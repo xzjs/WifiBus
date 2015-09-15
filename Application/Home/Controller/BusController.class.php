@@ -4,15 +4,15 @@ namespace Home\Controller;
 
 use Think\Controller;
 
-class LineController extends Controller {
+class BusController extends Controller {
 	
 	/**
-	 * 添加线路
+	 * 添加车辆
 	 */
 	public function add() {
-		$Line = D ( 'Line' );
-		if ($Line->create ()) {
-			$result = $Line->add ();
+		$Bus = D ( 'Bus' );
+		if ($Bus->create ()) {
+			$result = $Bus->add ();
 			if ($result) {
 				$this->success ( '数据添加成功！' );
 				echo $result;
@@ -20,20 +20,18 @@ class LineController extends Controller {
 				$this->error ( '数据添加错误！' );
 			}
 		} else {
-			$this->error ( $Line->getError () );
+			$this->error ( $Bus->getError () );
 		}
 	}
 	
 	/**
-	 * 查询线路
-	 *
-	 * @param number $id
-	 *        	线路id
+	 * 查询车辆信息
+	 * @param number $id 车辆id        	
 	 */
 	public function select($id = 0) {
-		$Line = M ( 'Line' );
+		$Bus = M ( 'Bus' );
 		// 读取数据
-		$data = $Line->find ( $id );
+		$data = $Bus->find ( $id );
 		if ($data) {
 			$this->assign ( 'data', $data ); // 模板变量赋值
 		} else {
@@ -43,43 +41,41 @@ class LineController extends Controller {
 	}
 	
 	/**
-	 * 测试更新线路方法
-	 * 
-	 * @param number $id
-	 *        	线路id
+	 * 测试更新车辆信息的方法
+	 * @param number $id 车辆id 
 	 */
-	public function edit($id = 0) {
-		$Line = M ( 'Line' );
-		$this->assign ( 'line', $Line->find ( $id ) );
-		$this->display ();
+	public function edit($id=0){
+		$Bus   =   M('Bus');
+		$this->assign('Bus',$Bus->find($id));
+		$this->display();
 	}
 	
 	/**
-	 * 更新线路
+	 * 更新车辆信息
 	 */
 	public function update() {
-		$Line = D ( 'Line' );
-		if ($Line->create ()) {
-			$result = $Line->save ();
+		$Bus = D ( 'Bus' );
+		if ($Bus->create ()) {
+			$result = $Bus->save ();
 			if ($result) {
 				$this->success ( '操作成功！' );
 			} else {
 				$this->error ( '写入错误！' );
 			}
 		} else {
-			$this->error ( $Line->getError () );
+			$this->error ( $Bus->getError () );
 		}
 	}
 	
 	/**
-	 * 删除线路
+	 * 删除车辆
 	 */
 	public function delete($id = 0) {
-		$Line = M ( 'Line' );
-		if ($Line->delete ( $id )) {
+		$Bus = M ( 'Bus' );
+		if ($Bus->delete ( $id )) {
 			$this->success ( '操作成功！' );
 		} else {
-			$this->error ( $Line->getError () );
+			$this->error ( $Bus->getError () );
 		}
 	}
 }
