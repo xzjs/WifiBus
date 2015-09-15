@@ -15,7 +15,6 @@ class BusController extends Controller {
 			$result = $Bus->add ();
 			if ($result) {
 				$this->success ( '数据添加成功！' );
-				echo $result;
 			} else {
 				$this->error ( '数据添加错误！' );
 			}
@@ -33,7 +32,7 @@ class BusController extends Controller {
 		// 读取数据
 		$data = $Bus->find ( $id );
 		if ($data) {
-			$this->assign ( 'data', $data ); // 模板变量赋值
+			$this->assign ( 'bus', $data ); // 模板变量赋值
 		} else {
 			$this->error ( '数据错误' );
 		}
@@ -46,7 +45,7 @@ class BusController extends Controller {
 	 */
 	public function edit($id=0){
 		$Bus   =   M('Bus');
-		$this->assign('Bus',$Bus->find($id));
+		$this->assign('bus',$Bus->find($id));
 		$this->display();
 	}
 	

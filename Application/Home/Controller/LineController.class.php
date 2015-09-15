@@ -15,7 +15,6 @@ class LineController extends Controller {
 			$result = $Line->add ();
 			if ($result) {
 				$this->success ( '数据添加成功！' );
-				echo $result;
 			} else {
 				$this->error ( '数据添加错误！' );
 			}
@@ -35,7 +34,7 @@ class LineController extends Controller {
 		// 读取数据
 		$data = $Line->find ( $id );
 		if ($data) {
-			$this->assign ( 'data', $data ); // 模板变量赋值
+			$this->assign ( 'line', $data ); // 模板变量赋值
 		} else {
 			$this->error ( '数据错误' );
 		}
