@@ -1,7 +1,7 @@
 <?php
 namespace Home\Model;
 use Think\Model;
-class LineModel extends Model {
+class DiviceModel extends Model {
     // 定义自动验证
     protected $_validate    =   array(
         array('ssid','require','设备ssid不能为空！'),
