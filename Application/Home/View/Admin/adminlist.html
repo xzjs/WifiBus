@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<p>
+    <a href="__URL__/edit">添加新的管理员</a>
+</p>
+
+<volist name="list" id="vo" empty="暂时没有数据">
+    <a href="__URL__/edit/id/{$vo.id}">{$vo.name}</a>
+    <br/>
+</volist>
+</body>
+</html>
