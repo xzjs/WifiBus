@@ -29,8 +29,11 @@ class BusController extends Controller {
 	 */
 	public function select($id = 0) {
 		$Bus = M ( 'Bus' );
-		// 读取数据
-		$data = $Bus->find ( $id );
+		if($id==0){
+			$data=$Bus->select();
+		}else{
+			$data = $Bus->find ( $id );
+		}
 		if ($data) {
 			$this->assign ( 'bus', $data ); // 模板变量赋值
 		} else {
@@ -45,6 +48,11 @@ class BusController extends Controller {
 	 */
 	public function edit($id=0){
 		$Bus   =   M('Bus');
+		if($id==0){
+			$data=$Bus->select();
+		}else{
+			$data = $Bus->find ( $id );
+		}
 		$this->assign('bus',$Bus->find($id));
 		$this->display();
 	}

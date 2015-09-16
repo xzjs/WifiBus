@@ -28,9 +28,13 @@ class AdController extends Controller {
 	 * @param number $id
 	 *        	广告Id
 	 */
-	public function select($id) {
+	public function select($id = 0) {
 		$Ad = M ( 'Ad' );
-		$result = $Ad->find ( $id );
+		if ($id == 0) {
+			$result = $Ad->select ();
+		} else {
+			$result = $Ad->find ( $id );
+		}
 		if ($result) {
 			$this->assign ( 'ad', $result );
 		} else {
@@ -47,7 +51,11 @@ class AdController extends Controller {
 	 */
 	public function edit($id) {
 		$Ad = M ( 'Ad' );
-		$result = $Ad->find ( $id );
+		if ($id == 0) {
+			$result = $Ad->select ();
+		} else {
+			$result = $Ad->find ( $id );
+		}
 		if ($result) {
 			$this->assign ( 'ad', $result );
 		} else {
@@ -71,14 +79,13 @@ class AdController extends Controller {
 			$this->error ( $Ad->getError () );
 		}
 	}
-	
 	public function delete($id) {
-		$Ad=M('Ad');
-		$result=$Ad->delete($id);
-		if($result){
-			$this->success('删除成功！');
-		}else{
-			$this->error('删除失败！');
+		$Ad = M ( 'Ad' );
+		$result = $Ad->delete ( $id );
+		if ($result) {
+			$this->success ( '删除成功！' );
+		} else {
+			$this->error ( '删除失败！' );
 		}
 	}
 }
