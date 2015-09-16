@@ -32,7 +32,11 @@ class LineController extends Controller {
 	public function select($id = 0) {
 		$Line = M ( 'Line' );
 		// 读取数据
-		$data = $Line->find ( $id );
+		if ($id == 0) {
+			$data = $Line->select ();
+		} else {
+			$data = $Line->find ( $id );
+		}
 		if ($data) {
 			$this->assign ( 'line', $data ); // 模板变量赋值
 		} else {
@@ -43,13 +47,18 @@ class LineController extends Controller {
 	
 	/**
 	 * 测试更新线路方法
-	 * 
+	 *
 	 * @param number $id
 	 *        	线路id
 	 */
 	public function edit($id = 0) {
 		$Line = M ( 'Line' );
-		$this->assign ( 'line', $Line->find ( $id ) );
+		if ($id == 0) {
+			$data = $Line->select ();
+		} else {
+			$data = $Line->find ( $id );
+		}
+		$this->assign ( 'line',  $data);
 		$this->display ();
 	}
 	

@@ -32,7 +32,11 @@ class DeviceController extends Controller {
 	public function select($id = 0) {
 		$Device = M ( 'Device' );
 		// 读取数据
-		$data = $Device->find ( $id );
+		if ($id == 0) {
+			$data = $Device->select ();
+		} else {
+			$data = $Device->find ( $id );
+		}
 		if ($data) {
 			$this->assign ( 'device', $data ); // 模板变量赋值
 		} else {
@@ -49,7 +53,11 @@ class DeviceController extends Controller {
 	 */
 	public function edit($id = 0) {
 		$Device = M ( 'Device' );
-		$result=$Device->find($id);
+		if ($id == 0) {
+			$data = $Device->select ();
+		} else {
+			$data = $Device->find ( $id );
+		}
 		if ($result) {
 			$this->assign ( 'device', $result );
 			$this->display ();
