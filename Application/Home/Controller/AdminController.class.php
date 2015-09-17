@@ -9,6 +9,7 @@
 namespace Home\Controller;
 use Org\MyClass\Admin;
 use Think\Controller;
+use Think\Exception;
 
 class AdminController extends Controller
 {
@@ -38,12 +39,22 @@ class AdminController extends Controller
             $Admin->pwd=md5('1');
             $Admin->type='Low';
             $a=$_SESSION['admin'];
-            $result=$a->add($Admin->data());
-            if($result>0){
-                $this->success('添加成功','adminlist');
+            if($Admin->id==0){
+                $result=$a->add($Admin->data());
+                if($result>0){
+                    $this->success('添加成功','adminlist');
+                }else{
+                    $this->error('添加失败');
+                }
             }else{
-                $this->error('添加失败');
+                $result=$a->update($Admin->data());
+                if($result){
+                    $this->success('修改成功','adminlist');
+                }else{
+                    $this->error('添加失败');
+                }
             }
+
         }
     }
 
@@ -69,5 +80,29 @@ class AdminController extends Controller
             $this->assign('data',$data);
         }
         $this->show();
+    }
+
+    /**
+     * 修改密码
+     */
+    public function update_pwd(){
+        try {
+            $data = I('post.');
+            $a = $_SESSION['admin'];
+            $result = $a->update_pwd($data);
+            if ($result) {
+                $this->success('修改成功', 'adminlist');
+            } else {
+                $this->error('修改失败');
+            }
+        }catch (Exception $e){
+            $this->error($e->getMessage());
+        }
+    }
+
+    public function logout(){
+        $a = $_SESSION['admin'];
+        $a->logout();
+        $this->success('注销成功','login');
     }
 }

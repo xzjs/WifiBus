@@ -3,8 +3,7 @@ namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
     public function index(){
-        $sa=new \Org\MyClass\SuperAdmin();
-        $sa->login();
+        echo 'hello';
     }
     
     public function hello(){

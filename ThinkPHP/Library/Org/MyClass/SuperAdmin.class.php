@@ -58,6 +58,15 @@ class SuperAdmin extends Admin
         }else{
             return $Admin->find($id);
         }
+    }
 
+    /**
+     * 更新管理员
+     * @param $a 要更新的管理员数据
+     * @return bool 返回受影响的行数或者false
+     */
+    public function update($a){
+        $Admin=M('Admin');
+        return $Admin->save($a);
     }
 }
