@@ -3,7 +3,11 @@
 namespace Home\Controller;
 
 use Think\Controller;
-
+/**
+ * wifi设备控制器类
+ * @author xiuge
+ *
+ */
 class DeviceController extends Controller {
 	
 	/**

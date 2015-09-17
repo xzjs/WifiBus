@@ -3,7 +3,11 @@
 namespace Home\Controller;
 
 use Think\Controller;
-
+/**
+ * 公交车控制器类
+ * @author xiuge
+ *
+ */
 class BusController extends Controller {
 	
 	/**
