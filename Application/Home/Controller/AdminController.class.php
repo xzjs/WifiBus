@@ -101,7 +101,7 @@ class AdminController extends Controller
     }
 
     /**
-     * 注销
+     * 注销dd
      */
     public function logout(){
         $a = $_SESSION['admin'];
