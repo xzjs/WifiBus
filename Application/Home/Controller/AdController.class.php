@@ -3,7 +3,12 @@
 namespace Home\Controller;
 
 use Think\Controller;
-
+/**
+ * 
+ *广告控制器类
+ * @author xiuge
+ * 
+ */
 class AdController extends Controller {
 	
 	/**
