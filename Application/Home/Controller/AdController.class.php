@@ -3,11 +3,13 @@
 namespace Home\Controller;
 
 use Think\Controller;
+
 /**
+ *
+ * 广告控制器类
  * 
- *广告控制器类
  * @author xiuge
- * 
+ *        
  */
 class AdController extends Controller {
 	
@@ -72,16 +74,22 @@ class AdController extends Controller {
 	/**
 	 * 更新广告信息
 	 */
-	public function update() {
-		$Ad = D ( 'Ad' );
-		if ($Ad->create ()) {
-			if ($result = $Ad->save ()) {
-				$this->success ( '更新成功！' );
+	public function update($id = 0, $click_num = 0) {
+		if (($id == 0) && ($click_num == 0)) {
+			$Ad = D ( 'Ad' );
+			if ($Ad->create ()) {
+				$result = $Ad->save ();
 			} else {
-				$this->error ( '更新失败！' );
+				$this->error ( $Ad->getError () );
 			}
 		} else {
-			$this->error ( $Ad->getError () );
+			$Ad = M ( 'Ad' );
+			$result = $Ad->where ( 'id=' . $id )->setField ( 'click_num', $click_num );
+		}
+		if ($result) {
+			$this->success ( '更新成功！' );
+		} else {
+			$this->error ( '更新失败！' );
 		}
 	}
 	public function delete($id) {

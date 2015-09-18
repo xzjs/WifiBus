@@ -37,6 +37,7 @@ defined('APP_PATH')     or define('APP_PATH',       dirname($_SERVER['SCRIPT_FIL
 defined('APP_STATUS')   or define('APP_STATUS',     ''); // 应用状态 加载对应的配置文件
 defined('APP_DEBUG')    or define('APP_DEBUG',      false); // 是否调试模式
 
+
 if(function_exists('saeAutoLoader')){// 自动识别SAE环境
     defined('APP_MODE')     or define('APP_MODE',      'sae');
     defined('STORAGE_TYPE') or define('STORAGE_TYPE',  'Sae');
@@ -62,6 +63,13 @@ defined('CACHE_PATH')   or define('CACHE_PATH',     RUNTIME_PATH.'Cache/'); // �
 defined('CONF_EXT')     or define('CONF_EXT',       '.php'); // 配置文件后缀
 defined('CONF_PARSE')   or define('CONF_PARSE',     '');    // 配置文件解析方法
 defined('ADDON_PATH')   or define('ADDON_PATH',     APP_PATH.'Addon');
+
+
+//自定义路径常量
+defined('UPLOAD_PATH')    or define('UPLOAD_PATH',      './upload/'); // 上传文件目录
+defined('IMAGE_PATH')    or define('IMAGE_PATH',      UPLOAD_PATH.'image/'); // 上传文件目录
+defined('TEXT_PATH')    or define('TEXT_PATH',      UPLOAD_PATH.'text/'); // 上传文件目录
+defined('VIDEO_PATH')    or define('VIDEO_PATH',      UPLOAD_PATH.'video/'); // 上传文件目录
 
 // 系统信息
 if(version_compare(PHP_VERSION,'5.4.0','<')) {

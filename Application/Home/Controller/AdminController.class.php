@@ -54,7 +54,6 @@ class AdminController extends Controller
                     $this->error('添加失败');
                 }
             }
-
         }
     }
 
@@ -101,7 +100,7 @@ class AdminController extends Controller
     }
 
     /**
-     * 注销dd
+     * 注销
      */
     public function logout(){
         $a = $_SESSION['admin'];
