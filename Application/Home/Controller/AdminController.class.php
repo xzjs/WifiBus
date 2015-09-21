@@ -11,6 +11,11 @@ use Org\MyClass\Admin;
 use Think\Controller;
 use Think\Exception;
 
+/**
+ * 管理员控制器
+ * Class AdminController
+ * @package Home\Controller
+ */
 class AdminController extends Controller
 {
     /**
@@ -36,8 +41,6 @@ class AdminController extends Controller
     public function add(){
         $Admin=M('Admin');
         if($Admin->create()){
-            $Admin->pwd=md5('1');
-            $Admin->type='Low';
             $a=$_SESSION['admin'];
             if($Admin->id==0){
                 $result=$a->add($Admin->data());
@@ -106,5 +109,19 @@ class AdminController extends Controller
         $a = $_SESSION['admin'];
         $a->logout();
         $this->success('注销成功','login');
+    }
+
+    /**
+     * 删除
+     * @param $id 管理员id
+     */
+    public function delete($id){
+        $a=$_SESSION['admin'];
+        $result=$a->delete($id);
+        if($result==1){
+            $this->success('删除成功','__URL__/adminlist');
+        }else{
+            $this->error('删除失败');
+        }
     }
 }

@@ -15,6 +15,15 @@ class AdminModel extends Model{
      * @var array 用户名不可重复
      */
     protected $_validate=array(
-        array('name','unique','用户名重复')
+        array('name','','帐号名称已经存在！',0,'unique',1),
+    );
+
+    /**
+     * 定义自动完成
+     * @var array
+     */
+    protected $auto=array(
+        array('pwd','md5',3,'function') ,
+        array('type','Low'),
     );
 }
