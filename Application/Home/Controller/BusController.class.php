@@ -6,7 +6,7 @@ use Think\Controller;
 
 /**
  * 公交车控制器类
- * 
+ *
  * @author xiuge
  *        
  */
@@ -35,23 +35,22 @@ class BusController extends Controller {
 	
 	/**
 	 * 查询车辆信息
-	 * 
+	 *
 	 * @param number $id
 	 *        	车辆id
 	 */
-	public function select($id = 0) {
+	public function select($id = 0, $line_id = 0) {
 		$Bus = M ( 'Bus' );
-		if ($id == 0) {
-			$data = $Bus->select ();
-		} else {
-			$data = $Bus->find ( $id );
-		}
+		if ($id != 0)
+			$condition ['id'] = $id;
+		if ($line_id != 0)
+			$condition ['line_id'] = $line_id;
+		$data = $Bus->where ( $condition )->select ();
 		if ($data) {
-			$this->assign ( 'bus', $data ); // 模板变量赋值
+			var_dump($data);
 		} else {
 			$this->error ( '数据错误' );
 		}
-		$this->display ();
 	}
 	
 	/**
@@ -73,32 +72,49 @@ class BusController extends Controller {
 	
 	/**
 	 * 更新车辆信息
+	 * 
+	 * @param number $id
+	 *        	车辆id
+	 * @param number $position_x
+	 *        	车辆位置横坐标
+	 * @param number $position_y
+	 *        	车辆位置纵坐标
 	 */
-	public function update($id = 0, $position_x = 0, $position_y = 0) {
-		if (($position_x == 0) && ($position_y == 0)) {
+	public function update($id = 0, $position_x = 0, $position_y = 0, $no = '', $line_id = 0) {
+		if (IS_POST) {
 			$Bus = D ( 'Bus' );
 			if ($Bus->create ()) {
 				$result = $Bus->save ();
+				if ($result) {
+					$this->success ( '操作成功！' );
+				} else {
+					$this->error ( '写入错误！' );
+				}
 			} else {
 				$this->error ( $Bus->getError () );
 			}
-		} else {
+		} elseif (IS_GET) {
 			$Bus = M ( 'Bus' );
-			$data = array (
-					'position_x' => $position_x,
-					'position_y' => $position_y 
-			);
+			if ($position_x != 0)
+				$data ['position_x'] = $position_x;
+			if ($position_y != 0)
+				$data ['position_y'] = $position_y;
+			if ($no != '')
+				$data ['no'] = $no;
+			if ($line_id != 0)
+				$data ['line_id'] = $line_id;
 			$result = $Bus->where ( 'id=' . $id )->setField ( $data );
-		}
-		if ($result) {
-			$this->success ( '操作成功！' );
-		} else {
-			$this->error ( '写入错误！' );
+			if ($result) {
+				$this->success ( '操作成功！' );
+			} else {
+				$this->error ( '写入错误！' );
+			}
 		}
 	}
 	
 	/**
 	 * 删除车辆
+	 * @param number $id 车辆id
 	 */
 	public function delete($id = 0) {
 		$Bus = M ( 'Bus' );

@@ -3,10 +3,11 @@
 namespace Home\Controller;
 
 use Think\Controller;
+
 /**
  * wifi设备控制器类
  * @author xiuge
- *
+ *        
  */
 class DeviceController extends Controller {
 	
@@ -36,17 +37,10 @@ class DeviceController extends Controller {
 	public function select($id = 0) {
 		$Device = M ( 'Device' );
 		// 读取数据
-		if ($id == 0) {
-			$data = $Device->select ();
-		} else {
-			$data = $Device->find ( $id );
-		}
-		if ($data) {
-			$this->assign ( 'device', $data ); // 模板变量赋值
-		} else {
-			$this->error ( '数据错误' );
-		}
-		$this->display ();
+		if ($id != 0)
+			$condition ['id'] = $id;
+		$data = $Device->where ( $condition )->select ();
+		var_dump ( $data );
 	}
 	
 	/**
@@ -71,24 +65,60 @@ class DeviceController extends Controller {
 	}
 	
 	/**
-	 * 更新设备信息
+	 * 更新广告信息
+	 * @param number $id 设备ID
+	 * @param string $mac 设备MAC
+	 * @param string $useage 设备使用率
+	 * @param string $time 设备上次更新时间
+	 * @param string $ssid 设备SSID
+	 * @param string $firmware 设备固件版本
+	 * @param string $content 设备内容
+	 * @param number $status 设备状态
+	 * @param number $bus_id 设备所安放的车辆ID
 	 */
-	public function update() {
-		$Device = D ( 'Device' );
-		if ($Device->create ()) {
-			$result = $Device->save ();
+	public function update($id = 0, $mac = '', $useage = '', $time = '', $ssid = '', $firmware = '', $content = '', $status = 0, $bus_id = 0) {
+		if (IS_POST) {
+			$Device = D ( 'Device' );
+			if ($Device->create ()) {
+				$result = $Device->save ();
+				if ($result) {
+					$this->success ( '操作成功！' );
+				} else {
+					$this->error ( '写入错误！' );
+				}
+			} else {
+				$this->error ( $Device->getError () );
+			}
+		} elseif (IS_GET) {
+			$Device = M ( 'Device' );
+			if ($mac != '')
+				$data ['mac'] = $mac;
+			if ($useage != '')
+				$data ['useage'] = $useage;
+			if ($time != '')
+				$data ['time'] = $time;
+			if ($ssid != '')
+				$data ['ssid'] = $ssid;
+			if ($firmware != '')
+				$data ['firmware'] = $firmware;
+			if ($content != '')
+				$data ['content'] = $content;
+			if ($status != 0)
+				$data ['status'] = $status;
+			if ($bus_id != 0)
+				$data ['bus_id'] = $bus_id;
+			$result = $Device->where ( 'id=' . $id )->setField ( $data );
 			if ($result) {
 				$this->success ( '操作成功！' );
 			} else {
 				$this->error ( '写入错误！' );
 			}
-		} else {
-			$this->error ( $Device->getError () );
 		}
 	}
 	
 	/**
 	 * 删除设备
+	 * @param number $id 设备ID
 	 */
 	public function delete($id = 0) {
 		$Device = M ( 'Device' );

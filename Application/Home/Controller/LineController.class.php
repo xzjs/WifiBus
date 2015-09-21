@@ -42,11 +42,10 @@ class LineController extends Controller {
 			$data = $Line->find ( $id );
 		}
 		if ($data) {
-			$this->assign ( 'line', $data ); // 模板变量赋值
+			var_dump($data);
 		} else {
 			$this->error ( '数据错误' );
 		}
-		$this->display ();
 	}
 	
 	/**
@@ -85,6 +84,7 @@ class LineController extends Controller {
 	
 	/**
 	 * 删除线路
+	 * @param number $id 线路ID
 	 */
 	public function delete($id = 0) {
 		$Line = M ( 'Line' );
