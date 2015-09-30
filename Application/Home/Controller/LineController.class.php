@@ -3,10 +3,12 @@
 namespace Home\Controller;
 
 use Think\Controller;
+
 /**
  * 公交线路控制器类
- * @author xiuge
  *
+ * @author xiuge
+ *        
  */
 class LineController extends Controller {
 	
@@ -42,7 +44,7 @@ class LineController extends Controller {
 			$data = $Line->find ( $id );
 		}
 		if ($data) {
-			var_dump($data);
+			var_dump ( $data );
 		} else {
 			$this->error ( '数据错误' );
 		}
@@ -61,7 +63,7 @@ class LineController extends Controller {
 		} else {
 			$data = $Line->find ( $id );
 		}
-		$this->assign ( 'line',  $data);
+		$this->assign ( 'line', $data );
 		$this->display ();
 	}
 	
@@ -84,7 +86,9 @@ class LineController extends Controller {
 	
 	/**
 	 * 删除线路
-	 * @param number $id 线路ID
+	 *
+	 * @param number $id
+	 *        	线路ID
 	 */
 	public function delete($id = 0) {
 		$Line = M ( 'Line' );

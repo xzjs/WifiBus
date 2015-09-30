@@ -22,7 +22,7 @@
     url:<input type="url" name="url" value="{$data.url}">
     <br/>
     status:
-    <if condition="$data['status'] eq 'on'">
+    <if condition="$data.status eq 'on'">
         <input type="radio" name="status" value="on" checked="checked" /> 激活
         <input type="radio" name="status" value="off" /> 关闭
         <else/>
@@ -31,6 +31,9 @@
     </if>
     <br/>
     <input type="submit" value="提交">
+    <if condition="$data.id neq 0">
+        <a href="__URL__/delete/id/{$data.id}" >删除</a>
+    </if>
 </form>
 </body>
 </html>
