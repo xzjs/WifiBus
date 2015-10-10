@@ -46,13 +46,13 @@ class BusController extends Controller {
 		if ($line_id != 0)
 			$condition_bus ['line_id'] = $line_id;
 		$data = $Bus->where ( $condition_bus )->select ();
-		$Device=M("Device");
+		$Device = M ( "Device" );
 		$condition_device ['bus_id'] = $id;
-		$mac=$Device->where($condition_device)->getField('mac');
-		$data[0]['position_x']=S($mac.'x');
-		$data[0]['position_y']=S($mac.'y');
+		$mac = $Device->where ( $condition_device )->getField ( 'mac' );
+		$data [0] ['position_x'] = S ( $mac . 'x' );
+		$data [0] ['position_y'] = S ( $mac . 'y' );
 		if ($data) {
-			var_dump($data);
+			var_dump ( $data );
 		} else {
 			$this->error ( '数据错误' );
 		}
@@ -60,7 +60,7 @@ class BusController extends Controller {
 	
 	/**
 	 * 测试更新车辆信息的方法
-	 * 
+	 *
 	 * @param number $id
 	 *        	车辆id
 	 */
@@ -77,7 +77,7 @@ class BusController extends Controller {
 	
 	/**
 	 * 更新车辆信息
-	 * 
+	 *
 	 * @param number $id
 	 *        	车辆id
 	 * @param number $position_x
@@ -85,9 +85,8 @@ class BusController extends Controller {
 	 * @param number $position_y
 	 *        	车辆位置纵坐标
 	 */
-	public function update($id = 0, $no = '', $line_id = 0,$mac='', $position_x = 0, $position_y = 0) {
-		
-	if (IS_POST) {
+	public function update($id = 0, $no = '', $line_id = 0, $mac = '', $position_x = 0, $position_y = 0) {
+		if (IS_POST) {
 			$Bus = D ( 'Bus' );
 			if ($Bus->create ()) {
 				$result = $Bus->save ();
@@ -117,15 +116,37 @@ class BusController extends Controller {
 					$this->error ( '写入错误！' );
 				}
 			} else {
-				S($mac.'x',$position_x );
-				S($mac.'y',$position_y );
+				S ( $mac . 'x', $position_x );
+				S ( $mac . 'y', $position_y );
+				$update_time = S ( 'update_time' );
+				if (S ( 'update_time' ) == null) {
+					$update_time = 1;
+				} else {
+					$update_time = S ( 'update_time' );
+					$update_time ++;
+					if ($update_time > 5) {
+						$update_time=0;
+						$Device = M ( "Device" );
+						$info = $Device->field ( 'bus_id,mac' )->select ();
+						foreach ( $info as $value ) {
+							$Bus = M ( 'Bus' );
+							$data ['position_x'] = S ( $value ['mac'] . 'x' );
+							$data ['position_y'] = S ( $value ['mac'] . 'y' );
+							$data ['id'] = $value ['bus_id'];
+							$Bus->save ( $data );
+						}
+					}
+				}
+				S ( 'update_time', $update_time );
 			}
 		}
 	}
 	
 	/**
 	 * 删除车辆
-	 * @param number $id 车辆id
+	 * 
+	 * @param number $id
+	 *        	车辆id
 	 */
 	public function delete($id = 0) {
 		$Bus = M ( 'Bus' );
