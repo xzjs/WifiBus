@@ -1,118 +1,95 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit|ie-comp|ie-stand">
-    <title>index</title>
-    
-    <load href="__PUBLIC__/css/css.css" />
-    <load href="__PUBLIC__/css/high.css" />
-    <load href="__PUBLIC__/js/jquery-1.11.2.min.js" />
-    <load href="__PUBLIC__/js/index.js" />
-    <load href="__PUBLIC__/js/charts.js" />
-    <load href="__PUBLIC__/js/echarts-all.js" />
-    <load href="__PUBLIC__/js/ajax.js" />
- 	<Script>window.onload=init_index()</script>
-</head>
-
-<body>
-    <div class="out_container_subtitle">
-        <div class="container_subtitle">
-            <img src="__PUBLIC__/images/index_logo.png" alt="logo">
+<div class="out_container_title">
+    <div class="container_title">
+        <div class="left">
             <ul>
-                <li>
-                    <img src="__PUBLIC__/images/admin.png" alt="">
-                    <p><a href="">admin</a></p>
+                <li class="box_one">
+                    <a></a>
                 </li>
-                <li>
-                    <img src="__PUBLIC__/images/exit.png" alt="">
-                    <p><a href="">注销</a></p>
+                <li class="box_two">
+                    <a></a>
                 </li>
             </ul>
+        </div>
+        <div class="main">
+            <div id="allmap"></div>
+        </div>
+        <div class="right">
             <ul>
-                <li class="action"><a href="index.html">总览</a></li>
-                <li><a href="Advertisement.html">广告和流量分析</a></li>
-                <li><a href="user-control.html">用户控制</a></li>
-                <li><a href="#">广告设置</a></li>
+                <li>
+                    <img src="__PUBLIC__/images/G_car.png" alt="">
+                    <img src="__PUBLIC__/images/G_point.png" alt="">
+
+                    <p>正在运营</p>
+                </li>
+                <li class="clear"></li>
+                <li>
+                    <img src="__PUBLIC__/images/R_car.png" alt="">
+                    <img src="__PUBLIC__/images/R_point.png" alt="">
+
+                    <p>暂停运营</p>
+                </li>
+                <li class="clear"></li>
             </ul>
-            <div class="clear"></div>
+        </div>
+        <div class="clr"></div>
+        <div class="footer">
+            <ul>
+                <li id="workNormal"></li>
+                <li id="onlinePeople"></li>
+                <li id="flow"></li>
+                <li id="adClick"></li>
+                <div class="clr"></div>
+            </ul>
+        </div>
+        <div class="display">
+            <select>
+                <option value="line1">线路1</option>
+                <option value="line2">线路2</option>
+                <option value="line3">线路3</option>
+                <option value="line4">线路4</option>
+            </select>
+
+            <div class="search">
+                <form action="form">
+                    <p>
+                        <input type="text">
+                        <a href=""><img src="__PUBLIC__/images/home_search.png" alt=""></a>
+                    </p>
+                </form>
+            </div>
+            <ul class="select">
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+            </ul>
+        </div>
+        <div class="road_display">
+            <div class="left_display">
+                <ul>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                </ul>
+            </div>
         </div>
     </div>
-    <div class="out_container_title">
-        <div class="container_title">
-            <div class="left">
-                <ul>
-                    <li class="box_one">
-                        <a></a>
-                    </li>
-                    <li class="box_two">
-                        <a></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="main">
-                <img src="__PUBLIC__/images/map.png" alt="">
-            </div>
-            <div class="right">
-                <ul>
-                    <li>
-                        <img src="__PUBLIC__/images/G_car.png" alt="">
-                        <img src="__PUBLIC__/images/G_point.png" alt="">
-                        <p>正在运营</p>
-                    </li>
-                    <li class="clear"></li>
-                    <li>
-                        <img src="__PUBLIC__/images/R_car.png" alt="">
-                        <img src="__PUBLIC__/images/R_point.png" alt="">
-                        <p>暂停运营</p>
-                    </li>
-                    <li class="clear"></li>
-                </ul>
-            </div>
-            <div class="clr"></div>
-            <div class="footer">
-                <ul>
-                    <li id="workNormal"></li>
-                    <li id="onlinePeople"></li>
-                    <li id="flow"></li>
-                    <li id="adClick"></li>
-                    <div class="clr"></div>
-                </ul>
-            </div>
-            <div class="display">
-                <select id="line_selector" onchange="show_bus_no(this.value)" onload="load_line()">
-                    
-                </select>
-                
-                <div class="search">
-                    <form >
-                        <p>
-                            <input type="text" id="search_keys">
-                            <a ><img src="__PUBLIC__/images/home_search.png" alt="" onclick="search_bus($('#search_keys').val())"></a>
-                        </p>
-                    </form>
-                </div>
-                <ul class="select" id="bus_no_selector">
-                    
-                </ul>
-            </div>
-            <div class="road_display">
-                <div class="left_display">
-                    <ul id=line_list_ul>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <script type="text/javascript">
+    <div class="clear"></div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
+<script type="text/javascript">
     var myChartWork = echarts.init(document.getElementById('workNormal'));
     var myChartOnline = echarts.init(document.getElementById('onlinePeople'));
     var myChartFlow = echarts.init(document.getElementById('flow'));
     var myChartAd = echarts.init(document.getElementById('adClick'));
-    
+
     // 正在工作设备量
     var optionWork = workOption();
     //在线人数
@@ -125,7 +102,12 @@
     myChartOnline.setOption(optionOnline);
     myChartFlow.setOption(optionFlow);
     myChartAd.setOption(optionAd);
-    </script>
-</body>
-
-</html>
+</script>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");    // 创建Map实例
+    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
+    map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+    map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+</script>
