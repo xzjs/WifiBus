@@ -39,22 +39,31 @@ class BusController extends Controller {
 	 * @param number $id
 	 *        	车辆id
 	 */
-	public function select($id = 0, $line_id = 0) {
+	public function select($id = 0, $line_id = 0, $search_keys = '', $is_getbuslist = 0) {
 		$Bus = M ( 'Bus' );
-		if ($id != 0)
-			$condition_bus ['id'] = $id;
-		if ($line_id != 0)
-			$condition_bus ['line_id'] = $line_id;
-		$data = $Bus->where ( $condition_bus )->select ();
-		$Device = M ( "Device" );
-		$condition_device ['bus_id'] = $id;
-		$mac = $Device->where ( $condition_device )->getField ( 'mac' );
-		$data [0] ['position_x'] = S ( $mac . 'x' );
-		$data [0] ['position_y'] = S ( $mac . 'y' );
-		if ($data) {
-			var_dump ( $data );
+		if ($is_getbuslist == 1) {
+			if ($search_keys != '') {
+				$map ['no'] = array (
+						'like',
+						'%' . $search_keys . '%' 
+				);
+			} elseif ($line_id != 0) {
+				$map ['line_id'] = $line_id;
+			}
+			$data = $Bus->where ( $map )->field ( 'id,no' )->select ();
+			$a = json_encode ( $data );
+			$this->ajaxReturn ( json_encode ( $data ) );
 		} else {
-			$this->error ( '数据错误' );
+			if ($id != 0)
+				$condition_bus ['id'] = $id;
+			if ($line_id != 0)
+				$condition_bus ['line_id'] = $line_id;
+			$data = $Bus->where ( $condition_bus )->select ();
+			$Device = M ( "Device" );
+			$condition_device ['bus_id'] = $id;
+			$mac = $Device->where ( $condition_device )->getField ( 'mac' );
+			$data [0] ['position_x'] = S ( $mac . 'x' );
+			$data [0] ['position_y'] = S ( $mac . 'y' );
 		}
 	}
 	
@@ -125,7 +134,7 @@ class BusController extends Controller {
 					$update_time = S ( 'update_time' );
 					$update_time ++;
 					if ($update_time > 5) {
-						$update_time=0;
+						$update_time = 0;
 						$Device = M ( "Device" );
 						$info = $Device->field ( 'bus_id,mac' )->select ();
 						foreach ( $info as $value ) {
@@ -144,7 +153,7 @@ class BusController extends Controller {
 	
 	/**
 	 * 删除车辆
-	 * 
+	 *
 	 * @param number $id
 	 *        	车辆id
 	 */
