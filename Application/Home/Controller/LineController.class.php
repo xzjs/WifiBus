@@ -3,10 +3,12 @@
 namespace Home\Controller;
 
 use Think\Controller;
+
 /**
  * 公交线路控制器类
- * @author xiuge
  *
+ * @author xiuge
+ *        
  */
 class LineController extends Controller {
 	
@@ -42,7 +44,7 @@ class LineController extends Controller {
 			$data = $Line->find ( $id );
 		}
 		if ($data) {
-			var_dump($data);
+			var_dump ( $data );
 		} else {
 			$this->error ( '数据错误' );
 		}
@@ -61,7 +63,7 @@ class LineController extends Controller {
 		} else {
 			$data = $Line->find ( $id );
 		}
-		$this->assign ( 'line',  $data);
+		$this->assign ( 'line', $data );
 		$this->display ();
 	}
 	
@@ -69,6 +71,17 @@ class LineController extends Controller {
 	 * 更新线路
 	 */
 	public function update() {
+		$redis->set('name','test');
+		echo $redis->get('name');
+		
+		$array1['mac']='001122334455';
+		$array1['position_x']='11.22';
+		$array1['position_y']='44.55';
+		
+		$redis->HSET('h','asd',$array1['mac']);
+		$redis->HSET('h','as',$array1['mac']);
+		$redis->HSET('h','a',$array1['mac']);
+		var_dump($redis->HGETALL('h'));
 		$Line = D ( 'Line' );
 		if ($Line->create ()) {
 			$result = $Line->save ();
@@ -84,7 +97,9 @@ class LineController extends Controller {
 	
 	/**
 	 * 删除线路
-	 * @param number $id 线路ID
+	 *
+	 * @param number $id
+	 *        	线路ID
 	 */
 	public function delete($id = 0) {
 		$Line = M ( 'Line' );
