@@ -69,4 +69,14 @@ class SuperAdmin extends Admin
         $Admin=M('Admin');
         return $Admin->save($a);
     }
+
+    /**
+     * 删除管理员
+     * @param $id 管理员id
+     * @return mixed 受影响的行数
+     */
+    public function delete($id){
+        $Admin=M('Admin');
+        return $Admin->delete($id);
+    }
 }
