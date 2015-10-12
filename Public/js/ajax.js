@@ -9,7 +9,8 @@ function init_index() {
 /**
  * 加载所有设备的工作状态
  */
-function load_device_status(){
+function load_device_status() {
+
 	
 }
 
@@ -36,12 +37,13 @@ function load_line() {
 			$("ul#line_list_ul").html(line_list_str);
 		}
 	});
-	show_bus_no(1);//默认显示一路
+	show_bus_no(1);// 默认显示一路
 }
 
 /**
  * 显示某线路上的车辆的车牌号
- * @param str 线路Id
+ * 
+ * @param str：线路Id
  */
 function show_bus_no(str) {
 	$.post("Bus/select", {
@@ -61,7 +63,8 @@ function show_bus_no(str) {
 
 /**
  * 根据车牌号搜索车辆
- * @param str 搜索关键字
+ * 
+ * @param str：搜索关键字
  */
 function search_bus(str) {
 	$.post("Bus/select", {

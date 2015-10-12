@@ -36,18 +36,18 @@ class BusController extends Controller {
 	/**
 	 * 查询车辆信息
 	 *
-	 * @param number $id
-	 *        	车辆id
+	 * @param number $id:车辆id
 	 */
 	public function select($id = 0, $line_id = 0, $search_keys = '', $is_getbuslist = 0) {
 		$Bus = M ( 'Bus' );
+		//获取车辆列表
 		if ($is_getbuslist == 1) {
-			if ($search_keys != '') {
+			if ($search_keys != '') {//根据关键字搜索
 				$map ['no'] = array (
 						'like',
 						'%' . $search_keys . '%' 
 				);
-			} elseif ($line_id != 0) {
+			} elseif ($line_id != 0) {//根据线路搜索
 				$map ['line_id'] = $line_id;
 			}
 			$data = $Bus->where ( $map )->field ( 'id,no' )->select ();
@@ -70,8 +70,7 @@ class BusController extends Controller {
 	/**
 	 * 测试更新车辆信息的方法
 	 *
-	 * @param number $id
-	 *        	车辆id
+	 * @param number $id:车辆id
 	 */
 	public function edit($id = 0) {
 		$Bus = M ( 'Bus' );
@@ -87,12 +86,9 @@ class BusController extends Controller {
 	/**
 	 * 更新车辆信息
 	 *
-	 * @param number $id
-	 *        	车辆id
-	 * @param number $position_x
-	 *        	车辆位置横坐标
-	 * @param number $position_y
-	 *        	车辆位置纵坐标
+	 * @param number $id:车辆id
+	 * @param number $position_x:车辆位置横坐标
+	 * @param number $position_y:车辆位置纵坐标
 	 */
 	public function update($id = 0, $no = '', $line_id = 0, $mac = '', $position_x = 0, $position_y = 0) {
 		if (IS_POST) {
@@ -154,8 +150,7 @@ class BusController extends Controller {
 	/**
 	 * 删除车辆
 	 *
-	 * @param number $id
-	 *        	车辆id
+	 * @param number $id:车辆id
 	 */
 	public function delete($id = 0) {
 		$Bus = M ( 'Bus' );
