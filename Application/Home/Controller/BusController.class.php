@@ -36,33 +36,41 @@ class BusController extends Controller {
 	/**
 	 * 查询车辆信息
 	 *
-	 * @param number $id
-	 *        	车辆id
+	 * @param number $id:车辆id
 	 */
-	public function select($id = 0, $line_id = 0) {
+	public function select($id = 0, $line_id = 0, $search_keys = '', $is_getbuslist = 0) {
 		$Bus = M ( 'Bus' );
-		if ($id != 0)
-			$condition_bus ['id'] = $id;
-		if ($line_id != 0)
-			$condition_bus ['line_id'] = $line_id;
-		$data = $Bus->where ( $condition_bus )->select ();
-		$Device = M ( "Device" );
-		$condition_device ['bus_id'] = $id;
-		$mac = $Device->where ( $condition_device )->getField ( 'mac' );
-		$data [0] ['position_x'] = S ( $mac . 'x' );
-		$data [0] ['position_y'] = S ( $mac . 'y' );
-		if ($data) {
-			var_dump ( $data );
+		//获取车辆列表
+		if ($is_getbuslist == 1) {
+			if ($search_keys != '') {//根据关键字搜索
+				$map ['no'] = array (
+						'like',
+						'%' . $search_keys . '%' 
+				);
+			} elseif ($line_id != 0) {//根据线路搜索
+				$map ['line_id'] = $line_id;
+			}
+			$data = $Bus->where ( $map )->field ( 'id,no' )->select ();
+			$a = json_encode ( $data );
+			$this->ajaxReturn ( json_encode ( $data ) );
 		} else {
-			$this->error ( '数据错误' );
+			if ($id != 0)
+				$condition_bus ['id'] = $id;
+			if ($line_id != 0)
+				$condition_bus ['line_id'] = $line_id;
+			$data = $Bus->where ( $condition_bus )->select ();
+			$Device = M ( "Device" );
+			$condition_device ['bus_id'] = $id;
+			$mac = $Device->where ( $condition_device )->getField ( 'mac' );
+			$data [0] ['position_x'] = S ( $mac . 'x' );
+			$data [0] ['position_y'] = S ( $mac . 'y' );
 		}
 	}
 	
 	/**
 	 * 测试更新车辆信息的方法
 	 *
-	 * @param number $id
-	 *        	车辆id
+	 * @param number $id:车辆id
 	 */
 	public function edit($id = 0) {
 		$Bus = M ( 'Bus' );
@@ -78,12 +86,9 @@ class BusController extends Controller {
 	/**
 	 * 更新车辆信息
 	 *
-	 * @param number $id
-	 *        	车辆id
-	 * @param number $position_x
-	 *        	车辆位置横坐标
-	 * @param number $position_y
-	 *        	车辆位置纵坐标
+	 * @param number $id:车辆id
+	 * @param number $position_x:车辆位置横坐标
+	 * @param number $position_y:车辆位置纵坐标
 	 */
 	public function update($id = 0, $no = '', $line_id = 0, $mac = '', $position_x = 0, $position_y = 0) {
 		if (IS_POST) {
@@ -125,7 +130,7 @@ class BusController extends Controller {
 					$update_time = S ( 'update_time' );
 					$update_time ++;
 					if ($update_time > 5) {
-						$update_time=0;
+						$update_time = 0;
 						$Device = M ( "Device" );
 						$info = $Device->field ( 'bus_id,mac' )->select ();
 						foreach ( $info as $value ) {
@@ -144,9 +149,8 @@ class BusController extends Controller {
 	
 	/**
 	 * 删除车辆
-	 * 
-	 * @param number $id
-	 *        	车辆id
+	 *
+	 * @param number $id:车辆id
 	 */
 	public function delete($id = 0) {
 		$Bus = M ( 'Bus' );

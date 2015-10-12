@@ -6,6 +6,7 @@ use Think\Controller;
 
 /**
  * wifi设备控制器类
+ * 
  * @author xiuge
  *        
  */
@@ -31,8 +32,7 @@ class DeviceController extends Controller {
 	/**
 	 * 查询设备信息
 	 *
-	 * @param number $id
-	 *        	设备id
+	 * @param number $id:设备id        	
 	 */
 	public function select($id = 0) {
 		$Device = M ( 'Device' );
@@ -46,8 +46,7 @@ class DeviceController extends Controller {
 	/**
 	 * 测试更新设备方法
 	 *
-	 * @param number $id
-	 *        	设备id
+	 * @param number $id:设备id        	
 	 */
 	public function edit($id = 0) {
 		$Device = M ( 'Device' );
@@ -66,15 +65,16 @@ class DeviceController extends Controller {
 	
 	/**
 	 * 更新广告信息
-	 * @param number $id 设备ID
-	 * @param string $mac 设备MAC
-	 * @param string $useage 设备使用率
-	 * @param string $time 设备上次更新时间
-	 * @param string $ssid 设备SSID
-	 * @param string $firmware 设备固件版本
-	 * @param string $content 设备内容
-	 * @param number $status 设备状态
-	 * @param number $bus_id 设备所安放的车辆ID
+	 * 
+	 * @param number $id:设备ID        	
+	 * @param string $mac:设备MAC        	
+	 * @param string $useage:设备使用率        	
+	 * @param string $time:设备上次更新时间        	
+	 * @param string $ssid:设备SSID        	
+	 * @param string $firmware:设备固件版本        	
+	 * @param string $content:设备内容        	
+	 * @param number $status:设备状态        	
+	 * @param number $bus_id:设备所安放的车辆ID        	
 	 */
 	public function update($id = 0, $mac = '', $useage = '', $time = '', $ssid = '', $firmware = '', $content = '', $status = 0, $bus_id = 0) {
 		if (IS_POST) {
@@ -118,7 +118,8 @@ class DeviceController extends Controller {
 	
 	/**
 	 * 删除设备
-	 * @param number $id 设备ID
+	 * 
+	 * @param number $id:设备ID        	
 	 */
 	public function delete($id = 0) {
 		$Device = M ( 'Device' );
