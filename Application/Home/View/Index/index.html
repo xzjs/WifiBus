@@ -97,7 +97,7 @@
     function chart() {
         // 正在工作设备量
         var num = Math.random();
-        num=0.5-num;
+        num = 0.5 - num;
         a += num;
         var optionWork = workOption(a);
         //在线人数
@@ -126,7 +126,7 @@
     function map(line, array) {
         // 百度地图API功能
         var map = new BMap.Map("l-map");            // 创建Map实例
-        map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 12);
+        map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 13);
 
         var busline = new BMap.BusLineSearch(map, {
             renderOptions: {map: map, panel: "r-result"},
@@ -148,15 +148,44 @@
         }, 1500);
 
         setTimeout(function () {
-            var x;
-            for (x in array) {
-                var a = array[x][0];
-                var b = array[x][1];
-                var pt = new BMap.Point(a, b);
-                var myIcon = new BMap.Icon("__PUBLIC__/images/red_left.png", new BMap.Size(300, 157));
-                var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
-                map.addOverlay(marker2);
-            }
-        }, 2500);
+                    var x;
+                    for (x in array) {
+                        var a = array[x][0];
+                        var b = array[x][1];
+                        var pt = new BMap.Point(a, b);
+                        var num = Math.round(Math.random() * 5);
+                        var img;
+                        switch (num) {
+                            case 0:
+                                img = "__PUBLIC__/images/red_left.png";
+                                break;
+                            case 1:
+                                img = "__PUBLIC__/images/green_left.png";
+                                break;
+                            case 2:
+                                img = "__PUBLIC__/images/green_left.png";
+                                break;
+                            case 3:
+                                img = "__PUBLIC__/images/red_right.png";
+                                break;
+                            case 4:
+                                img = "__PUBLIC__/images/green_right.png";
+                                break;
+                            case 5:
+                                img = "__PUBLIC__/images/green_right.png";
+                                break;
+                            default :
+                                img = "__PUBLIC__/images/green_right.png";
+                                break;
+                        }
+                        var myIcon = new BMap.Icon(img, new BMap.Size(50, 30));
+                        var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
+                        map.addOverlay(marker2);
+                    }
+                }
+                ,
+                2500
+        )
+        ;
     }
 </script>
