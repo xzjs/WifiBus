@@ -35,25 +35,25 @@ class LineController extends Controller {
 	 * @param number $id
 	 *        	线路id
 	 */
-	public function select($id = 0, $is_getlinelist = 0) {
+	public function select($id = 0,$search_keys = '', $is_ajax = 0) {
 		$Line = M ( 'Line' );
-		if ($is_getlinelist == 1) {//获取线路列表
-			$data = $Line->select();
-			$a=json_encode($data);
-			$this->ajaxReturn(json_encode($data));
-		}else{
-			// 读取数据
-			if ($id == 0) {
-				$data = $Line->select ();
-			} else {
-				$data = $Line->find ( $id );
-			}
-			if ($data) {
-				var_dump ( $data );
-			} else {
-				$this->error ( '数据错误' );
-			}
+		if ($id != 0) {
+			$data = $Line->find ( $id );
+		} elseif ($search_keys != '') {//根据关键字搜索
+			$map ['name'] = array (
+					'like',
+					'%' . $search_keys . '%'
+			);
+			$data = $Line->where ( $map )->select ();
+		}else {
+			$data = $Line->select ();
 		}
+		
+		if($is_ajax==1){
+			$a = json_encode ( $data );
+			$this->ajaxReturn ( json_encode ( $data ) );
+		}else
+			return $data;
 	}
 	
 	/**

@@ -108,13 +108,13 @@ $(document).ready(function() {
 		$(this).click(function(event) {
 			userStart();
 			$(this).addClass('showTemp');
-			$(userCar[index]).removeClass('hideTemp');
+			userCar.removeClass('hideTemp');
 		});		
 	});
 	function userStart(){
 		for(var n=0; n<userLen; n++){
 			$(userLine[n]).removeClass('showTemp');
-			$(userCar[n]).addClass('hideTemp');
+			userCar.addClass('hideTemp');
 		}
 	};
 

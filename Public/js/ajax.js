@@ -19,7 +19,7 @@ function load_device_status() {
  */
 function load_line() {
 	$.post("Line/select", {
-		is_getlinelist : 1
+		is_ajax : 1
 	}, function(data, status) {
 		if (status == 4 || status == "success") {
 			var line_list = eval(data);
@@ -37,7 +37,7 @@ function load_line() {
 			$("ul#line_list_ul").html(line_list_str);
 		}
 	});
-	show_bus_no(1);// 默认显示一路
+	get_bus_list(1,"bus_no_selector");// 默认显示一路
 }
 
 /**
@@ -45,10 +45,10 @@ function load_line() {
  * 
  * @param str：线路Id
  */
-function show_bus_no(str) {
-	$.post("Bus/select", {
+function get_bus_list(url,id,display) {
+	$.post(url, {
 		is_getbuslist : 1,
-		line_id : str
+		line_id : id
 	}, function(data, status) {
 		if (status == 4 || status == "success") {
 			var bus_info = eval(data);
@@ -56,7 +56,7 @@ function show_bus_no(str) {
 			for (var i = 0; i < bus_info.length; i++) {
 				bus_list += "<li><a href='#'>" + bus_info[i].no + "</a></li>";
 			}
-			$("ul#bus_no_selector").html(bus_list);
+			$("ul#"+display).html(bus_list);
 		}
 	});
 }
@@ -66,10 +66,10 @@ function show_bus_no(str) {
  * 
  * @param str：搜索关键字
  */
-function search_bus(str) {
+function search_bus(keys) {
 	$.post("Bus/select", {
 		is_getbuslist : 1,
-		search_keys : str
+		search_keys : keys
 	}, function(data, status) {
 		if (status == 4 || status == "success") {
 			var bus_info = eval(data);
@@ -81,3 +81,26 @@ function search_bus(str) {
 		}
 	});
 }
+
+/**
+ * 搜索线路（用户控制——》线路管理——》搜索）
+ * @param key 搜索关键字
+ */
+function search_line(key){
+	$.post("Line/select", {
+		is_ajax : 1,
+		search_keys : keys
+	}, function(data, status) {
+		if (status == 4 || status == "success") {
+			var line_info = eval(data);
+			var line_list = "";
+			for (var i = 0; i < line_info.length; i++) {
+				line_list += "<li><a href='#'>" + line_info[i].no + "</a></li>";
+			}
+			$("ul#line_list").html(line_list);
+		}
+	});
+}
+
+
+
