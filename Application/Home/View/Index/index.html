@@ -1,131 +1,178 @@
-<!DOCTYPE html>
-<html lang="en">
+<div class="out_container_title">
+	<div class="container_title">
+		<div class="left">
+			<ul>
+				<li class="box_one"><a></a></li>
+				<li class="box_two"><a></a></li>
+			</ul>
+		</div>
+		<div id="l-map" class="main"></div>
+		<div class="right">
+			<ul>
+				<li><img src="__PUBLIC__/images/G_car.png" alt=""> <img
+					src="__PUBLIC__/images/G_point.png" alt="">
 
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="renderer" content="webkit|ie-comp|ie-stand">
-    <title>index</title>
-    
-    <load href="__PUBLIC__/css/css.css" />
-    <load href="__PUBLIC__/css/high.css" />
-    <load href="__PUBLIC__/js/jquery-1.11.2.min.js" />
-    <load href="__PUBLIC__/js/index.js" />
-    <load href="__PUBLIC__/js/charts.js" />
-    <load href="__PUBLIC__/js/echarts-all.js" />
-    <load href="__PUBLIC__/js/ajax.js" />
- 	<Script>window.onload=init_index()</script>
-</head>
+					<p>正在运营</p></li>
+				<li class="clear"></li>
+				<li><img src="__PUBLIC__/images/R_car.png" alt=""> <img
+					src="__PUBLIC__/images/R_point.png" alt="">
 
-<body>
-    <div class="out_container_subtitle">
-        <div class="container_subtitle">
-            <img src="__PUBLIC__/images/index_logo.png" alt="logo">
-            <ul>
-                <li>
-                    <img src="__PUBLIC__/images/admin.png" alt="">
-                    <p><a href="">admin</a></p>
-                </li>
-                <li>
-                    <img src="__PUBLIC__/images/exit.png" alt="">
-                    <p><a href="">注销</a></p>
-                </li>
-            </ul>
-            <ul>
-                <li class="action"><a href="{:U('Index')}">总览</a></li>
-                <li><a href="Advertisement.html">广告和流量分析</a></li>
-                <li><a href="{:U('Manage/line_manage')}">用户控制</a></li>
-                <li><a href="#">广告设置</a></li>
-            </ul>
-            <div class="clear"></div>
-        </div>
-    </div>
-    <div class="out_container_title">
-        <div class="container_title">
-            <div class="left">
-                <ul>
-                    <li class="box_one">
-                        <a></a>
-                    </li>
-                    <li class="box_two">
-                        <a></a>
-                    </li>
-                </ul>
-            </div>
-            <div class="main">
-                <img src="__PUBLIC__/images/map.png" alt="">
-            </div>
-            <div class="right">
-                <ul>
-                    <li>
-                        <img src="__PUBLIC__/images/G_car.png" alt="">
-                        <img src="__PUBLIC__/images/G_point.png" alt="">
-                        <p>正在运营</p>
-                    </li>
-                    <li class="clear"></li>
-                    <li>
-                        <img src="__PUBLIC__/images/R_car.png" alt="">
-                        <img src="__PUBLIC__/images/R_point.png" alt="">
-                        <p>暂停运营</p>
-                    </li>
-                    <li class="clear"></li>
-                </ul>
-            </div>
-            <div class="clr"></div>
-            <div class="footer">
-                <ul>
-                    <li id="workNormal"></li>
-                    <li id="onlinePeople"></li>
-                    <li id="flow"></li>
-                    <li id="adClick"></li>
-                    <div class="clr"></div>
-                </ul>
-            </div>
-            <div class="display">
-                <select id="line_selector" onchange="get_bus_list(this.value,'bus_no_selector')">
-                    
-                </select>
-                
-                <div class="search">
-                    <form >
-                        <p>
-                            <input type="text" id="search_keys">
-                            <a ><img src="__PUBLIC__/images/home_search.png" alt="" onclick="search_bus($('#search_keys').val())"></a>
-                        </p>
-                    </form>
-                </div>
-                <ul class="select" id="bus_no_selector">
-                    
-                </ul>
-            </div>
-            <div class="road_display">
-                <div class="left_display">
-                    <ul id=line_list_ul>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="clear"></div>
-    </div>
-    <script type="text/javascript">
+					<p>暂停运营</p></li>
+				<li class="clear"></li>
+			</ul>
+		</div>
+		<div class="clr"></div>
+		<div class="footer">
+			<ul>
+				<li id="workNormal"></li>
+				<li id="onlinePeople"></li>
+				<li id="flow"></li>
+				<li id="adClick"></li>
+				<div class="clr"></div>
+			</ul>
+		</div>
+		<div class="display">
+			<select id="line_selector"
+				onchange="get_bus_list(this.value,'bus_no_selector')">
+
+			</select>
+
+			<div class="search">
+				<form>
+					<p>
+						<input type="text" id="search_keys"> <a><img
+							src="__PUBLIC__/images/home_search.png" alt=""
+							onclick="search_bus($('#search_keys').val())"></a>
+					</p>
+				</form>
+			</div>
+			<ul class="select" id="bus_no_selector">
+
+			</ul>
+		</div>
+		<div class="road_display">
+			<div class="left_display">
+				<ul>
+					<li><a href="javascript:void(0);"
+						onclick="ajax('__CONTROLLER__/bus/str/开发区1路','开发区1路')">1路</a></li>
+					<li><a href="javascript:void(0);"
+						onclick="ajax('__CONTROLLER__/bus/str/开发区18路','开发区18路')">18路</a></li>
+					<li><a href="javascript:void(0);"
+						onclick="ajax('__CONTROLLER__/bus/str/开发区4路','开发区4路')">4路</a></li>
+					<li><a href="javascript:void(0);"
+						onclick="ajax('__CONTROLLER__/bus/str/开发区26路','开发区26路')">26路</a></li>
+				</ul>
+			</div>
+		</div>
+	</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
+<script type="text/javascript">
     var myChartWork = echarts.init(document.getElementById('workNormal'));
     var myChartOnline = echarts.init(document.getElementById('onlinePeople'));
     var myChartFlow = echarts.init(document.getElementById('flow'));
     var myChartAd = echarts.init(document.getElementById('adClick'));
-    
-    // 正在工作设备量
-    var optionWork = workOption();
-    //在线人数
-    var optionOnline = onlineOption();
-    // 流量
-    var optionFlow = flowOption();
-    // 广告点击量
-    var optionAd = adOption();
-    myChartWork.setOption(optionWork);
-    myChartOnline.setOption(optionOnline);
-    myChartFlow.setOption(optionFlow);
-    myChartAd.setOption(optionAd);
-    </script>
-</body>
 
-</html>
+    var a = 70;
+    var b = 35;
+    var c = 30;
+    var d = 40;
+    ajax("__CONTROLLER__/all", '');
+    var int = self.setInterval("chart()", 1000);
+
+    function chart() {
+        // 正在工作设备量
+        var num = Math.random();
+        num = 0.5 - num;
+        a += num;
+        var optionWork = workOption(a);
+        //在线人数
+        b += num;
+        var optionOnline = onlineOption(b);
+        // 流量
+        c += 0.01;
+        var optionFlow = flowOption(c);
+        // 广告点击量
+        d += num;
+        var optionAd = adOption(d);
+        myChartWork.setOption(optionWork);
+        myChartOnline.setOption(optionOnline);
+        myChartFlow.setOption(optionFlow);
+        myChartAd.setOption(optionAd);
+    }
+    function ajax($url, line) {
+        jQuery.ajax({
+            url: $url,
+            dataType: "json",
+            success: function (results) {
+                map(line, results.data);
+            }
+        });
+    }
+    function map(line, array) {
+        // 百度地图API功能
+        var map = new BMap.Map("l-map");            // 创建Map实例
+        map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 13);
+
+        var busline = new BMap.BusLineSearch(map, {
+            renderOptions: {map: map, panel: "r-result"},
+            onGetBusListComplete: function (result) {
+                if (result) {
+                    var fstLine = result.getBusListItem(0);//获取第一个公交列表显示到map上
+                    busline.getBusLine(fstLine);
+                }
+            }
+        });
+
+        function busSearch() {
+            var busName = line;
+            busline.getBusList(busName);
+        }
+
+        setTimeout(function () {
+            busSearch();
+        }, 1500);
+
+        setTimeout(function () {
+                    var x;
+                    for (x in array) {
+                        var a = array[x][0];
+                        var b = array[x][1];
+                        var pt = new BMap.Point(a, b);
+                        var num = Math.round(Math.random() * 5);
+                        var img;
+                        switch (num) {
+                            case 0:
+                                img = "__PUBLIC__/images/red_left.png";
+                                break;
+                            case 1:
+                                img = "__PUBLIC__/images/green_left.png";
+                                break;
+                            case 2:
+                                img = "__PUBLIC__/images/green_left.png";
+                                break;
+                            case 3:
+                                img = "__PUBLIC__/images/red_right.png";
+                                break;
+                            case 4:
+                                img = "__PUBLIC__/images/green_right.png";
+                                break;
+                            case 5:
+                                img = "__PUBLIC__/images/green_right.png";
+                                break;
+                            default :
+                                img = "__PUBLIC__/images/green_right.png";
+                                break;
+                        }
+                        var myIcon = new BMap.Icon(img, new BMap.Size(50, 30));
+                        var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
+                        map.addOverlay(marker2);
+                    }
+                }
+                ,
+                2500
+        )
+        ;
+    }
+</script>
