@@ -3,15 +3,6 @@
  */
 function init_index() {
 	load_line();
-	load_device_status();
-}
-
-/**
- * 加载所有设备的工作状态
- */
-function load_device_status() {
-
-	
 }
 
 /**
@@ -45,8 +36,8 @@ function load_line() {
  * 
  * @param str：线路Id
  */
-function get_bus_list(url,id,display) {
-	$.post(url, {
+function get_bus_list(id,display) {
+	$.post("Bus/select", {
 		is_getbuslist : 1,
 		line_id : id
 	}, function(data, status) {
