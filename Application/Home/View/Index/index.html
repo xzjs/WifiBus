@@ -10,9 +10,7 @@
                 </li>
             </ul>
         </div>
-        <div class="main">
-            <div id="allmap"></div>
-        </div>
+        <div id="l-map" class="main"></div>
         <div class="right">
             <ul>
                 <li>
@@ -70,13 +68,12 @@
         <div class="road_display">
             <div class="left_display">
                 <ul>
-                    <li><a href="#">黄岛17路</a></li>
-                    <li><a href="#">黄岛17路</a></li>
-                    <li><a href="#">黄岛17路</a></li>
-                    <li><a href="#">黄岛17路</a></li>
-                    <li><a href="#">黄岛17路</a></li>
-                    <li><a href="#">黄岛17路</a></li>
-                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="javascript:void(0);" onclick="ajax('__CONTROLLER__/bus/str/开发区1路','开发区1路')">1路</a></li>
+                    <li><a href="javascript:void(0);" onclick="ajax('__CONTROLLER__/bus/str/开发区18路','开发区18路')">18路</a>
+                    </li>
+                    <li><a href="javascript:void(0);" onclick="ajax('__CONTROLLER__/bus/str/开发区4路','开发区4路')">4路</a></li>
+                    <li><a href="javascript:void(0);" onclick="ajax('__CONTROLLER__/bus/str/开发区26路','开发区26路')">26路</a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -90,24 +87,76 @@
     var myChartFlow = echarts.init(document.getElementById('flow'));
     var myChartAd = echarts.init(document.getElementById('adClick'));
 
-    // 正在工作设备量
-    var optionWork = workOption();
-    //在线人数
-    var optionOnline = onlineOption();
-    // 流量
-    var optionFlow = flowOption();
-    // 广告点击量
-    var optionAd = adOption();
-    myChartWork.setOption(optionWork);
-    myChartOnline.setOption(optionOnline);
-    myChartFlow.setOption(optionFlow);
-    myChartAd.setOption(optionAd);
-</script>
-<script type="text/javascript">
-    // 百度地图API功能
-    var map = new BMap.Map("allmap");    // 创建Map实例
-    map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);  // 初始化地图,设置中心点坐标和地图级别
-    map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
-    map.setCurrentCity("北京");          // 设置地图显示的城市 此项是必须设置的
-    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    var a = 70;
+    var b = 35;
+    var c = 30;
+    var d = 40;
+    ajax("__CONTROLLER__/all", '');
+    var int = self.setInterval("chart()", 1000);
+
+    function chart() {
+        // 正在工作设备量
+        var num = Math.random();
+        num=0.5-num;
+        a += num;
+        var optionWork = workOption(a);
+        //在线人数
+        b += num;
+        var optionOnline = onlineOption(b);
+        // 流量
+        c += 0.01;
+        var optionFlow = flowOption(c);
+        // 广告点击量
+        d += num;
+        var optionAd = adOption(d);
+        myChartWork.setOption(optionWork);
+        myChartOnline.setOption(optionOnline);
+        myChartFlow.setOption(optionFlow);
+        myChartAd.setOption(optionAd);
+    }
+    function ajax($url, line) {
+        jQuery.ajax({
+            url: $url,
+            dataType: "json",
+            success: function (results) {
+                map(line, results.data);
+            }
+        });
+    }
+    function map(line, array) {
+        // 百度地图API功能
+        var map = new BMap.Map("l-map");            // 创建Map实例
+        map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 12);
+
+        var busline = new BMap.BusLineSearch(map, {
+            renderOptions: {map: map, panel: "r-result"},
+            onGetBusListComplete: function (result) {
+                if (result) {
+                    var fstLine = result.getBusListItem(0);//获取第一个公交列表显示到map上
+                    busline.getBusLine(fstLine);
+                }
+            }
+        });
+
+        function busSearch() {
+            var busName = line;
+            busline.getBusList(busName);
+        }
+
+        setTimeout(function () {
+            busSearch();
+        }, 1500);
+
+        setTimeout(function () {
+            var x;
+            for (x in array) {
+                var a = array[x][0];
+                var b = array[x][1];
+                var pt = new BMap.Point(a, b);
+                var myIcon = new BMap.Icon("__PUBLIC__/images/red_left.png", new BMap.Size(300, 157));
+                var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
+                map.addOverlay(marker2);
+            }
+        }, 2500);
+    }
 </script>

@@ -215,7 +215,6 @@ body{
 .container_subtitle>img+ul>li>p>a{
     color: #fff;
     line-height: 60px;
-    font: 
 }
 .container_subtitle>img+ul>li>p>a:hover{
     color: #ef4f2f;
@@ -253,19 +252,22 @@ body{
     cursor: pointer;
 }
 .main{
-    float: left;
     margin-left: 30px;
     width: 75%;
 }
-.main>img{
-    width: 100%;
-    background: #fff;
-    border-radius:15px;
+#allmap{
+    width: 75%;
+    height: 600px;
+}
+#l-map{
+    width: 70%;
+    height: 500px;
 }
 .right{
     width: 180px;
-    float: left;
-    min-height: 400px;
+    position: absolute;
+    top: 100px;
+    right: 70px;
 }
 .right>ul>li>img{
     float: left;

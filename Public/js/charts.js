@@ -7,7 +7,7 @@ var labelFromatter = {
 	normal: {
 		label: {
 			formatter: function(params) {
-				return 100 - params.value + '%'
+				return Math.round((100 - params.value)*100)/100 + '%'
 			},
 			textStyle: {
 				baseline: 'top'
@@ -47,7 +47,7 @@ var labelBottom = {
 };
 
 // 正在工作设备量
-function workOption() {
+function workOption(a) {
 	var optionWork = {
         legend: {
             orient: 'vertical',
@@ -77,12 +77,12 @@ function workOption() {
             radius: ['50%', '70%'],
             itemStyle: labelFromatter,
             data: [{
-                value: 65,
+                value: (100-a),
                 name: '设备总量',
                 itemStyle: labelBottom
             }, {
 
-                value: 35,
+                value: a,
                 name: '正在工作设备量',
                 itemStyle: labelTop
             }]
@@ -99,7 +99,7 @@ function onlineOption(){
             orient: 'vertical',
             x: 'right',
             y: 'bottom',
-            data: ['当前在线总人数', '已经认证人数'],
+            data: ['当前在线总人数', '可承载人数'],
             textStyle: {
                 color: '#fff'
             }
@@ -123,12 +123,12 @@ function onlineOption(){
             radius: ['50%', '70%'],
             itemStyle: labelFromatter,
             data: [{
-                value: 46,
+                value: a,
                 name: '已经认证人数',
                 itemStyle: labelBottom
 
             }, {
-                value: 54,
+                value: (100-a),
                 name: '当前在线总人数',
                 itemStyle: {
                     normal: {
@@ -149,7 +149,7 @@ function onlineOption(){
 };
 
 // 流量
-function flowOption(){
+function flowOption(c){
 	var optionFlow = {
         legend: {
             orient: 'vertical',
@@ -178,12 +178,12 @@ function flowOption(){
             radius: ['50%', '70%'],
             itemStyle: labelFromatter,
             data: [{
-                value: 70,
+                value: (100-c),
                 name: '所有设备流量总量',
                 itemStyle: labelBottom
 
             }, {
-                value: 30,
+                value: c,
                 name: '已用流量',
                 itemStyle: {
                     normal: {
@@ -204,7 +204,7 @@ function flowOption(){
 };
 
  // 广告点击量
-function adOption(){
+function adOption(a){
 	var optionAd = {
         legend: {
             orient: 'vertical',
@@ -242,11 +242,11 @@ function adOption(){
                 }
             },
             data: [{
-                value: 40,
+                value: a,
                 name: '广告下载量',
 
             }, {
-                value: 30,
+                value: (70-a),
                 name: '本地资源访问量',
             }, {
                 value: 30,
