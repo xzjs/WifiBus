@@ -1,4 +1,4 @@
-
+<Script>window.onload=init_index()</script>
 <div class="out_container_title">
 	<div class="container_title">
 		<div class="left">
@@ -93,16 +93,16 @@
         var num = Math.random();
         num = 0.5 - num;
         a += num;
-        var optionWork = workOption(a);
+        var optionWork = workOption(a, "__CONTROLLER__/work/f/work/num/" + a);
         //在线人数
         b += num;
-        var optionOnline = onlineOption(b);
+        var optionOnline = onlineOption(b, "__CONTROLLER__/work/f/online/num/" + b);
         // 流量
         c += 0.01;
-        var optionFlow = flowOption(c);
+        var optionFlow = flowOption(c, "__CONTROLLER__/work/f/flow/num/" + c);
         // 广告点击量
         d += num;
-        var optionAd = adOption(d);
+        var optionAd = adOption(d, "__CONTROLLER__/work/f/ad/num/" + d);
         myChartWork.setOption(optionWork);
         myChartOnline.setOption(optionOnline);
         myChartFlow.setOption(optionFlow);

@@ -77,4 +77,10 @@ class IndexController extends Controller {
         $arr['data']=$data;
         echo json_encode($arr);
     }
+
+    public function work($f,$num){
+        $this->assign('f',$f);
+        $this->assign('num',$num);
+        $this->show();
+    }
 }
