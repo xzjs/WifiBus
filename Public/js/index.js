@@ -165,13 +165,15 @@ $(document).ready(function() {
 	var userCarFar = $(".search_car_far");
 	var userLineLen = userLineFar.length;
 
+	
 	userLineFar.each(function(index, el) {
 		$(this).click(function() {
+			
 			$(this).addClass('showTemp');
-			$(userCarFar[index]).removeClass('hideTemp');
+			//$(userCarFar[index]).removeClass('showTemp');
 			for(var i=0; i<userLineLen; i++){
 				if(i==index)continue;
-				$(userCarFar[i]).addClass('hideTemp');
+				//$(userCarFar[i]).addClass('showTemp');
 				$(userLineFar[i]).removeClass('showTemp');
 			}
 		});
