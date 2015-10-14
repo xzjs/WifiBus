@@ -1,0 +1,95 @@
+<div class="out_container_title">
+    <div class="container_title">
+        <div class="left">
+            <ul>
+                <li class="box_one">
+                    <a></a>
+                </li>
+                <li class="box_two">
+                    <a></a>
+                </li>
+                <li class="box_anly">
+                    <a href="Comprehensive analysis of advertising.html"></a>
+                </li>
+            </ul>
+        </div>
+        <div class="adv_main" id="adMain"></div>
+        <div class="clr"></div>
+        <div class="adv_footer">
+            <ul>
+                <li id="adTime"></li>
+                <li id="flowTime"></li>
+                <li id="customerTime"></li>
+                <li id="turnBackTime"></li>
+                <div class="clr"></div>
+            </ul>
+        </div>
+        <div class="display">
+            <select>
+                <option value="line1">线路1</option>
+                <option value="line2">线路2</option>
+                <option value="line3">线路3</option>
+                <option value="line4">线路4</option>
+            </select>
+            <div class="search">
+                <form action="form">
+                    <p>
+                        <input type="text">
+                        <a href=""><img src="images/home_search.png" alt=""></a>
+                    </p>
+                </form>
+            </div>
+            <div class="clear"></div>
+            <ul class="select">
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+            </ul>
+        </div>
+        <div class="road_display">
+            <div class="left_display">
+                <ul>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
+<script type="text/javascript">
+    var myChartAdMain = echarts.init(document.getElementById('adMain'), 'macarons2');
+    var myChartAdTime = echarts.init(document.getElementById('adTime'),'macarons');
+    var myChartFlowTime = echarts.init(document.getElementById('flowTime'),'macarons');
+    var myChartCustomerTime = echarts.init(document.getElementById('customerTime'),'macarons');
+    var myChartTurnBackTime = echarts.init(document.getElementById('turnBackTime'),'macarons');
+
+    // 广告点击量
+    var adMainOption = adMainFunction();
+
+    // 广告点击量时间关系图
+    var adMainTime = adMainTimeFunction();
+
+    // 流量时间关系图
+    var adMainFlow = adMainFlowFunction();
+    // 客流量时间关系图
+    var adMainCustomer = adMainCustomerFunction();
+    // 回头率时间关系图
+    var adMainTurnBack = adMainTurnBackFunction();
+
+    myChartAdMain.setOption(adMainOption);
+    myChartAdTime.setOption(adMainTime);
+    myChartFlowTime.setOption(adMainFlow);
+    myChartCustomerTime.setOption(adMainCustomer);
+    myChartTurnBackTime.setOption(adMainTurnBack);
+</script>

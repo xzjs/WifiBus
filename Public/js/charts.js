@@ -47,7 +47,7 @@ var labelBottom = {
 };
 
 // 正在工作设备量
-function workOption(a) {
+function workOption(a,url) {
 	var optionWork = {
         legend: {
             orient: 'vertical',
@@ -68,7 +68,8 @@ function workOption(a) {
                 color: '#FF7F50',
                 textAlign: 'center'
             },
-            link: './index-work.html'
+            link: url,
+            target:'self'
 
         },
         series: [{
@@ -88,12 +89,11 @@ function workOption(a) {
             }]
         }]
     };
-
     return optionWork;
 }
 
 //在线人数
-function onlineOption(){
+function onlineOption(a,url){
 	var optionOnline = {
         legend: {
             orient: 'vertical',
@@ -114,7 +114,8 @@ function onlineOption(){
                 color: myColor[1],
                 textAlign: 'center'
             },
-            link: './index-work.html'
+            link: url,
+            target:'self'
 
         },
         series: [{
@@ -149,7 +150,7 @@ function onlineOption(){
 };
 
 // 流量
-function flowOption(c){
+function flowOption(c,url){
 	var optionFlow = {
         legend: {
             orient: 'vertical',
@@ -169,7 +170,8 @@ function flowOption(c){
                 fontSize: 20,
                 color: myColor[3],
             },
-            link: './index-work.html'
+            link: url,
+            target:'self'
 
         },
         series: [{
@@ -204,7 +206,7 @@ function flowOption(c){
 };
 
  // 广告点击量
-function adOption(a){
+function adOption(a,url){
 	var optionAd = {
         legend: {
             orient: 'vertical',
@@ -224,7 +226,8 @@ function adOption(a){
                 fontSize: 20,
                 color: '#fff'
             },
-            link: 'http://www.baidu.com'
+            link: url,
+            target:'self'
 
         },
         series: [{
@@ -282,7 +285,7 @@ function adMainFunction(){
             trigger: 'axis'
         },
         legend: {
-            data: ['2011年'],
+            data: ['2015年'],
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 16,
