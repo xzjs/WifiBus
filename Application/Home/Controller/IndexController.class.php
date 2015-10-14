@@ -3,6 +3,12 @@ namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
     public function index(){
+    	$Line = A ( 'Line' );
+    	$data = $Line->select ();
+    	$this->assign ( 'line_list', $data );
+    	$Bus=M('Bus');
+    	$data = $Bus->where('line_id=1')->select();
+    	$this->assign ( 'bus_list', $data );
     	$this->display ();
     }
     

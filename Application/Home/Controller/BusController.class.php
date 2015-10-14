@@ -59,11 +59,7 @@ class BusController extends Controller {
 			if ($line_id != 0)
 				$condition_bus ['line_id'] = $line_id;
 			$data = $Bus->where ( $condition_bus )->select ();
-			$Device = M ( "Device" );
-			$condition_device ['bus_id'] = $id;
-			$mac = $Device->where ( $condition_device )->getField ( 'mac' );
-			$data [0] ['position_x'] = S ( $mac . 'x' );
-			$data [0] ['position_y'] = S ( $mac . 'y' );
+			return $data;
 		}
 	}
 	

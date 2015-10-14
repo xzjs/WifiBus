@@ -1,12 +1,5 @@
 /**
- * index页面初始化
- */
-function init_index() {
-	load_line();
-}
-
-/**
- * 加载线路列表
+ * 加载线路列表(暂未用到)
  */
 function load_line() {
 	$.post("Line/select", {
@@ -28,7 +21,6 @@ function load_line() {
 			$("ul#line_list_ul").html(line_list_str);
 		}
 	});
-	get_bus_list(1,"bus_no_selector");// 默认显示一路
 }
 
 /**
@@ -36,8 +28,8 @@ function load_line() {
  * 
  * @param str：线路Id
  */
-function get_bus_list(id,display) {
-	$.post("Bus/select", {
+function get_bus_list(url,id,display) {
+	$.post(url, {
 		is_getbuslist : 1,
 		line_id : id
 	}, function(data, status) {
@@ -57,8 +49,8 @@ function get_bus_list(id,display) {
  * 
  * @param str：搜索关键字
  */
-function search_bus(keys) {
-	$.post("Bus/select", {
+function search_bus(url,keys) {
+	$.post(url, {
 		is_getbuslist : 1,
 		search_keys : keys
 	}, function(data, status) {
