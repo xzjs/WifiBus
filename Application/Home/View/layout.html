@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="renderer" content="webkit|ie-comp|ie-stand">
-    <title>index</title>
+    <title>{$title}</title>
     <link rel="stylesheet" href="__PUBLIC__/css/css.css">
     <link rel="stylesheet" href="__PUBLIC__/css/high.css">
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ABMyPFHzCuKItIEoAG2FZjtt"></script>
@@ -28,10 +28,10 @@
 					</p></li>
 			</ul>
 			<ul>
-				<li class="action"><a href="{:U('Index/index')}">总览</a></li>
-				<li><a href="Advertisement.html">广告和流量分析</a></li>
-				<li><a href="{:U('Manage/line_manage')}">用户控制</a></li>
-				<li><a href="#">广告设置</a></li>
+				<li class="{$class1}"><a href="{:U('Index/index')}">总览</a></li>
+				<li class="{$class2}"><a href="{:U('Analyse/index')}">广告和流量分析</a></li>
+				<li class="{$class3}"><a href="{:U('Manage/line_manage')}">用户控制</a></li>
+				<li class="{$class4}"><a href="{:U('Ad/index')}">广告设置</a></li>
 			</ul>
 			<div class="clear"></div>
 		</div>

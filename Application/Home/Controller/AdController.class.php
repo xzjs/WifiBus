@@ -114,4 +114,10 @@ class AdController extends Controller {
 			$this->error ( '删除失败！' );
 		}
 	}
+
+	public function index(){
+		$this->assign('title','广告设置');
+		$this->assign('class4','action');
+		$this->show();
+	}
 }

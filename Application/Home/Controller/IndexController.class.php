@@ -3,6 +3,8 @@ namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
     public function index(){
+        $this->assign('title','首页');
+        $this->assign('class1','action');
     	$Line = A ( 'Line' );
     	$data = $Line->select ();
     	$this->assign ( 'line_list', $data );
@@ -78,7 +80,13 @@ class IndexController extends Controller {
         echo json_encode($arr);
     }
 
+    /**
+     * @param $f 图例
+     * @param $num 数值
+     */
     public function work($f,$num){
+        $this->assign('title','详细状态');
+        $this->assign('class1','action');
         $this->assign('f',$f);
         $this->assign('num',$num);
         $this->show();
