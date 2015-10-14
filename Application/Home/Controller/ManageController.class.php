@@ -27,9 +27,9 @@ class ManageController extends Controller {
 					'xls',
 					'xlsx' 
 			); // 讴置附件上传类型
-			$upload->savePath = 'Uploads/excel/'; // 讴置附件上传目录
+			$upload->savePath = 'excel'; // 讴置附件上传目录
 			$info = $upload->upload ();
-			$in = $info [file_stu] ['savepath'];
+			$in = $info [file_stu] ['savepath'];   
 			$j = $info [file_stu] ['rootPath'];
 			$resurl = "./Uploads/" . $info ['j'] ['savepath'] . $info ['j'] ['savename']; // $resurl 为excel的路径
 			$res = D ( 'Manage' )->read ( $resurl );
