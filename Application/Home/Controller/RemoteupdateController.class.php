@@ -4,6 +4,8 @@ use Think\Controller;
 class RemoteupdateController extends Controller {
 	
     public function remoteupdate(){
+		$this->assign('title','用户控制');
+		$this->assign('class3','action');
     	$Line = A ( 'Line' );
     	$data = $Line->select ();
     	$this->assign ( 'line_list', $data );

@@ -271,7 +271,7 @@ function adOption(a,url){
 // ***************************************
 
 // 广告点击量
-function adMainFunction(){
+function adMainFunction(adInfo){
 	var tempOption = {
         title: {
             text: '广告点击量',
@@ -305,7 +305,7 @@ function adMainFunction(){
         }],
         yAxis: [{
             type: 'category',
-            data: ['巴西烤肉', '麦当劳', 'KFC', '龙麦KTV', '可口可乐', '青啤'],
+            data: [adInfo[0].text, adInfo[1].text, adInfo[2].text, adInfo[3].text, adInfo[4].text, adInfo[5].text],
             axisLabel: {
                 textStyle: {
                     fontFamily: 'Microsoft YaHei, sans-serif',
@@ -317,15 +317,14 @@ function adMainFunction(){
         series: [{
             name: '2015年',
             type: 'bar',
-            data: [18203, 23489, 29034, 104970, 131744, 630230]
+            data: [adInfo[0].click_num, adInfo[1].click_num, adInfo[2].click_num, adInfo[3].click_num, adInfo[4].click_num, adInfo[5].click_num]
         }]
     };
-
     return tempOption;
 };
 
 // 广告点击量时间关系图
-function adMainTimeFunction(){
+function adMainTimeFunction(date1,date2){
 	var tempOption = {
         title: {
             text: '广告点击量时间关系图',
@@ -374,19 +373,19 @@ function adMainTimeFunction(){
         series: [{
             name: '上周',
             type: 'line',
-            data: [11, 11, 15, 13, 12, 13, 10],
+            data: [date1[0],date1[1],date1[2],date1[3],date1[4],date1[5],date1[6]],
 
         }, {
             name: '本周',
             type: 'line',
-            data: [1, 2, 2, 5, 3, 2, 0],
+            data: [date2[0],date2[1],date2[2],date2[3],date2[4],date2[5],date2[6]],
         }]
     };
     return tempOption;
 }
 
 // 流量时间关系图
-function adMainFlowFunction(){
+function adMainFlowFunction(date){
 	var tempOption = {
         title: {
             text: ' 流量时间关系图',
@@ -427,7 +426,7 @@ function adMainFlowFunction(){
         series: [{
             name: '流量',
             type: 'line',
-            data: [11, 11, 15, 13, 12, 13, 10],
+            data: [date[0],date[1],date[2],date[3],date[4],date[5],date[6]],
             itemStyle: {
             	normal: {
             		color: myColor[0]
@@ -439,7 +438,7 @@ function adMainFlowFunction(){
 }
 
 // 客流量时间关系图
-function adMainCustomerFunction(){
+function adMainCustomerFunction(date){
 	var tempOption = {
         title: {
             text: '客流量时间关系图',
@@ -480,7 +479,7 @@ function adMainCustomerFunction(){
         series: [{
             name: '客流量',
             type: 'line',
-            data: [11, 11, 15, 13, 12, 13, 10],
+            data: [date[0],date[1],date[2],date[3],date[4],date[5],date[6]],
             itemStyle: {
             	normal: {
             		color: myColor[2]
@@ -492,7 +491,7 @@ function adMainCustomerFunction(){
 }
 
 // 回头率时间关系图
-function adMainTurnBackFunction(){
+function adMainTurnBackFunction(date){
 	var tempOption = {
         title: {
             text: '回头率时间关系图',
@@ -533,7 +532,7 @@ function adMainTurnBackFunction(){
         series: [{
             name: '回头率',
             type: 'line',
-            data: [70, 110, 120, 103, 98, 88, 99],
+            data: [date[0],date[1],date[2],date[3],date[4],date[5],date[6]],
             itemStyle: {
             	normal: {
             		color: myColor[1]

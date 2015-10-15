@@ -22,8 +22,11 @@ class AnalyseController extends Controller {
     	$data = $Line->select ();
     	$this->assign ( 'line_list', $data );
     	$Bus=M('Bus');
-    	$data = $Bus->where('line_id='.$data[0][id])->select();
-    	$this->assign ( 'bus_list', $data );
+    	$data1 = $Bus->where('line_id='.$data[0][id])->select();
+    	$this->assign ( 'bus_list', $data1 );
+    	$Ad=M('Ad');
+    	$data2 = $Ad->where('line_id='.$data[0][id])->field('text,click_num')->select();
+    	$this->assign ( 'adInfo', json_encode ( $data2 ) );
     	$this->display ();
 	}
 	
@@ -38,5 +41,13 @@ class AnalyseController extends Controller {
 		$this->assign('class2','action');
 		$this->display ();
 	}
+	
+	public function getAdInfo($line_id=0) {
+		$Ad=M('Ad');
+		$data = $Ad->where('line_id='.$line_id)->field('text,click_num')->select();
+		$this->ajaxReturn ( json_encode ( $data ) );
+	}
+	
+	
 	
 }

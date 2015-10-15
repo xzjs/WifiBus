@@ -42,6 +42,9 @@ $(document).ready(function() {
         	getStart();
             $(this).addClass('showTemp');
             $(rightDiv[index]).removeClass('hideTemp');
+            leftDisplay.stop(true, false).animate({
+                width: 'toggle'
+            });
         });
     });
 

@@ -23,6 +23,7 @@ function load_line() {
 	});
 }
 
+
 /**
  * 显示某线路上的车辆的车牌号
  * 
@@ -84,6 +85,8 @@ function search_line(key){
 		}
 	});
 }
+
+
 
 
 
