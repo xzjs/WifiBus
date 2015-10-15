@@ -315,7 +315,7 @@ function adMainFunction(){
             },
         }],
         series: [{
-            name: '2011年',
+            name: '2015年',
             type: 'bar',
             data: [18203, 23489, 29034, 104970, 131744, 630230]
         }]
