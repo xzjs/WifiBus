@@ -9,7 +9,7 @@ class IndexController extends Controller {
     	$data = $Line->select ();
     	$this->assign ( 'line_list', $data );
     	$Bus=M('Bus');
-    	$data = $Bus->where('line_id=1')->select();
+    	$data = $Bus->where('line_id='.$data[0][id])->select();
     	$this->assign ( 'bus_list', $data );
     	$this->display ();
     }

@@ -212,7 +212,7 @@ function adOption(a,url){
             orient: 'vertical',
             x: 'right',
             y: 'bottom',
-            data: ['广告下载量', '本地资源访问量', 'APP下载量'],
+            data: ['广告点击量', '本地资源访问量', 'APP下载量'],
             textStyle: {
                 color: '#fff'
             }
@@ -315,7 +315,7 @@ function adMainFunction(){
             },
         }],
         series: [{
-            name: '2011年',
+            name: '2015年',
             type: 'bar',
             data: [18203, 23489, 29034, 104970, 131744, 630230]
         }]
