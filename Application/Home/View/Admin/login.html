@@ -1,16 +1,45 @@
+{__NOLAYOUT__}
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title></title>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" >
+	<!-- 使IE以最高模式渲染页面 -->
+	<meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<!-- 使360以极速模式渲染页面 -->
+	<title>index</title>
+	<link rel="stylesheet"  href="__PUBLIC__/css/css.css">
+	<link rel="stylesheet"  href="__PUBLIC__/css/high.css">
+	<script src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>
+	<script type="text/javascript" src="__PUBLIC__/js/index.js"></script>
 </head>
 <body>
-<form action="__URL__/loginx" method="post">
-    name:<input type="text" name="name">
-    <br/>
-    pwd:<input type="password" name="pwd">
-    <br/>
-    <input type="submit" value="登录">
-</form>
+	<div class="out_container">
+		<div class="container">
+			<div class="logo">
+				<img src="__PUBLIC__/images/log_logo.png" alt="logo">
+				<h1>青岛智能产业技术研究院<br>智能车载WIFI管理系统</h1>
+				<div class="clr"></div>
+			</div>
+			<div class="log_main">
+				<img src="__PUBLIC__/images/wifi.png" alt="wifi">
+				<div class="rectangle">
+					<h2>管理员登录</h2>
+					<form action="{:U('Admin/loginx')}" method="post" >
+	  					<p>
+	  						<img src="__PUBLIC__/images/manager.png" alt="">
+	  						<input type="text" placeholder="用户名" name="name"  size="10"  />
+	  					</p>
+	  					<p>
+	  						<img src="__PUBLIC__/images/unlocked.png" alt="">
+	  						<input type="password" placeholder="密码"  name="pwd" maxlength="18" size="10"  />
+	  					</p>
+	  					<button class="submit" >登录</button>
+					</form>
+				</div>
+				<div class="clr"></div>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

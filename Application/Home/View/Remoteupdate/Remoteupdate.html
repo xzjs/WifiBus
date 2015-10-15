@@ -82,7 +82,7 @@
 							<div class="dis">
 								<p>Close</p>
 								
-								<form action="form" method="get" >
+								<form action="form" class="movie_upload" method="get" >
 									<div>
 										<p>电影文件：</p>
 										<input type="file" class="file" name="j"
@@ -92,11 +92,11 @@
 									</div>
 									<div>
 										<p>图片简介：</p>
-										<input type="text">
+										<input type="text" name="image_des">
 									</div>
 									<div>
 										<p>文字简介：</p>
-										<input type="text"> <br>
+										<input type="text" name="text_des"> <br>
 									</div>
 									<div class="dis_button">
 										<input type="button" value="提交" onclick="upload(3)">
@@ -543,12 +543,23 @@
 </div>
 
 <script type="text/javascript">
-function upload(type,button){
-	x=button.form.id.serializeArray();
+function upload(type){
+	x=$(".movie_upload").serializeArray();
+	/* var condition="type:"+type;
 	  $.each(x, function(i, field){
-		  document.write(field.name);
-		  document.write(field.value);
+		  condition+=", ";
+		  condition+=field.name+":'"+field.value+"'";
 	  });
+	document.write(x[0].name); */
+	$.post("upload", {
+		type:1,
+		ye:x[0].value/* ,
+		image_des:"sdfsd",
+		text_des:"sdsd" */
+	}, function(data, status) {
+		if (status == 4 || status == "success") {
+			document.write(data+"success!");
+		}
+	});
 }
-
 </script>
