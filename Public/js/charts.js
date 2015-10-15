@@ -631,7 +631,7 @@ function adAnlyOptionFunction2(){
             trigger: 'axis'
         },
         legend: {
-            data: ['广告点击量', '客流量', '流量'],
+            data: ['广告点击量', '客流量'],
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 14,
@@ -678,15 +678,6 @@ function adAnlyOptionFunction2(){
             		color: '#EDCB4C'
             	}
             }
-        }, {
-            name: '流量',
-            type: 'bar',
-            data: [26, 60, 35, 66, 16, 37, 45],
-            itemStyle: {
-            	normal: {
-            		color: '#4CB6E4'
-            	}
-            }
         }]
     };
     return tempOption;
@@ -709,7 +700,7 @@ function adAnlyOptionFunction3(){
             trigger: 'axis'
         },
         legend: {
-            data: ['广告点击量', '客流量', '流量'],
+            data: ['广告点击量',  '流量'],
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 14,
@@ -748,15 +739,6 @@ function adAnlyOptionFunction3(){
             	}
             }
         }, {
-            name: '客流量',
-            type: 'bar',
-            data: [10, 40, 14, 20, 39, 61, 28],
-            itemStyle: {
-            	normal: {
-            		color: '#E7DAC9'
-            	}
-            }
-        }, {
             name: '流量',
             type: 'bar',
             data: [26, 60, 35, 66, 16, 37, 45],
@@ -787,7 +769,7 @@ function adAnlyOptionFunction4(){
             trigger: 'axis'
         },
         legend: {
-            data: ['广告点击量', '客流量', '流量'],
+            data: [ '客流量', '流量'],
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 14,
@@ -816,16 +798,7 @@ function adAnlyOptionFunction4(){
                 }
             }
         }],
-        series: [{
-            name: '广告点击量',
-            type: 'bar',
-            data: [20, 58, 44, 38, 77, 68, 40],
-            itemStyle: {
-            	normal: {
-            		color: '#44B7D3'
-            	}
-            }
-        }, {
+        series: [ {
             name: '客流量',
             type: 'bar',
             data: [10, 40, 14, 20, 39, 61, 28],
