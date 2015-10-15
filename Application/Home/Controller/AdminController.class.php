@@ -18,21 +18,31 @@ use Think\Exception;
  */
 class AdminController extends Controller
 {
+	public function Admin(){
+		$this->display();
+	}
     /**
      * 登录
      */
     public function loginx(){
-        $data['name']=I('post.name');
-        $data['pwd']=I('post.pwd');
-        $a=new Admin();
-        $o=$a->login($data);
-        if($o){
-            $_SESSION['admin']=$o;
-            //var_dump($o);
-            $this->success('登陆成功','adminlist');
-        }else{
-            $this->error('登录失败');
-        }
+    	$Admin = D ( 'Admin' );
+    	if ($result=$Admin->create ()) {
+    		$data['name']=$result['name'];
+    		$data['pwd']=$result['pwd'];
+    		$a=new Admin();
+    		$o=$a->login($data);
+    		if($o){
+    			$_SESSION['admin']=$o;
+    			$this->redirect('Index/index');
+    			//var_dump($o);
+    			//$this->success('登陆成功','adminlist');
+    		}else{
+    			$this->error('用户名或密码错误，请重新输入！');
+    		}
+    	} else {
+    		$this->error ( $Admin->getError () );
+    	}
+        
     }
 
     /**

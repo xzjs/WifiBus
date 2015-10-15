@@ -11,11 +11,9 @@ class RemoteupdateController extends Controller {
     	$data = $Bus->where('line_id='.$data[0][id])->select();
     	$this->assign ( 'bus_list', $data );
     	$this->display ();
-    	
     }
     
-    public function upload(){
-    	
+    public function upload($type=0,$ye="dfsdf"){
     	if (! empty ( $_FILES ['j'] ['name'] ))
     	{
     		$upload = new \Think\Upload (); // 实例化上传类
@@ -24,10 +22,11 @@ class RemoteupdateController extends Controller {
     				'xls',
     				'xlsx'
     		); // 讴置附件上传类型
-    		$upload->savePath = 'excel/'; // 讴置附件上传目录
+    		/* $upload->savePath = 'excel/'; // 讴置附件上传目录
     		$upload->autoSub=false;
-    		$info = $upload->upload ();
+    		$info = $upload->upload (); */
     	}
+    	return $ye;
     	
     }
     
