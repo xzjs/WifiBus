@@ -71,6 +71,8 @@
 						<a href="#"></a>
 						<div class="clear"></div>
 					</div>
+					
+					
 					<ul class="movie">
 						<li><img src="__PUBLIC__/images/movie_1.png" alt="">
 							<h1>
@@ -79,7 +81,8 @@
 							<p>阿汤哥继续玩命</p>
 							<div class="dis">
 								<p>Close</p>
-								<form action="form" method="get">
+								
+								<form action="form" method="get" >
 									<div>
 										<p>电影文件：</p>
 										<input type="file" class="file" name="j"
@@ -96,10 +99,12 @@
 										<input type="text"> <br>
 									</div>
 									<div class="dis_button">
-										<input type="button" value="提交">
+										<input type="button" value="提交" onclick="upload(3)">
 									</div>
 								</form>
-							</div></li>
+								
+							</div>
+						</li>
 						<li><img src="__PUBLIC__/images/movie_1.png" alt="">
 							<h1>
 								<a href="">碟中谍</a>
@@ -298,6 +303,8 @@
 							</div></li>
 						<div class="clear"></div>
 					</ul>
+					
+					
 					<ul class="clear"></ul>
 				</li>
 				<li>
@@ -534,3 +541,14 @@
 		<div class="clear"></div>
 	</div>
 </div>
+
+<script type="text/javascript">
+function upload(type,button){
+	x=button.form.id.serializeArray();
+	  $.each(x, function(i, field){
+		  document.write(field.name);
+		  document.write(field.value);
+	  });
+}
+
+</script>

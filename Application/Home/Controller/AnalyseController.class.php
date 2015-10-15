@@ -14,5 +14,29 @@ use Think\Controller;
  * @package Home\Controller
  */
 class AnalyseController extends Controller {
-
+	
+	public function index() {
+		$this->assign('title','广告和流量分析');
+        $this->assign('class2','action');
+    	$Line = A ( 'Line' );
+    	$data = $Line->select ();
+    	$this->assign ( 'line_list', $data );
+    	$Bus=M('Bus');
+    	$data = $Bus->where('line_id='.$data[0][id])->select();
+    	$this->assign ( 'bus_list', $data );
+    	$this->display ();
+	}
+	
+	public function analyse() {
+		$this->assign('title','广告和流量分析');
+        $this->assign('class2','action');
+		$this->display ();
+	}
+	
+	public function adver_rank() {
+		$this->assign('title','广告和流量分析');
+		$this->assign('class2','action');
+		$this->display ();
+	}
+	
 }

@@ -1,20 +1,15 @@
 <?php
 namespace Org\YxgClass;
-use Org\Util\Date;
-
+use Org\Util\Date; 
 /**
- * 图片广告管理类
+ * 视频广告管理类
  * @author xiuge
  *
  */
-class ImageAd extends Media{
+class AppAd extends Media{
 	public static $format = array (
-			'jpeg',
-			'jpg',
-			'png',
-			'bmp'
+			'apk'
 	);
-	
 	/**
 	 * (non-PHPdoc)
 	 * @see \Org\YxgClass\Media::addMedia()
@@ -23,7 +18,7 @@ class ImageAd extends Media{
 	 */
 	public function addMedia($Media) {
 		$cur_date=new Date();
-		$Media->url=IMAGE_PATH.$cur_date->format("%Y%m%d%H%M%S").rand(0,99999).$Media->suffix;//用日期和随机数命名
+		$Media->url=VIDEO_PATH.$cur_date->format("%Y%m%d%H%M%S").rand(0,99999).".$Media->suffix";//用日期和随机数命名
 		return $Media->add();
 	}
 } 
