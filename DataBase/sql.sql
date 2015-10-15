@@ -53,7 +53,7 @@ CREATE TABLE `think_ad` (
   `text` varchar(45) DEFAULT NULL,
   `type` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -62,6 +62,7 @@ CREATE TABLE `think_ad` (
 
 LOCK TABLES `think_ad` WRITE;
 /*!40000 ALTER TABLE `think_ad` DISABLE KEYS */;
+INSERT INTO `think_ad` VALUES (1,10,'是的范德萨发给',1),(2,0,'视频',3),(3,0,'图片',2),(4,0,'',0);
 /*!40000 ALTER TABLE `think_ad` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -78,14 +79,14 @@ CREATE TABLE `think_admin` (
   `pwd` varchar(45) DEFAULT NULL,
   `title` varchar(45) DEFAULT NULL,
   `tel` varchar(45) DEFAULT NULL,
-  `time` date DEFAULT NULL,
+  `time` datetime DEFAULT NULL,
   `content` varchar(45) DEFAULT NULL,
   `email` varchar(45) DEFAULT NULL,
   `url` varchar(45) DEFAULT NULL,
   `status` varchar(45) DEFAULT NULL,
   `type` varchar(45) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -94,7 +95,7 @@ CREATE TABLE `think_admin` (
 
 LOCK TABLES `think_admin` WRITE;
 /*!40000 ALTER TABLE `think_admin` DISABLE KEYS */;
-INSERT INTO `think_admin` VALUES (1,'admin','c4ca4238a0b923820dcc509a6f75849b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Super'),(3,'1','c4ca4238a0b923820dcc509a6f75849b','1','1','2015-09-16','1','1@qq.com','http://qq.com','on','Low'),(4,'2','c4ca4238a0b923820dcc509a6f75849b','1','1','2015-09-16','1','1@qq.com','http://qq.com','on','Low');
+INSERT INTO `think_admin` VALUES (1,'admin','c4ca4238a0b923820dcc509a6f75849b',NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Super'),(2,'test',NULL,NULL,NULL,NULL,NULL,NULL,NULL,NULL,'Low');
 /*!40000 ALTER TABLE `think_admin` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -107,14 +108,15 @@ DROP TABLE IF EXISTS `think_bus`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `think_bus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `position_x` float DEFAULT NULL,
-  `position_y` float DEFAULT NULL,
+  `position_x` double DEFAULT NULL,
+  `position_y` double DEFAULT NULL,
   `no` varchar(45) DEFAULT NULL,
   `line_id` int(11) NOT NULL,
+  `online_num` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_think_bus_think_line_idx` (`line_id`),
   CONSTRAINT `fk_think_bus_think_line` FOREIGN KEY (`line_id`) REFERENCES `think_line` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -123,6 +125,7 @@ CREATE TABLE `think_bus` (
 
 LOCK TABLES `think_bus` WRITE;
 /*!40000 ALTER TABLE `think_bus` DISABLE KEYS */;
+INSERT INTO `think_bus` VALUES (41,120.24031066894531,36.05568313598633,NULL,35,NULL),(42,120.00491333007812,35.877262115478516,NULL,35,NULL),(43,120.17896270751953,36.01848602294922,NULL,35,NULL),(44,120.17222595214844,35.98093795776367,NULL,35,NULL),(45,120.19880676269531,35.96189498901367,NULL,35,NULL),(46,120.2171401977539,35.96574783325195,NULL,35,NULL),(47,120.23513793945312,35.97136306762695,NULL,35,NULL),(48,120.24031066894531,36.05568313598633,NULL,36,NULL),(49,120.17222595214844,35.98093795776367,NULL,36,NULL),(50,120.2171401977539,35.96574783325195,NULL,36,NULL),(51,120.19880676269531,35.96189498901367,NULL,36,NULL),(52,120.17924499511719,35.970550537109375,NULL,36,NULL),(53,120.25094604492188,35.9661865234375,NULL,36,NULL),(54,120.2171401977539,35.96574783325195,NULL,37,NULL),(55,120.198808,35.966188,NULL,37,NULL),(56,120.191441,35.958657,NULL,37,NULL),(57,120.295569,35.995049,NULL,37,NULL),(58,120.132005,35.923543,NULL,37,NULL),(59,120.093147,36.098653,NULL,38,NULL),(60,120.198808,35.961895,NULL,38,NULL),(61,120.178963,36.018485,NULL,38,NULL);
 /*!40000 ALTER TABLE `think_bus` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -141,7 +144,7 @@ CREATE TABLE `think_command` (
   PRIMARY KEY (`id`),
   KEY `fk_think_command_think_device1_idx` (`device_id`),
   CONSTRAINT `fk_think_command_think_device1` FOREIGN KEY (`device_id`) REFERENCES `think_device` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -150,7 +153,6 @@ CREATE TABLE `think_command` (
 
 LOCK TABLES `think_command` WRITE;
 /*!40000 ALTER TABLE `think_command` DISABLE KEYS */;
-INSERT INTO `think_command` VALUES (1,'Reboot',1,1);
 /*!40000 ALTER TABLE `think_command` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -174,7 +176,7 @@ CREATE TABLE `think_device` (
   PRIMARY KEY (`id`),
   KEY `fk_think_device_think_bus1_idx` (`bus_id`),
   CONSTRAINT `fk_think_device_think_bus1` FOREIGN KEY (`bus_id`) REFERENCES `think_bus` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -183,7 +185,7 @@ CREATE TABLE `think_device` (
 
 LOCK TABLES `think_device` WRITE;
 /*!40000 ALTER TABLE `think_device` DISABLE KEYS */;
-INSERT INTO `think_device` VALUES (1,'0e:60:55:f3:3d:0a',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
+INSERT INTO `think_device` VALUES (37,'0e:60:55:f3:3d:0a',NULL,NULL,NULL,NULL,NULL,NULL,NULL);
 /*!40000 ALTER TABLE `think_device` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -216,6 +218,31 @@ LOCK TABLES `think_device_ad` WRITE;
 UNLOCK TABLES;
 
 --
+-- Table structure for table `think_device_media`
+--
+
+DROP TABLE IF EXISTS `think_device_media`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `think_device_media` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `device_id` int(11) DEFAULT NULL,
+  `media_id` int(11) DEFAULT NULL,
+  `position` int(11) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `think_device_media`
+--
+
+LOCK TABLES `think_device_media` WRITE;
+/*!40000 ALTER TABLE `think_device_media` DISABLE KEYS */;
+/*!40000 ALTER TABLE `think_device_media` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `think_line`
 --
 
@@ -225,8 +252,9 @@ DROP TABLE IF EXISTS `think_line`;
 CREATE TABLE `think_line` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `name` (`name`)
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -235,7 +263,34 @@ CREATE TABLE `think_line` (
 
 LOCK TABLES `think_line` WRITE;
 /*!40000 ALTER TABLE `think_line` DISABLE KEYS */;
+INSERT INTO `think_line` VALUES (36,'开发区18路'),(35,'开发区1路'),(38,'开发区26路'),(37,'开发区4路');
 /*!40000 ALTER TABLE `think_line` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `think_manage`
+--
+
+DROP TABLE IF EXISTS `think_manage`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `think_manage` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `title` char(1) DEFAULT NULL,
+  `keywords` char(1) DEFAULT NULL,
+  `description` char(1) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `think_manage`
+--
+
+LOCK TABLES `think_manage` WRITE;
+/*!40000 ALTER TABLE `think_manage` DISABLE KEYS */;
+INSERT INTO `think_manage` VALUES (1,'a','q','z');
+/*!40000 ALTER TABLE `think_manage` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -255,7 +310,7 @@ CREATE TABLE `think_media` (
   PRIMARY KEY (`id`),
   KEY `fk_think_media_think_admin1_idx` (`admin_id`),
   CONSTRAINT `fk_think_media_think_admin1` FOREIGN KEY (`admin_id`) REFERENCES `think_admin` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -264,6 +319,7 @@ CREATE TABLE `think_media` (
 
 LOCK TABLES `think_media` WRITE;
 /*!40000 ALTER TABLE `think_media` DISABLE KEYS */;
+INSERT INTO `think_media` VALUES (2,'2015091811185147293.jpg','图片文件',0000000000,NULL,1),(3,'2015091815041366159.jpg','',0000000000,1,1),(4,'2015091815425658709.','',0000000000,3,1),(5,'2015091815453552658.rmvb','',0000000000,3,1),(6,'2015091815585413073.txt','',0000000000,2,1),(7,'D:\\xampp\\htdocs\\WifiBus\\ThinkPHP/upload/image','',0000000010,1,1),(8,'./Application/upload/text/2015091820015438858','',0000000000,2,1),(9,'./upload/video/2015091820024990386.mp4','',0000000000,3,1);
 /*!40000 ALTER TABLE `think_media` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -355,4 +411,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2015-10-15 10:40:08
+-- Dump completed on 2015-10-15 16:12:56
