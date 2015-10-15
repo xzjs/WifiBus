@@ -15,7 +15,9 @@ class AdminModel extends Model{
      * @var array 用户名不可重复
      */
     protected $_validate=array(
-        array('name','','帐号名称已经存在！',0,'unique',1),
+        //array('name','','帐号名称已经存在！',0,'unique',1),
+    	array('name','require','用户名不能为空，请重新输入！'),
+    	array('pwd','require','密码不能为空,请重新输入！'),
     );
 
     /**
