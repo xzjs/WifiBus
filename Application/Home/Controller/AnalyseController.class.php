@@ -14,5 +14,9 @@ use Think\Controller;
  * @package Home\Controller
  */
 class AnalyseController extends Controller {
-
+    public function index(){
+        $this->assign('title','广告和流量分析');
+        $this->assign('class2','action');
+        $this->show();
+    }
 }
