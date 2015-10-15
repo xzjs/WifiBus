@@ -1,80 +1,80 @@
-<Script>window.onload=init_index()</script>
+<Script>window.onload = init_index()</script>
 <div class="out_container_title">
-	<div class="container_title">
-		<div class="left">
-			<ul>
-				<li class="box_one"><a></a></li>
-				<li class="box_two"><a></a></li>
-			</ul>
-		</div>
-		<div id="l-map" class="main"></div>
-		<div class="right">
-			<ul>
-				<li><img src="__PUBLIC__/images/G_car.png" alt=""> <img
-					src="__PUBLIC__/images/G_point.png" alt="">
+    <div class="container_title">
+        <div class="left">
+            <ul>
+                <li class="box_one"><a></a></li>
+                <li class="box_two"><a></a></li>
+            </ul>
+        </div>
+        <div id="l-map" class="main"></div>
+        <div class="right">
+            <ul>
+                <li><img src="__PUBLIC__/images/G_car.png" alt=""> <img
+                        src="__PUBLIC__/images/G_point.png" alt="">
 
-					<p>正在运营</p></li>
-				<li class="clear"></li>
-				<li><img src="__PUBLIC__/images/R_car.png" alt=""> <img
-					src="__PUBLIC__/images/R_point.png" alt="">
+                    <p>正在运营</p></li>
+                <li class="clear"></li>
+                <li><img src="__PUBLIC__/images/R_car.png" alt=""> <img
+                        src="__PUBLIC__/images/R_point.png" alt="">
 
-					<p>暂停运营</p></li>
-				<li class="clear"></li>
-			</ul>
-		</div>
-		<div class="clr"></div>
-		<div class="footer">
-			<ul>
-				<li id="workNormal"></li>
-				<li id="onlinePeople"></li>
-				<li id="flow"></li>
-				<li id="adClick"></li>
-				<div class="clr"></div>
-			</ul>
-		</div>
-		<div class="display">
-			<select id="line_selector" onchange="get_bus_list('{:U('Bus/select')}',this.value,'bus_no_selector')">
-				<volist name="line_list" id="vo" empty=" ">
-					<option value={$vo.id}>{$vo.name}</option>
-				</volist>
-			</select>
+                    <p>暂停运营</p></li>
+                <li class="clear"></li>
+            </ul>
+        </div>
+        <div class="clr"></div>
+        <div class="footer">
+            <ul>
+                <li id="workNormal"></li>
+                <li id="onlinePeople"></li>
+                <li id="flow"></li>
+                <li id="adClick"></li>
+                <div class="clr"></div>
+            </ul>
+        </div>
+        <div class="display">
+            <select id="line_selector" onchange="get_bus_list('{:U('Bus/select')}',this.value,'bus_no_selector')">
+                <volist name="line_list" id="vo" empty=" ">
+                    <option value={$vo.id}>{$vo.name}</option>
+                </volist>
+            </select>
 
-			<div class="search">
-				<form>
-					<p>
-						<input type="text" id="search_keys"> <a><img
-							src="__PUBLIC__/images/home_search.png" alt=""
-							onclick="search_bus('{:U('Bus/select')}',$('#search_keys').val())"></a>
-					</p>
-				</form>
-			</div>
-			<ul class="select" id="bus_no_selector">
-				<volist name="bus_list" id="vo" empty=" ">
-				    <li><a href="#">{$vo.no}</a></li>
-				</volist>
-			</ul>
-		</div>
-		
-		<div class="road_display">
-			<div class="left_display">
-				<ul>
-					<li><a href="javascript:void(0);"
-						onclick="ajax('__CONTROLLER__/bus/str/35','开发区1路')">1路</a></li>
-					<li><a href="javascript:void(0);"
-						onclick="ajax('__CONTROLLER__/bus/str/36','开发区18路')">18路</a></li>
-					<li><a href="javascript:void(0);"
-						onclick="ajax('__CONTROLLER__/bus/str/37','开发区4路')">4路</a></li>
-					<li><a href="javascript:void(0);"
-						onclick="ajax('__CONTROLLER__/bus/str/38','开发区26路')">26路</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-	<div class="clear"></div>
+            <div class="search">
+                <form>
+                    <p>
+                        <input type="text" id="search_keys"> <a><img
+                            src="__PUBLIC__/images/home_search.png" alt=""
+                            onclick="search_bus('{:U('Bus/select')}',$('#search_keys').val())"></a>
+                    </p>
+                </form>
+            </div>
+            <ul class="select" id="bus_no_selector">
+                <volist name="bus_list" id="vo" empty=" ">
+                    <li><a href="#">{$vo.no}</a></li>
+                </volist>
+            </ul>
+        </div>
+
+        <div class="road_display">
+            <div class="left_display">
+                <ul>
+                    <li><a href="javascript:void(0);"
+                           onclick="ajax('__CONTROLLER__/bus/str/35','开发区1路')">1路</a></li>
+                    <li><a href="javascript:void(0);"
+                           onclick="ajax('__CONTROLLER__/bus/str/36','开发区18路')">18路</a></li>
+                    <li><a href="javascript:void(0);"
+                           onclick="ajax('__CONTROLLER__/bus/str/37','开发区4路')">4路</a></li>
+                    <li><a href="javascript:void(0);"
+                           onclick="ajax('__CONTROLLER__/bus/str/38','开发区26路')">26路</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
 </div>
 <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
 <script type="text/javascript">
-		
+
 
     var myChartWork = echarts.init(document.getElementById('workNormal'));
     var myChartOnline = echarts.init(document.getElementById('onlinePeople'));
@@ -87,6 +87,16 @@
     var d = 40;
     ajax("__CONTROLLER__/all", '');
     var int = self.setInterval("chart()", 1000);
+
+    var map = new BMap.Map("l-map");            // 创建Map实例
+    map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 13);
+
+    var opts = {
+        width: 250,     // 信息窗口宽度
+        height: 80,     // 信息窗口高度
+        title: "公交状况", // 信息窗口标题
+        enableMessage: true//设置允许信息窗发送短息
+    };
 
     function chart() {
         // 正在工作设备量
@@ -113,15 +123,12 @@
             url: $url,
             dataType: "json",
             success: function (results) {
-                map(line, results.data);
+                get_map(line, results.data);
             }
         });
     }
-    function map(line, array) {
+    function get_map(line, array) {
         // 百度地图API功能
-        var map = new BMap.Map("l-map");            // 创建Map实例
-        map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 13);
-
         var busline = new BMap.BusLineSearch(map, {
             renderOptions: {map: map, panel: "r-result"},
             onGetBusListComplete: function (result) {
@@ -132,7 +139,7 @@
             }
         });
 
-        function busSearch() { 
+        function busSearch() {
             var busName = line;
             busline.getBusList(busName);
         }
@@ -140,6 +147,8 @@
         setTimeout(function () {
             busSearch();
         }, 1500);
+
+
 
         setTimeout(function () {
                     var x;
@@ -175,11 +184,28 @@
                         var myIcon = new BMap.Icon(img, new BMap.Size(50, 30));
                         var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
                         map.addOverlay(marker2);
+                          // 创建标注
+                        var content = '<p>在线人数:20</p><p>已用流量56G/120G</p><p>磁盘使用率:35%</p><p>本地资源访问人数:15</p>';
+                        addClickHandler(content, marker2);
                     }
                 }
                 ,
                 2500
         )
         ;
+    }
+
+    function addClickHandler(content, marker) {
+        marker.addEventListener("click", function (e) {
+                    openInfo(content, e)
+                }
+        );
+    }
+
+    function openInfo(content, e) {
+        var p = e.target;
+        var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+        var infoWindow = new BMap.InfoWindow(content, opts);  // 创建信息窗口对象
+        map.openInfoWindow(infoWindow, point); //开启信息窗口
     }
 </script>
