@@ -143,7 +143,7 @@ class DeviceController extends Controller
     {
         $Command = M("Command");
         $mac_array = I('post.mac');
-        $data['device_id'] = 1;
+        $data['device_id'] = 37;
         $data['cmd'] = 'Reboot';
         $data['status'] = 0;
         $Command->add($data);

@@ -212,7 +212,7 @@ function adOption(a,url){
             orient: 'vertical',
             x: 'right',
             y: 'bottom',
-            data: ['广告下载量', '本地资源访问量', 'APP下载量'],
+            data: ['广告点击量', '本地资源访问量', 'APP下载量'],
             textStyle: {
                 color: '#fff'
             }
