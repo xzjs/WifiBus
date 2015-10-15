@@ -10,6 +10,8 @@ class ManageController extends Controller {
 	 * 加载初始界面
 	 */
 	public function line_manage() {
+		$this->assign('title','用户控制');
+		$this->assign('class3','action');
 		$Line = A ( 'Line' );
 		$data = $Line->select ();
 		$this->assign ( 'line_list', $data );
@@ -27,13 +29,14 @@ class ManageController extends Controller {
 					'xls',
 					'xlsx' 
 			); // 讴置附件上传类型
-			$upload->savePath = 'Uploads/excel/'; // 讴置附件上传目录
+			$upload->savePath = 'excel/'; // 讴置附件上传目录
+			$upload->autoSub=false;
 			$info = $upload->upload ();
-			$in = $info [file_stu] ['savepath'];
-			$j = $info [file_stu] ['rootPath'];
 			$resurl = "./Uploads/" . $info ['j'] ['savepath'] . $info ['j'] ['savename']; // $resurl 为excel的路径
 			$res = D ( 'Manage' )->read ( $resurl );
 			unlink ( $resurl );
+			
+			
 			
 			foreach ( $res as $k => $v ) {
 				if ($k == 1) {

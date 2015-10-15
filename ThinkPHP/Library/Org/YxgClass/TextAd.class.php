@@ -7,6 +7,9 @@ use Org\Util\Date;
  *
  */
 class TextAd extends Media{
+	public static $format = array (
+			'txt'
+	);
 	/**
 	 * (non-PHPdoc)
 	 * @see \Org\YxgClass\Media::addMedia()
