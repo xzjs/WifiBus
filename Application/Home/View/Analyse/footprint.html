@@ -1,0 +1,86 @@
+<div class="out_container_title">
+    <div class="container_title">
+        <div class="left">
+            <ul>
+                <li class="box_one">
+                    <a href="{:U('index')}"></a>
+                </li>
+                <li class="box_two">
+                    <a></a>
+                </li>
+                <li class="box_anly">
+                    <a href="{:U('analyse')}" style="background: url(images/analysis_hover.png)"></a>
+                </li>
+            </ul>
+        </div>
+
+        <div class="ad_anly">
+            <ul class="ad_subtitle">
+                <li><a href="{:U('analyse')}">综合分析</a></li>
+                <li><a href="{:U('adver_rank')}">排行分析</a></li>
+                <li class="ad_action"><a href="{:U('footprint')}">足迹分析</a></li>
+                <li class="clr"></li>
+            </ul>
+            <ul class="ad_anly_pic">
+                <li id="adAnly1">
+
+                </li>
+                <li>
+
+
+                </li>
+            </ul>
+        </div>
+        <div class="display">
+            <select>
+                <option value="line1">线路1</option>
+                <option value="line2">线路2</option>
+                <option value="line3">线路3</option>
+                <option value="line4">线路4</option>
+            </select>
+
+            <div class="search">
+                <form action="form">
+                    <p>
+                        <input type="text">
+                        <a href=""><img src="images/home_search.png" alt=""></a>
+                    </p>
+                </form>
+            </div>
+            <div class="clear"></div>
+            <ul class="select">
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+                <li><a href="#">鲁BH8305</a></li>
+            </ul>
+        </div>
+        <div class="road_display">
+            <div class="left_display">
+                <ul>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                    <li><a href="#">黄岛17路</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+<script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
+<script type="text/javascript">
+    var myChartAdAnly1 = echarts.init(document.getElementById('adAnly1'));
+
+    // 广告点击量客流量流量使用量
+    var adAnlyOption1 = footprintFunction();
+
+
+    myChartAdAnly1.setOption(adAnlyOption1);
+</script>
