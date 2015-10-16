@@ -1,54 +1,53 @@
-
 // ****************************
 // 总览中的一些饼状图Pie
 // ****************************
 var myColor = ['#10C460', '#DE4949', '#CEC51A', '#16A2EF'];
 var labelFromatter = {
-	normal: {
-		label: {
-			formatter: function(params) {
-				return Math.round((100 - params.value)*100)/100 + '%'
-			},
-			textStyle: {
-				baseline: 'top'
-			}
-		}
-	},
+    normal: {
+        label: {
+            formatter: function (params) {
+                return Math.round((100 - params.value) * 100) / 100 + '%'
+            },
+            textStyle: {
+                baseline: 'top'
+            }
+        }
+    },
 };
 var labelTop = {
-	normal: {
-		label: {
-			show: false
-		},
-		labelLine: {
-			show: false
-		}
-	}
+    normal: {
+        label: {
+            show: false
+        },
+        labelLine: {
+            show: false
+        }
+    }
 };
 var labelBottom = {
-	normal: {
-		color: '#ccc',
-		label: {
-			show: true,
-			position: 'center',
-			textStyle: {
-				fontSize: 26,
-				fontFamily: 'Microsoft YaHei, sans-serif',
-				color: '#fff',
-			}
-		},
-		labelLine: {
-			show: false
-		}
-	},
-	emphasis: {
-		color: 'rgba(0,0,0,0)'
-	}
+    normal: {
+        color: '#ccc',
+        label: {
+            show: true,
+            position: 'center',
+            textStyle: {
+                fontSize: 26,
+                fontFamily: 'Microsoft YaHei, sans-serif',
+                color: '#fff',
+            }
+        },
+        labelLine: {
+            show: false
+        }
+    },
+    emphasis: {
+        color: 'rgba(0,0,0,0)'
+    }
 };
 
 // 正在工作设备量
-function workOption(a,url) {
-	var optionWork = {
+function workOption(a, url) {
+    var optionWork = {
         legend: {
             orient: 'vertical',
             x: 'right',
@@ -69,7 +68,7 @@ function workOption(a,url) {
                 textAlign: 'center'
             },
             link: url,
-            target:'self'
+            target: 'self'
 
         },
         series: [{
@@ -78,7 +77,7 @@ function workOption(a,url) {
             radius: ['50%', '70%'],
             itemStyle: labelFromatter,
             data: [{
-                value: (100-a),
+                value: (100 - a),
                 name: '设备总量',
                 itemStyle: labelBottom
             }, {
@@ -93,8 +92,8 @@ function workOption(a,url) {
 }
 
 //在线人数
-function onlineOption(a,url){
-	var optionOnline = {
+function onlineOption(a, url) {
+    var optionOnline = {
         legend: {
             orient: 'vertical',
             x: 'right',
@@ -115,7 +114,7 @@ function onlineOption(a,url){
                 textAlign: 'center'
             },
             link: url,
-            target:'self'
+            target: 'self'
 
         },
         series: [{
@@ -129,11 +128,11 @@ function onlineOption(a,url){
                 itemStyle: labelBottom
 
             }, {
-                value: (100-a),
+                value: (100 - a),
                 name: '当前在线总人数',
                 itemStyle: {
                     normal: {
-                    	color: myColor[1],
+                        color: myColor[1],
                         label: {
                             show: false,
                         },
@@ -150,8 +149,8 @@ function onlineOption(a,url){
 };
 
 // 流量
-function flowOption(c,url){
-	var optionFlow = {
+function flowOption(c, url) {
+    var optionFlow = {
         legend: {
             orient: 'vertical',
             x: 'right',
@@ -171,7 +170,7 @@ function flowOption(c,url){
                 color: myColor[3],
             },
             link: url,
-            target:'self'
+            target: 'self'
 
         },
         series: [{
@@ -180,7 +179,7 @@ function flowOption(c,url){
             radius: ['50%', '70%'],
             itemStyle: labelFromatter,
             data: [{
-                value: (100-c),
+                value: (100 - c),
                 name: '所有设备流量总量',
                 itemStyle: labelBottom
 
@@ -189,7 +188,7 @@ function flowOption(c,url){
                 name: '已用流量',
                 itemStyle: {
                     normal: {
-                    	color: myColor[3],
+                        color: myColor[3],
                         label: {
                             show: false,
                         },
@@ -205,9 +204,9 @@ function flowOption(c,url){
     return optionFlow;
 };
 
- // 广告点击量
-function adOption(a,url){
-	var optionAd = {
+// 广告点击量
+function adOption(a, url) {
+    var optionAd = {
         legend: {
             orient: 'vertical',
             x: 'right',
@@ -227,7 +226,7 @@ function adOption(a,url){
                 color: '#fff'
             },
             link: url,
-            target:'self'
+            target: 'self'
 
         },
         series: [{
@@ -249,7 +248,7 @@ function adOption(a,url){
                 name: '广告下载量',
 
             }, {
-                value: (70-a),
+                value: (70 - a),
                 name: '本地资源访问量',
             }, {
                 value: 30,
@@ -271,8 +270,8 @@ function adOption(a,url){
 // ***************************************
 
 // 广告点击量
-function adMainFunction(adInfo){
-	var tempOption = {
+function adMainFunction(adInfo) {
+    var tempOption = {
         title: {
             text: '广告点击量',
             textStyle: {
@@ -324,14 +323,14 @@ function adMainFunction(adInfo){
 };
 
 // 广告点击量时间关系图
-function adMainTimeFunction(date1,date2){
-	var tempOption = {
+function adMainTimeFunction(date1, date2) {
+    var tempOption = {
         title: {
             text: '广告点击量时间关系图',
             x: 'center',
             y: 'bottom',
             textStyle: {
-            	fontFamily: 'Microsoft YaHei, sans-serif',
+                fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 18,
                 color: '#fff'
             }
@@ -342,7 +341,7 @@ function adMainTimeFunction(date1,date2){
         legend: {
             data: ['上周', '本周'],
             textStyle: {
-            	fontFamily: 'Microsoft YaHei, sans-serif',
+                fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 12,
                 color: '#fff'
             }
@@ -373,26 +372,26 @@ function adMainTimeFunction(date1,date2){
         series: [{
             name: '上周',
             type: 'line',
-            data: [date1[0],date1[1],date1[2],date1[3],date1[4],date1[5],date1[6]],
+            data: [date1[0], date1[1], date1[2], date1[3], date1[4], date1[5], date1[6]],
 
         }, {
             name: '本周',
             type: 'line',
-            data: [date2[0],date2[1],date2[2],date2[3],date2[4],date2[5],date2[6]],
+            data: [date2[0], date2[1], date2[2], date2[3], date2[4], date2[5], date2[6]],
         }]
     };
     return tempOption;
 }
 
 // 流量时间关系图
-function adMainFlowFunction(date){
-	var tempOption = {
+function adMainFlowFunction(date) {
+    var tempOption = {
         title: {
             text: ' 流量时间关系图',
             x: 'center',
             y: 'bottom',
             textStyle: {
-            	fontFamily: 'Microsoft YaHei, sans-serif',
+                fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 18,
                 color: '#fff'
             }
@@ -426,11 +425,11 @@ function adMainFlowFunction(date){
         series: [{
             name: '流量',
             type: 'line',
-            data: [date[0],date[1],date[2],date[3],date[4],date[5],date[6]],
+            data: [date[0], date[1], date[2], date[3], date[4], date[5], date[6]],
             itemStyle: {
-            	normal: {
-            		color: myColor[0]
-            	}
+                normal: {
+                    color: myColor[0]
+                }
             },
         }]
     };
@@ -438,14 +437,14 @@ function adMainFlowFunction(date){
 }
 
 // 客流量时间关系图
-function adMainCustomerFunction(date){
-	var tempOption = {
+function adMainCustomerFunction(date) {
+    var tempOption = {
         title: {
             text: '客流量时间关系图',
             x: 'center',
             y: 'bottom',
             textStyle: {
-            	fontFamily: 'Microsoft YaHei, sans-serif',
+                fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 18,
                 color: '#fff'
             }
@@ -479,11 +478,11 @@ function adMainCustomerFunction(date){
         series: [{
             name: '客流量',
             type: 'line',
-            data: [date[0],date[1],date[2],date[3],date[4],date[5],date[6]],
+            data: [date[0], date[1], date[2], date[3], date[4], date[5], date[6]],
             itemStyle: {
-            	normal: {
-            		color: myColor[2]
-            	}
+                normal: {
+                    color: myColor[2]
+                }
             },
         }]
     };
@@ -491,14 +490,14 @@ function adMainCustomerFunction(date){
 }
 
 // 回头率时间关系图
-function adMainTurnBackFunction(date){
-	var tempOption = {
+function adMainTurnBackFunction(date) {
+    var tempOption = {
         title: {
             text: '回头率时间关系图',
             x: 'center',
             y: 'bottom',
             textStyle: {
-            	fontFamily: 'Microsoft YaHei, sans-serif',
+                fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 18,
                 color: '#fff'
             }
@@ -532,11 +531,11 @@ function adMainTurnBackFunction(date){
         series: [{
             name: '回头率',
             type: 'line',
-            data: [date[0],date[1],date[2],date[3],date[4],date[5],date[6]],
+            data: [date[0], date[1], date[2], date[3], date[4], date[5], date[6]],
             itemStyle: {
-            	normal: {
-            		color: myColor[1]
-            	}
+                normal: {
+                    color: myColor[1]
+                }
             },
         }]
     };
@@ -552,8 +551,8 @@ function adMainTurnBackFunction(date){
 // **********************************
 
 // 广告点击量客流量流量使用量
-function adAnlyOptionFunction1(){
-	var tempOption = {
+function adAnlyOptionFunction1() {
+    var tempOption = {
         title: {
             text: '广告点击量客流量流量使用量',
             x: 'center',
@@ -615,8 +614,8 @@ function adAnlyOptionFunction1(){
 };
 
 // 广告点击量客流量时间
-function adAnlyOptionFunction2(){
-	var tempOption = {
+function adAnlyOptionFunction2() {
+    var tempOption = {
         title: {
             text: '广告点击量客流量时间',
             x: 'center',
@@ -665,18 +664,18 @@ function adAnlyOptionFunction2(){
             type: 'bar',
             data: [20, 58, 44, 38, 77, 68, 40],
             itemStyle: {
-            	normal: {
-            		color: '#C12E34'
-            	}
+                normal: {
+                    color: '#C12E34'
+                }
             }
         }, {
             name: '客流量',
             type: 'bar',
             data: [10, 40, 14, 20, 39, 61, 28],
             itemStyle: {
-            	normal: {
-            		color: '#EDCB4C'
-            	}
+                normal: {
+                    color: '#EDCB4C'
+                }
             }
         }]
     };
@@ -684,8 +683,8 @@ function adAnlyOptionFunction2(){
 }
 
 // 广告点击量流量时间
-function adAnlyOptionFunction3(){
-	var tempOption = {
+function adAnlyOptionFunction3() {
+    var tempOption = {
         title: {
             text: '广告点击量流量时间',
             x: 'center',
@@ -700,7 +699,7 @@ function adAnlyOptionFunction3(){
             trigger: 'axis'
         },
         legend: {
-            data: ['广告点击量',  '流量'],
+            data: ['广告点击量', '流量'],
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 14,
@@ -734,18 +733,18 @@ function adAnlyOptionFunction3(){
             type: 'bar',
             data: [20, 58, 44, 38, 77, 68, 40],
             itemStyle: {
-            	normal: {
-            		color: '#ED9678'
-            	}
+                normal: {
+                    color: '#ED9678'
+                }
             }
         }, {
             name: '流量',
             type: 'bar',
             data: [26, 60, 35, 66, 16, 37, 45],
             itemStyle: {
-            	normal: {
-            		color: '#DAAFA9'
-            	}
+                normal: {
+                    color: '#DAAFA9'
+                }
             }
         }]
     };
@@ -753,8 +752,8 @@ function adAnlyOptionFunction3(){
 }
 
 // 客流量量流量时间
-function adAnlyOptionFunction4(){
-	var tempOption = {
+function adAnlyOptionFunction4() {
+    var tempOption = {
         title: {
             text: '客流量量流量时间',
             x: 'center',
@@ -769,7 +768,7 @@ function adAnlyOptionFunction4(){
             trigger: 'axis'
         },
         legend: {
-            data: [ '客流量', '流量'],
+            data: ['客流量', '流量'],
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 14,
@@ -798,23 +797,23 @@ function adAnlyOptionFunction4(){
                 }
             }
         }],
-        series: [ {
+        series: [{
             name: '客流量',
             type: 'bar',
             data: [10, 40, 14, 20, 39, 61, 28],
             itemStyle: {
-            	normal: {
-            		color: '#EC6A98'
-            	}
+                normal: {
+                    color: '#EC6A98'
+                }
             }
         }, {
             name: '流量',
             type: 'bar',
             data: [26, 60, 35, 66, 16, 37, 45],
             itemStyle: {
-            	normal: {
-            		color: '#F7EA83'
-            	}
+                normal: {
+                    color: '#F7EA83'
+                }
             }
         }]
     };
@@ -825,3 +824,213 @@ function adAnlyOptionFunction4(){
 // ********************************
 // 广告流量分析－－综合分析 End
 // ********************************
+
+//*********************************
+//排行分析
+//*********************************
+function adver_rankOptionFunction3() {
+    option = {
+        color:["#669966"],
+        title : {
+            text: '当日故障率TOP10',
+            textStyle:{
+                "color":"#FFFFFF"
+            }
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+
+        calculable : true,
+        xAxis : [
+            {
+                type : 'value',
+                boundaryGap : [0, 0.001],
+                axisLabel:{
+                    textStyle:{
+                        "color":"#FFFFFF"
+                    }
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'category',
+                data : ['鲁B123','鲁B124','鲁B125','鲁B126','鲁B127','鲁B128','鲁B127','鲁B129','鲁B138','鲁B139','鲁B130'],
+                axisLabel:{
+                    textStyle:{
+                        "color":"#FFFFFF"
+                    }
+                }
+            }
+        ],
+        series : [
+
+            {
+
+                type:'bar',
+                data:[19, 23, 31,35, 50, 63,64,65,66,67,68,68,69,69]
+            }
+        ]
+    };
+    return option;
+}
+
+function adver_rankOptionFunction2(){
+    option = {
+        title : {
+            text: '当日上网用户TOP10',
+            textStyle:{
+                "color":"#FFFFFF"
+            }
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+
+        calculable : true,
+        xAxis : [
+            {
+                type : 'value',
+                boundaryGap : [0, 0.001],
+                axisLabel:{
+                    textStyle:{
+                        "color":"#FFFFFF"
+                    }
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'category',
+                data : ['鲁B123','鲁B124','鲁B125','鲁B126','鲁B127','鲁B128','鲁B127','鲁B129','鲁B138','鲁B139','鲁B130'],
+                axisLabel:{
+                    textStyle:{
+                        "color":"#FFFFFF"
+                    }
+                }
+            }
+        ],
+        series : [
+
+            {
+
+                type:'bar',
+                data:[ 10,23, 31,35, 50, 63,70,100,110,129,188]
+            }
+        ]
+    };
+    return option;
+}
+
+function adver_rankOptionFunction1(){
+    option = {
+        color:["#FF6666"],
+        title: {
+            text: '当日用户上网走势',
+            textStyle:{
+                "color":"#FFFFFF"
+            }
+        },
+        tooltip: {
+            trigger: 'axis'
+        },
+        calculable: true,
+        xAxis: [
+            {
+                type: 'category',
+                boundaryGap: false,
+                data: ['5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00',
+                    '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
+                    '18:00', '19:00', '20:00', '21:00', '22:00', '23:00',
+                    '24:00', '00:00', '01:00', '02:00', '03:00', '04:00',
+                    '05:00'],
+                axisLabel:{
+                    textStyle:{
+                        "color":"#FFFFFF"
+                    }
+                }
+            }
+        ],
+        yAxis: [
+            {
+                type: 'value',
+                axisLabel: {
+                    formatter: '{value}人次'
+                },
+                axisLabel:{
+                    textStyle:{
+                        "color":"#FFFFFF"
+                    }
+                }
+            }
+        ],
+        series: [
+            {
+                name: '连接人次',
+                type: 'line',
+                data: [1, 3, 12, 13, 12, 13, 10, 15, 12, 10, 1, 6, 8, 9, 5, 5, 8, 1, 0, 0, 0, 0, 0, 0, 0],
+                markPoint: {
+                    data: [
+                        {type: 'max', name: '×î´óÖµ'},
+                        {type: 'min', name: '×îÐ¡Öµ'}
+                    ]
+                }
+
+            }
+
+        ]
+    };
+    return option;
+}
+
+//**************************
+//足迹分析
+//**************************
+function footprintFunction(){
+    option = {
+        color:["#0099CC"],
+        title : {
+            text: '各站联网人数',
+            textStyle:{
+                "color":"#FFFFFF"
+            }
+        },
+        tooltip : {
+            trigger: 'axis'
+        },
+
+        calculable : true,
+        xAxis : [
+            {
+                type : 'value',
+                boundaryGap : [0, 0.001],
+                axisLabel:{
+                    textStyle:{
+                        "color":"#FFFFFF"
+                    }
+                }
+            }
+        ],
+        yAxis : [
+            {
+                type : 'category',
+                data : ['石油大学','公共艺术园','东方华庭','上流汇','码头休闲村','海云家园','北船','武船','风和日丽','大湾港路','佳家园'],
+                axisLabel:{
+                    textStyle:{
+                        "color":"#FFFFFF"
+                    }
+                }
+            }
+        ],
+        series : [
+
+            {
+
+                type:'bar',
+                data:[19, 23, 31,35, 50, 63,64,65,66,67,68,68,69,69]
+            }
+        ]
+    };
+    return option;
+}
