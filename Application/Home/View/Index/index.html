@@ -95,7 +95,7 @@
     var c = 30;
     var d = 40;
     ajax("__CONTROLLER__/all", '');
-    var int = self.setInterval("chart()", 1000);
+    var int = self.setInterval("chart()", 3000);
 
     var map = new BMap.Map("allmap");            // 创建Map实例
     map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 13);
@@ -118,6 +118,9 @@
         var optionOnline = onlineOption(b, "__CONTROLLER__/work/f/online/num/" + b);
         // 流量
         c += 0.01;
+        if(c>85){
+            c=30;
+        }
         var optionFlow = flowOption(c, "__CONTROLLER__/work/f/flow/num/" + c);
         // 广告点击量
         d += num;
