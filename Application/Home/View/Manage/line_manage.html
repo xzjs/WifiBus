@@ -1,166 +1,160 @@
 <div class="out_container_title">
-    <div class="container_title">
-        <div class="left">
-            <ul>
-                <li class="box_three"><a></a></li>
-                <li class="box_four"><a href="{:U('Remoteupdate/remoteupdate')}"></a></li>
-                <li class="box_five"><a href="{:U('Others/others')}"></a></li>
-            </ul>
-        </div>
-        <div id="allmap" class="big_map"></div>
-        <div class="search_line">
-            <div>
-                <form action="form">
-                    <input type="text"> <input type="submit" value="提交">
-                </form>
-            </div>
-            <ul id="ul_line_list">
-                <volist name="line_list" id="vo" empty=" ">
-                    <li><a onclick=func('{:U("Home/Index/bus/str")}/{$vo.id}','{$vo.name}','{:U("Bus/select")}',{$vo.id},'ul_bus_list')>{$vo.name}</a></li>
-                </volist>
-            </ul>
-            <div class="line_button">
-                <p class="we_click line_edit_con">编辑</p>
+	<div class="container_title">
+		<div class="left">
+			<ul>
+				<li class="box_three"><a></a></li>
+				<li class="box_four"><a
+					href="{:U('Remoteupdate/remoteupdate')}"></a></li>
+				<li class="box_five"><a href="{:U('Others/others')}"></a></li>
+			</ul>
+		</div>
+		<div id="allmap" class="big_map"></div>
+		<div class="search_line">
+			<div>
+				<form action="form">
+					<input type="text"> <input type="submit" value="提交">
+				</form>
+			</div>
+			<ul id="ul_line_list">
+				<volist name="line_list" id="vo" empty=" ">
+				<li><a onclick=func('{:U("Home/Index/bus/str")}/{$vo.id}','{$vo.name}','{:U("Bus/select")}',{$vo.id},'ul_bus_list')>{$vo.name}</a></li>
+				</volist>
+			</ul>
+			<div class="line_button">
+				<p class="we_click line_edit_con">编辑</p>
 
-                <p class="we_click line_add_con">添加</p>
+				<p class="we_click line_add_con">添加</p>
 
-                <p class="we_click line_alladd_con">批量添加</p>
+				<p class="we_click line_alladd_con">批量添加</p>
 
-                <div class="clr"></div>
-            </div>
-        </div>
+				<div class="clr"></div>
+			</div>
+		</div>
 
-        <!-- 以下三个search_car div分别对应上面li中的三条线路 -->
-        <div class="search_car	hideTemp">
-            <div>
-                <form action="form">
-                    <input type="text"> <input type="submit" value="提交">
-                </form>
-            </div>
-            <ul id="ul_bus_list">
-            </ul>
-            <div class="car_button">
-                <p class="we_click car_edit_con">
-                    编辑</a>
-                </p>
+		<!-- 以下三个search_car div分别对应上面li中的三条线路 -->
+		<div class="search_car	hideTemp">
+			<div>
+				<form action="form">
+					<input type="text"> <input type="submit" value="提交">
+				</form>
+			</div>
+			<ul id="ul_bus_list">
+			</ul>
+			<div class="car_button">
+				<p class="we_click car_edit_con">
+					编辑</a>
+				</p>
+				<p class="we_click car_add_con">添加</p>
 
-                <p class="we_click car_add_con">添加</p>
+				<div class="clr"></div>
+			</div>
+		</div>
 
-                <div class="clr"></div>
-            </div>
-        </div>
+		<div class="clear"></div>
+		<form method="post" action="upload" enctype="multipart/form-data">
+			<ul class="user_click">
+				<li class="car_add"><a>Close</a>
+					<div>
+						<p>车牌号:</p>
+						<input type="text">
 
+						<div class="clear"></div>
+					</div>
+					<div>
+						<p>设备MAC地址:</p>
+						<select name="mac">
+							<option value="mac1">12311fwxcv</option>
+							<option value="mac2">fwefxx</option>
+							<option value="mac3">fwefcvxgvber</option>
+							<option value="mac4">xxxhiwnxcwdf</option>
+						</select>
+					</div> <input type="submit" value="确定">
+				</li>
+			</ul>
+		</form>
 
-        <div class="clear"></div>
-        <form method="post" action="upload" enctype="multipart/form-data">
-            <ul class="user_click">
-                <li class="car_add"><a>Close</a>
+		<form method="post" action="upload" enctype="multipart/form-data">
+			<ul class="user_click">
+				<li class="line_edit"><a>Close</a>
 
-                    <div>
-                        <p>车牌号:</p>
-                        <input type="text">
+					<div>
+						<p>线路:</p>
+						<input type="text">
 
-                        <div class="clear"></div>
-                    </div>
-                    <div>
-                        <p>设备MAC地址:</p>
-                        <select name="mac">
-                            <option value="mac1">12311fwxcv</option>
-                            <option value="mac2">fwefxx</option>
-                            <option value="mac3">fwefcvxgvber</option>
-                            <option value="mac4">xxxhiwnxcwdf</option>
-                        </select>
-                    </div>
-                    <input type="submit" value="确定"></li>
-            </ul>
-        </form>
+						<div class="clear"></div>
+					</div> <input type="submit" value="删除"> <input type="submit"
+					value="确定"></li>
+			</ul>
+		</form>
 
-        <form method="post" action="upload" enctype="multipart/form-data">
-            <ul class="user_click">
-                <li class="line_edit"><a>Close</a>
+		<form method="post" action="upload" enctype="multipart/form-data">
+			<ul class="user_click">
+				<li class="line_alladd"><a>Close</a>
 
-                    <div>
-                        <p>线路:</p>
-                        <input type="text">
+					<div>
+						<p>批量表格</p>
+						<input type="file" class="file" name="j" onchange="ye.value=value">
+						<input name="ye" class="ye"> <input type="button"
+							class="button" value="打开" onclick=j.click()>
 
-                        <div class="clear"></div>
-                    </div>
-                    <input type="submit" value="删除"> <input type="submit"
-                                                            value="确定"></li>
-            </ul>
-        </form>
+						<div class="clear"></div>
+					</div> <input type="submit" value="提交"> <a
+					href="/wifibus/Download/模板.xlsx">请点击此处下载表格样本</a></li>
+			</ul>
+		</form>
 
-        <form method="post" action="upload" enctype="multipart/form-data">
-            <ul class="user_click">
-                <li class="line_alladd"><a>Close</a>
+		<form method="post" action="upload" enctype="multipart/form-data">
+			<ul class="user_click">
+				<li class="line_add"><a>Close</a>
 
-                    <div>
-                        <p>批量表格</p>
-                        <input type="file" class="file" name="j"
-                               onchange="ye.value=value"> <input name="ye" class="ye">
-                        <input type="button" class="button" value="打开" onclick=j.click()>
+					<div>
+						<p>线路:</p>
+						<input type="text">
 
-                        <div class="clear"></div>
-                    </div>
-                    <input type="submit" value="提交"> <a
-                            href="/wifibus/Download/模板.xlsx">请点击此处下载表格样本</a></li>
-            </ul>
-        </form>
+						<div class="clear"></div>
+					</div>
+					<div>
+						<p>车牌号:</p>
+						<input type="text">
 
-        <form method="post" action="upload" enctype="multipart/form-data">
-            <ul class="user_click">
-                <li class="line_add"><a>Close</a>
+						<div class="clear"></div>
+					</div>
+					<div>
+						<p>设备MAC地址:</p>
+						<select name="mac">
+							<option value="mac1">12311fwxcv</option>
+							<option value="mac2">fwefxx</option>
+							<option value="mac3">fwefcvxgvber</option>
+							<option value="mac4">xxxhiwnxcwdf</option>
+						</select>
+					</div> <input type="submit" value="确定"></li>
+			</ul>
+		</form>
 
-                    <div>
-                        <p>线路:</p>
-                        <input type="text">
+		<form method="post" action="upload" enctype="multipart/form-data">
+			<ul class="user_click">
+				<li class="car_edit"><a>Close</a>
 
-                        <div class="clear"></div>
-                    </div>
-                    <div>
-                        <p>车牌号:</p>
-                        <input type="text">
+					<div>
+						<p>车牌号:</p>
+						<input type="text">
 
-                        <div class="clear"></div>
-                    </div>
-                    <div>
-                        <p>设备MAC地址:</p>
-                        <select name="mac">
-                            <option value="mac1">12311fwxcv</option>
-                            <option value="mac2">fwefxx</option>
-                            <option value="mac3">fwefcvxgvber</option>
-                            <option value="mac4">xxxhiwnxcwdf</option>
-                        </select>
-                    </div>
-                    <input type="submit" value="确定"></li>
-            </ul>
-        </form>
-
-        <form method="post" action="upload" enctype="multipart/form-data">
-            <ul class="user_click">
-                <li class="car_edit"><a>Close</a>
-
-                    <div>
-                        <p>车牌号:</p>
-                        <input type="text">
-
-                        <div class="clear"></div>
-                    </div>
-                    <div>
-                        <p>设备MAC地址:</p>
-                        <select name="mac">
-                            <option value="mac1">12311fwxcv</option>
-                            <option value="mac2">fwefxx</option>
-                            <option value="mac3">fwefcvxgvber</option>
-                            <option value="mac4">xxxhiwnxcwdf</option>
-                        </select>
-                    </div>
-                    <input type="submit" value="删除"> <input type="submit"
-                                                            value="确定"></li>
-            </ul>
-        </form>
-    </div>
-    <div class="clear"></div>
+						<div class="clear"></div>
+					</div>
+					<div>
+						<p>设备MAC地址:</p>
+						<select name="mac">
+							<option value="mac1">12311fwxcv</option>
+							<option value="mac2">fwefxx</option>
+							<option value="mac3">fwefcvxgvber</option>
+							<option value="mac4">xxxhiwnxcwdf</option>
+						</select>
+					</div> <input type="submit" value="删除"> <input type="submit"
+					value="确定"></li>
+			</ul>
+		</form>
+	</div>
+	<div class="clear"></div>
 </div>
 <script type="text/javascript">
     // 百度地图API功能
