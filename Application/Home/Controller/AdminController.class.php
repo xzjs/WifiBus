@@ -34,7 +34,6 @@ class AdminController extends Controller
     		if($o){
     			$_SESSION['admin']=$o;
     			$this->redirect('Index/index');
-    			//var_dump($o);
     			//$this->success('登陆成功','adminlist');
     		}else{
     			$this->error('用户名或密码错误，请重新输入！');
