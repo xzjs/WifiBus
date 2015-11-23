@@ -7,7 +7,7 @@
  */
 //exec("cd d:/xampp/htdocs/wifi/ git pull ",$output);
 error_reporting ( E_ALL );
-$dir = '/var/www/html/PXPark/';//该目录为git检出目录
+$dir = '/var/www/html/WifiBus/';//该目录为git检出目录
 $handle = popen('cd '.$dir.' && git pull 2>&1','r');
 $read = stream_get_contents($handle);
 printf($read);
