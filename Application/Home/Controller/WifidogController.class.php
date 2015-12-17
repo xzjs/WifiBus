@@ -16,7 +16,8 @@ use Think\Controller;
 class WifidogController extends BaseController
 {
     public function login(){
-        $this->redirect('auth',array('token'=>time()));
+        $this->assign('token',time());
+        $this->show();
     }
 
     public function ping(){
@@ -25,7 +26,6 @@ class WifidogController extends BaseController
 
     public function auth($token){
         echo "Auth: 1";
-        return;
     }
 
     public function portal(){
