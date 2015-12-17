@@ -16,7 +16,7 @@ use Think\Controller;
 class WifidogController extends BaseController
 {
     public function login(){
-        $this->redirect('auth/token/'.time());
+        $this->redirect('Wifidog/auth/token/'.time());
     }
 
     public function ping(){
