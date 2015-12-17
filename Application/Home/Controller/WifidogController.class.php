@@ -25,6 +25,7 @@ class WifidogController extends BaseController
 
     public function auth($token){
         echo "Auth: 1";
+        return;
     }
 
     public function portal(){
