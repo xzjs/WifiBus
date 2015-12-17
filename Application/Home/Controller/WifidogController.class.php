@@ -25,10 +25,14 @@ class WifidogController extends BaseController
     }
 
     public function ping(){
-
+        echo 'pong';
     }
 
     public function auth(){
         echo "Auth: 1";
+    }
+
+    public function portal(){
+        $this->redirect('http://www.baidu.com','location',302);
     }
 }
