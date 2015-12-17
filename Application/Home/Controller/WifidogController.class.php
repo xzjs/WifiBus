@@ -21,7 +21,7 @@ class WifidogController extends BaseController
     }
 
     public function login(){
-        $this->auth();
+        $this->redirect('auth');
     }
 
     public function ping(){
