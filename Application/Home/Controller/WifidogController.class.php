@@ -16,7 +16,7 @@ use Think\Controller;
 class WifidogController extends BaseController
 {
     public function login(){
-        $this->assign('token',time());
+        $this->assign('url',U('Wifidog/auth').'/token/'.time());
         $this->show();
     }
 
