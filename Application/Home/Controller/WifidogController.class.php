@@ -21,14 +21,14 @@ class WifidogController extends BaseController
     }
 
     public function login(){
-        $this->redirect('auth');
+        $this->redirect('auth/token/123');
     }
 
     public function ping(){
         echo 'pong';
     }
 
-    public function auth(){
+    public function auth($token){
         echo "Auth: 1";
     }
 
