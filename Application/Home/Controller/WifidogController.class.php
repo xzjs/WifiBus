@@ -31,7 +31,7 @@ class WifidogController extends BaseController
     }
 
     public function portal(){
-        echo "hello";
+        redirect('http://www.baidu.com',3);
     }
 
     public function gw_message()
