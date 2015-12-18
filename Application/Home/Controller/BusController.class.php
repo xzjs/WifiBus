@@ -10,7 +10,7 @@ use Think\Controller;
  * @author xiuge
  *        
  */
-class BusController extends Controller {
+class BusController extends BaseController {
 	
 	/**
 	 * 添加车辆
@@ -157,12 +157,11 @@ class BusController extends Controller {
 		}
 	}
 
-	public function update_position($mac,$x,$y){
+    public function index(){
         $BusModel=D('Bus');
-        $condition['mac']=$mac;
-        $bus=$BusModel->where($condition)->find();
-		if($bus){
-
-        }
+        $buses=$BusModel->relation(true)->select();
+        $this->assign('data',$buses);
+        //var_dump($buses);
+        $this->show();
     }
 }
