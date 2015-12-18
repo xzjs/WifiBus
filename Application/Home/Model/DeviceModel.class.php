@@ -8,4 +8,12 @@ class DeviceModel extends Model {
     	array('bus_id','require','bus_id不能为空！'),
     	array('ssid','unique','设备id重复！'),
         );
+
+    /**
+     * 定义自动完成
+     * @var array
+     */
+    protected $_auto = array (
+        array('time','time',3,'function'), // 对update_time字段在更新的时候写入当前时间戳
+    );
  }
