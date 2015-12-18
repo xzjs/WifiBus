@@ -156,4 +156,13 @@ class BusController extends Controller {
 			$this->error ( $Bus->getError () );
 		}
 	}
+
+	public function update_position($mac,$x,$y){
+        $BusModel=D('Bus');
+        $condition['mac']=$mac;
+        $bus=$BusModel->where($condition)->find();
+		if($bus){
+
+        }
+    }
 }
