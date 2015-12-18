@@ -31,7 +31,7 @@ class WifidogController extends BaseController
     }
 
     public function portal(){
-        redirect('http://www.baidu.com', 'location', 3);
+        $this->redirect('http://www.baidu.com', 'location', 3);
     }
 
     public function gw_message()
