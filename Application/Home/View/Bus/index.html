@@ -1,0 +1,25 @@
+{__NOLAYOUT__}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+<table>
+    <volist name="data" id="vo">
+        <tr>
+            <td>{$vo.id}</td>
+            <td>{$vo.no}</td>
+            <td>{$vo.position_x}</td>
+            <td>{$vo.position_y}</td>
+            <td>{$vo.Device.mac}</td>
+            <td>{$vo.Device.useage}</td>
+            <td>{$vo.Device.time|date="Y-m-d H:i:s",###}</td>
+            <td>{$vo.Device.online_num}</td>
+            <td>{$vo.Device.flow_num}</td>
+        </tr>
+    </volist>
+</table>
+</body>
+</html>

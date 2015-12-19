@@ -17,10 +17,11 @@ class LineController extends Controller {
 	 */
 	public function add() {
 		$Line = D ( 'Line' );
+		
 		if ($Line->create ()) {
 			$result = $Line->add ();
 			if ($result) {
-				$this->success ( '数据添加成功！' );
+				echo $result;
 			} else {
 				$this->error ( '数据添加错误！' );
 			}

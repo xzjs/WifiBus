@@ -10,13 +10,14 @@ use Think\Controller;
  * @author xiuge
  *        
  */
-class BusController extends Controller {
+class BusController extends BaseController {
 	
 	/**
 	 * 添加车辆
 	 */
 	public function add() {
 		$Bus = D ( 'Bus' );
+	
 		if ($Bus->create ()) {
 			if (empty ( $Bus->position_x ) && empty ( $Bus->position_y )) {
 				$Bus->position_x = 0;
@@ -24,7 +25,14 @@ class BusController extends Controller {
 			}
 			$result = $Bus->add ();
 			if ($result) {
-				$this->success ( '数据添加成功！' );
+				$device=D('Device');
+				$flag=$device->add();
+				if ($flag>0)
+					echo $result;
+				else 
+				{
+					$this->error ( '数据添加错误！' );
+				}
 			} else {
 				$this->error ( '数据添加错误！' );
 			}
@@ -156,4 +164,12 @@ class BusController extends Controller {
 			$this->error ( $Bus->getError () );
 		}
 	}
+
+    public function index(){
+        $BusModel=D('Bus');
+        $buses=$BusModel->relation(true)->select();
+        $this->assign('data',$buses);
+        //var_dump($buses);
+        $this->show();
+    }
 }

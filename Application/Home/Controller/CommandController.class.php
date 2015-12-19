@@ -12,15 +12,37 @@ use Think\Controller;
 class CommandController extends Controller
 {
     /**
-     * @param $mac 路由器mac地址
-     * @param $cmd 命令
-     * @param $arg 回执参数
+     * 心跳接口
+     * @param $mac 设备mac
+     * @param $lon 经度
+     * @param $lat 纬度
+     * @param $online_num 在线人数
+     * @param $usage 使用率
+     * @param $flow_num 使用流量
+     * @param string $cmd 操作命令
+     * @param int $arg 参数
      */
-    public function ping($mac, $cmd = '0', $arg = 0)
+    public function ping($mac,$lon,$lat,$online_num,$usage,$flow_num,$cmd = '0', $arg = 0)
     {
         $Device=D("Device");
-        $d=$Device->where('mac="'.$mac.'"')->find();
-        $Command = M("Command");
+        $condition['mac']=$mac;
+        $d=$Device->where($condition)->find();
+        if($d){
+            $Device->useage=$usage;
+            $Device->online_num=$online_num;
+            $Device->flow_num=$flow_num;
+            $Device->create();
+            $Device->save();
+            $Bus=D('Bus');
+            $b=$Bus->find($Device->bus_id);
+            if($b){
+                $Bus->position_x=$lon;
+                $Bus->position_y=$lat;
+                $Bus->save();
+            }
+        }
+        $this->output('pong');
+        /*$Command = M("Command");
         if($cmd=='0'){
             $data=$Command->where('device_id=' . $d['id'] . ' and status=0')->find();
             if($data){
@@ -60,7 +82,7 @@ class CommandController extends Controller
         }
         $Command->status = 1;
         $Command->where('id=' . $Command->id)->save();
-        $this->output('pong');
+        $this->output('pong');*/
     }
 
     public function index()
