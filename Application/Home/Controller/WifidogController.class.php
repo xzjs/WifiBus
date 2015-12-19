@@ -29,6 +29,6 @@ class WifidogController extends BaseController
     }
 
     public function portal(){
-        redirect('qaiiwifi.com',3);
+        redirect('wifi21.com',3);
     }
 }
