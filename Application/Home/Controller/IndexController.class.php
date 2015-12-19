@@ -1,7 +1,8 @@
 <?php
 namespace Home\Controller;
 use Think\Controller;
-class IndexController extends BaseController {
+class IndexController extends Controller {
+	
     public function index(){
         /*if(!isset($_SESSION['admin'])){
             $this->error('请先登录',U('Admin/login'));

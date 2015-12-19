@@ -99,7 +99,8 @@
 
     var map = new BMap.Map("allmap");            // 创建Map实例
     map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 13);
-
+    
+    
     var opts = {
         width: 250,     // 信息窗口宽度
         height: 80,     // 信息窗口高度
@@ -130,6 +131,7 @@
         myChartFlow.setOption(optionFlow);
         myChartAd.setOption(optionAd);
     }
+    
     function ajax($url, line) {
         jQuery.ajax({
             url: $url,
@@ -139,6 +141,7 @@
             }
         });
     }
+    
     function get_map(line, array) {
         // 百度地图API功能
         var busline = new BMap.BusLineSearch(map, {
