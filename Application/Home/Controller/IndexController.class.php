@@ -10,7 +10,7 @@ class IndexController extends Controller {
         $this->assign('title','首页');
         $this->assign('class1','action');
     	$Line = A ( 'Line' );
-    	$data = $Line->select ();
+    	$data = $Line->getLineList ();
     	$this->assign ( 'line_list', $data );
     	$Bus=M('Bus');
     	$data = $Bus->where('line_id='.$data[0][id])->select();

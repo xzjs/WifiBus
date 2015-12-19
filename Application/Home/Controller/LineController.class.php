@@ -36,7 +36,7 @@ class LineController extends Controller {
 	 * @param number $id
 	 *        	线路id
 	 */
-	public function select($id = 0,$search_keys = '', $is_ajax = 0) {
+	public function getLineList($id = 0,$search_keys = '', $is_ajax = 0) {
 		$Line = M ( 'Line' );
 		if ($id != 0) {
 			$data = $Line->find ( $id );
@@ -47,7 +47,7 @@ class LineController extends Controller {
 			);
 			$data = $Line->where ( $map )->select ();
 		}else {
-			$data = $Line->select ();
+			$data = $Line->order('name')->select ();
 		}
 		
 		if($is_ajax==1){

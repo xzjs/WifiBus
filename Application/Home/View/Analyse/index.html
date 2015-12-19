@@ -55,18 +55,26 @@
 </div>
 <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
 <script type="text/javascript">
+//广告点击量(数据库数据)
+var adInfo = eval({$adInfo});
+var textList=new Array();
+var numList=new Array();
+for (var i = 0; i < adInfo.length; i++) {
+	textList[i]=adInfo[i].text;
+	numList[i]=adInfo[i].click_num;
+}
+var adMainOption = adMainFunction(textList,numList);
+
+
+
+
+
 
     var myChartAdMain = echarts.init(document.getElementById('adMain'), 'macarons2');
     var myChartAdTime = echarts.init(document.getElementById('adTime'),'macarons');
     var myChartFlowTime = echarts.init(document.getElementById('flowTime'),'macarons');
     var myChartCustomerTime = echarts.init(document.getElementById('customerTime'),'macarons');
     var myChartTurnBackTime = echarts.init(document.getElementById('turnBackTime'),'macarons');
-
-    // 广告点击量
-    
-	var adInfo = eval({$adInfo});
-    var adMainOption = adMainFunction(adInfo);
-
     
     var a=new Array((Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*15,(Math.random()+1)*15);
 	var b=new Array((Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*15,(Math.random()+1)*15);
@@ -74,7 +82,6 @@
 	var d=new Array((Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50);
 	var e=new Array((Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6);
 	
-    	
     // 广告点击量时间关系图
     var adMainTime = adMainTimeFunction(a,b);
     // 流量时间关系图
@@ -113,12 +120,22 @@
         myChartCustomerTime.setOption(adMainCustomer);
         myChartTurnBackTime.setOption(adMainTurnBack);
     	
+        
+        
+        
+        
     	$.post("getAdInfo", {
     		line_id : line
     	}, function(data, status) {
     		if (status == 4 || status == "success") {
     			var adInfo = eval(data);
-    		    var adMainOption = adMainFunction(adInfo);
+    			var textList=new Array();
+    			var numList=new Array();
+    			for (var i = 0; i < adInfo.length; i++) {
+    				textList[i]=adInfo[i].text;
+    				numList[i]=adInfo[i].click_num;
+    			}
+    		    var adMainOption = adMainFunction(textList,numList);
     		    myChartAdMain.setOption(adMainOption);
     		}
     	});

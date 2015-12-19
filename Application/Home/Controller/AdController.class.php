@@ -40,19 +40,25 @@ class AdController extends Controller
      *            广告Id
      * @param number $type 广告类型
      */
-    public function select($id = 0, $type = 0)
+    public function select()
     {
         $Ad = M('Ad');
-        if ($id != 0)
-            $condition ['id'] = $id;
-        if ($type != 0)
-            $condition ['type'] = $type;
-        $result = $Ad->where($condition)->select();
-        if ($result) {
-            var_dump($result);
-        } else {
-            $this->error('查询失败！');
-        }
+    	if(I('param.line_id',0)!=0){
+    		$result=$Ad->where('line_id='.I('param.line_id'))->order('click_num desc')->limit(6)->select();
+    		$this->ajaxReturn($result);
+    	}else{
+    		if ($id != 0)
+    			$condition ['id'] = $id;
+    		if ($type != 0)
+    			$condition ['type'] = $type;
+    		$result = $Ad->where($condition)->select();
+    		if ($result) {
+    			var_dump($result);
+    		} else {
+    			$this->error('查询失败！');
+    		}
+    	}
+        
     }
 
     /**
