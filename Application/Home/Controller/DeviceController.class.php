@@ -16,18 +16,20 @@ class DeviceController extends Controller
     /**
      * 添加设备
      */
-    public function add()
+    public function add($bus_id=0,$mac=0)
     {
         $Device = D('Device');
+        $Device->bus_id=$bus_id;
+        $Device->mac=$mac;
         if ($Device->create()) {
             $result = $Device->add();
             if ($result) {
-                $this->success('数据添加成功！');
+               return $result;
             } else {
-                $this->error('数据添加错误！');
+                 return 0;
             }
         } else {
-            $this->error($Device->getError());
+             return -1;
         }
     }
 

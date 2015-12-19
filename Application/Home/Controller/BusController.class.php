@@ -17,6 +17,7 @@ class BusController extends BaseController {
 	 */
 	public function add() {
 		$Bus = D ( 'Bus' );
+	
 		if ($Bus->create ()) {
 			if (empty ( $Bus->position_x ) && empty ( $Bus->position_y )) {
 				$Bus->position_x = 0;
@@ -24,7 +25,14 @@ class BusController extends BaseController {
 			}
 			$result = $Bus->add ();
 			if ($result) {
-				$this->success ( '数据添加成功！' );
+				$device=D('Device');
+				$flag=$device->add();
+				if ($flag>0)
+					echo $result;
+				else 
+				{
+					$this->error ( '数据添加错误！' );
+				}
 			} else {
 				$this->error ( '数据添加错误！' );
 			}

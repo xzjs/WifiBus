@@ -3,9 +3,9 @@ namespace Home\Controller;
 use Think\Controller;
 class IndexController extends BaseController {
     public function index(){
-        if(!isset($_SESSION['admin'])){
+        /*if(!isset($_SESSION['admin'])){
             $this->error('请先登录',U('Admin/login'));
-        }
+        }*/
         $this->assign('title','首页');
         $this->assign('class1','action');
     	$Line = A ( 'Line' );
