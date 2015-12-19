@@ -58,7 +58,7 @@ class BusController extends BaseController {
 			} elseif ($line_id != 0) {//根据线路搜索
 				$map ['line_id'] = $line_id;
 			}
-			$data = $Bus->where ( $map )->field ( 'id,no' )->select ();
+			$data = $Bus->where ( $map )->field ( 'id,no' )->order('no')->select ();
 			$a = json_encode ( $data );
 			$this->ajaxReturn ( json_encode ( $data ) );
 		} else {
@@ -66,10 +66,11 @@ class BusController extends BaseController {
 				$condition_bus ['id'] = $id;
 			if ($line_id != 0)
 				$condition_bus ['line_id'] = $line_id;
-			$data = $Bus->where ( $condition_bus )->select ();
+			$data = $Bus->where ( $condition_bus )->order('no')->select ();
 			return $data;
 		}
 	}
+
 	
 	/**
 	 * 测试更新车辆信息的方法

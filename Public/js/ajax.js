@@ -70,18 +70,20 @@ function search_bus(url,keys) {
  * 搜索线路（用户控制——》线路管理——》搜索）
  * @param key 搜索关键字
  */
-function search_line(key){
-	$.post("Line/select", {
+function search_line(url,key){
+	$.post(url, {
 		is_ajax : 1,
-		search_keys : keys
+		search_keys : key
 	}, function(data, status) {
 		if (status == 4 || status == "success") {
 			var line_info = eval(data);
 			var line_list = "";
 			for (var i = 0; i < line_info.length; i++) {
-				line_list += "<li><a href='#'>" + line_info[i].no + "</a></li>";
+				line_list +="<li><a href='#'>" + line_info[i].name + "</a></li>";
+				//line_list += "<li><a href='#'>" + line_info[i].no + "</a></li>";
+				//line_list +="<li><a onclick=func('{:U("Home/Index/bus/str")}/"+line_info[i].id+"','"+line_info[i].no+"','{:U("Bus/select")}',"+line_info[i].id+",'ul_bus_list')>"+line_info[i].no+"</a></li>";
 			}
-			$("ul#line_list").html(line_list);
+			$("ul#ul_line_list").html(line_list);
 		}
 	});
 }

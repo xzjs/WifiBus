@@ -12,8 +12,8 @@ class IndexController extends Controller {
     	$Line = A ( 'Line' );
     	$data = $Line->getLineList ();
     	$this->assign ( 'line_list', $data );
-    	$Bus=M('Bus');
-    	$data = $Bus->where('line_id='.$data[0][id])->select();
+    	$Bus=A('Bus');
+    	$data = $Bus->select(0,$data[0][id],'',0);
     	$this->assign ( 'bus_list', $data );
     	$this->display ();
     }

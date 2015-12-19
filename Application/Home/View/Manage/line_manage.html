@@ -11,13 +11,11 @@
 		<div id="allmap" class="big_map"></div>
 		<div class="search_line">
 			<div>
-				<form action="form">
-					<input type="text"> <input type="submit" value="提交">
-				</form>
+					<input type="text" id="line_search_keys"> <input type="button" onclick="search_line('{:U('Line/getLineList')}',$('input#line_search_keys').val())" value="提交">
 			</div>
 			<ul id="ul_line_list">
 				<volist name="line_list" id="vo" empty=" ">
-				<li><a onclick=func('{:U("Home/Index/bus/str")}/{$vo.id}','{$vo.name}','{:U("Bus/select")}',{$vo.id},'ul_bus_list')>{$vo.name}</a></li>
+				<li><a href="javascript:void(0);" onclick="ajax('{:U("Index/bus")}/str/{$vo.id}','{$vo.name}')">{$vo.name}</a></li>
 				</volist>
 			</ul>
 			<div class="line_button">
@@ -163,10 +161,7 @@
     map.setCurrentCity("青岛");          // 设置地图显示的城市 此项是必须设置的
     map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
 
-    function func(url,line,url1,id,display){
-        ajax(url,line);
-        get_bus_list(url1,id,display)
-    }
+    
     function ajax(url, line) {
         jQuery.ajax({
             url: url,
