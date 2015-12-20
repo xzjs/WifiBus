@@ -3,26 +3,44 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>上网认证页</title>
-    <!-- 新 Bootstrap 核心 CSS 文件 -->
-    <link rel="stylesheet" href="__PUBLIC__/css/bootstrap.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Document</title>
+    <style>
+        html{
+            background: #fff;
+            height: 100%;
+        }
+        body{
+            height: 100%;
+        }
+        .container{
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        .clickMe{
+            font: 32px '微软雅黑', sans-serif;
+            display: block;
+            position: absolute;
+            width: 80%;
+            left: 10%;
+            top: 50%;
+            margin-top: -44px;
+            height: 88px;
+            background: #abf637;
+            border-radius: 56px;
+            text-align: center;
+            line-height: 88px;
+            cursor: pointer;
+            -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+            box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
-<div class="container-fluid">
-    <div class="row-fluid text-center">
-        <div class="col-xs-5">
-        </div>
-        <div class="col-xs-2">
-            <a href="{$url}" class="btn btn-success btn-lg">点我上网</a>
-        </div>
-        <div class="col-xs-5">
-        </div>
-    </div>
+<div class="container">
+    <a class="clickMe" href="{$url}">点我上网</a>
 </div>
-<!-- jQuery文件。务必在bootstrap.min.js 之前引入 -->
-<script src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>
-
-<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
-<script src="__PUBLIC__/js/bootstrap.min.js"></script>
 </body>
 </html>
