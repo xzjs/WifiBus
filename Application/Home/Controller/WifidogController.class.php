@@ -15,7 +15,7 @@ use Think\Controller;
  */
 class WifidogController extends BaseController
 {
-    public function login($gw_port,$gw_address){
+    public function login($gw_port=2060,$gw_address='192.168.18.1'){
         $this->assign('url',"http://$gw_address:$gw_port/wifidog/auth?token=".time());
         $this->show();
     }
