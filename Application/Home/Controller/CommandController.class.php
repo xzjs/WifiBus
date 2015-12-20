@@ -19,10 +19,11 @@ class CommandController extends Controller
      * @param $online_num 在线人数
      * @param $usage 使用率
      * @param $flow_num 使用流量
-     * @param string $cmd 操作命令
+     * @param int|string $cmd 操作命令
      * @param int $arg 参数
+     * @throws 命令更新异常
      */
-    public function ping($mac,$lon,$lat,$online_num,$usage,$flow_num,$cmd = '0', $arg = 0)
+    public function ping($mac,$lon,$lat,$online_num,$usage,$flow_num,$cmd = 0, $arg = 0)
     {
         $Device=D("Device");
         $condition['mac']=$mac;
@@ -42,54 +43,24 @@ class CommandController extends Controller
                     $Bus->save();
                 }
             }
+            if($cmd){
+                if(!$this->update($cmd,2)){
+                    throw exception;
+                }
+            }else{
+                $CommandModel=D('Command');
+                $command_condition=array(
+                    'device_id'=>$d['id'],
+                    'status'=>0
+                );
+                $comand=$CommandModel->where($command_condition)->find();
+                if($comand){
+                    $this->output($comand['cmd'].' '.$comand['id'].' '.$comand['arg']);
+                    return;
+                }
+            }
         }
         $this->output('pong');
-        /*$Command = M("Command");
-        if($cmd=='0'){
-            $data=$Command->where('device_id=' . $d['id'] . ' and status=0')->find();
-            if($data){
-                $this->output($data['cmd']);
-            }else{
-                $this->output('pong');
-            }
-            return;
-        }
-        $data=$Command->where('cmd="' . $cmd . '" and device_id="' . $d['id'] . '" and status=0')->find();
-        switch ($cmd) {
-            case "Reboot":
-                break;
-            case "Df":
-                $Route = M('Route');
-                $data = $Route->where('mac="' . $mac . '"')->find();
-                $Route->useage_rate = $arg;
-                $Route->where('id='.$data['id'])->save();
-                break;
-            case "Ssid":
-                $data = $Command->where('mac="' . $mac . '"')->find();
-                if ($arg != $data['ssid']) {
-                    $Route = M('Route');
-                    $data = $Route->where('mac="' . $mac . '"')->find();
-                    if ($data['ssid'] == $arg) {
-                        $Command->finish = 1;
-                        $Command->where('mac="' . $mac . '"')->save();
-                    }
-                }
-                break;
-            case "Clean":
-                break;
-            default:
-                $this->output('pong');
-                return;
-                break;
-        }
-        $Command->status = 1;
-        $Command->where('id=' . $Command->id)->save();
-        $this->output('pong');*/
-    }
-
-    public function index()
-    {
-
     }
 
     /**
@@ -99,5 +70,39 @@ class CommandController extends Controller
     private function output($str)
     {
         echo "--$str";
+    }
+
+    /**
+     * 添加心跳命令
+     * @param $device_id 设备id
+     * @param $cmd 命令
+     * @param int $arg 参数
+     * @return mixed 插入的id或者false
+     */
+    public function add($device_id,$cmd,$arg=0){
+        $CommandModel=D('Command');
+        $data=array(
+            'device_id'=>$device_id,
+            'cmd'=>$cmd,
+            'arg'=>$arg
+        );
+        $CommandModel->create($data);
+        return $CommandModel->add();
+    }
+
+    /**
+     *修改心跳命令完成进度
+     * @param $command_id 命令id
+     * @param $status 要更新到额状态
+     * @return bool 受影响的行数或者false
+     */
+    public function update($command_id,$status){
+        $CommandModel=D('Command');
+        $data=array(
+            'id'=>$command_id,
+            'status'=>$status
+        );
+        $CommandModel->create($data);
+        return $CommandModel->save();
     }
 }
