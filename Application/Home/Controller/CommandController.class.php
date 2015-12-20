@@ -31,14 +31,16 @@ class CommandController extends Controller
             $Device->useage=$usage;
             $Device->online_num=$online_num;
             $Device->flow_num=$flow_num;
-            $Device->create();
+            $Device->time=time();
             $Device->save();
             $Bus=D('Bus');
             $b=$Bus->find($Device->bus_id);
             if($b){
-                $Bus->position_x=$lon;
-                $Bus->position_y=$lat;
-                $Bus->save();
+                if($lon*$lat) {
+                    $Bus->position_x = $lon;
+                    $Bus->position_y = $lat;
+                    $Bus->save();
+                }
             }
         }
         $this->output('pong');

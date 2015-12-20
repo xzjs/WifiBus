@@ -7,6 +7,8 @@ class OthersController extends Controller {
         $this->assign('class3','action');
     	$this->display ();
     }
-    
-    
+
+    public function get_ssid($ids){
+
+    }
 }
