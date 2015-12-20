@@ -270,7 +270,7 @@ function adOption(a, url) {
 // ***************************************
 
 // 广告点击量
-function adMainFunction(adInfo) {
+function adMainFunction(text,click_num) {
     var tempOption = {
         title: {
             text: '广告点击量',
@@ -304,7 +304,7 @@ function adMainFunction(adInfo) {
         }],
         yAxis: [{
             type: 'category',
-            data: [adInfo[0].text, adInfo[1].text, adInfo[2].text, adInfo[3].text, adInfo[4].text, adInfo[5].text],
+            data: text,
             axisLabel: {
                 textStyle: {
                     fontFamily: 'Microsoft YaHei, sans-serif',
@@ -316,7 +316,7 @@ function adMainFunction(adInfo) {
         series: [{
             name: '2015年',
             type: 'bar',
-            data: [adInfo[0].click_num, adInfo[1].click_num, adInfo[2].click_num, adInfo[3].click_num, adInfo[4].click_num, adInfo[5].click_num]
+            data: click_num,
         }]
     };
     return tempOption;

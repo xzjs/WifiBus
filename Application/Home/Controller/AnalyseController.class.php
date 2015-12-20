@@ -19,13 +19,13 @@ class AnalyseController extends Controller {
 		$this->assign('title','广告和流量分析');
         $this->assign('class2','action');
     	$Line = A ( 'Line' );
-    	$data = $Line->select ();
+    	$data = $Line->getLineList ();
     	$this->assign ( 'line_list', $data );
-    	$Bus=M('Bus');
-    	$data1 = $Bus->where('line_id='.$data[0][id])->select();
+    	$Bus=A('Bus');
+    	$data1 = $Bus->select(0,$data[0][id],'',0);
     	$this->assign ( 'bus_list', $data1 );
     	$Ad=M('Ad');
-    	$data2 = $Ad->where('line_id='.$data[0][id])->field('text,click_num')->select();
+    	$data2 = $Ad->where('line_id='.$data[0][id])->field('text,click_num')->order('click_num desc')->limit(6)->select();
     	$this->assign ( 'adInfo', json_encode ( $data2 ) );
     	$this->display ();
 	}
@@ -44,8 +44,8 @@ class AnalyseController extends Controller {
 	
 	public function getAdInfo($line_id=0) {
 		$Ad=M('Ad');
-		$data = $Ad->where('line_id='.$line_id)->field('text,click_num')->select();
-		$this->ajaxReturn ( json_encode ( $data ) );
+		$data = $Ad->where('line_id='.$line_id)->field('text,click_num')->order('click_num desc')->limit(6)->select();
+		$this->ajaxReturn ( $data  );
 	}
 	
 	

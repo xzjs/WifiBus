@@ -1,4 +1,3 @@
-<Script>window.onload = init_index()</script>
 <div class="out_container_title">
     <div class="container_title">
         <div class="left">
@@ -46,7 +45,6 @@
             </select>
 
             <div class="search">
-
                 <p>
                     <input type="text" id="search_keys"> <a><img
                         src="__PUBLIC__/images/home_search.png" alt=""
@@ -60,17 +58,15 @@
             </ul>
         </div>
 
+
+
         <div class="road_display">
             <div class="left_display">
                 <ul>
-                    <li><a href="javascript:void(0);"
-                           onclick="ajax('__CONTROLLER__/bus/str/35','开发区1路')">1路</a></li>
-                    <li><a href="javascript:void(0);"
-                           onclick="ajax('__CONTROLLER__/bus/str/36','开发区18路')">18路</a></li>
-                    <li><a href="javascript:void(0);"
-                           onclick="ajax('__CONTROLLER__/bus/str/37','开发区4路')">4路</a></li>
-                    <li><a href="javascript:void(0);"
-                           onclick="ajax('__CONTROLLER__/bus/str/38','开发区26路')">26路</a></li>
+                	<volist name="line_list" id="vo" empty=" ">
+                  	  <li><a href="javascript:void(0);"
+                           onclick="ajax('__CONTROLLER__/bus/str/+{$vo.id}','{$vo.name}')">{$vo.name}</a></li>
+                	</volist>
                 </ul>
             </div>
         </div>
