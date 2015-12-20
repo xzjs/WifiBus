@@ -34,7 +34,7 @@ class CommandController extends Controller
             $Device->time=time();
             $Device->save();
             $Bus=D('Bus');
-            $b=$Bus->find($Device->bus_id);
+            $b=$Bus->find($d['bus_id']);
             if($b){
                 if($lon*$lat) {
                     $Bus->position_x = $lon;
