@@ -25,6 +25,8 @@ class CommandController extends Controller
      */
     public function ping($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd = 0, $arg = 0)
     {
+        $LogCtrl=A('Log');
+        $LogCtrl->add($mac,$lon,$lat,$online_num,$usage,$flow_num,$cmd,$arg);
         $Device = D("Device");
         $condition['mac'] = $mac;
         $d = $Device->where($condition)->find();
