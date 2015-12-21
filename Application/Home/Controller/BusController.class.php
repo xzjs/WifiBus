@@ -178,7 +178,7 @@ class BusController extends BaseController {
 
     public function index(){
         $BusModel=D('Bus');
-        $buses=$BusModel->relation(true)->select('41,42');
+        $buses=$BusModel->relation(true)->select();
         $this->assign('data',$buses);
         //var_dump($buses);
         $this->show();
