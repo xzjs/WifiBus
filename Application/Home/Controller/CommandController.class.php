@@ -23,41 +23,41 @@ class CommandController extends Controller
      * @param int $arg 参数
      * @throws 命令更新异常
      */
-    public function ping($mac,$lon,$lat,$online_num,$usage,$flow_num,$cmd = 0, $arg = 0)
+    public function ping($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd = 0, $arg = 0)
     {
-        $Device=D("Device");
-        $condition['mac']=$mac;
-        $d=$Device->where($condition)->find();
-        if($d){
-            $Device->useage=$usage;
-            $Device->online_num=$online_num;
-            $Device->flow_num=$flow_num;
-            $Device->time=time();
+        $Device = D("Device");
+        $condition['mac'] = $mac;
+        $d = $Device->where($condition)->find();
+        if ($d) {
+            $Device->useage = $usage;
+            $Device->online_num = $online_num;
+            $Device->flow_num = $flow_num;
+            $Device->time = time();
             $Device->save();
-            $Bus=D('Bus');
-            $b=$Bus->find($d['bus_id']);
-            if($b){
-                if($lon*$lat) {
+            $Bus = D('Bus');
+            $b = $Bus->find($d['bus_id']);
+            if ($b) {
+                if ($lon * $lat) {
                     $Bus->position_x = $lon;
                     $Bus->position_y = $lat;
                     $Bus->save();
                 }
             }
-            if($cmd){
-                if(!$this->update($cmd,2)){
+            if ($cmd) {
+                if (!$this->update($cmd, 2)) {
                     throw exception;
                 }
-            }else{
-                $CommandModel=D('Command');
-                $command_condition=array(
-                    'device_id'=>$d['id'],
-                    'status'=>0
-                );
-                $command=$CommandModel->where($command_condition)->find();
-                if($command){
-                    $this->output($command['cmd'],$command['id'],$command['arg']);
-                    return;
-                }
+            }
+            $CommandModel = D('Command');
+            $command_condition = array(
+                'device_id' => $d['id'],
+                'status' => 0
+            );
+            $command = $CommandModel->where($command_condition)->find();
+            if ($command) {
+                $this->output($command['cmd'], $command['id'], $command['arg']);
+                $this->update($command['id'],1);
+                return;
             }
         }
         $this->output('pong');
@@ -67,7 +67,7 @@ class CommandController extends Controller
      * 格式化输出
      * @param $str 要输出的字符串
      */
-    private function output($str,$id=0,$arg=0)
+    private function output($str, $id = 0, $arg = 0)
     {
         echo "--$str:$id,$arg";
     }
@@ -79,17 +79,18 @@ class CommandController extends Controller
      * @param int $arg 参数
      * @return mixed 插入的id或者false
      */
-    public function add($device_id,$cmd,$arg=0){
-        $CommandModel=D('Command');
-        $data=array(
-            'device_id'=>$device_id,
-            'cmd'=>$cmd,
-            'arg'=>$arg,
-            'status'=>0,
-            'time'=>time()
+    public function add($device_id, $cmd, $arg = 0)
+    {
+        $CommandModel = D('Command');
+        $data = array(
+            'device_id' => $device_id,
+            'cmd' => $cmd,
+            'arg' => $arg,
+            'status' => 0,
+            'time' => time()
         );
-        $CommandModel->create($data,1);
-        $result=$CommandModel->add();
+        $CommandModel->create($data, 1);
+        $result = $CommandModel->add();
         return $result;
     }
 
@@ -99,11 +100,13 @@ class CommandController extends Controller
      * @param $status 要更新到额状态
      * @return bool 受影响的行数或者false
      */
-    public function update($command_id,$status){
-        $CommandModel=D('Command');
-        $data=array(
-            'id'=>$command_id,
-            'status'=>$status
+    public function update($command_id, $status)
+    {
+        $CommandModel = D('Command');
+        $data = array(
+            'id' => $command_id,
+            'status' => $status,
+            'time'=>time()
         );
         $CommandModel->create($data);
         return $CommandModel->save();
