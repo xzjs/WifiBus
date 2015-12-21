@@ -21,14 +21,18 @@
                 </form>
                 <ul>
 
-                    <volist name="line_list" id="vo" empty=" " offset='0' length='1'>
-                        <li class="showTemp"
-                            onclick="get_bus_list('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check')">
+                    <volist name="line_list" id="vo" empty=" " key="k">
+                    	<if condition="($k eq 1)">
+                    		<li class="showTemp"
+                            	onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check')">
                             <input type="checkbox" name="roadLine" value={$vo.id}><a>{$vo.name}</a></li>
-                    </volist>
-                    <volist name="line_list" id="vo" empty=" " offset='1'>
-                        <li onclick="get_bus_list('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check')">
+                    	
+						<else/>
+
+							<li onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check')">
                             <input type="checkbox" name="roadLine" value={$vo.id}><a>{$vo.name}</a></li>
+
+						</if>
                     </volist>
 
                 </ul>
@@ -44,8 +48,7 @@
                 </form>
                 <ul id="bus_list_check">
                     <volist name="bus_list" id="vo" empty=" ">
-                        <li>
-                        <li><input type="checkbox" name="car" value={vo.id}'> <a>{$vo.no}</a></li>
+                        <li><input type="checkbox" name="car" value={vo.id}> <a>{$vo.no}</a></li>
                     </volist>
                 </ul>
                 <a class="checkAll">全选</a> <a class="checkNone">取消全选</a>
