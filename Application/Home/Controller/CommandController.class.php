@@ -53,9 +53,9 @@ class CommandController extends Controller
                     'device_id'=>$d['id'],
                     'status'=>0
                 );
-                $comand=$CommandModel->where($command_condition)->find();
-                if($comand){
-                    $this->output($comand['cmd'].' '.$comand['id'].' '.$comand['arg']);
+                $command=$CommandModel->where($command_condition)->find();
+                if($command){
+                    $this->output($command['cmd'].' '.$command['id'].' '.$command['arg']);
                     return;
                 }
             }
