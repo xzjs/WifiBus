@@ -1,0 +1,239 @@
+<div class="out_container_title">
+	<div class="container_title">
+		<div class="left">
+			<ul>
+				<li class="box_three"><a></a></li>
+				<li class="box_four"><a
+					href="{:U('Remoteupdate/remoteupdate')}"></a></li>
+				<li class="box_five"><a href="{:U('Others/others')}"></a></li>
+			</ul>		
+		</div>
+		<div id="allmap" class="big_map"></div>
+		<div class="search_line">
+			<div>
+					<input type="text" id="line_search_keys"> <input type="button" onclick="search_line('{:U('Line/getLineList')}',$('input#line_search_keys').val())" value="提交">
+			</div>
+			<ul id="ul_line_list">
+				<volist name="line_list" id="vo" empty=" ">
+				<li><a href="javascript:void(0);" onclick="ajax('{:U("Index/bus")}/str/{$vo.id}','{$vo.name}')">{$vo.name}</a></li>
+				</volist>
+			</ul>
+			<div class="line_button">
+				<p class="we_click line_edit_con">编辑</p>
+
+				<p class="we_click line_add_con">添加</p>
+
+				<p class="we_click line_alladd_con">批量添加</p>
+
+				<div class="clr"></div>
+			</div>
+		</div>
+
+		<div class="search_car	hideTemp">
+			<div>
+				<form action="form">
+					<input type="text"> <input type="submit" value="提交">
+				</form>
+			</div>
+			<ul id="ul_bus_list">
+			</ul>
+			<div class="car_button">
+				<p class="we_click car_edit_con">
+					编辑</a>
+				</p>
+				<p class="we_click car_add_con">添加</p>
+
+				<div class="clr"></div>
+			</div>
+		</div>
+
+		<div class="clear"></div>
+		<form method="post" action="upload" enctype="multipart/form-data">
+			<ul class="user_click">
+				<li class="car_add"><a>Close</a>
+					<div>
+						<p>车牌号:</p>
+						<input type="text">
+
+						<div class="clear"></div>
+					</div>
+					<div>
+						<p>设备MAC地址:</p>
+						<select name="mac">
+							<option value="mac1">12311fwxcv</option>
+							<option value="mac2">fwefxx</option>
+							<option value="mac3">fwefcvxgvber</option>
+							<option value="mac4">xxxhiwnxcwdf</option>
+						</select>
+					</div> <input type="submit" value="确定">
+				</li>
+			</ul>
+		</form>
+
+		<form method="post" action="upload" enctype="multipart/form-data">
+			<ul class="user_click">
+				<li class="line_edit"><a>Close</a>
+
+					<div>
+						<p>线路:</p>
+						<input type="text">
+
+						<div class="clear"></div>
+					</div> <input type="submit" value="删除"> <input type="submit"
+					value="确定"></li>
+			</ul>
+		</form>
+
+		<form method="post" action="upload" enctype="multipart/form-data">
+			<ul class="user_click">
+				<li class="line_alladd"><a>Close</a>
+
+					<div>
+						<p>批量表格</p>
+						<input type="file" class="file" name="j" onchange="ye.value=value">
+						<input name="ye" class="ye"> <input type="button"
+							class="button" value="打开" onclick=j.click()>
+
+						<div class="clear"></div>
+					</div> <input type="submit" value="提交"> <a
+					href="/wifibus/Download/模板.xlsx">请点击此处下载表格样本</a></li>
+			</ul>
+		</form>
+
+		<form method="post" action="upload" enctype="multipart/form-data">
+			<ul class="user_click">
+				<li class="line_add"><a>Close</a>
+
+					<div>
+						<p>线路:</p>
+						<input type="text">
+
+						<div class="clear"></div>
+					</div>
+					<div>
+						<p>车牌号:</p>
+						<input type="text">
+
+						<div class="clear"></div>
+					</div>
+					<div>
+						<p>设备MAC地址:</p>
+						<select name="mac">
+							<option value="mac1">12311fwxcv</option>
+							<option value="mac2">fwefxx</option>
+							<option value="mac3">fwefcvxgvber</option>
+							<option value="mac4">xxxhiwnxcwdf</option>
+						</select>
+					</div> <input type="submit" value="确定"></li>
+			</ul>
+		</form>
+
+		<form method="post" action="upload" enctype="multipart/form-data">
+			<ul class="user_click">
+				<li class="car_edit"><a>Close</a>
+
+					<div>
+						<p>车牌号:</p>
+						<input type="text">
+
+						<div class="clear"></div>
+					</div>
+					<div>
+						<p>设备MAC地址:</p>
+						<select name="mac">
+							<option value="mac1">12311fwxcv</option>
+							<option value="mac2">fwefxx</option>
+							<option value="mac3">fwefcvxgvber</option>
+							<option value="mac4">xxxhiwnxcwdf</option>
+						</select>
+					</div> <input type="submit" value="删除"> <input type="submit"
+					value="确定"></li>
+			</ul>
+		</form>
+	</div>
+	<div class="clear"></div>
+</div>
+<script type="text/javascript">
+    // 百度地图API功能
+    var map = new BMap.Map("allmap");    // 创建Map实例
+    map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 13);  // 初始化地图,设置中心点坐标和地图级别
+    map.addControl(new BMap.MapTypeControl());   //添加地图类型控件
+    map.setCurrentCity("青岛");          // 设置地图显示的城市 此项是必须设置的
+    map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+
+    
+    function ajax(url, line) {
+        jQuery.ajax({
+            url: url,
+            dataType: "json",
+            success: function (results) {
+                map1(line, results.data);
+            }
+        });
+    }
+    function map1(line, array) {
+        // 百度地图API功能
+        var map = new BMap.Map("allmap");            // 创建Map实例
+        map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 13);
+
+        var busline = new BMap.BusLineSearch(map, {
+            renderOptions: {map: map, panel: "r-result"},
+            onGetBusListComplete: function (result) {
+                if (result) {
+                    var fstLine = result.getBusListItem(0);//获取第一个公交列表显示到map上
+                    busline.getBusLine(fstLine);
+                }
+            }
+        });
+
+        function busSearch() {
+            var busName = line;
+            busline.getBusList(busName);
+        }
+
+        setTimeout(function () {
+            busSearch();
+        }, 1500);
+
+        setTimeout(function () {
+                    var x;
+                    for (x in array) {
+                        var a = array[x][0];
+                        var b = array[x][1];
+                        var pt = new BMap.Point(a, b);
+                        var num = Math.round(Math.random() * 5);
+                        var img;
+                        switch (num) {
+                            case 0:
+                                img = "__PUBLIC__/images/red_left.png";
+                                break;
+                            case 1:
+                                img = "__PUBLIC__/images/green_left.png";
+                                break;
+                            case 2:
+                                img = "__PUBLIC__/images/green_left.png";
+                                break;
+                            case 3:
+                                img = "__PUBLIC__/images/red_right.png";
+                                break;
+                            case 4:
+                                img = "__PUBLIC__/images/green_right.png";
+                                break;
+                            case 5:
+                                img = "__PUBLIC__/images/green_right.png";
+                                break;
+                            default :
+                                img = "__PUBLIC__/images/green_right.png";
+                                break;
+                        }
+                        var myIcon = new BMap.Icon(img, new BMap.Size(50, 30));
+                        var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
+                        map.addOverlay(marker2);
+                    }
+                }
+                ,
+                2500
+        )
+        ;
+    }
+</script>
