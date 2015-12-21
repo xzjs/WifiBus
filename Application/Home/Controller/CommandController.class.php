@@ -55,7 +55,7 @@ class CommandController extends Controller
                 );
                 $command=$CommandModel->where($command_condition)->find();
                 if($command){
-                    $this->output($command['cmd'].' '.$command['id'].' '.$command['arg']);
+                    $this->output($command['cmd'],$command['id'],$command['arg']);
                     return;
                 }
             }
@@ -67,9 +67,9 @@ class CommandController extends Controller
      * 格式化输出
      * @param $str 要输出的字符串
      */
-    private function output($str)
+    private function output($str,$id=0,$arg=0)
     {
-        echo "--$str";
+        echo "--$str:$id,$arg";
     }
 
     /**
