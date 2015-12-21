@@ -56,7 +56,7 @@ class CommandController extends Controller
             $command = $CommandModel->where($command_condition)->find();
             if ($command) {
                 $this->output($command['cmd'], $command['id'], $command['arg']);
-                $this->update($command['id'],1);
+                //$this->update($command['id'],1);
                 return;
             }
         }
