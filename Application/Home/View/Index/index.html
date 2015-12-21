@@ -60,8 +60,6 @@
             </ul>
         </div>
 
-
-
         <div class="road_display">
             <div class="left_display">
                 <ul>
@@ -87,7 +85,7 @@
  */
 $(function () {
 
-    $.post("{:U('Weather/search')}", {
+    $.post("{:U('Weather/get_weather')}", {
         city_code: 370200,
     }, function (datas, status) {
         if (status == 4 || status == "success") {
