@@ -84,10 +84,13 @@ class CommandController extends Controller
         $data=array(
             'device_id'=>$device_id,
             'cmd'=>$cmd,
-            'arg'=>$arg
+            'arg'=>$arg,
+            'status'=>0,
+            'time'=>time()
         );
-        $CommandModel->create($data);
-        return $CommandModel->add();
+        $CommandModel->create($data,1);
+        $result=$CommandModel->add();
+        return $result;
     }
 
     /**

@@ -14,7 +14,7 @@ class CommandModel extends RelationModel{
      * @var array 自动完成规则
      */
     protected $_auto = array (
-        array('time','time',2,'function'), // 对update_time字段在更新的时候写入当前时间戳
+        array('time','time',3,'function'), // 对update_time字段在更新的时候写入当前时间戳
         array('status','0'),
     );
 }
