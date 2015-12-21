@@ -246,10 +246,10 @@ $(document).ready(function() {
 		$(this).click(function() {
 			
 			$(this).addClass('showTemp');
-			$(userCarFar[index]).removeClass('hideTemp');
+			//$(userCarFar[index]).removeClass('hideTemp');
 			for (var i = 0; i < userLineLen; i++) {
 				if (i == index) continue;
-				$(userCarFar[i]).addClass('hideTemp');
+				//$(userCarFar[i]).addClass('hideTemp');
 				$(userLineFar[i]).removeClass('showTemp');
 			}
 		});

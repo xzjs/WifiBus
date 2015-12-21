@@ -29,6 +29,28 @@ function load_line() {
  * 
  * @param str：线路Id
  */
+function get_bus_list_check(url,id,display) {
+	$.post(url, {
+		is_getbuslist : 1,
+		line_id : id
+	}, function(data, status) {
+		if (status == 4 || status == "success") {
+			var bus_info = eval(data);
+			var bus_list = "";
+			for (var i = 0; i < bus_info.length; i++) {
+				bus_list += "<li><input type='checkbox' name='car' value="+bus_info[i].id+"> <a>"+ bus_info[i].no +"</a></li>";
+			}
+			$("ul#"+display).html(bus_list);
+		}
+	});
+}
+
+
+/**
+ * 显示某线路上的车辆的车牌号
+ * 
+ * @param str：线路Id
+ */
 function get_bus_list(url,id,display) {
 	$.post(url, {
 		is_getbuslist : 1,
