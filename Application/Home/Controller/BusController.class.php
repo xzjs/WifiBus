@@ -87,7 +87,14 @@ class BusController extends BaseController {
 		$this->assign ( 'bus', $Bus->find ( $id ) );
 		$this->display ();
 	}
-	
+	/**
+	 * 删除line 更新 bus表
+	 */
+	public function update_line($lineId){
+		$bus=D('Bus');
+		$result=$bus->where('line_id='.$lineId)->setField('line_id',null);
+		return  $result;
+	}
 	/**
 	 * 更新车辆信息
 	 *
@@ -96,6 +103,8 @@ class BusController extends BaseController {
 	 * @param number $position_y:车辆位置纵坐标
 	 */
 	public function update($id = 0, $no = '', $line_id = 0, $mac = '', $position_x = 0, $position_y = 0) {
+		
+		
 		if (IS_POST) {
 			$Bus = D ( 'Bus' );
 			if ($Bus->create ()) {
@@ -150,6 +159,7 @@ class BusController extends BaseController {
 				S ( 'update_time', $update_time );
 			}
 		}
+		
 	}
 	
 	/**
