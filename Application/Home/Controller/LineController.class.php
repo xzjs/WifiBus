@@ -13,6 +13,15 @@ use Think\Controller;
 class LineController extends Controller {
 	
 	/**
+	 * 查询线路下的车辆
+	 */
+	public function  line_bus(){
+		$bus=A('Bus');
+		$reslut=$bus->select($id = 0, $line_id = I('post.id'), $search_keys = '', $is_getbuslist = 1);
+		echo $reslut;
+	}
+	
+	/**
 	 * 添加线路或则车辆
 	 * 返回值：-1路线名重复，-2车牌号重复
 	 */
@@ -20,8 +29,7 @@ class LineController extends Controller {
 		
 		
 			$Line = D ( 'Line' );
-			$Line->id=I('post.lineId');
-			$Line->name=I('post.lineName');
+			
 			if ($Line->create ()) {
 				$result = $Line->add ();
 				if($result)
@@ -120,15 +128,22 @@ class LineController extends Controller {
 	 */
 	public function update() {
 		$Line = D ( 'Line' );
+		
+		$name=I('post.name');
+		$id=I('post.id');
+		//echo $name;
 		if ($Line->create ()) {
-			$result = $Line->save ();
+		
+			$result = M()->execute("UPDATE think_line SET name='$name' WHERE id=$id");
+			
 			if ($result) {
-				$this->success ( '操作成功！' );
+				echo  '更新成功！' ;
 			} else {
-				$this->error ( '写入错误！' );
+				echo  '更新失败！';
 			}
 		} else {
-			$this->error ( $Line->getError () );
+			//echo "ee";
+			echo $Line->getError () ;
 		}
 	}
 	
@@ -141,9 +156,9 @@ class LineController extends Controller {
 	public function delete() {
 		$Line = M ( 'Line' );
 		$bus=A('Bus');
-		echo I('post.lineId');
+		//echo I('post.lineId');
 		//$Line->id=I('post.lineId');
-		if ($bus->update_line(I('post.lineId'))&&$Line->delete (I('post.lineId'))) {
+		if ($bus->update_line(I('post.id'))&&$Line->delete (I('post.id'))) {
 			echo'操作成功！' ;
 		} else {
 			echo "删除失败";
