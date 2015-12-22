@@ -44,8 +44,20 @@ class AnalyseController extends Controller {
 	
 	public function getAdInfo($line_id=0) {
 		$Ad=M('Ad');
-		$data = $Ad->where('line_id='.$line_id)->field('text,click_num')->order('click_num desc')->limit(6)->select();
-		$this->ajaxReturn ( $data  );
+		//$data = $Ad->where('line_id='.$line_id)->field('text,click_num')->order('click_num desc')->limit(6)->select();
+		$result=M()->query("SELECT SUM(adc.num) as click_num,ad.text FROM think_ad AS ad,think_adclick AS adc WHERE adc.ad_id=ad.id GROUP BY adc.ad_id");
+		$array=array();
+		for($i=0;$i<count($result);$i++){
+				
+			$array[$i]=array(
+					'text'=>$result[$i]['text'],
+		
+					'click_num'=>$result[$i]['click_num'],
+						
+			);
+		}
+		echo json_encode($array);
+		///$this->ajaxReturn ( $data  );
 	}
 	
 	

@@ -124,7 +124,7 @@ class BusController extends BaseController {
 		$bus=D('Bus');
 		//echo "fff";
 		$result=$bus->where('line_id='.$lineId)->setField('line_id',null);
-		//echo $result;
+		// echo $result;
 		return  $result+1;
 	}
 	/**

@@ -55,21 +55,24 @@
 </div>
 <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
 <script type="text/javascript">
-//广告点击量(数据库数据)
-var adInfo = eval({$adInfo});
-var textList=new Array();
-var numList=new Array();
-for (var i = 0; i < adInfo.length; i++) {
-	textList[i]=adInfo[i].text;
-	numList[i]=adInfo[i].click_num;
-}
-var adMainOption = adMainFunction(textList,numList);
 
-
-
-
-
-
+$.post("getAdInfo", {
+	//line_id : line
+}, function(data, status) {
+	if (status == "success") {
+		//alert("ff");
+		//alert(eval(data));
+		 adInfo = eval(data);
+		 var textList=new Array();
+		var numList=new Array();
+		for (var i = 0; i < adInfo.length; i++) {
+			textList[i]=adInfo[i].text;
+			numList[i]=adInfo[i].click_num;
+		}
+	    var adMainOption = adMainFunction(textList,numList);
+	    myChartAdMain.setOption(adMainOption); 
+	}
+});
     var myChartAdMain = echarts.init(document.getElementById('adMain'), 'macarons2');
     var myChartAdTime = echarts.init(document.getElementById('adTime'),'macarons');
     var myChartFlowTime = echarts.init(document.getElementById('flowTime'),'macarons');
@@ -90,8 +93,7 @@ var adMainOption = adMainFunction(textList,numList);
     var adMainCustomer = adMainCustomerFunction(d);
     // 回头率时间关系图
     var adMainTurnBack = adMainTurnBackFunction(e);
-    
-    myChartAdMain.setOption(adMainOption);
+   
     myChartAdTime.setOption(adMainTime);
     myChartFlowTime.setOption(adMainFlow);
     myChartCustomerTime.setOption(adMainCustomer);
@@ -124,20 +126,5 @@ var adMainOption = adMainFunction(textList,numList);
         
         
         
-    	$.post("getAdInfo", {
-    		line_id : line
-    	}, function(data, status) {
-    		if (status == 4 || status == "success") {
-    			var adInfo = eval(data);
-    			var textList=new Array();
-    			var numList=new Array();
-    			for (var i = 0; i < adInfo.length; i++) {
-    				textList[i]=adInfo[i].text;
-    				numList[i]=adInfo[i].click_num;
-    			}
-    		    var adMainOption = adMainFunction(textList,numList);
-    		    myChartAdMain.setOption(adMainOption);
-    		}
-    	});
     } 
 </script>
