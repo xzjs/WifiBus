@@ -78,7 +78,6 @@ $(document).ready(function() {
             });
         });
     });
-
 	
 	
 	//使路线与车辆初始化
@@ -133,7 +132,7 @@ $(document).ready(function() {
 	// 线路管理侧边栏
 	boxThreeA.click(function(e) {
 		userStart();
-		clearUserControl();
+		// clearUserControl();
 		$(this).toggleClass('boxThreeHover');
 		searchLine.stop(true, false).animate({
 			width: 'toggle'
@@ -193,39 +192,39 @@ $(document).ready(function() {
 
 
 	// 线路、车辆编辑添加功能
-	$(".user_click li").css('display', 'none');
-	var userControl = [$(".line_edit"), $(".line_add"), $(".line_alladd"),
-		$(".car_edit"), $(".car_add")
-	];
+	// $(".user_click li").css('display', 'none');
+	// var userControl = [$(".line_edit"), $(".line_add"), $(".line_alladd"),
+	// 	$(".car_edit"), $(".car_add")
+	// ];
 
-	function clearUserControl() {
-		for (var i = 0; i < userControl.length; i++) {
-			userControl[i].hide();
-		}
-	};
-	$(".icon-pencil").click(function() {
-		clearUserControl();
-		$(".line_edit").show();
-	});
-	$(".line_add_con").click(function() {
-		clearUserControl();
-		$(".line_add").show();
-	});
-	$(".line_alladd_con").click(function() {
-		clearUserControl();
-		$(".line_alladd").show();
-	});
-	$(".car_edit_con").click(function() {
-		clearUserControl();
-		$(".car_edit").show();
-	});
-	$(".car_add_con").click(function() {
-		clearUserControl();
-		$(".car_add").show();
-	});
-	$(".user_click li>a:first-child").click(function() {
-		$(this).parent('li').hide();
-	});
+	// function clearUserControl() {
+	// 	for (var i = 0; i < userControl.length; i++) {
+	// 		userControl[i].hide();
+	// 	}
+	// };
+	// $(".icon-pencil").click(function() {
+	// 	clearUserControl();
+	// 	$(".line_edit").show();
+	// });
+	// $(".line_add_con").click(function() {
+	// 	clearUserControl();
+	// 	$(".line_add").show();
+	// });
+	// $(".line_alladd_con").click(function() {
+	// 	clearUserControl();
+	// 	$(".line_alladd").show();
+	// });
+	// $(".car_edit_con").click(function() {
+	// 	clearUserControl();
+	// 	$(".car_edit").show();
+	// });
+	// $(".car_add_con").click(function() {
+	// 	clearUserControl();
+	// 	$(".car_add").show();
+	// });
+	// $(".user_click li>a:first-child").click(function() {
+	// 	$(this).parent('li').hide();
+	// });
 
 	// 用户控制－－－远程更新 复选框的全选
 	$(".checkAll").click(function() {
@@ -246,10 +245,10 @@ $(document).ready(function() {
 		$(this).click(function() {
 			
 			$(this).addClass('showTemp');
-			//$(userCarFar[index]).removeClass('hideTemp');
+			$(userCarFar[index]).removeClass('hideTemp');
 			for (var i = 0; i < userLineLen; i++) {
 				if (i == index) continue;
-				//$(userCarFar[i]).addClass('hideTemp');
+				$(userCarFar[i]).addClass('hideTemp');
 				$(userLineFar[i]).removeClass('showTemp');
 			}
 		});
