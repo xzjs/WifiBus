@@ -122,8 +122,10 @@ class BusController extends BaseController {
 	 */
 	public function update_line($lineId){
 		$bus=D('Bus');
+		//echo "fff";
 		$result=$bus->where('line_id='.$lineId)->setField('line_id',null);
-		return  $result;
+		//echo $result;
+		return  $result+1;
 	}
 	/**
 	 * 更新车辆信息
