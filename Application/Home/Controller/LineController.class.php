@@ -156,7 +156,7 @@ class LineController extends Controller {
 	public function delete() {
 		$Line = M ( 'Line' );
 		$bus=A('Bus');
-		echo I('post.id');
+		//echo I('post.id');
 		//$Line->id=I('post.lineId');
 		if ($bus->update_line(I('post.id'))&&$Line->delete (I('post.id'))) {
 			echo'操作成功！' ;
