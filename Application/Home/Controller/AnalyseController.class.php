@@ -25,8 +25,8 @@ class AnalyseController extends Controller {
     	$data1 = $Bus->select(0,$data[0][id],'',0);
     	$this->assign ( 'bus_list', $data1 );
     	$Ad=M('Ad');
-    	$data2 = $Ad->where('line_id='.$data[0][id])->field('text,click_num')->order('click_num desc')->limit(6)->select();
-    	$this->assign ( 'adInfo', json_encode ( $data2 ) );
+    	//$data2 = $Ad->where('line_id='.$data[0][id])->field('text,click_num')->order('click_num desc')->limit(6)->select();
+    	//$this->assign ( 'adInfo', json_encode ( $data2 ) );
     	$this->display ();
 	}
 	
