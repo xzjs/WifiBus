@@ -13,6 +13,17 @@ use Think\Controller;
 class LineController extends Controller {
 	
 	/**
+	 * 线路查询
+	 */
+	public function select(){
+		$line=D('Line');
+		//$id=I('post.id');
+		$data = $line->field ( 'id as lineId,name as lineName' )->order('id')->select ();
+			$a = json_encode ( $data );
+			echo  $a;
+	}
+	
+	/**
 	 * 查询线路下的车辆
 	 */
 	public function  line_bus(){
