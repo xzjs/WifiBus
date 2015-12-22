@@ -25,11 +25,12 @@ class CommandController extends Controller
      */
     public function ping($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd = 0, $arg = 0)
     {
-        $LogCtrl=A('Log');
-        $LogCtrl->add($mac,$lon,$lat,$online_num,$usage,$flow_num,$cmd,$arg);
+        $LogCtrl = A('Log');
+        $LogCtrl->add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg);
         $Device = D("Device");
         $condition['mac'] = $mac;
         $d = $Device->where($condition)->find();
+        $CommandModel = D('Command');
         if ($d) {
             $Device->useage = $usage;
             $Device->online_num = $online_num;
@@ -46,11 +47,15 @@ class CommandController extends Controller
                 }
             }
             if ($cmd) {
-                if (!$this->update($cmd, 2)) {
+                $data_c = array(
+                    'status' => 2,
+                    'return_arg' => $arg
+                );
+                if(!$CommandModel->where("id=$cmd")->save($data_c)){
                     throw exception;
                 }
             }
-            $CommandModel = D('Command');
+
             $command_condition = array(
                 'device_id' => $d['id'],
                 'status' => 0
@@ -108,9 +113,22 @@ class CommandController extends Controller
         $data = array(
             'id' => $command_id,
             'status' => $status,
-            'time'=>time()
+            'time' => time()
         );
         $CommandModel->create($data);
-        return $CommandModel->save();
+        $result = $CommandModel->save();
+        echo $result;
+        return $result;
+    }
+
+    /**
+     * 获取心跳命令的结果
+     * @param $id 命令id
+     */
+    public function get_result($id)
+    {
+        $CommandModel = D('Command');
+        $result = $CommandModel->find($id);
+        echo json_encode($result);
     }
 }

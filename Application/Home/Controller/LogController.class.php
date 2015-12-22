@@ -8,7 +8,9 @@
 namespace Home\Controller;
 
 use Think\Controller;
-class LogController extends BaseController{
+
+class LogController extends BaseController
+{
 
     /**
      * 日志添加功能
@@ -21,8 +23,9 @@ class LogController extends BaseController{
      * @param $cmd 操作命令
      * @param $arg 参数
      */
-    public function add($mac,$lon,$lat,$online_num,$usage,$flow_num,$cmd,$arg){
-        if($lon*$lat) {
+    public function add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg)
+    {
+        if ($lon * $lat) {
             $LogModel = M('Log');
             $data = array(
                 'mac' => $mac,
