@@ -652,30 +652,7 @@ body{
     background: #fff;
     border-radius: 4px;
 }
-/*.search_line_far ul a,.search_car_far ul a{
-    font: 18px '微软雅黑', sans-serif;
-    display: block;
-    line-height: 52px;
-    height: 52px;
-    color: #fff;
-    text-align: center;
-    cursor: pointer;
-}*/
-/*.search_line_far ul a,.search_car_far ul a{
-    font: 18px '微软雅黑', sans-serif;
-    display: inline-block;
-    line-height: 52px;
-    height: 52px;
-    color: #fff;
-    text-align: center;
-    cursor: pointer;
-}*/
-/*.search_line_far ul a:hover{
-    background-color: #336ca6;
-}*/
-/*.search_car_far ul a:hover{
-    background-color: #3b84ff;
-}*/
+
 .search_line_far ul li,.search_car_far ul li{
     position: relative;
 }
@@ -708,7 +685,6 @@ body{
     width: 80px;
     margin-left: 20px;
 }
-
 .up_main{
     width: 770px;
     float: left;
@@ -731,7 +707,6 @@ body{
     margin: 0 0 0 10px;
     float: left;
 }
-
 .up_main .subtitle_1>a,.up_main .subtitle>a{
     display: block;
     background: url(../images/up_arrow_1.png);
@@ -762,11 +737,11 @@ body{
 .up_main>ul>li>div+div input.button{
     cursor: pointer;
 }
-.file{
+/*.file{
     width: 647px;
     display: none;
-}
-.ye{
+}*/
+/*.ye{
     background: #fff;
     width: 647px;
 }
@@ -776,7 +751,7 @@ body{
     width: 110px;
     background: #336ca6;
     margin: 0 0 0 10px;
-}
+}*/
 .movie>li>img{
     width: 170px;
     height: 103px;
@@ -1051,12 +1026,18 @@ body{
     height:320px;
     overflow-y: scroll;
 }
+.search_line>ul>li>a:hover,{
+    color: black;
+}
 .search_line>ul>li:hover{
-    background: #ff9933;
     border-radius: 6px;
+    background: #66cccc;
+
 }
 .search_car{
     left: 293px;
+    background: #ddf0ed;
+    opacity: 0.9;
 }
 .search_line form{
     margin: 18px 0 5px 0px;
@@ -1093,15 +1074,10 @@ body{
     color: #fff;
     text-align: center;
     border-radius: 50%;
-    margin-right:4px;
+    padding-right:4px;
 }
 .search_line>ul>li>a:first-child{
     width: 62%;
-    border-radius: 5px;
-    margin-left: 8px;
-}
-.search_car>ul>li>a:first-child{
-    width: 70%;
     border-radius: 5px;
     margin-left: 8px;
 }
@@ -1117,14 +1093,14 @@ body{
 .search_line>ul>li>a>img:last-child{
     width: 140%;
 }
-.search_line .line_button, .search_car .car_button{
+.search_line .line_button{
     margin: 0;
     width: 100%;
     position: absolute;
     bottom: 24px;
 }
 .search_line .we_click{
-    font: 14px '微软雅黑', sans-serif;
+    font: 16px '微软雅黑', sans-serif;
     display: block;
     float:left;
     width: 43%;
@@ -1139,6 +1115,219 @@ body{
     margin:0 8px;
     font-weight: bold;
 }
+.search_car{
+    top: 88px;
+    height: 381px;
+    border-radius: 2px 15px 15px 2px;
+}
+.search_car>ul{
+    height: 320px;
+    overflow-y: scroll;
+}
+.search_car>ul>li:hover{
+    border-radius: 5px 15px 15px 5px;
+}
+.search_car>ul>li>a{
+    border-radius: 6px;
+    color: black;
+}
+.search_car>ul>li:hover{
+    background: #66cccc;
+}
+.search_car>ul>li>a:first-child{
+    width: 70%;
+    border-radius: 5px;
+    margin-left: 8px;
+}
+.search_car>.car_button{
+    width: 100%;
+    position: absolute;
+    bottom: 10px;
+    text-align: center;
+}
+.search_car .car_add_con{
+    font: 16px '微软雅黑', sans-serif;
+    display: block;
+    width: 80%;
+    left: 50%;
+    transform:translateX(8%); 
+    height: 44px;
+    background: #66cccc;
+    border-radius: 28px;
+    text-align: center;
+    line-height: 44px;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    margin:0 8px;
+    font-weight: bold;
+}
+.user_click>li{
+    position: absolute;
+    background: #aee0f3;
+    width:289px;
+    height: 163px;
+    z-index: 100;
+    top: 280px;
+    left: 44%;
+    opacity: 0.9;
+    border-radius: 10px;
+}
+.user_click>li>a:first-child{
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    text-shadow: 0px 1px 2px #fff;
+    cursor: pointer;
+}
+.user_click .cont1{
+    margin:35px 0 15px 0; 
+}
+.user_click>li>div>label{
+    display: inline-block;
+    text-align: center;
+    width: 37%;
+    color: #666;
+    text-shadow: 0px 1px 1px #fff;   
+    font-size: 16px;
+    font-weight: bold;
+    padding: 2px 0 2px 2px;
+    margin-left:10px;
+}
+.user_click>li>div>input{
+    color: #666;
+    text-indent: 10px;
+    width: 50%;
+    border-radius: 5px;
+    line-height: 22px;
+    height: 22px;
+    font-size: 16px;
+
+}
+.user_click>li>div>select{
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    width: 52%;
+    color: #666;
+    border-radius: 5px;
+    line-height: 26px;
+    height: 26px;
+    font-size: 16px;
+    background: url(../images/arrow.png) no-repeat scroll right center transparent;
+    background-color: #fff;
+
+}
+#lineForm .user_click div{
+    margin-top: 42px;
+}
+#lineForm .user_click>li>div>input{
+    width: 59%;
+}
+#lineForm .user_click>li>div>label{
+    width: 28%;
+}
+.user_click>li>input:last-child{
+    font: 16px '微软雅黑', sans-serif;
+    width: 30%;
+    height: 34px;
+    background: #fff;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 34px;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    font-weight: bold;
+    margin-top: 6%;
+    margin-left:62.5%;
+    color: #666; 
+}
+#mLineForm .user_click div{
+    margin-top: 33px;
+}
+#mLineForm .user_click>li>input:nth-child(3){
+    appearance:none;
+    -moz-appearance:none;
+    -webkit-appearance:none;
+    font: 16px '微软雅黑', sans-serif;
+    width: 30%;
+    height: 34px;
+    background: #fff;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 34px;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    font-weight: bold;
+    margin-top: 6%;
+    margin-left:62.5%;
+    color: #666; 
+}
+#mLineForm .file{
+    display: none;
+}    
+#mLineForm>li>div>input[type="button"]{
+
+    font: 16px '微软雅黑', sans-serif;
+    width: 30%;
+    height: 34px;
+    background: #fff;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 34px;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    font-weight: bold;
+    margin-top: 6%;
+    margin-left:62.5%;
+    color: #666; 
+}
+#mLineForm .button{
+    display: inline-block;
+    background: #fff;
+    width: 20%;
+    font: 16px '微软雅黑', sans-serif;
+    height: 34px;
+    border-radius: 8px;
+    text-align: center;
+    line-height: 34px;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    font-weight: bold;
+}
+#mLineForm .sign{
+    width: 100%;
+    text-align: center;
+    color: #666;
+    display: block;
+    margin-top: 20px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 /*.search_line>ul>li>a:hover{
     background: #336ca6;
 }
@@ -1206,20 +1395,8 @@ search_car> div+ul{
 }
 */
 
-/*.search_car .car_button>div>p{
-    font: 12px '微软雅黑', sans-serif;
-    display: block;
-    width: 55px;
-    height: 30px;
-    background: #fff;
-    border-radius: 4px;
-    text-align: center;
-    float: left;
-    margin: 0 0 0 45px;
-    line-height: 30px;
-    cursor: pointer;
-}*/
-.user_click>li{
+
+/*.user_click>li{
     width:289px;
     height: 163px;
     background: #336ca6;
@@ -1227,14 +1404,14 @@ search_car> div+ul{
     position: absolute;
     top: 280px;
     left: 44%;
-}
-.line_add{
+}*/
+/*.line_add{
     height: 190px !important;
-}
-.user_click .line_alladd>div,.user_click .line_edit>div{
+}*/
+/*.user_click .line_alladd>div,.user_click .line_edit>div{
     margin: 55px 0 0 0 ;
-}
-
+}*/
+/*
 .user_click .line_add>div{
     margin: 23px 0 0 0;
 }
@@ -1282,7 +1459,7 @@ search_car> div+ul{
     height: 22px;
     font: 12px '微软雅黑', sans-serif;
     color: #000;
-}
+}*/
 /*.line_alladd>input,.line_add>input,.car_add>input{
     margin: 20px 0 0 104px !important;
 }
@@ -1295,7 +1472,7 @@ search_car> div+ul{
 .line_alladd>input+a:hover{
     color: #ddd;
 }*/
-.user_click li>a:first-child{
+/*.user_click li>a:first-child{
     cursor: pointer;
     display: block;
     color: #fff;
@@ -1305,6 +1482,12 @@ search_car> div+ul{
 }
 .user_click li>a:first-child:hover{
     color: #ddd;
+}*/
+.hide{
+    display: none;
+}
+.show{
+    display:block; 
 }
 /*************************************/
 /*广告-综合分析*/
@@ -1394,26 +1577,6 @@ search_car> div+ul{
 }
 .adv_other_set>li>img{
     cursor: pointer;
-}
-
-
-.weather{
-	width: 100%;
-	height: 60px; 
-	text-align: center;	
-	padding: 10px 5px;
-	font-weight: 400;
-    font-style: normal;
-    font-size: 11px;
-    cursor: pointer;
-}
-
-.weather{
-	position: absolute;
-  bottom: 3px;
-  left: 0;
-  width: 54px;
-  height: 150px;
 }
 /*********************************************/
 /*用户控制-线路管理*/

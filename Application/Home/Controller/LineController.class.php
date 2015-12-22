@@ -13,6 +13,17 @@ use Think\Controller;
 class LineController extends Controller {
 	
 	/**
+	 * 线路查询
+	 */
+	public function select(){
+		$line=D('Line');
+		//$id=I('post.id');
+		$data = $line->field ( 'id as lineId,name as lineName' )->order('id')->select ();
+			$a = json_encode ( $data );
+			echo  $a;
+	}
+	
+	/**
 	 * 查询线路下的车辆
 	 */
 	public function  line_bus(){
@@ -156,7 +167,7 @@ class LineController extends Controller {
 	public function delete() {
 		$Line = M ( 'Line' );
 		$bus=A('Bus');
-		//echo I('post.lineId');
+		//echo I('post.id');
 		//$Line->id=I('post.lineId');
 		if ($bus->update_line(I('post.id'))&&$Line->delete (I('post.id'))) {
 			echo'操作成功！' ;

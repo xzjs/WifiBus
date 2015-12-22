@@ -11,33 +11,62 @@ use Think\Controller;
  *        
  */
 class BusController extends BaseController {
+	/**
+	 * 更新bus车牌号
+	 */
+	public function update_no(){
+		$bus=D('Bus');
+		$no=I('post.no');
+		$id=I('post.carId');
+		$bus->id=I('post.carId');
+		if($bus->create()){
+			echo $no;
+			echo $id;
+			$result=M()->execute("UPDATE think_bus SET no ='$no' WHERE id=$id");
+			echo $result;
+			if($result){
+				echo "更新成功";
+			}
+			else {
+				echo "更新失败";
+			}
+		}
+		else {
+				echo $bus->getError();
+		}
+	}
 	
 	/**
 	 * 添加车辆
 	 */
 	public function add() {
 		$Bus = D ( 'Bus' );
-	
-		if ($Bus->create ()) {
+		$device=D('Device');
+		if ($Bus->create ()&&$device->create ()) {
 			if (empty ( $Bus->position_x ) && empty ( $Bus->position_y )) {
 				$Bus->position_x = 0;
 				$Bus->position_y = 0;
 			}
-			$result = $Bus->add ();
+			$result = $Bus->add();
 			if ($result) {
-				$device=D('Device');
-				$flag=$device->add();
-				if ($flag>0)
-					echo $result;
-				else 
-				{
-					$this->error ( '数据添加错误！' );
-				}
+				
+				$device->bus_id=$result;
+				$device->mac=I('post.mac');
+			
+					$flag=$device->add();
+					if ($flag>0)
+						echo '数据添加失成功！';
+					else
+					{
+						echo  '数据添加失败！' ;
+					}
+				
+				
 			} else {
-				$this->error ( '数据添加错误！' );
+				echo '数据添加失败！' ;
 			}
 		} else {
-			$this->error ( $Bus->getError () );
+			echo $Bus->getError().$device->getError() ;
 		}
 	}
 	
@@ -89,12 +118,14 @@ class BusController extends BaseController {
 		$this->display ();
 	}
 	/**
-	 * 删除line 更新 bus表
+	 * 删除line 后更新 bus表
 	 */
 	public function update_line($lineId){
 		$bus=D('Bus');
+		//echo "fff";
 		$result=$bus->where('line_id='.$lineId)->setField('line_id',null);
-		return  $result;
+		//echo $result;
+		return  $result+1;
 	}
 	/**
 	 * 更新车辆信息
@@ -170,10 +201,11 @@ class BusController extends BaseController {
 	 */
 	public function delete($id = 0) {
 		$Bus = M ( 'Bus' );
-		if ($Bus->delete ( $id )) {
-			$this->success ( '操作成功！' );
+		$device=A('Device');
+		if ($device->update_bus(I('post.carId'))&&$Bus->delete ( I('post.carId') )) {
+			echo  '操作成功！' ;
 		} else {
-			$this->error ( $Bus->getError () );
+			echo '操作失败！' ;
 		}
 	}
 
