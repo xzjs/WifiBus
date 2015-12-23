@@ -93,22 +93,68 @@ $.post("get_ad_click", {
 	    myChartAdTime.setOption(adMainOption_adtime ); 
 	}
 });
-    var c=new Array((Math.random()+1.5)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100);
-	var d=new Array((Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50);
+$.post("get_flow", {
+	//line_id : line
+}, function(data, status) {
+	if (status == "success") {
+		adInfo = eval(data);
+		 var timeList=new Array();
+		var numList=new Array();
+		for (var i = 0; i < adInfo.length; i++) {
+			timeList[i]=adInfo[i].time;
+			numList[i]=adInfo[i].num;
+		}
+	//	alert(timeList);
+	    var adMainFlow = adMainFlowFunction(timeList,numList);
+	    myChartFlowTime.setOption(adMainFlow);
+	}
+});
+$.post("get_online_num", {
+	//line_id : line
+}, function(data, status) {
+	if (status == "success") {
+		adInfo = eval(data);
+		 var timeList=new Array();
+		var numList=new Array();
+		for (var i = 0; i < adInfo.length; i++) {
+			timeList[i]=adInfo[i].time;
+			numList[i]=adInfo[i].num;
+		}
+	//	alert(timeList);
+	        var adMainCustomer = adMainCustomerFunction(timeList,numList);
+	    myChartCustomerTime.setOption(adMainCustomer);
+	}
+});
+/* $.post("get_backm", {
+	//line_id : line
+}, function(data, status) {
+	if (status == "success") {
+		adInfo = eval(data);
+		 var timeList=new Array();
+		var numList=new Array();
+		for (var i = 0; i < adInfo.length; i++) {
+			timeList[i]=adInfo[i].time;
+			numList[i]=adInfo[i].num;
+		}
+	//	alert(timeList);
+	        var adMainCustomer = adMainCustomerFunction(timeList,numList);
+	    myChartCustomerTime.setOption(adMainCustomer);
+	}
+}); */
+  
 	var e=new Array((Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6);
 	
     // 广告点击量时间关系图
   // var adMainTime = adMainTimeFunction(a,b);
     // 流量时间关系图
-    var adMainFlow = adMainFlowFunction(c);
+    
     // 客流量时间关系图
-    var adMainCustomer = adMainCustomerFunction(d);
+  //  var adMainCustomer = adMainCustomerFunction(d);
     // 回头率时间关系图
     var adMainTurnBack = adMainTurnBackFunction(e);
    
    // myChartAdTime.setOption(adMainTime);
-    myChartFlowTime.setOption(adMainFlow);
-    myChartCustomerTime.setOption(adMainCustomer);
+  
     myChartTurnBackTime.setOption(adMainTurnBack);
     
     

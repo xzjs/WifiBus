@@ -14,10 +14,95 @@ use Think\Controller;
  * @package Home\Controller
  */
 class AnalyseController extends Controller {
+
+	/**
+	 * 回头客流量——时间关系查询
+	 */
+	public function d(){
+		$time=time()-6*86400;
+		$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400)";
+		$result=M()->query($sql);
+		$array=array();
+		$base=A('Base');
+		$today=$base->weekday(strtotime("now "));
+		//f "d".$today;
+		for ($h = 0; $h <7; $h++) {
+			$sum[$h] = 0;
+		}
+		for($i=0;$i<count($result);$i++){
+			$dif= (int)((strtotime("now ")-(strtotime(date('Y-m-d', $result [$i] ['time']))))/86400);
+			$sum[$dif]=$sum[$dif]+1;
+	
+		}
+		for($i=0;$i<7;$i++){
+	
+			$array[$i]=array(
+					'time'=>"周".mb_substr(($base->weekday((strtotime("now ")-(86400*$i)))),-1),
+					'num'=>$sum[$i],
+			);
+			//echo 	$sum[$i];
+		}
+		echo json_encode($array);
+	
+	}
+	/**
+	 * 客流量——时间关系查询
+	 */
+	public function get_online_num(){
+		$time=time()-6*86400;
+		$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400)";
+		$result=M()->query($sql);
+		$array=array();
+		$base=A('Base');
+		$today=$base->weekday(strtotime("now "));
+		//f "d".$today;
+		for ($h = 0; $h <7; $h++) {
+			$sum[$h] = 0;
+		}
+		for($i=0;$i<count($result);$i++){
+			$dif= (int)((strtotime("now ")-(strtotime(date('Y-m-d', $result [$i] ['time']))))/86400);
+			$sum[$dif]=$sum[$dif]+1;
+	
+		}
+		for($i=0;$i<7;$i++){
+	
+			$array[$i]=array(
+					'time'=>"周".mb_substr(($base->weekday((strtotime("now ")-(86400*$i)))),-1),
+					'num'=>$sum[$i],
+			);
+			//echo 	$sum[$i];
+		}
+		echo json_encode($array);
+	
+	}
 	/**
 	 * 流量——时间关系查询
 	 */
 	public function get_flow(){
+		$time=time()-6*86400;
+		$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400)";
+		$result=M()->query($sql);
+		$array=array();
+		$base=A('Base');
+		$today=$base->weekday(strtotime("now "));
+		//f "d".$today;
+		for ($h = 0; $h <7; $h++) {
+			$sum[$h] = 0;
+		}
+		for($i=0;$i<count($result);$i++){
+			$dif= (int)((strtotime("now ")-(strtotime(date('Y-m-d', $result [$i] ['time']))))/86400);
+			$sum[$dif]=$sum[$dif]+$result [$i]['num'];
+				
+		}
+		for($i=0;$i<7;$i++){
+		
+			$array[$i]=array(
+					'time'=>"周".mb_substr(($base->weekday((strtotime("now ")-(86400*$i)))),-1),
+					'num'=>$sum[$i],
+			);
+			//echo 	$sum[$i];
+		}
+		echo json_encode($array);
 		
 	}
 	/**
@@ -83,7 +168,7 @@ class AnalyseController extends Controller {
 	public function get_ad_click_top($line_id=0) {
 		$Ad=M('Ad');
 		//$data = $Ad->where('line_id='.$line_id)->field('text,click_num')->order('click_num desc')->limit(6)->select();
-		$result=M()->query("SELECT SUM(adc.num) as click_num,ad.text FROM think_ad AS ad,think_adclick AS adc WHERE adc.ad_id=ad.id GROUP BY adc.ad_id");
+		$result=M()->query("SELECT SUM(adc.num) as click_num,ad.text FROM think_ad AS ad,think_adclick AS adc WHERE adc.ad_id=ad.id GROUP BY adc.ad_id ORDER BY  click_num DESC LIMIT 6");
 		$array=array();
 		for($i=0;$i<count($result);$i++){
 				
