@@ -324,6 +324,7 @@ function adMainFunction(text,click_num) {
 
 // 广告点击量时间关系图
 function adMainTimeFunction(date1, date2) {
+	
     var tempOption = {
         title: {
             text: '广告点击量时间关系图',
@@ -339,7 +340,7 @@ function adMainTimeFunction(date1, date2) {
             trigger: 'axis'
         },
         legend: {
-            data: ['上周', '本周'],
+            data: [ '本周'],
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 12,
@@ -349,7 +350,7 @@ function adMainTimeFunction(date1, date2) {
         xAxis: [{
             type: 'category',
             boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            data: [date1[0], date1[1], date1[2], date1[3], date1[4], date1[5], date1[6]],
             axisLabel: {
                 textStyle: {
                     fontFamily: 'Microsoft YaHei, sans-serif',
@@ -370,11 +371,6 @@ function adMainTimeFunction(date1, date2) {
             }
         }],
         series: [{
-            name: '上周',
-            type: 'line',
-            data: [date1[0], date1[1], date1[2], date1[3], date1[4], date1[5], date1[6]],
-
-        }, {
             name: '本周',
             type: 'line',
             data: [date2[0], date2[1], date2[2], date2[3], date2[4], date2[5], date2[6]],
@@ -384,7 +380,7 @@ function adMainTimeFunction(date1, date2) {
 }
 
 // 流量时间关系图
-function adMainFlowFunction(date) {
+function adMainFlowFunction(date1,date2) {
     var tempOption = {
         title: {
             text: ' 流量时间关系图',
@@ -402,7 +398,7 @@ function adMainFlowFunction(date) {
         xAxis: [{
             type: 'category',
             boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            data:[date1[0], date1[1], date1[2], date1[3], date1[4], date1[5], date1[6]],
             axisLabel: {
                 textStyle: {
                     fontFamily: 'Microsoft YaHei, sans-serif',
@@ -425,7 +421,7 @@ function adMainFlowFunction(date) {
         series: [{
             name: '流量',
             type: 'line',
-            data: [date[0], date[1], date[2], date[3], date[4], date[5], date[6]],
+            data: [date2[0], date2[1], date2[2], date2[3], date2[4], date2[5], date2[6]],
             itemStyle: {
                 normal: {
                     color: myColor[0]
@@ -437,7 +433,7 @@ function adMainFlowFunction(date) {
 }
 
 // 客流量时间关系图
-function adMainCustomerFunction(date) {
+function adMainCustomerFunction(date1,date2) {
     var tempOption = {
         title: {
             text: '客流量时间关系图',
@@ -455,7 +451,7 @@ function adMainCustomerFunction(date) {
         xAxis: [{
             type: 'category',
             boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            data: [date1[0], date1[1], date1[2], date1[3], date1[4], date1[5], date1[6]],
             axisLabel: {
                 textStyle: {
                     fontFamily: 'Microsoft YaHei, sans-serif',
@@ -478,7 +474,7 @@ function adMainCustomerFunction(date) {
         series: [{
             name: '客流量',
             type: 'line',
-            data: [date[0], date[1], date[2], date[3], date[4], date[5], date[6]],
+            data: [date2[0], date2[1], date2[2], date2[3], date2[4], date2[5], date2[6]],
             itemStyle: {
                 normal: {
                     color: myColor[2]

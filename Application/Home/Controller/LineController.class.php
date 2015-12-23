@@ -28,7 +28,7 @@ class LineController extends Controller {
 	 */
 	public function  line_bus(){
 		$bus=A('Bus');
-		$reslut=$bus->select($id = 0, $line_id = I('post.id'), $search_keys = '', $is_getbuslist = 1);
+		$reslut=$bus->select_bus($id = 0, $line_id = I('post.id'), $search_keys = '', $is_getbuslist = 1);
 		echo $reslut;
 	}
 	

@@ -69,6 +69,19 @@ class BusController extends BaseController {
 			echo $Bus->getError().$device->getError() ;
 		}
 	}
+	/**
+	 * 查询车辆信息
+	 *
+	 * @param number $id:车辆id
+	 */
+	public function select_bus($id = 0, $line_id = 0, $search_keys = '', $is_getbuslist = 0) {
+		$Bus = M ( 'Bus' );
+		$map ['line_id'] = $line_id;
+		$data = $Bus->where ( $map )->field ( 'id as carId,no as carNum' )->order('no')->select ();
+		$a = json_encode ( $data );
+		return $a;
+	}
+	
 	
 	/**
 	 * 查询车辆信息
