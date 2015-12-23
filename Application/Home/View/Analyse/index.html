@@ -55,8 +55,12 @@
 </div>
 <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
 <script type="text/javascript">
-
-$.post("getAdInfo", {
+var myChartAdMain = echarts.init(document.getElementById('adMain'), 'macarons2');
+var myChartAdTime = echarts.init(document.getElementById('adTime'),'macarons');
+var myChartFlowTime = echarts.init(document.getElementById('flowTime'),'macarons');
+var myChartCustomerTime = echarts.init(document.getElementById('customerTime'),'macarons');
+var myChartTurnBackTime = echarts.init(document.getElementById('turnBackTime'),'macarons');
+$.post("get_ad_click_top", {
 	//line_id : line
 }, function(data, status) {
 	if (status == "success") {
@@ -73,20 +77,28 @@ $.post("getAdInfo", {
 	    myChartAdMain.setOption(adMainOption); 
 	}
 });
-    var myChartAdMain = echarts.init(document.getElementById('adMain'), 'macarons2');
-    var myChartAdTime = echarts.init(document.getElementById('adTime'),'macarons');
-    var myChartFlowTime = echarts.init(document.getElementById('flowTime'),'macarons');
-    var myChartCustomerTime = echarts.init(document.getElementById('customerTime'),'macarons');
-    var myChartTurnBackTime = echarts.init(document.getElementById('turnBackTime'),'macarons');
-    
-    var a=new Array((Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*15,(Math.random()+1)*15);
-	var b=new Array((Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*15,(Math.random()+1)*15);
-	var c=new Array((Math.random()+1.5)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100);
+$.post("get_ad_click", {
+	//line_id : line
+}, function(data, status) {
+	if (status == "success") {
+		adInfo = eval(data);
+		 var timeList=new Array();
+		var numList=new Array();
+		for (var i = 0; i < adInfo.length; i++) {
+			timeList[i]=adInfo[i].time;
+			numList[i]=adInfo[i].num;
+		}
+	//	alert(timeList);
+	    var adMainOption_adtime = adMainTimeFunction(timeList,numList);
+	    myChartAdTime.setOption(adMainOption_adtime ); 
+	}
+});
+    var c=new Array((Math.random()+1.5)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100);
 	var d=new Array((Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50);
 	var e=new Array((Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6);
 	
     // 广告点击量时间关系图
-    var adMainTime = adMainTimeFunction(a,b);
+  // var adMainTime = adMainTimeFunction(a,b);
     // 流量时间关系图
     var adMainFlow = adMainFlowFunction(c);
     // 客流量时间关系图
@@ -94,13 +106,13 @@ $.post("getAdInfo", {
     // 回头率时间关系图
     var adMainTurnBack = adMainTurnBackFunction(e);
    
-    myChartAdTime.setOption(adMainTime);
+   // myChartAdTime.setOption(adMainTime);
     myChartFlowTime.setOption(adMainFlow);
     myChartCustomerTime.setOption(adMainCustomer);
     myChartTurnBackTime.setOption(adMainTurnBack);
     
     
-    function getAdInfo(line) {
+   /*  function getAdInfo(line) {
     	var a=new Array((Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*15,(Math.random()+1)*15);
     	var b=new Array((Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*15,(Math.random()+1)*15);
     	var c=new Array((Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100);
@@ -121,10 +133,6 @@ $.post("getAdInfo", {
         myChartFlowTime.setOption(adMainFlow);
         myChartCustomerTime.setOption(adMainCustomer);
         myChartTurnBackTime.setOption(adMainTurnBack);
-    	
-        
-        
-        
-        
-    } 
+       
+    }  */
 </script>

@@ -14,7 +14,45 @@ use Think\Controller;
  * @package Home\Controller
  */
 class AnalyseController extends Controller {
+	/**
+	 * 流量——时间关系查询
+	 */
+	public function get_flow(){
+		
+	}
+	/**
+	 * 线路和车辆条件下查询时间与广告点击量的关系
+	 * @param number $line_id
+	 * @param number $bus_id
+	 */
+	public function get_ad_click($line_id=0,$bus_id=0) {
+		$Ad=M('Ad');
+		//$data = $Ad->where('line_id='.$line_id)->field('text,click_num')->order('click_num desc')->limit(6)->select();
+		$time=time()-6*86400;
+		$result=M()->query("SELECT  num,TIME FROM think_adclick WHERE TIME>(UNIX_TIMESTAMP(NOW())-6*86400)");
+     	$array=array();
+	    $base=A('Base');
+	    $today=$base->weekday(strtotime("now "));
+	//f "d".$today;
+	for ($h = 0; $h <7; $h++) {
+		$sum[$h] = 0;
+	}
+	for($i=0;$i<count($result);$i++){
+		$dif= (int)((strtotime("now ")-(strtotime(date('Y-m-d', $result [$i] ['time']))))/86400);
+		$sum[$dif]=$sum[$dif]+$result [$i]['num'];
+			
+		}
+			for($i=0;$i<7;$i++){
 	
+			$array[$i]=array(
+					'time'=>"周".mb_substr(($base->weekday((strtotime("now ")-(86400*$i)))),-1),
+	             	'num'=>$sum[$i],
+			);
+	//echo 	$sum[$i];
+		}
+		echo json_encode($array);
+		
+	}
 	public function index() {
 		$this->assign('title','广告和流量分析');
         $this->assign('class2','action');
@@ -42,7 +80,7 @@ class AnalyseController extends Controller {
 		$this->display ();
 	}
 	
-	public function getAdInfo($line_id=0) {
+	public function get_ad_click_top($line_id=0) {
 		$Ad=M('Ad');
 		//$data = $Ad->where('line_id='.$line_id)->field('text,click_num')->order('click_num desc')->limit(6)->select();
 		$result=M()->query("SELECT SUM(adc.num) as click_num,ad.text FROM think_ad AS ad,think_adclick AS adc WHERE adc.ad_id=ad.id GROUP BY adc.ad_id");
