@@ -100,7 +100,7 @@ class BusController extends BaseController {
 			} elseif ($line_id != 0) {//根据线路搜索
 				$map ['line_id'] = $line_id;
 			}
-			$data = $Bus->where ( $map )->field ( 'id as carId,no as carNum' )->order('no')->select ();
+			$data = $Bus->where ( $map )->field ( 'id ,no ' )->order('no')->select ();
 			$a = json_encode ( $data );
 			
 			$this->ajaxReturn ( json_encode ( $data ) );
