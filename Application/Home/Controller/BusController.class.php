@@ -87,11 +87,15 @@ class BusController extends BaseController {
 			} elseif ($line_id != 0) {//根据线路搜索
 				$map ['line_id'] = $line_id;
 			}
-			$data = $Bus->where ( $map )->field ( 'id as carId,no as carNum' )->order('no')->select ();
-			$a = json_encode ( $data );
-			return $a;
+			$data = $Bus->where ( $map )->field ( 'id,no' )->order('no')->select ();
+			
 			$this->ajaxReturn ( json_encode ( $data ) );
-		} else {
+		}elseif($is_getbuslist==2){
+			$condition_bus ['line_id'] =array('exp','is not null');
+			$data = $Bus->where($condition_bus)->field('id,line_id')->select ();
+			//var_dump($data);
+			$this->ajaxReturn($data);
+		}else {
 			if ($id != 0)
 				$condition_bus ['id'] = $id;
 			if ($line_id != 0)

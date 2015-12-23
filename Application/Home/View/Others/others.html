@@ -56,7 +56,7 @@
 	                <ul id="bus_list_check">
                     <volist name="bus_list" id="vo" empty=" ">
                         <li>
-                        <li><input class= "bus_array" type="checkbox" id={$line_list[0].id} name="car" value={vo.id} onchange="getCheckedList(this)"> <a>{$vo.no}</a></li>
+                        <li><input class= "bus_array" type="checkbox" id={$line_list[0].id} name="car" value={$vo.id} onchange="getCheckedList(this)"> <a>{$vo.no}</a></li>
                     </volist>
                 
                 </ul>

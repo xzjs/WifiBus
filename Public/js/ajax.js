@@ -82,6 +82,11 @@ function get_bus_list_check(url, id, display, order) {
 
 }
 
+
+/**
+ * 
+ * @param changedCheck
+ */
 function getCheckedList(changedCheck) {
 	
 	var pORc=changedCheck.name;//判断是该项为子项还是父项
@@ -90,19 +95,11 @@ function getCheckedList(changedCheck) {
 	}else if(pORc=="car"){
 		busCheckChange($(".bus_array"),changedCheck);
 	}
-	/*var lineList = $(".line_array");
-	var busList = $(".bus_array");
-	var busIdArr = new Array();
-	for (var i = 0; i < busList.length; i++) {
-		busCheckArr[i] = busList[i].checked;
-		busIdArr[i] = busList[i].value;
-	}*/
-	//alert(changedCheck.checked);
-
+	
 }
 
 /**
- * 控制子项跟随父项的check值而改变
+ * line check改变后的操作
  * @param busList 
  * @param line_id
  * @param isChecked
@@ -120,6 +117,11 @@ function lineCheckChange(busList,line_id,isChecked){
 	}
 }
 
+/**
+ * bus check改变后的操作
+ * @param busList
+ * @param theBus
+ */
 function busCheckChange(busList,theBus){
 	var lineList = $(".line_array");
 	if(!theBus.checked){
@@ -127,6 +129,11 @@ function busCheckChange(busList,theBus){
 			if(lineList[i].value==theBus.id)
 				lineList[i].checked=false;
 				checkedLineArr[i] = lineList[i].checked;
+		}
+		if(getBusIndex(theBus.value)!=-1){
+			checkedIdList[getBusIndex(theBus.value)].isChecked=theBus.checked;
+		}else{
+			checkedIdList.push(new Bus(theBus.id,theBus.value,false));//增加到选中check列表
 		}
 	}else{
 		var flag=new Boolean(true);
@@ -142,8 +149,9 @@ function busCheckChange(busList,theBus){
 	}
 	if(getBusIndex(theBus.value)!=-1){
 		checkedIdList[getBusIndex(theBus.value)].isChecked=theBus.checked;
+	}else{
+		checkedIdList.push(new Bus(theBus.id,theBus.value,theBus.checked));//增加到选中check列表
 	}
-	
 }
 
 /**
@@ -203,6 +211,8 @@ function get_bus_list(url,id,display) {
 		}
 	});
 }
+
+
 
 /**
  * 根据车牌号搜索车辆

@@ -96,7 +96,7 @@ $(document).ready(function() {
 
 		// 用户控制
 		userStart();
-		clearUserControl();
+		//clearUserControl();
 		$(searchLine).hide('slow');
 		$(boxThreeA).removeClass('boxThreeHover');
 
@@ -229,9 +229,52 @@ $(document).ready(function() {
 	// 用户控制－－－远程更新 复选框的全选
 	$(".checkAll").click(function() {
 		$(this).parent().find('li input').prop('checked', true);
+		var lORb=$(this).parent().attr('class');
+		if(lORb=='search_line_far'){//line被全选
+			var lineList = $(".line_array");
+			for (var i = 0; i < lineList.length; i++) {
+					getCheckedList(lineList[i]);
+					checkedLineArr[i] = lineList[i].checked;
+			}
+			checkedIdList.splice(0,checkedIdList.length);
+			$.post('/wifibus/index.php/Home/Bus/select', {
+				is_getbuslist:2,
+			}, function(data, status) {
+				if (status == 4 || status == "success") {
+					var allBus = eval(data);
+					for(var i=0;i<allBus.length;i++){
+						checkedIdList.push(new Bus(allBus[i].line_id,allBus[i].id,true));
+					}
+				}
+			});
+		}else if(lORb=='search_car_far'){//bus被全选
+			var busList = $(".bus_array");
+			for (var i = 0; i < busList.length; i++) {
+				getCheckedList(busList[i]);
+			}
+		}
+		
+		
+		
+		
 	});
 	$(".checkNone").click(function() {
 		$(this).parent().find('li input').removeAttr('checked');
+		var lORb=$(this).parent().attr('class');
+		if(lORb=='search_line_far'){//line被全选
+			var lineList = $(".line_array");
+			for (var i = 0; i < lineList.length; i++) {
+					getCheckedList(lineList[i]);
+					checkedLineArr[i] = lineList[i].checked;
+			}
+			checkedIdList.splice(0,checkedIdList.length);
+			
+		}else if(lORb=='search_car_far'){//bus被全选
+			var busList = $(".bus_array");
+			for (var i = 0; i < busList.length; i++) {
+				getCheckedList(busList[i]);
+			}
+		}
 	});
 	// 用户控制－－－远程更新 复选框的全选end
 
@@ -245,10 +288,8 @@ $(document).ready(function() {
 		$(this).click(function() {
 			
 			$(this).addClass('showTemp');
-			$(userCarFar[index]).removeClass('hideTemp');
 			for (var i = 0; i < userLineLen; i++) {
 				if (i == index) continue;
-				$(userCarFar[i]).addClass('hideTemp');
 				$(userLineFar[i]).removeClass('showTemp');
 			}
 		});
