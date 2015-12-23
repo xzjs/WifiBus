@@ -13,20 +13,80 @@ use Think\Controller;
 class LineController extends Controller {
 	
 	/**
-	 * 添加线路
+	 * 线路查询
+	 */
+	public function select(){
+		$line=D('Line');
+		//$id=I('post.id');
+		$data = $line->field ( 'id as lineId,name as lineName' )->order('id')->select ();
+			$a = json_encode ( $data );
+			echo  $a;
+	}
+	
+	/**
+	 * 查询线路下的车辆
+	 */
+	public function  line_bus(){
+		$bus=A('Bus');
+		$reslut=$bus->select($id = 0, $line_id = I('post.id'), $search_keys = '', $is_getbuslist = 1);
+		echo $reslut;
+	}
+	
+	/**
+	 * 添加线路或则车辆
+	 * 返回值：-1路线名重复，-2车牌号重复
 	 */
 	public function add() {
-		$Line = D ( 'Line' );
 		
-		if ($Line->create ()) {
-			$result = $Line->add ();
-			if ($result) {
-				echo $result;
+		
+			$Line = D ( 'Line' );
+			
+			if ($Line->create ()) {
+				$result = $Line->add ();
+				if($result)
+					echo "成功";
+				else 
+					echo "失败";
 			} else {
-				$this->error ( '数据添加错误！' );
+				echo  $Line->getError () ;
 			}
+		
+	}
+		
+	public function adds() {
+		$flag = 1;
+		if (I ( 'post.type' ) == 0) {
+			$Line = D ( 'Line' );
+			if ($Line->create ()) {
+				$result = $Line->add ();
+			} else {
+				exit ( $Line->getError () );
+			}
+		} 
+
+		else {
+			$Line = D ( 'Bus' );
+			$device = D ( 'Device' );
+			if ($Line->create() && $device->create()) {
+				$result = $Line->add ();
+				$device->bus_id = $result;
+				$flag = $device->add ();
+				if ($flag && $result) {
+					echo $result;
+				} else {
+					$this->error ( '数据添加失败！' );
+				}
+			} else {
+				$erro=$device->getError()+$Line->getError();
+				 //exit($erro);
+				
+			}
+		}
+		
+		if ($flag && $result) {
+			echo $result;
 		} else {
-			$this->error ( $Line->getError () );
+			$this->error ( '数据添加失败！' );
 		}
 	}
 	
@@ -36,27 +96,26 @@ class LineController extends Controller {
 	 * @param number $id
 	 *        	线路id
 	 */
-	public function getLineList($id = 0,$search_keys = '', $is_ajax = 0) {
+	public function getLineList($id = 0, $search_keys = '', $is_ajax = 0) {
 		$Line = M ( 'Line' );
 		if ($id != 0) {
 			$data = $Line->find ( $id );
-		} elseif ($search_keys != '') {//根据关键字搜索
+		} elseif ($search_keys != '') { // 根据关键字搜索
 			$map ['name'] = array (
 					'like',
-					'%' . $search_keys . '%'
+					'%' . $search_keys . '%' 
 			);
 			$data = $Line->where ( $map )->select ();
-		}else {
-			$data = $Line->order('name')->select ();
+		} else {
+			$data = $Line->order ( 'name' )->select ();
 		}
 		
-		if($is_ajax==1){
+		if ($is_ajax == 1) {
 			$a = json_encode ( $data );
 			$this->ajaxReturn ( json_encode ( $data ) );
-		}else
+		} else
 			return $data;
 	}
-	
 	
 	/**
 	 * 测试更新线路方法
@@ -80,15 +139,22 @@ class LineController extends Controller {
 	 */
 	public function update() {
 		$Line = D ( 'Line' );
+		
+		$name=I('post.name');
+		$id=I('post.id');
+		//echo $name;
 		if ($Line->create ()) {
-			$result = $Line->save ();
+		
+			$result = M()->execute("UPDATE think_line SET name='$name' WHERE id=$id");
+			
 			if ($result) {
-				$this->success ( '操作成功！' );
+				echo  '更新成功！' ;
 			} else {
-				$this->error ( '写入错误！' );
+				echo  '更新失败！';
 			}
 		} else {
-			$this->error ( $Line->getError () );
+			//echo "ee";
+			echo $Line->getError () ;
 		}
 	}
 	
@@ -98,12 +164,15 @@ class LineController extends Controller {
 	 * @param number $id
 	 *        	线路ID
 	 */
-	public function delete($id = 0) {
+	public function delete() {
 		$Line = M ( 'Line' );
-		if ($Line->delete ( $id )) {
-			$this->success ( '操作成功！' );
+		$bus=A('Bus');
+		//echo I('post.id');
+		//$Line->id=I('post.lineId');
+		if ($bus->update_line(I('post.id'))&&$Line->delete (I('post.id'))) {
+			echo'操作成功！' ;
 		} else {
-			$this->error ( $Line->getError () );
+			echo "删除失败";
 		}
 	}
 }

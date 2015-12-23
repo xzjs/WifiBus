@@ -11,33 +11,62 @@ use Think\Controller;
  *        
  */
 class BusController extends BaseController {
+	/**
+	 * 更新bus车牌号
+	 */
+	public function update_no(){
+		$bus=D('Bus');
+		$no=I('post.no');
+		$id=I('post.carId');
+		$bus->id=I('post.carId');
+		if($bus->create()){
+			echo $no;
+			echo $id;
+			$result=M()->execute("UPDATE think_bus SET no ='$no' WHERE id=$id");
+			echo $result;
+			if($result){
+				echo "更新成功";
+			}
+			else {
+				echo "更新失败";
+			}
+		}
+		else {
+				echo $bus->getError();
+		}
+	}
 	
 	/**
 	 * 添加车辆
 	 */
 	public function add() {
 		$Bus = D ( 'Bus' );
-	
-		if ($Bus->create ()) {
+		$device=D('Device');
+		if ($Bus->create ()&&$device->create ()) {
 			if (empty ( $Bus->position_x ) && empty ( $Bus->position_y )) {
 				$Bus->position_x = 0;
 				$Bus->position_y = 0;
 			}
-			$result = $Bus->add ();
+			$result = $Bus->add();
 			if ($result) {
-				$device=D('Device');
-				$flag=$device->add();
-				if ($flag>0)
-					echo $result;
-				else 
-				{
-					$this->error ( '数据添加错误！' );
-				}
+				
+				$device->bus_id=$result;
+				$device->mac=I('post.mac');
+			
+					$flag=$device->add();
+					if ($flag>0)
+						echo '数据添加失成功！';
+					else
+					{
+						echo  '数据添加失败！' ;
+					}
+				
+				
 			} else {
-				$this->error ( '数据添加错误！' );
+				echo '数据添加失败！' ;
 			}
 		} else {
-			$this->error ( $Bus->getError () );
+			echo $Bus->getError().$device->getError() ;
 		}
 	}
 	
@@ -58,8 +87,9 @@ class BusController extends BaseController {
 			} elseif ($line_id != 0) {//根据线路搜索
 				$map ['line_id'] = $line_id;
 			}
-			$data = $Bus->where ( $map )->field ( 'id,no' )->order('no')->select ();
+			$data = $Bus->where ( $map )->field ( 'id as carId,no as carNum' )->order('no')->select ();
 			$a = json_encode ( $data );
+			return $a;
 			$this->ajaxReturn ( json_encode ( $data ) );
 		} else {
 			if ($id != 0)
@@ -87,7 +117,16 @@ class BusController extends BaseController {
 		$this->assign ( 'bus', $Bus->find ( $id ) );
 		$this->display ();
 	}
-	
+	/**
+	 * 删除line 后更新 bus表
+	 */
+	public function update_line($lineId){
+		$bus=D('Bus');
+		//echo "fff";
+		$result=$bus->where('line_id='.$lineId)->setField('line_id',null);
+		// echo $result;
+		return  $result+1;
+	}
 	/**
 	 * 更新车辆信息
 	 *
@@ -96,6 +135,8 @@ class BusController extends BaseController {
 	 * @param number $position_y:车辆位置纵坐标
 	 */
 	public function update($id = 0, $no = '', $line_id = 0, $mac = '', $position_x = 0, $position_y = 0) {
+		
+		
 		if (IS_POST) {
 			$Bus = D ( 'Bus' );
 			if ($Bus->create ()) {
@@ -150,6 +191,7 @@ class BusController extends BaseController {
 				S ( 'update_time', $update_time );
 			}
 		}
+		
 	}
 	
 	/**
@@ -159,16 +201,17 @@ class BusController extends BaseController {
 	 */
 	public function delete($id = 0) {
 		$Bus = M ( 'Bus' );
-		if ($Bus->delete ( $id )) {
-			$this->success ( '操作成功！' );
+		$device=A('Device');
+		if ($device->update_bus(I('post.carId'))&&$Bus->delete ( I('post.carId') )) {
+			echo  '操作成功！' ;
 		} else {
-			$this->error ( $Bus->getError () );
+			echo '操作失败！' ;
 		}
 	}
 
     public function index(){
         $BusModel=D('Bus');
-        $buses=$BusModel->relation(true)->select('41,42');
+        $buses=$BusModel->relation(true)->select();
         $this->assign('data',$buses);
         //var_dump($buses);
         $this->show();

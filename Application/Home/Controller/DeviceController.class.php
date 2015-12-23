@@ -12,7 +12,14 @@ use Think\Controller;
  */
 class DeviceController extends Controller
 {
-
+/**
+ * 更新设备所属车辆
+ */
+	public function update_bus($bus_line){
+		$result=M()->execute("UPDATE  think_device SET bus_id=NULL WHERE bus_id=$bus_line");
+		return  $result;
+	}
+	
     /**
      * 添加设备
      */
