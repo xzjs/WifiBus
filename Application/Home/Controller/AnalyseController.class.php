@@ -14,7 +14,21 @@ use Think\Controller;
  * @package Home\Controller
  */
 class AnalyseController extends Controller {
-
+	/**
+	 * ssh查询车牌号mac
+	 */
+	public function select(){
+		
+		$result = M()->query("SELECT b.id,b.no, d.mac FROM think_device AS d,think_bus AS b WHERE b.id=d.bus_id");
+		
+		for($i=0;$i<count($result);$i++){
+			$array[$i]=array(
+					'id'=>$result[$i]['id'],
+					'value'=>$result[$i]['no'].";".$result[$i]['mac'],
+			);
+		}
+		echo json_encode($array);
+	}
 	/**
 	 * 回头客流量——时间关系查询
 	 */
