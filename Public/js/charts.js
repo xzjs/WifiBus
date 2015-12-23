@@ -454,7 +454,6 @@ function adMainCustomerFunction(date1,date2) {
             data: [date1[0], date1[1], date1[2], date1[3], date1[4], date1[5], date1[6]],
             axisLabel: {
                 textStyle: {
-                    fontFamily: 'Microsoft YaHei, sans-serif',
                     fontSize: 14,
                     color: '#fff'
                 }
@@ -486,7 +485,7 @@ function adMainCustomerFunction(date1,date2) {
 }
 
 // 回头率时间关系图
-function adMainTurnBackFunction(date) {
+function adMainTurnBackFunction(date1,date2) {
     var tempOption = {
         title: {
             text: '回头率时间关系图',
@@ -504,7 +503,7 @@ function adMainTurnBackFunction(date) {
         xAxis: [{
             type: 'category',
             boundaryGap: false,
-            data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
+            data: [date1[0], date1[1], date1[2], date1[3], date1[4], date1[5], date1[6]],
             axisLabel: {
                 textStyle: {
                     fontFamily: 'Microsoft YaHei, sans-serif',
@@ -527,7 +526,7 @@ function adMainTurnBackFunction(date) {
         series: [{
             name: '回头率',
             type: 'line',
-            data: [date[0], date[1], date[2], date[3], date[4], date[5], date[6]],
+            data: [date2[0], date2[1], date2[2], date2[3], date2[4], date2[5], date2[6]],
             itemStyle: {
                 normal: {
                     color: myColor[1]

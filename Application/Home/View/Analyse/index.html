@@ -125,7 +125,7 @@ $.post("get_online_num", {
 	    myChartCustomerTime.setOption(adMainCustomer);
 	}
 });
-/* $.post("get_backm", {
+ $.post("get_back", {
 	//line_id : line
 }, function(data, status) {
 	if (status == "success") {
@@ -136,26 +136,14 @@ $.post("get_online_num", {
 			timeList[i]=adInfo[i].time;
 			numList[i]=adInfo[i].num;
 		}
-	//	alert(timeList);
-	        var adMainCustomer = adMainCustomerFunction(timeList,numList);
-	    myChartCustomerTime.setOption(adMainCustomer);
+	//	alert(numList);
+		  var adMainTurnBack = adMainTurnBackFunction(timeList,numList);
+	        myChartTurnBackTime.setOption(adMainTurnBack);
 	}
-}); */
+}); 
   
-	var e=new Array((Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6);
-	
-    // 广告点击量时间关系图
-  // var adMainTime = adMainTimeFunction(a,b);
-    // 流量时间关系图
-    
-    // 客流量时间关系图
-  //  var adMainCustomer = adMainCustomerFunction(d);
-    // 回头率时间关系图
-    var adMainTurnBack = adMainTurnBackFunction(e);
-   
    // myChartAdTime.setOption(adMainTime);
   
-    myChartTurnBackTime.setOption(adMainTurnBack);
     
     
    /*  function getAdInfo(line) {
