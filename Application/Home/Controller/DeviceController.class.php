@@ -216,7 +216,7 @@ class DeviceController extends Controller
     	$Device=M('Device');
     	$data['ssid']=$ssid;
     	$Command=A('Command');
-    	$cmd_str="--Ssid:12";
+    	$cmd_str='--Ssid:12';
     	for($i=0;$i<count($device_ids);$i++){
     		$cmd_result=$Command->add($device_ids[$i],$cmd_str,$ssid);
     		if(!$cmd_result)
