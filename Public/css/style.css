@@ -1,0 +1,157 @@
+/*css reset*/
+body {
+    font-family: "Microsoft YaHei", "SimHei", sans-serif;
+    font-size: 62.5%;
+    height: 100%;
+}
+/* for IE/Win */
+html{
+    height: 100%;
+}
+html>body {
+    font-size: 10px;
+    height: 100%;
+}
+
+/* for everything else */
+
+/*字体边框等初始化*/
+
+body,div,dl,dt,dd,ul,ol,li,h1,h2,h3,h4,h5,h6,pre,form,fieldset,input,textarea,p,blockquote,th,td {
+    padding: 0;
+    margin: 0;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+fieldset,img {
+    border: 0;
+}
+img {
+    display: block;
+}
+address,caption,cite,code,dfn,th,var {
+    font-weight: normal;
+    font-style: normal;
+}
+ol,ul {
+    list-style: none;
+}
+caption,th {
+    text-align: left;
+}
+h1,h2,h3,h4,h5,h6 {
+    font-weight: normal;
+    font-size: 100%;
+}
+q:before,q:after {
+    content: '';
+}
+abbr,acronym {
+    border: 0;
+}
+a {
+    color: #343434;
+    text-decoration: none;
+}
+a:hover {
+    color: #b60a0a
+}
+input{
+    outline:medium;
+}
+/*************************************/
+body{
+    background-color: #333;
+}
+
+
+
+.container {
+    width: 100%;
+    height: 100%;
+    position: relative;
+}
+.click-container{
+    width: 100%;
+    /*margin-top: 65px;*/
+    position: absolute;
+    bottom: 40px;
+}
+.clickMe {
+    font: 22px '微软雅黑', sans-serif;
+    display: block;
+    width: 80%;
+    bottom: 12%;
+    height: 40px;
+    margin: 0 auto;
+    background-color: #0099FF;
+    color: #fff;
+    border-radius: 56px;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+    -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+    box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
+}
+
+.head {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.head img{
+    max-width: 100%;
+    width: 100%;
+}
+.logo {
+    position: relative;
+    top: -10px;
+    height: 40%;
+    background-size: 100% 100%;
+    border-radius: 2px;
+}
+
+footer {
+    width: 100%;
+    position: absolute;
+    bottom: 0;
+    margin-bottom: 1px;
+}
+
+footer>p {
+    text-align: center;
+    color: #909090;
+    font-size: 12px;
+}
+
+@media only screen and (min-width: 340px) {
+    .logo {
+        height: 44%;
+    }
+}
+
+.tips {
+    color: #fff;
+    margin-top: 15px;
+    padding: 10px;
+    font-size: 16px;
+}
+.tips strong {
+    font-weight: normal;
+    font-size: 20px;
+}
+.swiper-slide{
+    background-size: 100% 100% !important;
+}
+.pic1 {
+    background: url(../images/1.jpg) no-repeat;
+}
+
+.pic2 {
+    background: url(../images/2.jpg) no-repeat;
+}
+
+.pic3 {
+    background: url(../images/3.jpg) no-repeat;
+}

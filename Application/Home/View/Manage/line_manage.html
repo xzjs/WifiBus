@@ -1,4 +1,4 @@
-<div class="out_container_title">
+<div class="out_container_title" ng-controller="ManageCtrl">
     <div class="container_title">
         <div class="left">
             <ul>
@@ -22,31 +22,45 @@
                 <input type="text">
                 <input type="submit" value="提交">
             </form>
-            <ul id="ul_line_list">
-                <li>
-                    <a href="javascript:void(0)" data-id="38" class='line_name'>黄岛线路123路</a>
-                    <a href='javascript:void(0)' title='删除' data-id="38" class='line_del'><img src='/WifiBus/Public/images/usr_d.png' alt='删除'></a>
-                    <a href='javascript:void(0)' title="编辑" data-id="38" data-name='黄岛线路123路' class="line_edt"><img src="/WifiBus/Public/images/usr_e.png" alt="编辑"></a>
-                    <a href="javascript:void(0)" title="车辆" data-id="38" class="line_slec"><img src="/WifiBus/Public/images/usr_g.png" alt="车辆"></a>
+            <ul>
+                <li ng-repeat="line in lines">
+                    <a href="javascript:void(0)" data-id="38" class='line_name'>{{line.linename}}</a>
+                    <a href='javascript:void(0)' title='删除' data-id="38" class='line_del'
+                       ng-click="delete({{line.lineid}})">
+                        <img src='/WifiBus/Public/images/usr_d.png' alt='删除'>
+                    </a>
+                    <a href='javascript:void(0)' title="编辑" data-id="38" data-name='黄岛线路123路' class="line_edt"
+                       ng-click="edit({{line.lineid}})">
+                        <img src="/WifiBus/Public/images/usr_e.png" alt="编辑">
+                    </a>
+                    <a href="javascript:void(0)" title="车辆" data-id="38" class="line_slec" ng-click="go({{line.lineid}})">
+                        <img src="/WifiBus/Public/images/usr_g.png" alt="车辆">
+                    </a>
                 </li>
             </ul>
             <div class="line_button">
                 <a class="we_click line_add_con">添加</a>
                 <a class="we_click line_alladd_con">批量添加</a>
+
                 <div class="clr"></div>
             </div>
         </div>
         <!-- 以下三个search_car div分别对应上面li中的三条线路 hideTemp-->
         <div class="search_car hide">
-            <ul id="ul_bus_list" class="ul_bus_list">
+            <ul class="ul_bus_list">
                 <li>
-                    <a href="javascript:void(0)" data-id="">鲁nx234</a>
-                    <a href="javascript:void(0)" title="删除" data-id="" class="car_del"><img src="/WifiBus/Public/images/usr_d.png" alt="删除"></a>
-                    <a href="javascript:void(0)" title="编辑" data-id="" class="car_edt"><img src="/WifiBus/Public/images/usr_e.png" alt="编辑"></a>
+                    <a href="javascript:void(0)" data-id="">{{line.name}}</a>
+                    <a href="javascript:void(0)" title="删除" data-id="" class="car_del">
+                        <img src="/WifiBus/Public/images/usr_d.png" alt="删除">
+                    </a>
+                    <a href="javascript:void(0)" title="编辑" data-id="" class="car_edt">
+                        <img src="/WifiBus/Public/images/usr_e.png" alt="编辑">
+                    </a>
                 </li>
             </ul>
             <div class="car_button">
                 <a class="car_add_con" href="javascript:void(0)">添加</a>
+
                 <div class="clr"></div>
             </div>
         </div>
@@ -55,6 +69,7 @@
             <ul class="user_click">
                 <li class="car_add">
                     <a href="javascript:void(0)" title="关闭">X</a>
+
                     <div class="cont1">
                         <label>车牌号</label>
                         <input type="text" name="carNum">
@@ -75,6 +90,7 @@
         <form method="post" action="upload" enctype="multipart/form-data" id="lineForm" class="hide">
             <ul class="user_click">
                 <li class="line_edit"><a href="javascript:void(0)" title="关闭">X</a>
+
                     <div>
                         <label>公交线路</label>
                         <input type="text">
@@ -169,7 +185,7 @@
         jQuery.ajax({
             url: url,
             dataType: "json",
-            success: function(results) {
+            success: function (results) {
                 map1(line, results.data);
             }
         });
@@ -185,7 +201,7 @@
                 map: map,
                 panel: "r-result"
             },
-            onGetBusListComplete: function(result) {
+            onGetBusListComplete: function (result) {
                 if (result) {
                     var fstLine = result.getBusListItem(0); //获取第一个公交列表显示到map上
                     busline.getBusLine(fstLine);
@@ -198,11 +214,11 @@
             busline.getBusList(busName);
         }
 
-        setTimeout(function() {
+        setTimeout(function () {
             busSearch();
         }, 1500);
 
-        setTimeout(function() {
+        setTimeout(function () {
                     var x;
                     for (x in array) {
                         var a = array[x][0];
@@ -245,7 +261,7 @@
     }
 
     //线路与车辆管理
-    $(function() {
+    $(function () {
         //删除线路
         showLine();
 
@@ -254,7 +270,7 @@
         //     console.log($(this).attr('data-id'));
         // })
 
-        $('#ul_line_list').delegate('.line_del', 'click', function() {
+        $('#ul_line_list').delegate('.line_del', 'click', function () {
             var flag = window.confirm("你确定删除该条线路信息么？");
             if (flag) {
                 var lineId = parseInt($(this).attr("data-id"));
@@ -266,7 +282,7 @@
                         sqlType: 0,
                         id: lineId
                     },
-                    success: function(data, status) {
+                    success: function (data, status) {
                         alert(data);
                         showLine();
                     }
@@ -276,12 +292,12 @@
         });
 
         //修改线路
-        $('#ul_line_list').delegate('.line_edt','click',function(){
+        $('#ul_line_list').delegate('.line_edt', 'click', function () {
             var lineInfo = $(this).attr("data-name");
             $("#lineForm").removeClass('hide');
             $("#lineForm input[type=text]").val(lineInfo);
             var lineId = parseInt($(this).attr("data-id"));
-            $("#lineForm input[type=submit]").on("click", function() {
+            $("#lineForm input[type=submit]").on("click", function () {
                 $.ajax({
                     url: '../Line/update',
                     type: "POST",
@@ -290,7 +306,7 @@
                         id: lineId,
                         name: $("#lineForm input[type=text]").val()
                     },
-                    success: function(data, status) {
+                    success: function (data, status) {
                         alert(data);
                         showLine();
                         $("#lineForm input[type=text]").val("");
@@ -330,9 +346,9 @@
         //         })
         //     })
         //显示车辆信息
-        $.each($(".line_slec"), function(index, value) {
+        $.each($(".line_slec"), function (index, value) {
 
-            $(".line_slec").eq(index).on("click", function() {
+            $(".line_slec").eq(index).on("click", function () {
                 console.log("aaaa");
                 var lineId = $(".line_slec").eq(index).attr("data-id");
                 // console.log(lineId);
@@ -343,20 +359,20 @@
                         sqlType: 1,
                         id: lineId
                     },
-                    success: function(data, status) {
+                    success: function (data, status) {
 
                         var list = $.parseJSON(data),
                                 info = "";
-                        $.each(list, function(index, value) {
+                        $.each(list, function (index, value) {
                             value = list[index];
                             info += "<li><a href='javascript:void(0)' data-id='" + value.carId + "'>" + value.carNum + "</a><a href='javascript:void(0)' data-id='" + value.carId + "' title='删除' class='car_del'><img src='/WifiBus/Public/images/usr_d.png' alt='删除'></a><a href='javascript:void(0)' data-id='" + value.carId + "' title='编辑' class='car_edt'><img src='/WifiBus/Public/images/usr_e.png' alt='编辑'></a>";
                             $("#ul_bus_list").html(info);
 
                         })
                         $(".search_car").removeClass('hide');
-                        $(".car_add_con").on("click", function() {
+                        $(".car_add_con").on("click", function () {
                             $("#carForm").removeClass('hide');
-                            $("#carForm input[submit]").on("click", function() {
+                            $("#carForm input[submit]").on("click", function () {
                                 $.ajax({
                                     url: '',
                                     type: 'POST',
@@ -366,7 +382,7 @@
                                         carNum: $("#carForm input[text]").val(),
                                         carMac: $("#carForm select:checked").val()
                                     },
-                                    success: function(data, status) {
+                                    success: function (data, status) {
                                         if (data) {
                                             alert("添加成功");
                                             showCar(lineId);
@@ -377,9 +393,9 @@
                                 })
                             })
                         })
-                        $.each($(".car_del"), function(index, value) {
+                        $.each($(".car_del"), function (index, value) {
                             var carId = $(".car_del").eq(index).attr("data-id");
-                            $(".car_del").eq(index).on("click", function() {
+                            $(".car_del").eq(index).on("click", function () {
                                 var flag = window.confirm("你确定删除么");
                                 if (flag) {
                                     $.ajax({
@@ -389,7 +405,7 @@
                                             sqlType: 1,
                                             carId: carId
                                         },
-                                        success: function(data, status) {
+                                        success: function (data, status) {
                                             alert(data);
                                             showCar(lineId);
 
@@ -398,12 +414,12 @@
                                 }
                             })
                         })
-                        $.each($(".car_edt"), function(index, value) {
+                        $.each($(".car_edt"), function (index, value) {
                             var carId = $(".car_edt").eq(index).attr("data-id");
                             var carNum = ($("#ul_bus_list li").eq(index)).eq(0).html();
                             $("#carForm").removeClass('hide');
                             $("#carForm input[text]").val(carNum);
-                            $("#carForm input[submit]").on("click", function() {
+                            $("#carForm input[submit]").on("click", function () {
                                 $.ajax({
                                     url: '',
                                     type: 'POST',
@@ -414,7 +430,7 @@
                                         carNum: $("#carForm input[text]").val(),
                                         carMac: $("#carForm select:checked").val()
                                     },
-                                    success: function(data, status) {
+                                    success: function (data, status) {
                                         alert(data);
                                         showCar(lineId);
                                         $("#carForm input[text]").val("");
@@ -430,9 +446,9 @@
         })
 
         //添加线路 
-        $(".line_add_con").on("click", function() {
+        $(".line_add_con").on("click", function () {
             $("#lineForm").removeClass('hide');
-            $("#lineForm input[type=submit]").on("click", function() {
+            $("#lineForm input[type=submit]").on("click", function () {
                 $.ajax({
                     url: '../Line/add',
                     type: "POST",
@@ -440,7 +456,7 @@
                         sqlType: 0,
                         name: $("#lineForm input[type=text]").val()
                     },
-                    success: function(data, status) {
+                    success: function (data, status) {
                         alert(data);
                         $("#lineForm input[type=text]").val("");
                         $("#lineForm").addClass('hide');
@@ -464,12 +480,12 @@
                     sqlType: 0,
                     lineId: lineId
                 },
-                success: function(data, status) {
+                success: function (data, status) {
                     var list = $.parseJSON(data),
                             info = "";
-                    $.each(list, function(index, value) {
+                    $.each(list, function (index, value) {
                         value = list[index];
-                        info += "<li><a href='javascript:void(0)' class='line_name' data-id='" + value.lineid + "'>" + value.linename + "</a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='删除' class='line_del'><img src='/WifiBus/Public/images/usr_d.png' alt='删除'></a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='编辑' class='line_edt' data-name='"+value.linename+"'><img src='/WifiBus/Public/images/usr_e.png' alt='编辑'></a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='车辆' class='line_slec'><img src='/WifiBus/Public/images/usr_g.png' alt='车辆'></a></li>";
+                        info += "<li><a href='javascript:void(0)' class='line_name' data-id='" + value.lineid + "'>" + value.linename + "</a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='删除' class='line_del'><img src='/WifiBus/Public/images/usr_d.png' alt='删除'></a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='编辑' class='line_edt' data-name='" + value.linename + "'><img src='/WifiBus/Public/images/usr_e.png' alt='编辑'></a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='车辆' class='line_slec'><img src='/WifiBus/Public/images/usr_g.png' alt='车辆'></a></li>";
                         $("#ul_line_list").html(info);
                     })
                 }
@@ -485,11 +501,11 @@
                 sqlType: 1,
                 lineId: lineId
             },
-            success: function(data, status) {
+            success: function (data, status) {
 
                 var list = $.parseJSON(data),
                         info = "";
-                $.each(list, function(index, value) {
+                $.each(list, function (index, value) {
                     value = list[index];
                     info += "<li><a href='javascript:void(0)' data-id='" + value.carid + "'>" + value.carname + "</a><a href='javascript:void(0)' data-id='" + value.carid + "' title='删除' class='car_del'><img src='/WifiBus/Public/images/usr_d.png' alt='删除'></a><a href='javascript:void(0)' data-id='" + value.carId + "' title='编辑' class='car_edt'><img src='/WifiBus/Public/images/usr_e.png' alt='编辑'></a>";
                     $("#ul_bus_list").html(info);
@@ -500,5 +516,33 @@
     }
 </script>
 <script>
+    wifiapp.controller('ManageCtrl', function ($scope, Buses, Lines) {
+        $scope.getLines = function () {
+            var promise = Lines.query();
+            promise.then(function (data) {
+                console.log(data);
+                $scope.lines = data;
+            }, function (data) {
+                alert(data);
+            });
+        };
+        $scope.getBuses = function (line_id) {
+            var promise = Buses.query(line_id);
+            promise.then(function (data) {
+                $scope.buses = data.data;
+            }, function (data) {
+                alert(data);
+            });
+        };
+        $scope.delete = function (line_id) {
+            alert('delete');
+        };
+        $scope.edit = function (line_id) {
 
+        };
+        $scope.go=function(line_id){
+
+        }
+        $scope.getLines();
+    });
 </script>
