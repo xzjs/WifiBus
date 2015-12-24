@@ -42,52 +42,34 @@ class LineController extends Controller
     public function add()
     {
         $Line = D('Line');
-
         if ($Line->create()) {
             $result = $Line->add();
-            if ($result)
-                echo "成功";
-            else
-                echo "失败";
+            echo $result ? '添加成功' : '添加失败';
         } else {
             echo $Line->getError();
         }
 
     }
 
+    /**
+     * 添加一辆车
+     */
     public function adds()
     {
-        $flag = 1;
-        if (I('post.type') == 0) {
-            $Line = D('Line');
-            if ($Line->create()) {
-                $result = $Line->add();
+        $Bus = D('Bus');
+        $device = D('Device');
+        $post=I('post.');
+        if ($Bus->create() && $device->create()) {
+            $result = $Bus->add();
+            $device->bus_id = $result;
+            $flag = $device->add();
+            if ($flag && $result) {
+                echo '添加成功';
             } else {
-                exit ($Line->getError());
+                echo '添加失败';
             }
         } else {
-            $Line = D('Bus');
-            $device = D('Device');
-            if ($Line->create() && $device->create()) {
-                $result = $Line->add();
-                $device->bus_id = $result;
-                $flag = $device->add();
-                if ($flag && $result) {
-                    echo $result;
-                } else {
-                    $this->error('数据添加失败！');
-                }
-            } else {
-                $erro = $device->getError() + $Line->getError();
-                //exit($erro);
-
-            }
-        }
-
-        if ($flag && $result) {
-            echo $result;
-        } else {
-            $this->error('数据添加失败！');
+            echo $Bus->getError() . $device->getError();
         }
     }
 
@@ -188,13 +170,13 @@ class LineController extends Controller
      */
     public function get_buses($line_id)
     {
-        $LineModel=D('Line');
-        $line=$LineModel->find($line_id);
+        $LineModel = D('Line');
+        $line = $LineModel->find($line_id);
         $BusModel = D('Bus');
         $condition['line_id'] = $line_id;
-        $data=array(
-            'line'=>$line,
-            'buses'=>$BusModel->where($condition)->relation(true)->select()
+        $data = array(
+            'line' => $line,
+            'buses' => $BusModel->where($condition)->relation(true)->select()
         );
         echo json_encode($data);
     }

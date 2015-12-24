@@ -9,7 +9,6 @@ class LineModel extends Model {
      */
     protected $_validate    =   array(
         array('name','require','线路名称不能为空！'), 
-        array('name','','线路名称已经存在',0,'unique',1),
-    		array('name','','线路名称已经存在',0,'unique',2),
+        array('name','','线路名称已经存在',0,'unique',3),
     );
  }
