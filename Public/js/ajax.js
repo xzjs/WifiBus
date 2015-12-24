@@ -84,18 +84,18 @@ function get_bus_list_check(url, id, display, order) {
 
 
 /**
- * 
+ * 获取状态改变的check
  * @param changedCheck
  */
 function getCheckedList(changedCheck) {
 	
 	var pORc=changedCheck.name;//判断是该项为子项还是父项
 	if(pORc=="roadLine"){
-		lineCheckChange($(".bus_array"),changedCheck.value,changedCheck.checked);
+		lineCheckChange(changedCheck.checked);
 	}else if(pORc=="car"){
-		busCheckChange($(".bus_array"),changedCheck);
+		busCheckChange(changedCheck);
 	}
-	
+	getDeviceInfo();
 }
 
 /**
@@ -104,7 +104,8 @@ function getCheckedList(changedCheck) {
  * @param line_id
  * @param isChecked
  */
-function lineCheckChange(busList,line_id,isChecked){
+function lineCheckChange(isChecked){
+	busList=$(".bus_array");
 	for(var i=0;i<busList.length;i++){
 		var bus=busList[i];
 		bus.checked=isChecked;
@@ -122,7 +123,8 @@ function lineCheckChange(busList,line_id,isChecked){
  * @param busList
  * @param theBus
  */
-function busCheckChange(busList,theBus){
+function busCheckChange(theBus){
+	busList=$(".bus_array");
 	var lineList = $(".line_array");
 	if(!theBus.checked){
 		for(var i=0;i<lineList.length;i++){
@@ -257,9 +259,29 @@ function search_line(url,key){
 	});
 }
 
-
-function checkChange(url){
-	
+/**
+ * 获取选中check列表的ssid和网速上限
+ */
+function getDeviceInfo() {
+	var busArr = new Array();
+	for (var i = 0; i < checkedIdList.length; i++) {
+		if (checkedIdList[i].isChecked)
+			busArr[i] = checkedIdList[i].id;
+	}
+	if (busArr.length > 0) {
+		$.post('get_device_set', {
+			ids : busArr,
+		}, function(data, status) {
+			if (status == 4 || status == "success") {
+				var device_info = eval(data);
+				$('input#ssid_set').val(device_info.ssid);
+				$('input#flow_limit_set').val(device_info.flow_limit);
+			}
+		});
+	}else{
+		$('input#ssid_set').val('');
+		$('input#flow_limit_set').val('');
+	}
 }
 
 

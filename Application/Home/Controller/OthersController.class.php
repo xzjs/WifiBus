@@ -15,7 +15,19 @@ class OthersController extends Controller {
     	$this->display ();
     }
 
-    public function get_ssid($ids){
-		
-    }
+    public function get_device_set($ids){
+    	$id_list=$ids;
+    	$device=M('Device');
+    	for($i=0;$i<count($id_list);$i++){
+    		$condition['bus_id']=$id_list[$i];
+    		$result=$device->where($condition)->field('id')->find();
+    		$device_ids[$i]=$result['id'];
+    	}
+    	$Device=A('Device');
+		$json['ssid']=$Device->get_ssid($device_ids);
+		$json['flow_limit']=$Device->get_network_limit($device_ids);
+		$this->ajaxReturn($json);
+    } 
+    	
+    
 }

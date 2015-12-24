@@ -232,8 +232,8 @@ $(document).ready(function() {
 		var lORb=$(this).parent().attr('class');
 		if(lORb=='search_line_far'){//line被全选
 			var lineList = $(".line_array");
+			lineCheckChange(true);
 			for (var i = 0; i < lineList.length; i++) {
-					getCheckedList(lineList[i]);
 					checkedLineArr[i] = lineList[i].checked;
 			}
 			checkedIdList.splice(0,checkedIdList.length);
@@ -244,35 +244,39 @@ $(document).ready(function() {
 					var allBus = eval(data);
 					for(var i=0;i<allBus.length;i++){
 						checkedIdList.push(new Bus(allBus[i].line_id,allBus[i].id,true));
+						if(i==allBus.length-1)
+							getDeviceInfo();//checkchange动作完成之后再触发
 					}
 				}
 			});
 		}else if(lORb=='search_car_far'){//bus被全选
 			var busList = $(".bus_array");
 			for (var i = 0; i < busList.length; i++) {
-				getCheckedList(busList[i]);
+				busCheckChange(busList[i]);
+				if(i==busList.length-1)
+					getDeviceInfo();//checkchange动作完成之后再触发
 			}
 		}
-		
-		
-		
-		
 	});
 	$(".checkNone").click(function() {
 		$(this).parent().find('li input').removeAttr('checked');
 		var lORb=$(this).parent().attr('class');
-		if(lORb=='search_line_far'){//line被全选
+		if(lORb=='search_line_far'){//line全部取消选中
 			var lineList = $(".line_array");
+			lineCheckChange(false);
 			for (var i = 0; i < lineList.length; i++) {
-					getCheckedList(lineList[i]);
-					checkedLineArr[i] = lineList[i].checked;
+				checkedLineArr[i] = lineList[i].checked;
 			}
 			checkedIdList.splice(0,checkedIdList.length);
-			
-		}else if(lORb=='search_car_far'){//bus被全选
+			getDeviceInfo();
+			$('input#ssid_set').val('');
+			$('input#flow_limit_set').val('');
+		}else if(lORb=='search_car_far'){//bus全部取消选中
 			var busList = $(".bus_array");
 			for (var i = 0; i < busList.length; i++) {
-				getCheckedList(busList[i]);
+				busCheckChange(busList[i]);
+				if(i==busList.length-1)
+					getDeviceInfo();//checkchange动作完成之后再触发
 			}
 		}
 	});
