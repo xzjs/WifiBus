@@ -1,24 +1,28 @@
 {__NOLAYOUT__}
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Document</title>
     <style>
-        html{
+        html {
             background: #fff;
             height: 100%;
         }
-        body{
+
+        body {
             height: 100%;
         }
-        .container{
+
+        .container {
             width: 100%;
             height: 100%;
             position: relative;
         }
-        .clickMe{
+
+        .clickMe {
             font: 32px '微软雅黑', sans-serif;
             display: block;
             position: absolute;
@@ -35,50 +39,87 @@
             box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
             font-weight: bold;
         }
-        .head{
+
+        .head {
             width: 100%;
             position: relative;
             top: -8px;
             width: 100%;
             height: 85px;
-            background:url(__PUBLIC__/images/footer.jpg) no-repeat;
+            background: url(__PUBLIC__/images/footer.jpg) no-repeat;
             background-size: 100% 100%;
         }
-        .logo{
+
+        .logo {
             position: relative;
             top: -10px;
             height: 40%;
-            background: url(__PUBLIC__/images/title.jpg) no-repeat;
             background-size: 100% 100%;
             border-radius: 2px;
-
         }
-        footer{
+
+        footer {
             width: 100%;
             position: absolute;
             bottom: 0;
         }
-        footer>p{
+
+        footer>p {
             text-align: center;
             color: #ccc;
             font-size: 16px;
             padding: 12px 0;
         }
-        @media only screen and (min-width: 340px){
-            .logo{
+
+        @media only screen and (min-width: 340px) {
+            .logo {
                 height: 44%;
             }
         }
+
+        .tips{
+            margin-top: 15px;
+        }
+
+        .pic1 {
+            background: url(__PUBLIC__/images/1.jpg) no-repeat;
+        }
+
+        .pic2 {
+            background: url(__PUBLIC__/images/2.jpg) no-repeat;
+        }
+
+        .pic3 {
+            background: url(__PUBLIC__/images/3.jpg) no-repeat;
+        }
     </style>
+    <link rel="stylesheet" href="__PUBLIC__/css/swiper.min.css">
 </head>
+
 <body>
 <div class="container">
     <div class="head"></div>
-    <div class="logo"></div>
+    <div class="swiper-container logo">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide pic1"></div>
+            <div class="swiper-slide pic2"></div>
+            <div class="swiper-slide pic3"></div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+    <p class="tips">公告：<br>欢迎使用黄岛真情巴士的免费上网服务，您可以通过点击“免费上网”按键享受黄岛公交提供的真情服务。</p>
     <a class="clickMe" href="{$url}">开始上网</a>
     <footer>
         <p>欢迎使用真情巴士免费WiFi</p>
     </footer>
 </div>
+<script src="__PUBLIC__/js/swiper.min.js"></script>
+<script>
+    var mySwiper = new Swiper('.swiper-container', {
+        autoplay: 5000,
+        pagination: '.swiper-pagination'
+    })
+</script>
 </body>
+
 </html>
