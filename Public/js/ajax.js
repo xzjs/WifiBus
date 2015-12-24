@@ -1,3 +1,6 @@
+
+
+
 /**
  * 加载线路列表(暂未用到)
  */
@@ -25,29 +28,173 @@ function load_line() {
 
 
 /**
- * 显示某线路上的车辆的车牌号
+ * 显示某线路上的车辆的车牌号列表，并且类型设为check
  * 
  * @param str：线路Id
  */
-function get_bus_list_check(url,id,display) {
-	$.post(url, {
-		is_getbuslist : 1,
-		line_id : id
-	}, function(data, status) {
-		if (status == 4 || status == "success") {
-			var bus_info = eval(data);
-			var bus_list = "";
-			for (var i = 0; i < bus_info.length; i++) {
-				bus_list += "<li><input type='checkbox' name='car' value="+bus_info[i].id+"> <a>"+ bus_info[i].no +"</a></li>";
+function get_bus_list_check(url, id, display, order) {
+	if (order != selected) {
+				$.post(
+						url,
+						{
+							is_getbuslist : 1,
+							line_id : id
+						},
+						function(data, status) {
+							if (status == 4 || status == "success") {
+								var bus_info = eval(data);
+								var bus_list = "";
+								
+								for (var i = 0; i < bus_info.length; i++) {
+									var a=getCheckState(bus_info[i].id);
+									if(a==true){
+										var str=" checked='true' ";
+									}else{
+										var str=" ";
+									} 
+									bus_list += "<li><input type='checkbox' class='bus_array' id="
+											+ id +str
+											+ " onchange='getCheckedList(this)' name='car' value="
+											+ bus_info[i].id
+											+ "> <a>"
+											+ bus_info[i].no + "</a></li>";
+								}
+								$("ul#" + display).html(bus_list);
+								var lineList = $(".line_array");
+								for (var i = 0; i < lineList.length; i++) {
+									if (lineList[i].checked != checkedLineArr[i]) {
+										getCheckedList(lineList[i]);
+										checkedLineArr[i] = lineList[i].checked;
+									}
+								}
+							}
+						});
+				selected=order;
+	} else {
+		var lineList = $(".line_array");
+		for (var i = 0; i < lineList.length; i++) {
+			if (lineList[i].checked != checkedLineArr[i]) {
+				getCheckedList(lineList[i]);
+				checkedLineArr[i] = lineList[i].checked;
 			}
-			$("ul#"+display).html(bus_list);
 		}
-	});
+	}
+
 }
 
 
 /**
- * 显示某线路上的车辆的车牌号
+ * 获取状态改变的check
+ * @param changedCheck
+ */
+function getCheckedList(changedCheck) {
+	
+	var pORc=changedCheck.name;//判断是该项为子项还是父项
+	if(pORc=="roadLine"){
+		lineCheckChange(changedCheck.checked);
+	}else if(pORc=="car"){
+		busCheckChange(changedCheck);
+	}
+	getDeviceInfo();
+}
+
+/**
+ * line check改变后的操作
+ * @param busList 
+ * @param line_id
+ * @param isChecked
+ */
+function lineCheckChange(isChecked){
+	busList=$(".bus_array");
+	for(var i=0;i<busList.length;i++){
+		var bus=busList[i];
+		bus.checked=isChecked;
+		if(getBusIndex(bus.value)==-1){
+			checkedIdList.push(new Bus(bus.id,bus.value,isChecked));//增加到选中check列表
+		}else {
+			var j=getBusIndex(bus.value);
+			checkedIdList[j].isChecked=isChecked;//更新check属性的值
+		}
+	}
+}
+
+/**
+ * bus check改变后的操作
+ * @param busList
+ * @param theBus
+ */
+function busCheckChange(theBus){
+	busList=$(".bus_array");
+	var lineList = $(".line_array");
+	if(!theBus.checked){
+		for(var i=0;i<lineList.length;i++){
+			if(lineList[i].value==theBus.id)
+				lineList[i].checked=false;
+				checkedLineArr[i] = lineList[i].checked;
+		}
+		if(getBusIndex(theBus.value)!=-1){
+			checkedIdList[getBusIndex(theBus.value)].isChecked=theBus.checked;
+		}else{
+			checkedIdList.push(new Bus(theBus.id,theBus.value,false));//增加到选中check列表
+		}
+	}else{
+		var flag=new Boolean(true);
+		for(var i=0;i<busList.length;i++){
+			if(!busList[i].checked)
+				flag=false;
+		}
+		for(var i=0;i<lineList.length;i++){
+			if(lineList[i].value==theBus.id)
+				lineList[i].checked=flag;
+				checkedLineArr[i] = lineList[i].checked;
+		}
+	}
+	if(getBusIndex(theBus.value)!=-1){
+		checkedIdList[getBusIndex(theBus.value)].isChecked=theBus.checked;
+	}else{
+		checkedIdList.push(new Bus(theBus.id,theBus.value,theBus.checked));//增加到选中check列表
+	}
+}
+
+/**
+ * 获取bus_id在checkIdList中的索引
+ * @param id bus_id
+ * @returns {Number} 返回该id的索引,如果不存在则返回-1
+ */
+function getBusIndex(id){
+	for(var i=0;i<checkedIdList.length;i++){
+		if(checkedIdList[i].id==id)
+			return i;
+	}
+	return -1;
+}
+
+
+/**
+ * 获取bus_id在的check值
+ * @param id bus_id
+ * @returns {Number} 返回该id的check属性的值,如果不存在则返回-1
+ */
+function getCheckState(id){
+	var flag=new Boolean(false);
+	for(var i=0;i<checkedIdList.length;i++){
+		if(checkedIdList[i].id==id)
+			return checkedIdList[i].isChecked;
+	}
+	return -1;
+}
+
+/**
+ * Bus对象
+ */
+function Bus(parent_id,id,isChecked){
+	this.parent_id=parent_id;
+	this.id=id;
+	this.isChecked=isChecked;
+}
+
+/**
+ * 显示某线路上的车辆的车牌号列表
  * 
  * @param str：线路Id
  */
@@ -66,6 +213,8 @@ function get_bus_list(url,id,display) {
 		}
 	});
 }
+
+
 
 /**
  * 根据车牌号搜索车辆
@@ -110,7 +259,30 @@ function search_line(url,key){
 	});
 }
 
-
+/**
+ * 获取选中check列表的ssid和网速上限
+ */
+function getDeviceInfo() {
+	var busArr = new Array();
+	for (var i = 0; i < checkedIdList.length; i++) {
+		if (checkedIdList[i].isChecked)
+			busArr[i] = checkedIdList[i].id;
+	}
+	if (busArr.length > 0) {
+		$.post('get_device_set', {
+			ids : busArr,
+		}, function(data, status) {
+			if (status == 4 || status == "success") {
+				var device_info = eval(data);
+				$('input#ssid_set').val(device_info.ssid);
+				$('input#flow_limit_set').val(device_info.flow_limit);
+			}
+		});
+	}else{
+		$('input#ssid_set').val('');
+		$('input#flow_limit_set').val('');
+	}
+}
 
 
 

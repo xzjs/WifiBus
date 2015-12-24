@@ -24,14 +24,17 @@
                 <ul>
                 		<volist name="line_list" id="vo" empty=" " key="k">
                     	<if condition="($k eq 1)">
+                    	
                     		<li class="showTemp"
-                            	onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check')">
-                            <input type="checkbox" name="roadLine" value={$vo.id}><a>{$vo.name}</a></li>
+                            	onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
+                            <input type="checkbox" name="roadLine" value={$vo.id}  class="line_array">
+                            <a>{$vo.name}</a></li>
                     	
 						<else/>
-
-							<li onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check')">
-                            <input type="checkbox" name="roadLine" value={$vo.id}><a>{$vo.name}</a></li>
+						
+							<li onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
+                            <input type="checkbox" name="roadLine" value={$vo.id}  class="line_array">
+                            <a>{$vo.name}</a></li>
 
 						</if>
                     </volist>
@@ -53,7 +56,7 @@
 	                <ul id="bus_list_check">
                     <volist name="bus_list" id="vo" empty=" ">
                         <li>
-                        <li><input type="checkbox" name="car" value={vo.id}'> <a>{$vo.no}</a></li>
+                        <li><input class= "bus_array" type="checkbox" id={$line_list[0].id} name="car" value={$vo.id} onchange="getCheckedList(this)"> <a>{$vo.no}</a></li>
                     </volist>
                 
                 </ul>
@@ -72,7 +75,7 @@
                     </div>
                     <div class="other_set">
                         <form action="form" method="get">
-                            <input type="text">
+                            <input type="text" id="ssid_set" >
                             <input type="button" value="提交">
                         </form>
                     </div>
@@ -84,7 +87,7 @@
                     </div>
                     <div class="other_set">
                         <form action="form" method="get">
-                            <input type="text">kb/s
+                            <input type="text" id="flow_limit_set" >kb/s
                             <input type="button" value="提交">
                         </form>
                     </div>
@@ -120,7 +123,19 @@
 
 
 <script type="text/javascript">
-    
+
+var checkedIdList=new Array();//选中的bus列表
+var checkedLineArr= new Array();
+var selected=0;
+/**
+ * 创建全局变量
+ */
+$(function() {
+	var lineList = $(".line_array");
+	for(var i=0;i<lineList.length;i++){
+		checkedLineArr[i]=lineList[i].checked;
+	}
+})
     
     
 </script>

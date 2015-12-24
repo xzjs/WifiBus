@@ -186,4 +186,80 @@ class DeviceController extends Controller
         }*/
         $this->success('操作成功');
     }
+    
+   /**
+    * 根据id列表查询ssid，相同则返回ssid，不同则返回空
+    * @param array $device_ids id列表
+    * @return string ssid名
+    */
+    public function get_ssid($device_ids=null) {
+    	$Device=M('Device');
+    	$result=$Device->field('ssid')->find($device_ids[0]);
+    	$ssid_or_null=$result['ssid'];
+    	for($i=0;$i<count($device_ids);$i++){
+    		$result=$Device->field('ssid')->find($device_ids[$i]);
+    		if($ssid_or_null!=$result['ssid']){
+    			$ssid_or_null='';
+    			break;
+    		}
+    	}
+    	return $ssid_or_null;
+    }
+    
+    /**
+     * 设置id列表的设备的ssid
+     * @param array $device_ids id列表
+     * @param unknown $ssid ssid名
+     * @return boolean 操作结果
+     */
+    public function set_ssid($device_ids,$ssid) {
+    	$Device=M('Device');
+    	$data['ssid']=$ssid;
+    	for($i=0;$i<count($device_ids);$i++){
+    		$data['id']=$device_ids[$i];
+    		$result=$Device->data($data)->save();
+    		if(!$result)
+    			return false;//更新失败！
+    	}
+    	return true;//更新成功！
+    }
+    
+    /**
+     * 查询id列表设备的网速限制
+     * @param array $device_ids id列表
+     * @return string 相同则返回限制值，不同则返回空
+     */
+    public function get_network_limit($device_ids) {
+    	$Device=M('Device');
+    	$result=$Device->field('network_limit')->find($device_ids[0]);
+    	$limit_or_null=$result['network_limit'];
+    	for($i=0;$i<count($device_ids);$i++){
+    		$result=$Device->field('network_limit')->find($device_ids[$i]);
+    		if($limit_or_null!=$result['network_limit']){
+    			$limit_or_null='';
+    			break;
+    		}
+    	}
+    	return $limit_or_null;
+    }
+    
+    /**
+     * 设置id列表设备的网速限制值
+     * @param array $device_ids 设备id列表
+     * @param unknown $network_limit 网速限制值
+     * @return boolean 更新成功与否
+     */
+    public function set_network_limit($device_ids,$network_limit) {
+    	$Device=M('Device');
+    	$data['network_limit']=$network_limit;
+    	for($i=0;$i<count($device_ids);$i++){
+    		$data['id']=$device_ids[$i];
+    		$result=$Device->data($data)->save();
+    		if(!$result)
+    			return false;//更新失败！
+    	}
+    	return true;//更新成功！
+    }
+    
+    
 }
