@@ -259,30 +259,3 @@ function search_line(url,key){
 	});
 }
 
-/**
- * 获取选中check列表的ssid和网速上限
- */
-function getDeviceInfo() {
-	var busArr = new Array();
-	for (var i = 0; i < checkedIdList.length; i++) {
-		if (checkedIdList[i].isChecked)
-			busArr[i] = checkedIdList[i].id;
-	}
-	if (busArr.length > 0) {
-		$.post('get_device_set', {
-			ids : busArr,
-		}, function(data, status) {
-			if (status == 4 || status == "success") {
-				var device_info = eval(data);
-				$('input#ssid_set').val(device_info.ssid);
-				$('input#flow_limit_set').val(device_info.flow_limit);
-			}
-		});
-	}else{
-		$('input#ssid_set').val('');
-		$('input#flow_limit_set').val('');
-	}
-}
-
-
-
