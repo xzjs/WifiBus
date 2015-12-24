@@ -9,101 +9,60 @@
 
             </ul>
         </div>
+        
+        
         <div class="userLeftBar">
             <div class="search_line_far">
                 <form action="form">
                     <input type="text">
+                    <input type="submit" value="搜索">
                     <div class="clr"></div>
                 </form>
                 <ul>
-                    <li class="showTemp">
-                        <input type="checkbox" name="roadLine">
-                        <a>黄岛17路</a>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="roadLine">
-                        <a>黄岛18路</a>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="roadLine">
-                        <a>黄岛19路</a>
-                    </li>
+                		<volist name="line_list" id="vo" empty=" " key="k">
+                    	<if condition="($k eq 1)">
+
+                    		<li class="showTemp"
+                            	onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
+                            <input type="checkbox" name="roadLine" value={$vo.id}  class="line_array">
+                            <a>{$vo.name}</a></li>
+
+						<else/>
+
+							<li onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
+                            <input type="checkbox" name="roadLine" value={$vo.id}  class="line_array">
+                            <a>{$vo.name}</a></li>
+
+						</if>
+                    </volist>
                 </ul>
                 <a class="checkAll">全选</a>
                 <a class="checkNone">取消全选</a>
+
                 <div class="clr"></div>
             </div>
+
+
             <div class="search_car_far">
                 <form action="form">
                     <input type="text">
                     <input type="submit" value="搜索">
                     <div class="clr"></div>
                 </form>
-                <ul>
-                    <li>
-                        <input type="checkbox" name="car">
-                        <a href="#">鲁B17</a>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="car">
-                        <a href="#">鲁B17</a>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="car">
-                        <a href="#">鲁B17</a>
-                    </li>
+
+	                <ul id="bus_list_check">
+                    <volist name="bus_list" id="vo" empty=" ">
+                        <li>
+                        <li><input class= "bus_array" type="checkbox" id={$line_list[0].id} name="car" value={$vo.id} onchange="getCheckedList(this)"> <a>{$vo.no}</a></li>
+                    </volist>
+
                 </ul>
                 <a class="checkAll">全选</a>
                 <a class="checkNone">取消全选</a>
+
                 <div class="clr"></div>
             </div>
-            <div class="search_car_far hideTemp">
-                <form action="form">
-                    <input type="text">
-                    <div class="clr"></div>
-                </form>
-                <ul>
-                    <li>
-                        <input type="checkbox" name="car">
-                        <a href="#">鲁B18</a>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="car">
-                        <a href="#">鲁B18</a>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="car">
-                        <a href="#">鲁B18</a>
-                    </li>
-                </ul>
-                <a class="checkAll">全选</a>
-                <a class="checkNone">取消全选</a>
-                <div class="clr"></div>
-            </div>
-            <div class="search_car_far hideTemp">
-                <form action="form">
-                    <input type="text">
-                    <input type="submit" value="搜索">
-                    <div class="clr"></div>
-                </form>
-                <ul>
-                    <li>
-                        <input type="checkbox" name="car">
-                        <a href="#">鲁B19</a>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="car">
-                        <a href="#">鲁B19</a>
-                    </li>
-                    <li>
-                        <input type="checkbox" name="car">
-                        <a href="#">鲁B19</a>
-                    </li>
-                </ul>
-                <a class="checkAll">全选</a>
-                <a class="checkNone">取消全选</a>
-                <div class="clr"></div>
-            </div>
+
         </div>
         <div class="up_main">
             <ul>
@@ -281,3 +240,27 @@
         <div class="clear"></div>
     </div>
 </div>
+
+<script type="text/javascript">
+
+var checkedIdList=new Array();//选中的bus列表
+var checkedLineArr= new Array();
+var selected=0;
+/**
+ * 创建全局变量
+ */
+$(function() {
+	var lineList = $(".line_array");
+	for(var i=0;i<lineList.length;i++){
+		checkedLineArr[i]=lineList[i].checked;
+	}
+})
+
+    
+/**
+ * 获取选中check列表的ssid和网速上限
+ */
+function getDeviceInfo() {
+	
+}
+</script>

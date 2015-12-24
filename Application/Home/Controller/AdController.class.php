@@ -14,6 +14,20 @@ use Think\Controller;
 class AdController extends Controller
 {
 
+	/**
+	 * “广告设置”页面
+	 */
+	public function index(){
+		$this->assign('title','广告设置');
+		$this->assign('class4','action');
+		$Line = A ( 'Line' );
+		$data = $Line->getLineList ();
+		$this->assign ( 'line_list', $data );
+		$Bus=A('Bus');
+		$data = $Bus->select(0,$data[0][id],'',0);
+		$this->assign ( 'bus_list', $data );
+		$this->display ();
+	}
     /**
      * 添加广告
      */
@@ -128,10 +142,5 @@ class AdController extends Controller
         }
     }
 
-    public function index()
-    {
-        $this->assign('title', '广告设置');
-        $this->assign('class4', 'action');
-        $this->show();
-    }
+    
 }
