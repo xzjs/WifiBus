@@ -42,8 +42,17 @@ class OthersController extends Controller {
      * @param unknown $ssid 
      */
     public function set_ssid($ids,$ssid) {
+    	$id_list=$ids;
+    	$device=M('Device');
+    	$device_ids=array();
+    	for($i=0;$i<count($id_list);$i++){
+    		$condition['bus_id']=$id_list[$i];
+    		$result=$device->where($condition)->field('id')->find();
+    		if(count($result)>0)
+    			array_push($device_ids,$result['id']);
+    	}
     	$Device=A('Device');
-    	$result=$Device->set_ssid($ids,$ssid);
+    	$result=$Device->set_ssid($device_ids,$ssid);
     	$this->ajaxReturn($result);
     }
     
@@ -52,9 +61,18 @@ class OthersController extends Controller {
      * @param unknown $ids id列表
      * @param unknown $ssid
      */
-    public function set_networklimit($ids,$network_limit) {
+    public function set_network_limit($ids,$network_limit) {
+    	$id_list=$ids;
+    	$device=M('Device');
+    	$device_ids=array();
+    	for($i=0;$i<count($id_list);$i++){
+    		$condition['bus_id']=$id_list[$i];
+    		$result=$device->where($condition)->field('id')->find();
+    		if(count($result)>0)
+    			array_push($device_ids,$result['id']);
+    	}
     	$Device=A('Device');
-    	$result=$Device->set_network_limit($ids,$network_limit);
+    	$result=$Device->set_network_limit($device_ids,$network_limit);
     	$this->ajaxReturn($result);
     }
     
