@@ -14,13 +14,27 @@ use Think\Controller;
  * @package Home\Controller
  */
 class AnalyseController extends Controller {
-
+	/**
+	 * ssh查询车牌号mac
+	 */
+	public function select(){
+		
+		$result = M()->query("SELECT b.id,b.no, d.mac FROM think_device AS d,think_bus AS b WHERE b.id=d.bus_id");
+		
+		for($i=0;$i<count($result);$i++){
+			$array[$i]=array(
+					'id'=>$result[$i]['id'],
+					'value'=>$result[$i]['no'].";".$result[$i]['mac'],
+			);
+		}
+		echo json_encode($array);
+	}
 	/**
 	 * 回头客流量——时间关系查询
 	 */
-	public function d(){
+	public function get_back(){
 		$time=time()-6*86400;
-		$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400)";
+		$sql="SELECT mac,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=1";
 		$result=M()->query($sql);
 		$array=array();
 		$base=A('Base');
@@ -29,9 +43,13 @@ class AnalyseController extends Controller {
 		for ($h = 0; $h <7; $h++) {
 			$sum[$h] = 0;
 		}
+		
 		for($i=0;$i<count($result);$i++){
 			$dif= (int)((strtotime("now ")-(strtotime(date('Y-m-d', $result [$i] ['time']))))/86400);
-			$sum[$dif]=$sum[$dif]+1;
+      
+        	$sum[$dif]=$sum[$dif]+1;
+        
+			
 	
 		}
 		for($i=0;$i<7;$i++){
