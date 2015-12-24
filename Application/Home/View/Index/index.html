@@ -111,7 +111,6 @@
     var b = 35;
     var c = 30;
     var d = 40;
-    ajax("__CONTROLLER__/all", '');
     var int = self.setInterval("chart()", 3000);
 
     var map = new BMap.Map("allmap");            // 创建Map实例
@@ -148,18 +147,6 @@
         myChartFlow.setOption(optionFlow);
         myChartAd.setOption(optionAd);
     }
-
-    function ajax($url, line) {
-        jQuery.ajax({
-            url: $url,
-            dataType: "json",
-            success: function (results) {
-                get_map(line, results.data);
-            }
-        });
-    }
-
-
 </script>
 <script>
     wifiapp.factory('Buses', function ($http, $q) {
@@ -190,7 +177,11 @@
             var promise = Buses.query(line_id);
             promise.then(function (data) {
                 get_map(data);
-                setTimeout(print_busdata.buses,2000);
+                setTimeout(function(){
+                    $scope.int=setInterval(function(){
+                        print_bus();
+                    },5000);
+                },1000);
             }, function (data) {
                 alert('haha');
             });
@@ -215,34 +206,40 @@
 
             setTimeout(function () {
                 busSearch();
-            }, 1000);
+            }, 500);
         }
 
-        function print_bus(array) {
-            var x;
-            for (x in array) {
-                var a = array[x].position_x;
-                var b = array[x].position_y;
-                if (a * b > 0) {
-                    var pt = new BMap.Point(a, b);
-                    var convertor = new BMap.Convertor();
-                    var pointArr = [];
-                    pointArr.push(pt);
-                    convertor.translate(pointArr, 1, 5, function (data) {
-                        if (data.status === 0) {
-                            var timestamp = Date.parse(new Date()) / 1000;
-                            var d_time = array[x].Device.time;
-                            var img = '__PUBLIC__/images/' + (timestamp - d_time > 300 ? 'red' : 'green') + '_left.png';
-                            var myIcon = new BMap.Icon(img, new BMap.Size(50, 30));
-                            var marker2 = new BMap.Marker(data.points[0], {icon: myIcon});  // 创建标注
-                            map.addOverlay(marker2);
-                            // 创建标注
-                            var content = '<p>在线人数:' + array[x].Device.online_num + '</p><p>已用流量' + array[x].Device.flow_num + 'M/120G</p><p>磁盘使用率:' + array[x].Device.useage + '%</p><p>本地资源访问人数:15</p>';
-                            addClickHandler(content, marker2);
-                        }
-                    });
+        function print_bus() {
+            var promise = Buses.query($scope.line_id);
+            promise.then(function (data) {
+                var array=data.buses;
+                var x;
+                for (x in array) {
+                    var a = array[x].position_x;
+                    var b = array[x].position_y;
+                    if (a * b > 0) {
+                        var pt = new BMap.Point(a, b);
+                        var convertor = new BMap.Convertor();
+                        var pointArr = [];
+                        pointArr.push(pt);
+                        convertor.translate(pointArr, 1, 5, function (data) {
+                            if (data.status === 0) {
+                                var timestamp = Date.parse(new Date()) / 1000;
+                                var d_time = array[x].Device.time;
+                                var img = '__PUBLIC__/images/' + (timestamp - d_time > 300 ? 'red' : 'green') + '_left.png';
+                                var myIcon = new BMap.Icon(img, new BMap.Size(50, 30));
+                                var marker2 = new BMap.Marker(data.points[0], {icon: myIcon});  // 创建标注
+                                map.addOverlay(marker2);
+                                // 创建标注
+                                var content = '<p>在线人数:' + array[x].Device.online_num + '</p><p>已用流量' + array[x].Device.flow_num + 'M/120G</p><p>磁盘使用率:' + array[x].Device.useage + '%</p><p>本地资源访问人数:15</p>';
+                                addClickHandler(content, marker2);
+                            }
+                        });
+                    }
                 }
-            }
+            }, function (data) {
+                alert('haha');
+            });
         }
 
         function addClickHandler(content, marker) {

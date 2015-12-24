@@ -24,14 +24,14 @@
                 <ul>
                 		<volist name="line_list" id="vo" empty=" " key="k">
                     	<if condition="($k eq 1)">
-                    	
+
                     		<li class="showTemp"
                             	onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
                             <input type="checkbox" name="roadLine" value={$vo.id}  class="line_array">
                             <a>{$vo.name}</a></li>
-                    	
+
 						<else/>
-						
+
 							<li onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
                             <input type="checkbox" name="roadLine" value={$vo.id}  class="line_array">
                             <a>{$vo.name}</a></li>
@@ -44,28 +44,28 @@
 
                 <div class="clr"></div>
             </div>
-            
-            
+
+
             <div class="search_car_far">
                 <form action="form">
                     <input type="text">
                     <input type="submit" value="搜索">
                     <div class="clr"></div>
                 </form>
-                
+
 	                <ul id="bus_list_check">
                     <volist name="bus_list" id="vo" empty=" ">
                         <li>
                         <li><input class= "bus_array" type="checkbox" id={$line_list[0].id} name="car" value={$vo.id} onchange="getCheckedList(this)"> <a>{$vo.no}</a></li>
                     </volist>
-                
+
                 </ul>
                 <a class="checkAll">全选</a>
                 <a class="checkNone">取消全选</a>
 
                 <div class="clr"></div>
             </div>
-            
+
         </div>
         <div class="up_main">
             <ul>
@@ -200,7 +200,7 @@ function set_flow_limit(flow_limit){
 	if (busArr.length > 0) {
 		$.post('set_network_limit', {
 			ids : busArr,
-			network_limit: flow_limit 
+			network_limit: flow_limit
 		}, function(data, status) {
 			if (status == 4 || status == "success") {
 				if(data==0)
@@ -215,6 +215,6 @@ function set_flow_limit(flow_limit){
 		alert("没有选中车辆!");
 	}
 }
-    
-    
+
+
 </script>
