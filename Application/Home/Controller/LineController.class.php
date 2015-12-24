@@ -41,8 +41,6 @@ class LineController extends Controller
      */
     public function add()
     {
-
-
         $Line = D('Line');
 
         if ($Line->create()) {

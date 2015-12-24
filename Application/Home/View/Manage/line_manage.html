@@ -23,14 +23,15 @@
                 <li ng-repeat="line in lines">
                     <a href="javascript:void(0)" data-id="38" class='line_name'>{{line.linename}}</a>
                     <a href='javascript:void(0)' title='删除' data-id="38" class='line_del'
-                       ng-click="delete({{line.lineid}})">
+                       ng-click="delete(line.lineid)">
                         <img src='/WifiBus/Public/images/usr_d.png' alt='删除'>
                     </a>
                     <a href='javascript:void(0)' title="编辑" data-id="38" data-name='黄岛线路123路' class="line_edt"
-                       ng-click="edit({{line.lineid}})">
+                       ng-click="edit(line.lineid)">
                         <img src="/WifiBus/Public/images/usr_e.png" alt="编辑">
                     </a>
-                    <a href="javascript:void(0)" title="车辆" data-id="38" class="line_slec" ng-click="go({{line.lineid}})">
+                    <a href="javascript:void(0)" title="车辆" data-id="38" class="line_slec"
+                       ng-click="go(line.lineid)">
                         <img src="/WifiBus/Public/images/usr_g.png" alt="车辆">
                     </a>
                 </li>
@@ -532,12 +533,12 @@
             });
         };
         $scope.delete = function (line_id) {
-            alert('delete');
+            alert('delete'+line_id);
         };
         $scope.edit = function (line_id) {
 
         };
-        $scope.go=function(line_id){
+        $scope.go = function (line_id) {
 
         }
         $scope.getLines();
