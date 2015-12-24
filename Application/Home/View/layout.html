@@ -12,7 +12,52 @@
     <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=ABMyPFHzCuKItIEoAG2FZjtt"></script>
     <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>
 	<script src="//cdn.bootcss.com/angular.js/1.5.0-rc.0/angular.min.js"></script>
-    <script src="__PUBLIC__/js/app.js"></script>
+	<script>
+        var wifiapp = angular.module('wifi', []);
+
+        //查询线路下公交车的服务
+        wifiapp.factory('Buses', function ($http, $q) {
+            return {
+                query: function (line_id) {
+                    var config = {
+                        params: {
+                            'line_id': line_id
+                        }
+                    };
+                    var defered = $q.defer();
+                    $http.get("{:U('Line/get_buses')}", config).then(
+                            function successCallback(response) {
+                                defered.resolve(response.data);
+                            },
+                            function errCallback(response) {
+                                defered.reject(response);
+                            }
+                    );
+                    return defered.promise;
+                }
+            }
+        });
+
+        //查询所有线路的服务
+        wifiapp.factory('Lines',function($http,$q){
+            return {
+                query: function () {
+                    var config = {
+                    };
+                    var defered = $q.defer();
+                    $http.get("{:U('Line/select')}", config).then(
+                            function successCallback(response) {
+                                defered.resolve(response.data);
+                            },
+                            function errCallback(response) {
+                                defered.reject(response);
+                            }
+                    );
+                    return defered.promise;
+                }
+            }
+        });
+    </script>
     <script type="text/javascript" src="__PUBLIC__/js/index.js"></script>
     <script type="text/javascript" src="__PUBLIC__/js/charts.js"></script>
     <script type="text/javascript" src="__PUBLIC__/js/ajax.js"></script>

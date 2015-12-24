@@ -149,28 +149,6 @@
     }
 </script>
 <script>
-    wifiapp.factory('Buses', function ($http, $q) {
-        return {
-            query: function (line_id) {
-                var config = {
-                    params: {
-                        'line_id': line_id
-                    }
-                };
-                var defered = $q.defer();
-                $http.get("{:U('Line/get_buses')}", config).then(
-                        function successCallback(response) {
-                            defered.resolve(response.data);
-                        },
-                        function errCallback(response) {
-                            defered.reject(response);
-                        }
-                );
-                return defered.promise;
-            }
-        }
-    });
-
     wifiapp.controller('IndexCtrl', function ($scope, Buses) {
         $scope.getBuses = function (line_id) {
             $scope.line_id = line_id;
