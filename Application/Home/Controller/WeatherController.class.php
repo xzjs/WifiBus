@@ -56,7 +56,7 @@ class WeatherController extends Controller
     	 
     	$weath=$result[0]->weather_data[0]->weather;
     	 
-    	$html_str="<img src=".$img_url." width='24' height='24'>
+    	$html_str="<img src=".$img_url." >
 						<div>".$weath."</div>
 						<div>".$wind."</div>
 						<div>".$temperature."</div>";

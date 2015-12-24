@@ -258,3 +258,17 @@ function search_line(url,key){
 	});
 }
 
+/**
+ * ajax获取天气
+ */
+$(function () {
+    $.post("/wifibus/index.php/Home/Weather/get_weather", {
+        city_code: 370200,
+    }, function (datas, status) {
+        if (status == 4 || status == "success") {
+            $("div#weather").html(datas);
+
+        }
+    });
+})
+
