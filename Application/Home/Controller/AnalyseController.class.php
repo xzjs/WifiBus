@@ -14,6 +14,7 @@ use Think\Controller;
  * @package Home\Controller
  */
 class AnalyseController extends Controller {
+
 	/**
 	 * ssh查询车牌号mac
 	 */
@@ -29,6 +30,7 @@ class AnalyseController extends Controller {
 		}
 		echo json_encode($array);
 	}
+
 	/**
 	 * 回头客流量——时间关系查询
 	 */
