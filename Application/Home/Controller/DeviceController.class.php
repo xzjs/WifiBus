@@ -215,13 +215,18 @@ class DeviceController extends Controller
     public function set_ssid($device_ids,$ssid) {
     	$Device=M('Device');
     	$data['ssid']=$ssid;
+    	$Command=A('Command');
+    	$cmd_str="--Ssid:12";
     	for($i=0;$i<count($device_ids);$i++){
+    		$cmd_result=$Command->add($device_ids[$i],$cmd_str,$ssid);
+    		if(!$cmd_result)
+    			return 1;
     		$data['id']=$device_ids[$i];
     		$result=$Device->data($data)->save();
     		if(!$result)
-    			return false;//更新失败！
+    			return 2;//更新失败！
     	}
-    	return true;//更新成功！
+    	return 0;//更新成功！
     }
     
     /**
@@ -251,14 +256,19 @@ class DeviceController extends Controller
      */
     public function set_network_limit($device_ids,$network_limit) {
     	$Device=M('Device');
+    	$Command=A('Command');
+    	$cmd_str="--Networklimit:13";
     	$data['network_limit']=$network_limit;
     	for($i=0;$i<count($device_ids);$i++){
+    		$cmd_result=$Command->add($device_ids[$i],$cmd_str,$network_limit);
+    		if(!$cmd_result)
+    			return 1;
     		$data['id']=$device_ids[$i];
     		$result=$Device->data($data)->save();
     		if(!$result)
-    			return false;//更新失败！
+    			return 2;//更新失败！
     	}
-    	return true;//更新成功！
+    	return 0;//更新成功！
     }
     
     

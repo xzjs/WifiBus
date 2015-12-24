@@ -76,7 +76,7 @@
                     <div class="other_set">
                         <form action="form" method="get">
                             <input type="text" id="ssid_set" >
-                            <input type="button" value="提交">
+                            <input type="button" value="提交" onclick="set_ssid($('input#ssid_set').val())">
                         </form>
                     </div>
                     <ul class="clear"></ul>
@@ -88,7 +88,7 @@
                     <div class="other_set">
                         <form action="form" method="get">
                             <input type="text" id="flow_limit_set" >kb/s
-                            <input type="button" value="提交">
+                            <input type="button" value="提交" onclick="set_flow_limit($('input#flow_limit_set').val())">
                         </form>
                     </div>
                     <ul class="clear"></ul>
@@ -136,6 +136,85 @@ $(function() {
 		checkedLineArr[i]=lineList[i].checked;
 	}
 })
+
+/**
+ * 获取选中check列表的ssid和网速上限
+ */
+function getDeviceInfo() {
+	var busArr = new Array();
+	for (var i = 0; i < checkedIdList.length; i++) {
+		if (checkedIdList[i].isChecked)
+			busArr[i] = checkedIdList[i].id;
+	}
+	if (busArr.length > 0) {
+		$.post('get_device_set', {
+			ids : busArr,
+		}, function(data, status) {
+			if (status == 4 || status == "success") {
+				var device_info = eval(data);
+				$('input#ssid_set').val(device_info.ssid);
+				$('input#flow_limit_set').val(device_info.flow_limit);
+			}
+		});
+	}else{
+		$('input#ssid_set').val('');
+		$('input#flow_limit_set').val('');
+	}
+}
+
+/**
+ * 设置设备ssid
+ * @param ssid_value
+ */
+function set_ssid(ssid_value){
+	var busArr = new Array();
+	for (var i = 0; i < checkedIdList.length; i++) {
+		if (checkedIdList[i].isChecked)
+			busArr[i] = checkedIdList[i].id;
+	}
+	if (busArr.length > 0) {
+		$.post('set_ssid', {
+			ids : busArr,
+			ssid: ssid_value
+		}, function(data, status) {
+			if (status == 4 || status == "success") {
+				if(data==0)
+					alert('设置成功！');
+				else if(data==1)
+					alert('设备操作失败！');
+				else if(data==2)
+					alert("数据库更新失败！");
+			}
+		});
+	}else{
+		alert("没有选中车辆!");
+	}
+}
+
+function set_flow_limit(flow_limit){
+	var busArr = new Array();
+	for (var i = 0; i < checkedIdList.length; i++) {
+		if (checkedIdList[i].isChecked)
+			busArr[i] = checkedIdList[i].id;
+	}
+	if (busArr.length > 0) {
+		$.post('set_network_limit', {
+			ids : busArr,
+			network_limit: flow_limit 
+		}, function(data, status) {
+			if (status == 4 || status == "success") {
+				if(data==0)
+					alert('设置成功！');
+				else if(data==1)
+					alert('设备操作失败！');
+				else if(data==2)
+					alert("数据库更新失败！");
+			}
+		});
+	}else{
+		alert("没有选中车辆!");
+	}
+}
     
     
 </script>

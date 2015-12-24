@@ -2,8 +2,11 @@
 namespace Home\Controller;
 use Think\Controller;
 class OthersController extends Controller {
+	
+	/**
+	 * “其它”页面
+	 */
     public function others(){
-    	
     	$this->assign('title','其它设置');
         $this->assign('class3','action');
         $Line = A ( 'Line' );
@@ -15,6 +18,10 @@ class OthersController extends Controller {
     	$this->display ();
     }
 
+    /**
+     * 获取id列表的ssid和网速限制值
+     * @param unknown $ids id列表
+     */
     public function get_device_set($ids){
     	$id_list=$ids;
     	$device=M('Device');
@@ -29,5 +36,26 @@ class OthersController extends Controller {
 		$this->ajaxReturn($json);
     } 
     	
+    /**
+     * 设置id列表的设备的ssid
+     * @param unknown $ids id列表
+     * @param unknown $ssid 
+     */
+    public function set_ssid($ids,$ssid) {
+    	$Device=A('Device');
+    	$result=$Device->set_ssid($ids,$ssid);
+    	$this->ajaxReturn($result);
+    }
+    
+    /**
+     * 设置id列表的网速限制
+     * @param unknown $ids id列表
+     * @param unknown $ssid
+     */
+    public function set_networklimit($ids,$network_limit) {
+    	$Device=A('Device');
+    	$result=$Device->set_network_limit($ids,$network_limit);
+    	$this->ajaxReturn($result);
+    }
     
 }
