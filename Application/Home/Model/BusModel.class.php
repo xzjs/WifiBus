@@ -24,4 +24,12 @@ class BusModel extends RelationModel
     protected $_link = array(
         'Device'=> self::HAS_ONE,
     );
+
+    /**
+     * @var array 自动完成
+     */
+    protected $_auto = array (
+        array('position_x','0'),  // 新增的时候把status字段设置为1
+        array('position_y','0'),  // 新增的时候把status字段设置为1
+    );
 }
