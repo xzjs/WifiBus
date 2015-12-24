@@ -5,8 +5,7 @@
                 <li class="box_one"><a></a></li>
                 <li class="box_two"><a></a></li>
             </ul>
-            <div class="weather" id="weather">
-
+            <div class="weather" id="weather" style="color:#ccc">
 
             </div>
         </div>
@@ -85,22 +84,6 @@
 </div>
 <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
 <script type="text/javascript">
-
-    /**
-     * ajax获取天气
-     */
-    $(function () {
-
-        $.post("{:U('Weather/get_weather')}", {
-            city_code: 370200,
-        }, function (datas, status) {
-            if (status == 4 || status == "success") {
-                $("div#weather").html(datas);
-
-            }
-        });
-    })
-
 
     var myChartWork = echarts.init(document.getElementById('workNormal'));
     var myChartOnline = echarts.init(document.getElementById('onlinePeople'));
@@ -256,4 +239,7 @@
             map.openInfoWindow(infoWindow, point); //开启信息窗口
         }
     })
+    
+    
+
 </script>

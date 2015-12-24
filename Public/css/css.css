@@ -1596,6 +1596,17 @@ search_car> div+ul{
 /*用户控制-线路管理*/
 /*********************************************/
 
+/*左边栏天气*/
+.weather{
+	height: 60px; 
+	text-align: center;	
+	padding: 20px 5px 20px;
+	font-weight: 400;
+    font-style: normal;
+    font-size: 11px;
+    cursor: pointer;
+    margin-bottom : 50px
+}
 
 
 
