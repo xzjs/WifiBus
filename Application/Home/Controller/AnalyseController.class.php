@@ -157,6 +157,7 @@ class AnalyseController extends Controller {
 	//echo 	$sum[$i];
 		}
 		echo json_encode($array);*/
+
 	}
 	public function index() {
 		$this->assign('title','广告和流量分析');
