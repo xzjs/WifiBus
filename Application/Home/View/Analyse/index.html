@@ -69,18 +69,18 @@ $.post("get_ad_click_top", {
 	if (status == "success") {
 		//alert("ff");
 		//alert(eval(data));
-		 adInfo = eval(data);
-		 var textList=new Array();
-		var numList=new Array();
-		for (var i = 0; i < adInfo.length; i++) {
-			textList[i]=adInfo[i].text;
-			numList[i]=adInfo[i].click_num;
-		}
+		 adInfo = $.parseJSON(data);
+		 var textList=adInfo.name;
+		var numList=adInfo.data;
+//		for (var i = 0; i < adInfo.length; i++) {
+//			textList[i]=adInfo[i].text;
+//			numList[i]=adInfo[i].click_num;
+//		}
 	    var adMainOption = adMainFunction(textList,numList);
 	    myChartAdMain.setOption(adMainOption); 
 	}
 });
-$.post("get_ad_click", {
+$.post("get_flow", {
 	//line_id : line
 }, function(data, status) {
 	if (status == "success") {

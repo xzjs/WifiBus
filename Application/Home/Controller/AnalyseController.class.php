@@ -131,11 +131,12 @@ class AnalyseController extends Controller {
 	 * @param number $bus_id
 	 */
 	public function get_ad_click($line_id=0,$bus_id=0) {
-		$Ad=M('Ad');
+		/*//$Ad=D('Ad');
 		//$data = $Ad->where('line_id='.$line_id)->field('text,click_num')->order('click_num desc')->limit(6)->select();
 		$time=time()-6*86400;
-		$result=M()->query("SELECT  num,TIME FROM think_adclick WHERE TIME>(UNIX_TIMESTAMP(NOW())-6*86400)");
-     	$array=array();
+		//$result=M()->query("SELECT  num,TIME FROM think_adclick WHERE TIME>(UNIX_TIMESTAMP(NOW())-6*86400)");
+		$MediaModel=D('Media');
+		$array=array();
 	    $base=A('Base');
 	    $today=$base->weekday(strtotime("now "));
 	//f "d".$today;
@@ -155,8 +156,7 @@ class AnalyseController extends Controller {
 			);
 	//echo 	$sum[$i];
 		}
-		echo json_encode($array);
-		
+		echo json_encode($array);*/
 	}
 	public function index() {
 		$this->assign('title','广告和流量分析');
@@ -186,7 +186,7 @@ class AnalyseController extends Controller {
 	}
 	
 	public function get_ad_click_top($line_id=0) {
-		$Ad=M('Ad');
+		/*$Ad=M('Ad');
 		//$data = $Ad->where('line_id='.$line_id)->field('text,click_num')->order('click_num desc')->limit(6)->select();
 		$result=M()->query("SELECT SUM(adc.num) as click_num,ad.text FROM think_ad AS ad,think_adclick AS adc WHERE adc.ad_id=ad.id GROUP BY adc.ad_id ORDER BY  click_num DESC LIMIT 6");
 		$array=array();
@@ -200,7 +200,12 @@ class AnalyseController extends Controller {
 			);
 		}
 		echo json_encode($array);
-		///$this->ajaxReturn ( $data  );
+		///$this->ajaxReturn ( $data  );*/
+        $data=array(
+            'name'=>array('可口可乐','百事可乐','非常可乐'),
+            'data'=>array(11,12,13)
+        );
+        echo json_encode($data);
 	}
 	
 	
