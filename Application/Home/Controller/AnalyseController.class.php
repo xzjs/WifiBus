@@ -99,8 +99,22 @@ class AnalyseController extends Controller {
 	 * 流量——时间关系查询
 	 */
 	public function get_flow(){
+		$line_id = I('post.line_id');
+		$bus_id =I('post.bus_id');
 		$time=time()-6*86400;
-		$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400)";
+		if ($bus_id == 0 && $line_id == 0) {
+			$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400)";
+		}
+		else {
+			if ($bus_id == 0) {
+				$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)";
+				
+			}
+			else{
+				$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";
+				
+			}
+		}
 		$result=M()->query($sql);
 		$array=array();
 		$base=A('Base');
