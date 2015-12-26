@@ -66,39 +66,7 @@ var myChartAdTime = echarts.init(document.getElementById('adTime'),'macarons');
 var myChartFlowTime = echarts.init(document.getElementById('flowTime'),'macarons');
 var myChartCustomerTime = echarts.init(document.getElementById('customerTime'),'macarons');
 var myChartTurnBackTime = echarts.init(document.getElementById('turnBackTime'),'macarons');
-/* $.post("get_ad_click_top", {
-//	line_id : line
-}, function(data, status) {
-	if (status == "success") {
-		//alert("ff");
-		//alert(eval(data));
-		 adInfo = $.parseJSON(data);
-		 var textList=adInfo.name;
-		var numList=adInfo.data;
-//		for (var i = 0; i < adInfo.length; i++) {
-//			textList[i]=adInfo[i].text;
-//			numList[i]=adInfo[i].click_num;
-//		}
-	    var adMainOption = adMainFunction(textList,numList);
-	    myChartAdMain.setOption(adMainOption); 
-	}
-}); */
-$.post("get_flow", {
-	//line_id : line
-}, function(data, status) {
-	if (status == "success") {
-		adInfo = eval(data);
-		 var timeList=new Array();
-		var numList=new Array();
-		for (var i = 0; i < adInfo.length; i++) {
-			timeList[i]=adInfo[i].time;
-			numList[i]=adInfo[i].num;
-		}
-	//	alert(timeList);
-	    var adMainOption_adtime = adMainTimeFunction(timeList,numList);
-	    myChartAdTime.setOption(adMainOption_adtime ); 
-	}
-});
+
 $.post("get_flow", {
 	//line_id : line
 }, function(data, status) {
@@ -150,7 +118,6 @@ $.post("get_online_num", {
   
    // myChartAdTime.setOption(adMainTime);
   
-    
     
    /*  function getAdInfo(line) {
     	var a=new Array((Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*15,(Math.random()+1)*15);
