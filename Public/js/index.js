@@ -340,9 +340,9 @@ $(document).ready(function() {
 	// --------------------------
 	
 	function drag() {
-		var oTitle = $(".canDrag .dragPosition")[0];
+		//var oTitle = $(".canDrag .dragPosition")[0];
 		// 拖曳
-		oTitle.onmousedown = fnDown;
+		//oTitle.onmousedown = fnDown;
 	}
 
 	function fnDown(event) {
