@@ -186,27 +186,52 @@ class AnalyseController extends Controller {
 		$this->display ();
 	}
 	
-	public function get_ad_click_top($line_id=0) {
-		/*$Ad=M('Ad');
-		//$data = $Ad->where('line_id='.$line_id)->field('text,click_num')->order('click_num desc')->limit(6)->select();
-		$result=M()->query("SELECT SUM(adc.num) as click_num,ad.text FROM think_ad AS ad,think_adclick AS adc WHERE adc.ad_id=ad.id GROUP BY adc.ad_id ORDER BY  click_num DESC LIMIT 6");
-		$array=array();
-		for($i=0;$i<count($result);$i++){
-				
-			$array[$i]=array(
-					'text'=>$result[$i]['text'],
+public function get_ad_click_top() {
+		 $line_id = I('post.line_id');
+		$bus_id =I('post.bus_id');
 		
-					'click_num'=>$result[$i]['click_num'],
-						
-			);
+		if ($bus_id == 0 && $line_id == 0) {
+			$sql = 'SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac WHERE mac.media_id=md.id GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6';
+		} else {
+			if ($bus_id == 0) {
+				$sql = "SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac 
+                        WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT media_id FROM think_device_media WHERE device_id IN (SELECT  think_device.id FROM think_device,think_bus,think_line
+                       WHERE think_line.id=think_bus.line_id AND think_line.id=$line_id AND think_device.bus_id=think_bus.id)
+                               ) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6" ;
+			} 
+			else {
+			$sql="SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac 
+                 WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT think_device_media.media_id FROM think_device_media ,think_device WHERE think_device_media.device_id=think_device.id AND think_device.bus_id=$bus_id) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
+			}
 		}
-		echo json_encode($array);
-		///$this->ajaxReturn ( $data  );*/
-        $data=array(
-            'name'=>array('可口可乐','百事可乐','非常可乐'),
-            'data'=>array(11,12,13)
-        );
-        echo json_encode($data);
+	
+	$result = M ()->query ( $sql );
+		$array = array ();
+		for($i = 0; $i < count ( $result ); $i ++) {
+			
+			$array [$i] = array (
+					'text' => $result [$i] ['text'],
+					
+					'click_num' => $result [$i] ['click_num'] 
+			)
+			;
+		} 
+		echo json_encode ( $array );
+		
+		/* $data = array (
+				'name' => array (
+						'可口可乐',
+						'百事可乐',
+						'非常可乐' 
+				),
+				'data' => array (
+						11,
+						12,
+						13 
+				) 
+		);
+		echo json_encode ( $data ); */
+		// echo I('post.line_id'); 
 	}
 	
 	
