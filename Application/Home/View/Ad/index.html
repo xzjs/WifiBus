@@ -81,7 +81,7 @@
                     </div>
                     <ul class="movie">
                         <li>
-                            <img src="__PUBLIC__/images/field.jpg" alt="">
+                            <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="">
 
                             <div class="dis">
                                 <p>X</p>
@@ -110,7 +110,7 @@
                             </div>
                         </li>
                         <li>
-                            <img src="__PUBLIC__/images/field.jpg" alt="">
+                            <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="">
 
                             <div class="dis">
                                 <p>X</p>
@@ -128,7 +128,7 @@
                                         <p>文字简介： </p>
                                         <input type="text" name="text">
                                     </div>
-                                    <input type="hidden" value="ad1" name="position">
+                                    <input type="hidden" value="ad2" name="position">
                                     <input type="hidden" value="1" name="type">
                                     <input type="hidden" value="jpg" name="suffix">
 
@@ -139,7 +139,7 @@
                             </div>
                         </li>
                         <li>
-                            <img src="__PUBLIC__/images/field.jpg" alt="">
+                            <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="">
 
                             <div class="dis">
                                 <p>X</p>
@@ -157,7 +157,7 @@
                                         <p>文字简介： </p>
                                         <input type="text" name="text">
                                     </div>
-                                    <input type="hidden" value="ad1" name="position">
+                                    <input type="hidden" value="ad3" name="position">
                                     <input type="hidden" value="1" name="type">
                                     <input type="hidden" value="jpg" name="suffix">
 
@@ -168,7 +168,7 @@
                             </div>
                         </li>
                         <li>
-                            <img src="__PUBLIC__/images/field.jpg" alt="">
+                            <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="">
 
                             <div class="dis">
                                 <p>X</p>
@@ -186,7 +186,7 @@
                                         <p>文字简介： </p>
                                         <input type="text" name="text">
                                     </div>
-                                    <input type="hidden" value="ad1" name="position">
+                                    <input type="hidden" value="ad4" name="position">
                                     <input type="hidden" value="1" name="type">
                                     <input type="hidden" value="jpg" name="suffix">
 
@@ -197,7 +197,7 @@
                             </div>
                         </li>
                         <li>
-                            <img src="__PUBLIC__/images/field.jpg" alt="">
+                            <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="">
 
                             <div class="dis">
                                 <p>X</p>
@@ -215,7 +215,7 @@
                                         <p>文字简介： </p>
                                         <input type="text" name="text">
                                     </div>
-                                    <input type="hidden" value="ad1" name="position">
+                                    <input type="hidden" value="ad5" name="position">
                                     <input type="hidden" value="1" name="type">
                                     <input type="hidden" value="jpg" name="suffix">
 
@@ -226,7 +226,7 @@
                             </div>
                         </li>
                         <li>
-                            <img src="__PUBLIC__/images/field.jpg" alt="">
+                            <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="">
 
                             <div class="dis">
                                 <p>X</p>
@@ -244,7 +244,7 @@
                                         <p>文字简介： </p>
                                         <input type="text" name="text">
                                     </div>
-                                    <input type="hidden" value="ad1" name="position">
+                                    <input type="hidden" value="ad6" name="position">
                                     <input type="hidden" value="1" name="type">
                                     <input type="hidden" value="jpg" name="suffix">
 
@@ -286,8 +286,8 @@
      * @param id form id
      */
     function upload(id) {
-        var ids='';
-        var form=$("#"+id)[0];
+        var ids = arr_to_str(checkedIdList);
+        var form = $("#" + id)[0];
         var formData = new FormData(form);
         formData.append('ids', ids);
         $.ajax({
@@ -297,9 +297,10 @@
             data: formData,
             processData: false,
             contentType: false
-        }).done(function(res) {
-            alert(res);
-        }).fail(function(res) {
+        }).done(function (res) {
+            $(".dis").hide();
+            getDeviceInfo();
+        }).fail(function (res) {
             alert(res)
         });
     }
@@ -308,24 +309,49 @@
      * 将数组转化为字符串,用下划线分隔
      * @param arr 要转化的数组
      */
-    function arr_to_str(arr){
-        var str='';
-        for(var i=0;i<arr.length;i++){
-            if(i>0){
-                str+='_';
+    function arr_to_str(arr) {
+        var str = '';
+        for (var i = 0; i < arr.length; i++) {
+            if (i > 0) {
+                str += '_';
             }
             str+=arr[i];
         }
         return str;
     }
 
-    function change_img(ids){
-    	
-        $.get("{:U('Bus/get_info')}/ids/"+ids+"/type/1",function(data,status){
-            var medias= $.parseJSON(data);
-            console.log(medias);
-            var position_arr=new Array('ad1','ad2','ad3','ad4','ad5','ad6');
 
+    function change_img(ids) {
+        $.get("{:U('Bus/get_info')}/ids/" + ids + "/type/1", function (data, status) {
+            var medias = $.parseJSON(data);
+            console.log(medias);
+            var position_arr = new Array('ad1', 'ad2', 'ad3', 'ad4', 'ad5', 'ad6');
+            var img_arr = new Array('field.jpg', 'field.jpg', 'field.jpg', 'field.jpg', 'field.jpg', 'field.jpg');
+            for (var i = 0; i < position_arr.length; i++) {
+                var flag=true;
+                for (var j = 0; j < medias.length; j++) {
+                    for (var k = 0; k < medias[j].length; k++) {
+                        if (medias[j][k].position == position_arr[i]) {
+                            if (flag) {
+                                flag=false;
+                                img_arr[i] = medias[j][k].img;
+                            } else {
+                                if (img_arr[i] != medias[j][k].img) {
+                                    img_arr[i] = 'field.jpg';
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (img_arr[i] == 'field.jpg') {
+                        break;
+                    }
+                }
+            }
+            var imgs = $(".imgs");
+            for (var i = 0; i < imgs.length; i++) {
+                imgs[i].src = "__ROOT__/Update/" + img_arr[i];
+            }
         })
     }
 
@@ -336,7 +362,7 @@
     			busArr[i] = checkedIdList[i].id;
     	}
         change_img(arr_to_str(busArr));
-    }
+
 
     
     
