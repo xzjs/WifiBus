@@ -201,7 +201,7 @@ class AnalyseController extends Controller {
 	public function get_ad_click() {
 		$line_id = 35;
 		$bus_id =0;
-		/* if ($bus_id == 0 && $line_id == 0) {
+		 if ($bus_id == 0 && $line_id == 0) {
 			$sql="SELECT SUM(mac.click_num) AS click_num,md.text,mac.time FROM think_media AS md,think_mediaclick AS mac 
 WHERE mac.media_id=md.id AND mac.time>(UNIX_TIMESTAMP(NOW())-6*86400)
 GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
@@ -241,8 +241,8 @@ GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 			);
 			//echo 	$sum[$i];
 		}
-		echo json_encode($array); */
-		echo "dd";
+		echo json_encode($array); 
+		//echo "dd";
 	
 	}
 public function get_ad_click_top() {
