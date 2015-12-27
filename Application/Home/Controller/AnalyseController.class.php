@@ -249,8 +249,7 @@ GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 	}
 public function get_ad_click_top() {
 		 $line_id = I('post.line_id');
-		$bus_id =I('post.bus_id');
-		
+		$bus_id =I('post.bus_id');	
 		if ($bus_id == 0 && $line_id == 0) {
 			$sql = 'SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac WHERE mac.media_id=md.id GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6';
 		} else {
