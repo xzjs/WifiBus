@@ -123,4 +123,21 @@ class MediaController extends Controller {
 			$this->error ( $Media->getError () );
 		}
 	}
+	
+	public function get_img($device_ids){
+		/* $Device=M('Device');
+		$result=M()->query('select a.url,a.position from think_media as a,think_device_ad as b where b.device_id='.$device_ids[0].
+				' and a.id=b.ad_id');
+		$img_or_null=$result[0]['a.url'];
+		for($i=0;$i<count($device_ids);$i++){
+			$result=$Device->field('ssid')->find($device_ids[$i]);
+			if($img_or_null!=$result['ssid']){
+				$img_or_null='';
+				break;
+			}
+		}
+		return $img_or_null; */
+		$result=M()->query('select url,text from think_media limit 0,6');
+		return $result;
+	}
 }

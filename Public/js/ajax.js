@@ -95,7 +95,7 @@ function getCheckedList(changedCheck) {
 	}else if(pORc=="car"){
 		busCheckChange(changedCheck);
 	}
-	getDeviceInfo();
+	getDisplay();
 }
 
 /**

@@ -245,7 +245,7 @@ $(document).ready(function() {
 					for(var i=0;i<allBus.length;i++){
 						checkedIdList.push(new Bus(allBus[i].line_id,allBus[i].id,true));
 						if(i==allBus.length-1)
-							getDeviceInfo();//checkchange动作完成之后再触发
+							getDisplay();//checkchange动作完成之后再触发
 					}
 				}
 			});
@@ -254,7 +254,7 @@ $(document).ready(function() {
 			for (var i = 0; i < busList.length; i++) {
 				busCheckChange(busList[i]);
 				if(i==busList.length-1)
-					getDeviceInfo();//checkchange动作完成之后再触发
+					getDisplay();//checkchange动作完成之后再触发
 			}
 		}
 	});
@@ -268,7 +268,7 @@ $(document).ready(function() {
 				checkedLineArr[i] = lineList[i].checked;
 			}
 			checkedIdList.splice(0,checkedIdList.length);
-			getDeviceInfo();
+			getDisplay();
 			$('input#ssid_set').val('');
 			$('input#flow_limit_set').val('');
 		}else if(lORb=='search_car_far'){//bus全部取消选中
@@ -276,7 +276,7 @@ $(document).ready(function() {
 			for (var i = 0; i < busList.length; i++) {
 				busCheckChange(busList[i]);
 				if(i==busList.length-1)
-					getDeviceInfo();//checkchange动作完成之后再触发
+					getDisplay();//checkchange动作完成之后再触发
 			}
 		}
 	});
@@ -341,7 +341,7 @@ $(document).ready(function() {
 	function drag() {
 		var oTitle = $(".canDrag .dragPosition")[0];
 		// 拖曳
-		oTitle.onmousedown = fnDown;
+		//oTitle.onmousedown = fnDown;
 	}
 
 	function fnDown(event) {

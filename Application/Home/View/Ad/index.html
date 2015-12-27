@@ -77,7 +77,34 @@
                     </div>
                     <ul class="movie">
                         <li>
-                            <img src="__PUBLIC__/images/field.jpg" alt="">
+                            <img  alt="" id='img_display1' >
+                            <div class="dis">
+                                <p>Close</p>
+                                <form action="form"  method="get">
+                                    <div>
+                                        <p>广告文件：</p>
+                                        <input type="file" class="img_file" name="j" onchange="ye.value=value" multiple="multiple"> 
+                                        <input name="ye" class="ye">
+                                        <input type="button" value="打开" class="button" onclick=j.click()>
+                                    </div>
+                                    <div>
+                                        <p>图片简介： </p>
+                                        <input type="text" class="img_dsc">
+                                    </div>
+                                    <div>
+                                        <p>文字简介： </p>
+                                        <input  type="text" class="text_dsc">
+                                        <br>
+                                    </div>
+                                    	<input type="text" class="position" style="visibility:hidden" value="1">
+                                    <div class="dis_button">
+                                        <input type="button" value="提交" >
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+                        <li>
+                            <img  alt="" id='img_display2'>
                             <div class="dis">
                                 <p>Close</p>
                                 <form action="form" method="get">
@@ -103,7 +130,7 @@
                             </div>
                         </li>
                         <li>
-                            <img src="__PUBLIC__/images/forest.jpg" alt="">
+                            <img  alt="" id='img_display3'>
                             <div class="dis">
                                 <p>Close</p>
                                 <form action="form" method="get">
@@ -129,7 +156,7 @@
                             </div>
                         </li>
                         <li>
-                            <img src="__PUBLIC__/images/frozen-water.jpg" alt="">
+                            <img  alt="" id='img_display4'>
                             <div class="dis">
                                 <p>Close</p>
                                 <form action="form" method="get">
@@ -155,7 +182,7 @@
                             </div>
                         </li>
                         <li>
-                            <img src="__PUBLIC__/images/tadu.jpg" alt="">
+                            <img  alt="" id='img_display5'>
                             <div class="dis">
                                 <p>Close</p>
                                 <form action="form" method="get">
@@ -181,33 +208,7 @@
                             </div>
                         </li>
                         <li>
-                            <img src="__PUBLIC__/images/frozen-water.jpg" alt="">
-                            <div class="dis">
-                                <p>Close</p>
-                                <form action="form" method="get">
-                                    <div>
-                                        <p>广告文件：</p>
-                                        <input type="file" class="file" name="j" onchange="ye.value=value">
-                                        <input name="ye" class="ye">
-                                        <input type="button" value="打开" class="button" onclick=j.click()>
-                                    </div>
-                                    <div>
-                                        <p>图片简介： </p>
-                                        <input type="text">
-                                    </div>
-                                    <div>
-                                        <p>文字简介： </p>
-                                        <input type="text">
-                                        <br>
-                                    </div>
-                                    <div class="dis_button">
-                                        <input type="button" value="提交">
-                                    </div>
-                                </form>
-                            </div>
-                        </li>
-                        <li>
-                            <img src="__PUBLIC__/images/tadu.jpg" alt="">
+                            <img  alt="" id='img_display6'>
                             <div class="dis">
                                 <p>Close</p>
                                 <form action="form" method="get">
@@ -257,13 +258,50 @@ $(function() {
 	for(var i=0;i<lineList.length;i++){
 		checkedLineArr[i]=lineList[i].checked;
 	}
+	getDisplay();
+	$(".dis_button").click(function() {
+		var data = new FormData();
+		/* $.each($(this).parent().find('.file')[0].files, function(i, file) {
+		 	data.append('upload_file'+i, file);
+		}); */
+		//data.append('text_dsc', $(this).parent().find('#text_dsc').val);
+		//data.append('img_dsc', $(this).parent().find('#img_dsc').val);
+		//data.append('img', $(this).parent().find('.file')[0].files[0]);
+		var a=$(this).parent().find('#text_dsc').val;
+            $.ajax({
+                url: 'upload',
+                type: "POST",
+                data: data,+
+                success: function (data, status) {
+                    alert(data);
+                   
+                }
+            })
+        $(this).parent().parent().parent().slideUp();
+	});
 })
+
+
 
     
 /**
  * 获取选中check列表的ssid和网速上限
  */
-function getDeviceInfo() {
+function getDisplay() {
+	
+		$.post('get_img', {
+			//ids : busArr,
+		}, function(data, status) {
+			if (status == 4 || status == "success") {
+				var img_list = eval(data);
+				$('img#img_display1').attr('src',img_list[0].img);
+				$('img#img_display2').attr('src',img_list[1].img);
+				$('img#img_display3').attr('src',img_list[2].img);
+				$('img#img_display4').attr('src',img_list[3].img);
+				$('img#img_display5').attr('src',img_list[4].img);
+				$('img#img_display6').attr('src',img_list[5].img);
+			}
+		});
 	
 }
 </script>

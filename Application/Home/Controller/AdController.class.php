@@ -26,6 +26,7 @@ class AdController extends Controller
 		$Bus=A('Bus');
 		$data = $Bus->select(0,$data[0][id],'',0);
 		$this->assign ( 'bus_list', $data );
+		
 		$this->display ();
 	}
     /**
@@ -140,6 +141,22 @@ class AdController extends Controller
         } else {
             $this->error('删除失败！');
         }
+    }
+    
+    public function get_img($ids=0) {
+    	$Media=A('Media');
+    	$img_list=$Media->get_img();
+    	for($i=0;$i<count($img_list);$i++){
+    		$img_url[$i]['img']='http://'.GetHostByName($_SERVER['SERVER_NAME']).'/WifiBus/Uploads/'.$img_list[$i]['url'];
+    		$img_url[$i]['text']=$img_list[$i]['text'];
+    	}
+    	$this->ajaxReturn($img_url);
+    }
+    
+    public function upload() {
+    	$a=I('param.img_dsc');
+    	$b=I('param.text_dsc');
+    	$this->ajaxReturn($a);
     }
 
     
