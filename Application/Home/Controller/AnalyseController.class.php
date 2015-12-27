@@ -199,8 +199,8 @@ class AnalyseController extends Controller {
 	 * @param number $bus_id
 	 */
 	public function get_ad_click() {
-		$line_id = I('post.line_id');
-		$bus_id =I('post.bus_id');
+		$line_id = 35;
+		$bus_id =0;
 		if ($bus_id == 0 && $line_id == 0) {
 			$sql="SELECT SUM(mac.click_num) AS click_num,md.text,mac.time FROM think_media AS md,think_mediaclick AS mac 
 WHERE mac.media_id=md.id AND mac.time>(UNIX_TIMESTAMP(NOW())-6*86400)

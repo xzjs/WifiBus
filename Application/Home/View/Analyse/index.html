@@ -1,97 +1,193 @@
 <div class="out_container_title">
+
 	<div class="container_title">
+
 		<div class="left">
+
 			<ul>
+
 				<li class="box_one"><a></a></li>
+
 				<li class="box_two"><a></a></li>
+
 				<li class="box_anly"><a href="{:U('analyse')}"></a></li>
+
 			</ul>
+
 			<div class="weather" id="weather" style="color:#ccc">
 
+
+
             </div>
+
 		</div>
+
 		<div class="adv_main" id="adMain"></div>
+
 		<div class="clr"></div>
+
 		<div class="adv_footer">
+
 			<ul>
+
 				<li id="adTime"></li>
+
 				<li id="flowTime"></li>
+
 				<li id="customerTime"></li>
+
 				<li id="turnBackTime"></li>
+
 				<div class="clr"></div>
+
 			</ul>
+
 		</div>
+
 		<div class="display">
+
 			<select id="line_selector"
+
 				onchange="get_bus_list('{:U('Bus/select')}',this.value,'bus_no_selector')">
+
 				<volist name="line_list" id="vo" empty=" ">
+
 				<option value={$vo.id}>{$vo.name}</option>
+
 				</volist>
+
 			</select>
 
+
+
 			<div class="search">
+
 				<form>
+
 					<p>
+
 						<input type="text" id="search_keys"> <a><img
+
 							src="__PUBLIC__/images/home_search.png" alt=""
+
 							onclick="search_bus('{:U('Bus/select')}',$('#search_keys').val())"></a>
+
 					</p>
+
 				</form>
+
 			</div>
+
 			<ul class="select" id="bus_no_selector">
+
 				<volist name="bus_list" id="vo" empty=" ">
+
 				<li><a href="#" onclick="getAdInfo_bus({$vo.id})">{$vo.no}</a></li>
+
 				</volist>
+
 			</ul>
+
 		</div>
+
 		<div class="road_display">
+
 			<div class="left_display">
+
 				<ul>
+
 					<volist name="line_list" id="vo" empty=" ">
+
 					<li  onclick="getAdInfo_line({$vo.id})"><a href="#">{$vo.name}</a></li>
+
 					</volist>
+
 				</ul>
+
 			</div>
+
 		</div>
+
 	</div>
+
 	<div class="clear"></div>
+
 </div>
+
 <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
+
 <script type="text/javascript" src="__PUBLIC__/js/Analyse.js"></script>
+
 <script type="text/javascript">
+
 var line=0;
+
 var bus_id=0;
+
 var myChartAdMain = echarts.init(document.getElementById('adMain'), 'macarons2');
+
 var myChartAdTime = echarts.init(document.getElementById('adTime'),'macarons');
+
 var myChartFlowTime = echarts.init(document.getElementById('flowTime'),'macarons');
+
 var myChartCustomerTime = echarts.init(document.getElementById('customerTime'),'macarons');
+
 var myChartTurnBackTime = echarts.init(document.getElementById('turnBackTime'),'macarons');
 
+
+
   
+
    // myChartAdTime.setOption(adMainTime);
+
   
+
     
+
    /*  function getAdInfo(line) {
+
     	var a=new Array((Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*10,(Math.random()+1)*15,(Math.random()+1)*15);
+
     	var b=new Array((Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*8,(Math.random()+1)*15,(Math.random()+1)*15);
+
     	var c=new Array((Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100,(Math.random()+2)*100);
+
     	var d=new Array((Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50,(Math.random()+0.4)*50);
+
     	var e=new Array((Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6,(Math.random()+2)/6);
+
     	
+
     	// 广告点击量时间关系图
+
         var adMainTime = adMainTimeFunction(a,b);
+
         // 流量时间关系图
+
         var adMainFlow = adMainFlowFunction(c);
+
         // 客流量时间关系图
+
         var adMainCustomer = adMainCustomerFunction(d);
+
         // 回头率时间关系图
+
         var adMainTurnBack = adMainTurnBackFunction(e);
+
         
+
         myChartAdMain.setOption(adMainOption);
+
         myChartAdTime.setOption(adMainTime);
+
         myChartFlowTime.setOption(adMainFlow);
+
         myChartCustomerTime.setOption(adMainCustomer);
+
         myChartTurnBackTime.setOption(adMainTurnBack);
+
        
+
     }  */
+
 </script>
