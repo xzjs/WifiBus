@@ -98,6 +98,7 @@ $(document).ready(function() {
 		userStart();
 		//clearUserControl();
 		$(searchLine).hide('slow');
+		$("#search_car").hide();
 		$(boxThreeA).removeClass('boxThreeHover');
 
 		// 用户控制－远程更新
@@ -339,7 +340,7 @@ $(document).ready(function() {
 	// --------------------------
 	
 	function drag() {
-		var oTitle = $(".canDrag .dragPosition")[0];
+		//var oTitle = $(".canDrag .dragPosition")[0];
 		// 拖曳
 		//oTitle.onmousedown = fnDown;
 	}

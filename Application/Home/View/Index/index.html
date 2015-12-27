@@ -6,7 +6,7 @@
                 <li class="box_two"><a></a></li>
             </ul>
             <div class="weather" id="weather" style="color:#ccc">
-
+            
             </div>
         </div>
         <div id="allmap" class="main"></div>
@@ -66,11 +66,11 @@
         <div class="road_display">
             <div class="left_display">
                 <ul>
-                    <volist name="line_list" id="vo" empty=" ">
+                	<volist name="line_list" id="vo" empty=" ">
                         <li>
                             <a href="javascript:void(0);" ng-click="getBuses({$vo.id})">{$vo.name}</a>
                         </li>
-                    </volist>
+                	</volist>
                 </ul>
             </div>
         </div>
@@ -78,14 +78,13 @@
     <div class="clear"></div>
     <div class="address-footer">
         <p>版权:青岛智能产业技术研究院</p>
-
         <p>2015 all rights reserved</p>
     </div>
 </div>
 <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
 <script type="text/javascript">
 
-    var myChartWork = echarts.init(document.getElementById('workNormal'));
+   var myChartWork = echarts.init(document.getElementById('workNormal'));
     var myChartOnline = echarts.init(document.getElementById('onlinePeople'));
     var myChartFlow = echarts.init(document.getElementById('flow'));
     var myChartAd = echarts.init(document.getElementById('adClick'));
@@ -100,7 +99,7 @@
     map.centerAndZoom(new BMap.Point(120.126194, 36.010989), 13);
 
 
-    var opts = {
+     var opts = {
         width: 250,     // 信息窗口宽度
         height: 80,     // 信息窗口高度
         title: "公交状况", // 信息窗口标题
@@ -118,17 +117,17 @@
         var optionOnline = onlineOption(b, "__CONTROLLER__/work/f/online/num/" + b);
         // 流量
         c += 0.01;
-        if (c > 85) {
-            c = 30;
+        if(c>85){
+            c=30;
         }
         var optionFlow = flowOption(c, "__CONTROLLER__/work/f/flow/num/" + c);
         // 广告点击量
         d += num;
         var optionAd = adOption(d, "__CONTROLLER__/work/f/ad/num/" + d);
-        myChartWork.setOption(optionWork);
-        myChartOnline.setOption(optionOnline);
-        myChartFlow.setOption(optionFlow);
-        myChartAd.setOption(optionAd);
+       myChartWork.setOption(optionWork);
+       myChartOnline.setOption(optionOnline);
+       myChartFlow.setOption(optionFlow);
+       myChartAd.setOption(optionAd);
     }
 </script>
 <script>
@@ -145,37 +144,38 @@
                 },1000);
             }, function (data) {
                 alert('haha');
-            });
+        });
         };
-
+    
         function get_map(bus_array) {
-            // 百度地图API功能
-            var busline = new BMap.BusLineSearch(map, {
-                renderOptions: {map: map, panel: "r-result"},
-                onGetBusListComplete: function (result) {
-                    if (result) {
-                        var fstLine = result.getBusListItem(0);//获取第一个公交列表显示到map上
-                        busline.getBusLine(fstLine);
-                    }
+        // 百度地图API功能
+       
+        var busline = new BMap.BusLineSearch(map, {
+            renderOptions: {map: map, panel: "r-result"},
+            onGetBusListComplete: function (result) {
+                if (result) {
+                    var fstLine = result.getBusListItem(0);//获取第一个公交列表显示到map上
+                    busline.getBusLine(fstLine);
                 }
-            });
-
-            function busSearch() {
-                var busName = bus_array.line.name;
-                busline.getBusList(busName);
             }
+        });
 
-            setTimeout(function () {
-                busSearch();
-            }, 500);
+        function busSearch() {
+                var busName = bus_array.line.name;
+            busline.getBusList(busName);
         }
 
+        setTimeout(function () {
+            busSearch();
+            }, 500);
+        }
+      
         function print_bus() {
             var promise = Buses.query($scope.line_id);
             promise.then(function (data) {
                 var array=data.buses;
-                var x;
-                for (x in array) {
+                    var x;
+                     for (x in array) {
                     var a = array[x].position_x;
                     var b = array[x].position_y;
                     if (a * b > 0) {
@@ -190,34 +190,35 @@
                                 var img = '__PUBLIC__/images/' + (timestamp - d_time > 300 ? 'red' : 'green') + '_left.png';
                                 var myIcon = new BMap.Icon(img, new BMap.Size(50, 30));
                                 var marker2 = new BMap.Marker(data.points[0], {icon: myIcon});  // 创建标注
-                                map.addOverlay(marker2);
+                        map.addOverlay(marker2);
                                 // 创建标注
                                 var content = '<p>在线人数:' + array[x].Device.online_num + '</p><p>已用流量' + array[x].Device.flow_num + 'M/120G</p><p>磁盘使用率:' + array[x].Device.useage + '%</p><p>本地资源访问人数:15</p>';
-                                addClickHandler(content, marker2);
-                            }
-                        });
+                        addClickHandler(content, marker2);
                     }
+                        });
+                }
                 }
             }, function (data) {
                 alert('haha');
             });
-        }
+    }
 
-        function addClickHandler(content, marker) {
-            marker.addEventListener("click", function (e) {
-                        openInfo(content, e)
-                    }
-            );
-        }
+    function addClickHandler(content, marker) {
+        marker.addEventListener("click", function (e) {
+                    openInfo(content, e)
+                }
+        );
+    }
 
-        function openInfo(content, e) {
-            var p = e.target;
-            var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
-            var infoWindow = new BMap.InfoWindow(content, opts);  // 创建信息窗口对象
-            map.openInfoWindow(infoWindow, point); //开启信息窗口
-        }
+    function openInfo(content, e) {
+        var p = e.target;
+        var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+        var infoWindow = new BMap.InfoWindow(content, opts);  // 创建信息窗口对象
+       
+        map.openInfoWindow(infoWindow, point); //开启信息窗口
+    }
     })
-    
-    
+
+
 
 </script>

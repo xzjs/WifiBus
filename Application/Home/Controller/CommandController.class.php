@@ -41,8 +41,12 @@ class CommandController extends Controller
             $b = $Bus->find($d['bus_id']);
             if ($b) {
                 if ($lon * $lat) {
-                    $Bus->position_x = $lat/100;
-                    $Bus->position_y = $lon/100;
+                    $du=floor($lat/100);
+                    $lat=$du+($lat-$du)/6000;
+                    $du=floor($lon/100);
+                    $lon=$du+($lon-$du)/6000;
+                    $Bus->position_x = $lat;
+                    $Bus->position_y = $lon;
                     $Bus->save();
                 }
             }

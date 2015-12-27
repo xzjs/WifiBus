@@ -12,31 +12,32 @@
 
             </div>
         </div>
-        
-        
+
+
         <div class="userLeftBar">
             <div class="search_line_far">
                 <form action="form">
                     <input type="text">
                     <input type="submit" value="搜索">
+
                     <div class="clr"></div>
                 </form>
                 <ul>
-                		<volist name="line_list" id="vo" empty=" " key="k">
-                    	<if condition="($k eq 1)">
+                    <volist name="line_list" id="vo" empty=" " key="k">
+                        <if condition="($k eq 1)">
 
-                    		<li class="showTemp"
-                            	onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
-                            <input type="checkbox" name="roadLine" value={$vo.id}  class="line_array">
-                            <a>{$vo.name}</a></li>
+                            <li class="showTemp"
+                                onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
+                                <input type="checkbox" name="roadLine" value={$vo.id} class="line_array">
+                                <a>{$vo.name}</a></li>
 
-						<else/>
+                            <else/>
 
-							<li onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
-                            <input type="checkbox" name="roadLine" value={$vo.id}  class="line_array">
-                            <a>{$vo.name}</a></li>
+                            <li onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
+                                <input type="checkbox" name="roadLine" value={$vo.id} class="line_array">
+                                <a>{$vo.name}</a></li>
 
-						</if>
+                        </if>
                     </volist>
                 </ul>
                 <a class="checkAll">全选</a>
@@ -50,13 +51,15 @@
                 <form action="form">
                     <input type="text">
                     <input type="submit" value="搜索">
+
                     <div class="clr"></div>
                 </form>
 
-	                <ul id="bus_list_check">
+                <ul id="bus_list_check">
                     <volist name="bus_list" id="vo" empty=" ">
                         <li>
-                        <li><input class= "bus_array" type="checkbox" id={$line_list[0].id} name="car" value={$vo.id} onchange="getCheckedList(this)"> <a>{$vo.no}</a></li>
+                        <li><input class="bus_array" type="checkbox" id={$line_list[0].id} name="car" value={$vo.id}
+                                   onchange="getCheckedList(this)"> <a>{$vo.no}</a></li>
                     </volist>
 
                 </ul>
@@ -73,162 +76,180 @@
                     <div class="subtitle_1">
                         <p>设置本地广告</p>
                         <a href="#"></a>
+
                         <div class="clear"></div>
                     </div>
                     <ul class="movie">
                         <li>
-                            <img  alt="" id='img_display1' >
+                            <img src="__PUBLIC__/images/field.jpg" alt="">
+
                             <div class="dis">
-                                <p>Close</p>
-                                <form action="form"  method="get">
+                                <p>X</p>
+
+                                <form id="ad1">
                                     <div>
-                                        <p>广告文件：</p>
-                                        <input type="file" class="img_file" name="j" onchange="ye.value=value" multiple="multiple"> 
-                                        <input name="ye" class="ye">
-                                        <input type="button" value="打开" class="button" onclick=j.click()>
+                                        <p>广告链接: </p>
+                                        <input type="url" name="url">
                                     </div>
                                     <div>
-                                        <p>图片简介： </p>
-                                        <input type="text" class="img_dsc">
+                                        <p>广告图片：</p>
+                                        <input type="file" name="file" accept="image/jpeg">
                                     </div>
                                     <div>
                                         <p>文字简介： </p>
-                                        <input  type="text" class="text_dsc">
-                                        <br>
+                                        <input type="text" name="text">
                                     </div>
-                                    	<input type="text" class="position" style="visibility:hidden" value="1">
+                                    <input type="hidden" value="ad1" name="position">
+                                    <input type="hidden" value="1" name="type">
+                                    <input type="hidden" value="jpg" name="suffix">
+
                                     <div class="dis_button">
-                                        <input type="button" value="提交" >
+                                        <input type="button" value="提交" onclick="upload('ad1')">
                                     </div>
                                 </form>
                             </div>
                         </li>
                         <li>
-                            <img  alt="" id='img_display2'>
+                            <img src="__PUBLIC__/images/field.jpg" alt="">
+
                             <div class="dis">
-                                <p>Close</p>
-                                <form action="form" method="get">
+                                <p>X</p>
+
+                                <form id="ad2">
                                     <div>
-                                        <p>广告文件：</p>
-                                        <input type="file" class="file" name="j" onchange="ye.value=value">
-                                        <input name="ye" class="ye">
-                                        <input type="button" value="打开" class="button" onclick=j.click()>
+                                        <p>广告链接: </p>
+                                        <input type="url" name="url">
                                     </div>
                                     <div>
-                                        <p>图片简介： </p>
-                                        <input type="text">
+                                        <p>广告图片：</p>
+                                        <input type="file" name="file" accept="image/jpeg">
                                     </div>
                                     <div>
                                         <p>文字简介： </p>
-                                        <input type="text">
-                                        <br>
+                                        <input type="text" name="text">
                                     </div>
+                                    <input type="hidden" value="ad1" name="position">
+                                    <input type="hidden" value="1" name="type">
+                                    <input type="hidden" value="jpg" name="suffix">
+
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('ad2')">
                                     </div>
                                 </form>
                             </div>
                         </li>
                         <li>
-                            <img  alt="" id='img_display3'>
+                            <img src="__PUBLIC__/images/field.jpg" alt="">
+
                             <div class="dis">
-                                <p>Close</p>
-                                <form action="form" method="get">
+                                <p>X</p>
+
+                                <form id="ad3">
                                     <div>
-                                        <p>广告文件：</p>
-                                        <input type="file" class="file" name="j" onchange="ye.value=value">
-                                        <input name="ye" class="ye">
-                                        <input type="button" value="打开" class="button" onclick=j.click()>
+                                        <p>广告链接: </p>
+                                        <input type="url" name="url">
                                     </div>
                                     <div>
-                                        <p>图片简介： </p>
-                                        <input type="text">
+                                        <p>广告图片：</p>
+                                        <input type="file" name="file" accept="image/jpeg">
                                     </div>
                                     <div>
                                         <p>文字简介： </p>
-                                        <input type="text">
-                                        <br>
+                                        <input type="text" name="text">
                                     </div>
+                                    <input type="hidden" value="ad1" name="position">
+                                    <input type="hidden" value="1" name="type">
+                                    <input type="hidden" value="jpg" name="suffix">
+
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('ad3')">
                                     </div>
                                 </form>
                             </div>
                         </li>
                         <li>
-                            <img  alt="" id='img_display4'>
+                            <img src="__PUBLIC__/images/field.jpg" alt="">
+
                             <div class="dis">
-                                <p>Close</p>
-                                <form action="form" method="get">
+                                <p>X</p>
+
+                                <form id="ad4">
                                     <div>
-                                        <p>广告文件：</p>
-                                        <input type="file" class="file" name="j" onchange="ye.value=value">
-                                        <input name="ye" class="ye">
-                                        <input type="button" value="打开" class="button" onclick=j.click()>
+                                        <p>广告链接: </p>
+                                        <input type="url" name="url">
                                     </div>
                                     <div>
-                                        <p>图片简介： </p>
-                                        <input type="text">
+                                        <p>广告图片：</p>
+                                        <input type="file" name="file" accept="image/jpeg">
                                     </div>
                                     <div>
                                         <p>文字简介： </p>
-                                        <input type="text">
-                                        <br>
+                                        <input type="text" name="text">
                                     </div>
+                                    <input type="hidden" value="ad1" name="position">
+                                    <input type="hidden" value="1" name="type">
+                                    <input type="hidden" value="jpg" name="suffix">
+
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('ad4')">
                                     </div>
                                 </form>
                             </div>
                         </li>
                         <li>
-                            <img  alt="" id='img_display5'>
+                            <img src="__PUBLIC__/images/field.jpg" alt="">
+
                             <div class="dis">
-                                <p>Close</p>
-                                <form action="form" method="get">
+                                <p>X</p>
+
+                                <form id="ad5">
                                     <div>
-                                        <p>广告文件：</p>
-                                        <input type="file" class="file" name="j" onchange="ye.value=value">
-                                        <input name="ye" class="ye">
-                                        <input type="button" value="打开" class="button" onclick=j.click()>
+                                        <p>广告链接: </p>
+                                        <input type="url" name="url">
                                     </div>
                                     <div>
-                                        <p>图片简介： </p>
-                                        <input type="text">
+                                        <p>广告图片：</p>
+                                        <input type="file" name="file" accept="image/jpeg">
                                     </div>
                                     <div>
                                         <p>文字简介： </p>
-                                        <input type="text">
-                                        <br>
+                                        <input type="text" name="text">
                                     </div>
+                                    <input type="hidden" value="ad1" name="position">
+                                    <input type="hidden" value="1" name="type">
+                                    <input type="hidden" value="jpg" name="suffix">
+
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('ad5')">
                                     </div>
                                 </form>
                             </div>
                         </li>
                         <li>
-                            <img  alt="" id='img_display6'>
+                            <img src="__PUBLIC__/images/field.jpg" alt="">
+
                             <div class="dis">
-                                <p>Close</p>
-                                <form action="form" method="get">
+                                <p>X</p>
+
+                                <form id="ad6">
                                     <div>
-                                        <p>广告文件：</p>
-                                        <input type="file" class="file" name="j" onchange="ye.value=value">
-                                        <input name="ye" class="ye">
-                                        <input type="button" value="打开" class="button" onclick=j.click()>
+                                        <p>广告链接: </p>
+                                        <input type="url" name="url">
                                     </div>
                                     <div>
-                                        <p>图片简介： </p>
-                                        <input type="text">
+                                        <p>广告图片：</p>
+                                        <input type="file" name="file" accept="image/jpeg">
                                     </div>
                                     <div>
                                         <p>文字简介： </p>
-                                        <input type="text">
-                                        <br>
+                                        <input type="text" name="text">
                                     </div>
+                                    <input type="hidden" value="ad1" name="position">
+                                    <input type="hidden" value="1" name="type">
+                                    <input type="hidden" value="jpg" name="suffix">
+
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('ad6')">
                                     </div>
                                 </form>
                             </div>
@@ -247,13 +268,86 @@
 
 <script type="text/javascript">
 
-var checkedIdList=new Array();//选中的bus列表
-var checkedLineArr= new Array();
-var selected=0;
+    var checkedIdList = new Array();//选中的bus列表
+    var checkedLineArr = new Array();
+    var selected = 0;
+    /**
+     * 创建全局变量
+     */
+    $(function () {
+        var lineList = $(".line_array");
+        for (var i = 0; i < lineList.length; i++) {
+            checkedLineArr[i] = lineList[i].checked;
+        }
+    })
+
+    /**
+     * 文件上传函数
+     * @param id form id
+     */
+    function upload(id) {
+        var ids='';
+        var form=$("#"+id)[0];
+        var formData = new FormData(form);
+        formData.append('ids', ids);
+        $.ajax({
+            url: "{:U('Media/add')}",
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function(res) {
+            alert(res);
+        }).fail(function(res) {
+            alert(res)
+        });
+    }
+
+    /**
+     * 将数组转化为字符串,用下划线分隔
+     * @param arr 要转化的数组
+     */
+    function arr_to_str(arr){
+        var str='';
+        for(var i=0;i<arr.length;i++){
+            if(i>0){
+                str+='_';
+            }
+            str+=arr[i];
+        }
+        return str;
+    }
+
+    function change_img(ids){
+    	
+        $.get("{:U('Bus/get_info')}/ids/"+ids+"/type/1",function(data,status){
+            var medias= $.parseJSON(data);
+            console.log(medias);
+            var position_arr=new Array('ad1','ad2','ad3','ad4','ad5','ad6');
+
+        })
+    }
+
+    function getDisplay(){
+    	var busArr = new Array();
+    	for (var i = 0; i < checkedIdList.length; i++) {
+    		if (checkedIdList[i].isChecked)
+    			busArr[i] = checkedIdList[i].id;
+    	}
+        change_img(arr_to_str(busArr));
+    }
+
+    
+    
+    
+    
+    
+
 /**
  * 创建全局变量
  */
-$(function() {
+/* $(function() {
 	var lineList = $(".line_array");
 	for(var i=0;i<lineList.length;i++){
 		checkedLineArr[i]=lineList[i].checked;
@@ -267,7 +361,7 @@ $(function() {
 		//data.append('text_dsc', $(this).parent().find('#text_dsc').val);
 		//data.append('img_dsc', $(this).parent().find('#img_dsc').val);
 		//data.append('img', $(this).parent().find('.file')[0].files[0]);
-		var a=$(this).parent().find('#text_dsc').val;
+		/*var a=$(this).parent().find('#text_dsc').val;
             $.ajax({
                 url: 'upload',
                 type: "POST",
@@ -279,15 +373,13 @@ $(function() {
             })
         $(this).parent().parent().parent().slideUp();
 	});
-})
+}) */
 
-
-
-    
+ 
 /**
  * 获取选中check列表的ssid和网速上限
  */
-function getDisplay() {
+/* function getDisplay() {
 	
 		$.post('get_img', {
 			//ids : busArr,
@@ -303,5 +395,6 @@ function getDisplay() {
 			}
 		});
 	
-}
+} */
+
 </script>
