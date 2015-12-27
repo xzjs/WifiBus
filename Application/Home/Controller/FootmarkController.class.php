@@ -12,6 +12,5 @@ use Think\Controller;
 class FootmarkController extends BaseController{
     public function upload(){
         $file=$this->upload_file();
-
     }
 }

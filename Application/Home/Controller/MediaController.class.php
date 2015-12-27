@@ -3,8 +3,6 @@
 namespace Home\Controller;
 
 use Think\Controller;
-use Org\Util\Date;
-use Org\YxgClass\MediaFactory;
 
 /**
  * 媒体控制器类（包括文本、图片和视频）
@@ -19,41 +17,60 @@ class MediaController extends BaseController
      */
     public function add()
     {
+        $error_data['status']=0;
         $img=$this->upload_file();
         $Media = D('Media');
         if ($Media->create()) {
             $Media->img=$img;
             $media_id=$Media->add();
             if($media_id){
-                $buses=explode(' ',I('post.ids'));
+                $buses=explode('_',I('post.ids'));
                 foreach ($buses as $bus) {
                     $DeviceModel=D('Device');
                     $condition['bus_id']=$bus;
-                    $device=$DeviceModel->where($condition)->find();
+                    $devices=$DeviceModel->where($condition)->relation(true)->select();
+                    $m='';
+                    foreach ($devices as $device) {
+                        $media=$device['Media'];
+                        $m=$media['position']==I('post.position')?$media:$m;
+                    }
                     $dmModel=M('Device_media');
-                    $data=array(
-                        'device_id'=>$device['id'],
-                        'media_id'=>$media_id
-                    );
-                    $result=$dmModel->add($data);
+                    $result=false;
+                    if($m==''){
+                        $data=array(
+                            'device_id'=>$device['id'],
+                            'media_id'=>$media_id
+                        );
+                        $result=$dmModel->add($data);
+                    }else{
+                        $condition=array(
+                            'device_id'=>$device['id'],
+                            'media_id'=>$media_id
+                        );
+                        $dm=$dmModel->where($condition)->find();
+                        $dm['media_id']=$media_id;
+                        $result=$dmModel->save($dm);
+                    }
                     if($result){
                         $CommandCtrl=A('Command');
                         $cmd_result=$CommandCtrl->add($device['id'],'Contentsupdate',C('IP').C('PORT').'/WifiBus/Update/|'.$img.'|'.I('post.position').'.'.I('post.suffix'));
                         if($cmd_result){
-                            echo '成功';
+                            $error_data['status']=0;
+                            $error_data['data']='成功';
                         }else{
-                            echo '命令插入错误';
+                            $error_data['data']='命令插入错误';
                         }
                     }else{
-                        echo '添加关系表失败';
+                        $error_data['data']= '添加关系表失败';
                     }
                 }
             }else{
-                echo '上传成功';
+                $error_data['data']= '上传失败';
             }
         } else {
-            echo $Media->getError();
+            $error_data['data']= $Media->getError();
         }
+        echo json_encode($error_data);
     }
 
     /**
@@ -151,4 +168,6 @@ class MediaController extends BaseController
             $this->error($Media->getError());
         }
     }
+
+
 }

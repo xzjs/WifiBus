@@ -240,4 +240,26 @@ class BusController extends BaseController
         //var_dump($buses);
         $this->show();
     }
+
+    /**
+     * 获取设备的媒体信息
+     * @param $ids 公交车id字符串
+     */
+    public function get_info($ids,$type){
+        $ids=explode('_',$ids);
+        $data=array();
+        foreach ($ids as $bus_id) {
+            $DeviceModel=D('Device');
+            $condition['bus_id']=$bus_id;
+            $device=$DeviceModel->where($condition)->relation(true)->find();
+            $media_arr=array();
+            foreach ($device['Media'] as $m) {
+                if($m['type']=$type){
+                    array_push($media_arr,$m);
+                }
+            }
+            array_push($data,$media_arr);
+        }
+        echo json_encode($data);
+    }
 }

@@ -1,13 +1,11 @@
-<div class="out_container_title">
+<div class="out_container_title" ng-controller="IndexCtrl">
     <div class="container_title">
         <div class="left">
             <ul>
                 <li class="box_one"><a></a></li>
                 <li class="box_two"><a></a></li>
             </ul>
-            <div class="weather" id="weather">
-            
-            
+            <div class="weather" id="weather" style="color:#ccc">
             
             </div>
         </div>
@@ -45,6 +43,11 @@
                     <option value={$vo.id}>{$vo.name}</option>
                 </volist>
             </select>
+            <!--<select>
+                <option ng-repeat="line in lines">
+                    {{line.name}}
+                </option>
+            </select>-->
 
             <div class="search">
                 <p>
@@ -64,8 +67,9 @@
             <div class="left_display">
                 <ul>
                 	<volist name="line_list" id="vo" empty=" ">
-                  	  <li><a href="javascript:void(0);"
-                           onclick="ajax('__CONTROLLER__/bus/str/+{$vo.id}','{$vo.name}')">{$vo.name}</a></li>
+                        <li>
+                            <a href="javascript:void(0);" ng-click="getBuses({$vo.id})">{$vo.name}</a>
+                        </li>
                 	</volist>
                 </ul>
             </div>
@@ -79,21 +83,7 @@
 </div>
 <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
 <script type="text/javascript">
-	
-/**
- * ajax获取天气
- */
-$(function () {
 
-    $.post("{:U('Weather/get_weather')}", {
-        city_code: 370200,
-    }, function (datas, status) {
-        if (status == 4 || status == "success") {
-            $("div#weather").html(datas);
-
-        }
-    });
-})
    var myChartWork = echarts.init(document.getElementById('workNormal'));
     var myChartOnline = echarts.init(document.getElementById('onlinePeople'));
     var myChartFlow = echarts.init(document.getElementById('flow'));
@@ -103,15 +93,15 @@ $(function () {
     var b = 35;
     var c = 30;
     var d = 40;
- 
-    ajax("__CONTROLLER__/all", '');
     var int = self.setInterval("chart()", 3000);
 
     var map = new BMap.Map("allmap");            // 创建Map实例
-    map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 13);
+    map.centerAndZoom(new BMap.Point(120.126194, 36.010989), 13);
+
+
      var opts = {
         width: 250,     // 信息窗口宽度
-        height: 140,     // 信息窗口高度
+        height: 80,     // 信息窗口高度
         title: "公交状况", // 信息窗口标题
         enableMessage: true//设置允许信息窗发送短息
     };
@@ -139,19 +129,25 @@ $(function () {
        myChartFlow.setOption(optionFlow);
        myChartAd.setOption(optionAd);
     }
-    
-    function ajax($url, line) {
-        jQuery.ajax({
-            url: $url,
-            dataType: "json",
-            success: function (results) {
-            	var data=eval(results);
-                get_map(line,data );
-            }
+</script>
+<script>
+    wifiapp.controller('IndexCtrl', function ($scope, Buses) {
+        $scope.getBuses = function (line_id) {
+            $scope.line_id = line_id;
+            var promise = Buses.query(line_id);
+            promise.then(function (data) {
+                get_map(data);
+                setTimeout(function(){
+                    $scope.int=setInterval(function(){
+                        print_bus();
+                    },5000);
+                },1000);
+            }, function (data) {
+                alert('haha');
         });
-    }
+        };
     
-    function get_map(line, array) {
+        function get_map(bus_array) {
         // 百度地图API功能
        
         var busline = new BMap.BusLineSearch(map, {
@@ -165,60 +161,46 @@ $(function () {
         });
 
         function busSearch() {
-            var busName = line;
+                var busName = bus_array.line.name;
             busline.getBusList(busName);
         }
 
         setTimeout(function () {
             busSearch();
-        }, 1500);
+            }, 500);
+        }
       
-
-        setTimeout(function () {
+        function print_bus() {
+            var promise = Buses.query($scope.line_id);
+            promise.then(function (data) {
+                var array=data.buses;
                     var x;
                      for (x in array) {
-                        var a = array[x]['p_x'];
-                        var b = array[x]['p_y'];
-                    //  alert( a);	
+                    var a = array[x].position_x;
+                    var b = array[x].position_y;
+                    if (a * b > 0) {
                         var pt = new BMap.Point(a, b);
-                        var num = array[x]['flag'];
-                        var img;
-                        switch (num) {
-                            case 0:
-                                img = "__PUBLIC__/images/green_left.png";
-                                break;
-                            case 1:
-                                img = "__PUBLIC__/images/red_left.png";
-                                break;
-                            
-                            default :
-                                img = "__PUBLIC__/images/green_right.png";
-                                break;
-                        }
-                        var myIcon = new BMap.Icon(img, new BMap.Size(50, 20));
-                        var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
+                        var convertor = new BMap.Convertor();
+                        var pointArr = [];
+                        pointArr.push(pt);
+                        convertor.translate(pointArr, 1, 5, function (data) {
+                            if (data.status === 0) {
+                                var timestamp = Date.parse(new Date()) / 1000;
+                                var d_time = array[x].Device.time;
+                                var img = '__PUBLIC__/images/' + (timestamp - d_time > 300 ? 'red' : 'green') + '_left.png';
+                                var myIcon = new BMap.Icon(img, new BMap.Size(50, 30));
+                                var marker2 = new BMap.Marker(data.points[0], {icon: myIcon});  // 创建标注
                         map.addOverlay(marker2);
-                     //  alert("dd"); // 创建标注
-                      
-                        	 var content =  '<div style="margin:0;line-height:20px;padding:2px;font-size: 12px">'
-                        		 + '公交车牌号：'
-                  				+  array[x]['car_no']	
-                        	    + '<br/>在线人数：'
-                 				+  array[x]['online_num']
-                 				+ '<br/>已用流量：'
-                 				+  array[x]['flow_num']
-                 				+ '<br/>磁盘使用率：' 
-                 				+  array[x]['cipan_use']
-                                +'<br/>本地资源访问人数：'
-                 				+ 1
-                 				+'</div>';
+                                // 创建标注
+                                var content = '<p>在线人数:' + array[x].Device.online_num + '</p><p>已用流量' + array[x].Device.flow_num + 'M/120G</p><p>磁盘使用率:' + array[x].Device.useage + '%</p><p>本地资源访问人数:15</p>';
                         addClickHandler(content, marker2);
                     }
+                        });
                 }
-                ,
-                2500
-        )
-        ;
+                }
+            }, function (data) {
+                alert('haha');
+            });
     }
 
     function addClickHandler(content, marker) {
@@ -235,4 +217,8 @@ $(function () {
        
         map.openInfoWindow(infoWindow, point); //开启信息窗口
     }
+    })
+
+
+
 </script>
