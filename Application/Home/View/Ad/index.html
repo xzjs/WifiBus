@@ -286,7 +286,12 @@
      * @param id form id
      */
     function upload(id) {
-        var ids = arr_to_str(checkedIdList);
+    	var busArr = new Array();
+    	for (var i = 0; i < checkedIdList.length; i++) {
+    		if (checkedIdList[i].isChecked)
+    			busArr[i] = checkedIdList[i].id;
+    	}
+        var ids = arr_to_str(busArr);
         var form = $("#" + id)[0];
         var formData = new FormData(form);
         formData.append('ids', ids);
@@ -362,6 +367,7 @@
     			busArr[i] = checkedIdList[i].id;
     	}
         change_img(arr_to_str(busArr));
+    }
 
 
     
