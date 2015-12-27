@@ -53,7 +53,7 @@ class MediaController extends BaseController
                     }
                     if($result){
                         $CommandCtrl=A('Command');
-                        $cmd_result=$CommandCtrl->add($device['id'],'Contentsupdate',C('IP').C('PORT').'/WifiBus/Update/|'.$img.'|'.I('post.position').'.'.I('post.suffix'));
+                        $cmd_result=$CommandCtrl->add($device['id'],'Contentsupdate',C('IP').':'.C('PORT').'/WifiBus/Update/|'.$img.'|'.I('post.position').'.'.I('post.suffix'));
                         if($cmd_result){
                             $error_data['status']=0;
                             $error_data['data']='成功';
