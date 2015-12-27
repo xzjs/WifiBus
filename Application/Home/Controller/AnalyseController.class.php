@@ -208,10 +208,12 @@ GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 		}
 		else {
 			if ($bus_id == 0) {
+		
 				$sql="SELECT SUM(mac.click_num) AS click_num,md.text,mac.time FROM think_media AS md,think_mediaclick AS mac 
                         WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT media_id FROM think_device_media WHERE device_id IN (SELECT  think_device.id FROM think_device,think_bus,think_line
                        WHERE think_line.id=think_bus.line_id AND think_line.id=$line_id AND think_device.bus_id=think_bus.id)
                                )  AND mac.time>(UNIX_TIMESTAMP(NOW())-6*86400) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
+			echo "dd";
 			}
 			else{
 				$sql="  SELECT SUM(mac.click_num) AS click_num,md.text ,mac.time FROM think_media AS md,think_mediaclick AS mac 
@@ -239,7 +241,7 @@ GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 					'time'=>"周".mb_substr(($base->weekday((strtotime("now ")-(86400*$i)))),-1),
 					'num'=>$sum[$i],
 			);
-			//echo 	$sum[$i];
+			echo 	$array[1][time];
 		}
 		echo json_encode($array); 
 		//echo "dd";
