@@ -207,7 +207,7 @@ function get_bus_list(url,id,display) {
 			var bus_info = eval(data);
 			var bus_list = "";
 			for (var i = 0; i < bus_info.length; i++) {
-				bus_list += "<li><a href='#'>" + bus_info[i].no + "</a></li>";
+				bus_list += "<li><a href='#' onclick='getAdInfo_bus({$vo.id})>' "+ bus_info[i].no + "</a></li>";
 			}
 			$("ul#"+display).html(bus_list);
 		}
@@ -222,16 +222,19 @@ function get_bus_list(url,id,display) {
  * @param str：搜索关键字
  */
 function search_bus(url,keys) {
+	//alert("dd");
 	$.post(url, {
 		is_getbuslist : 1,
 		search_keys : keys
 	}, function(data, status) {
+	
 		if (status == 4 || status == "success") {
 			var bus_info = eval(data);
 			var bus_list = "";
 			for (var i = 0; i < bus_info.length; i++) {
-				bus_list += "<li><a href='#'>" + bus_info[i].no + "</a></li>";
+				bus_list += "<li><a href='#' onclick='getAdInfo_bus("+bus_info[i].id+")' >" + bus_info[i].no + "</a></li>";
 			}
+			
 			$("ul#bus_no_selector").html(bus_list);
 		}
 	});
