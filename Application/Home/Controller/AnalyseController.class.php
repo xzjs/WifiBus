@@ -69,7 +69,7 @@ class AnalyseController extends Controller {
 		for($i=0;$i<7;$i++){
 	
 			$array[$i]=array(
-					'time'=>"周".mb_substr(($base->weekday((strtotime("now ")-(86400*$i)))),-1),
+					'time'=>$base->weekday((strtotime("now ")-(86400*$i))),
 					'num'=>$sum[$i],
 			);
 			//echo 	$sum[$i];
@@ -113,7 +113,7 @@ class AnalyseController extends Controller {
 		for($i=0;$i<7;$i++){
 	
 			$array[$i]=array(
-					'time'=>"周".mb_substr(($base->weekday((strtotime("now ")-(86400*$i)))),-1),
+					'time'=>$base->weekday((strtotime("now ")-(86400*$i))),
 					'num'=>$sum[$i],
 			);
 			//echo 	$sum[$i];
@@ -157,7 +157,7 @@ class AnalyseController extends Controller {
 		for($i=0;$i<7;$i++){
 		
 			$array[$i]=array(
-					'time'=>"周".mb_substr(($base->weekday((strtotime("now ")-(86400*$i)))),-1),
+					'time'=>$base->weekday((strtotime("now ")-(86400*$i))),
 					'num'=>$sum[$i],
 			);
 			//echo 	$sum[$i];
