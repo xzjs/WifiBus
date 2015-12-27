@@ -35,9 +35,23 @@ class AnalyseController extends Controller {
 	 * 回头客流量——时间关系查询
 	 */
 	public function get_back(){
+		$line_id = I('post.line_id');
+		$bus_id =I('post.bus_id');
 		$time=time()-6*86400;
+		if ($bus_id == 0 && $line_id == 0) {
 		$sql="SELECT mac,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=1";
-		$result=M()->query($sql);
+		}
+		else{
+			if ($bus_id == 0) {
+				$sql="SELECT mac,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=1  AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)
+			";
+			}
+			else{
+				$sql="SELECT mac,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=1   AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";
+			}
+		}
+		$time=time()-6*86400;
+     	$result=M()->query($sql);
 		$array=array();
 		$base=A('Base');
 		$today=$base->weekday(strtotime("now "));
@@ -48,10 +62,8 @@ class AnalyseController extends Controller {
 		
 		for($i=0;$i<count($result);$i++){
 			$dif= (int)((strtotime("now ")-(strtotime(date('Y-m-d', $result [$i] ['time']))))/86400);
-      
         	$sum[$dif]=$sum[$dif]+1;
-        
-			
+       	
 	
 		}
 		for($i=0;$i<7;$i++){
@@ -75,8 +87,8 @@ class AnalyseController extends Controller {
 		if ($bus_id == 0 && $line_id == 0) {
 			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400)";
 		}
-		else{
-			if ($bus_id == 0) {
+		else{if ($bus_id == 0) {
+			
 			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_id  IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)";	
 			}
 			else {
