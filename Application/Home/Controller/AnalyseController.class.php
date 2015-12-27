@@ -238,7 +238,7 @@ GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 		for($i=0;$i<7;$i++){
 		
 			$array[$i]=array(
-					'time'=>"周".mb_substr(($base->weekday((strtotime("now ")-(86400*$i)))),-1),
+					'time'=>($base->weekday((strtotime("now ")-(86400*$i)))),
 					'num'=>$sum[$i],
 			);
 			echo 	$array[1][time];
