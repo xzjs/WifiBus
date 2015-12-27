@@ -13,14 +13,23 @@ use Think\Controller;
  * Class AnalyseController 广告流量分析控制器
  * @package Home\Controller
  */
-class AnalyseController extends Controller
-{
+class AnalyseController extends Controller {
 
-    /**
-     * ssh查询车牌号mac
-     */
-    public function select()
-    {
+	/**
+	 * ssh查询车牌号mac
+	 */
+	public function select(){
+		
+		$result = M()->query("SELECT b.id,b.no, d.mac FROM think_device AS d,think_bus AS b WHERE b.id=d.bus_id");
+		
+		for($i=0;$i<count($result);$i++){
+			$array[$i]=array(
+					'id'=>$result[$i]['id'],
+					'value'=>$result[$i]['no'].";".$result[$i]['mac'],
+			);
+		}
+		echo json_encode($array);
+	}
 
 	/**
 	 * 回头客流量——时间关系查询
@@ -247,23 +256,43 @@ public function get_ad_click_top() {
 				$sql = "SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac 
                         WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT media_id FROM think_device_media WHERE device_id IN (SELECT  think_device.id FROM think_device,think_bus,think_line
                        WHERE think_line.id=think_bus.line_id AND think_line.id=$line_id AND think_device.bus_id=think_bus.id)
-                               ) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
-            } else {
-                $sql = "SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac
+                               ) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6" ;
+			} 
+			else {
+			$sql="SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac 
                  WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT think_device_media.media_id FROM think_device_media ,think_device WHERE think_device_media.device_id=think_device.id AND think_device.bus_id=$bus_id) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
-            }
-        }
-
-        $result = M()->query($sql);
-        $array = array();
-        for ($i = 0; $i < count($result); $i++) {
-
-            $array [$i] = array(
-                'text' => $result [$i] ['text'],
-
-                'click_num' => $result [$i] ['click_num']
-            );
-        }
-        echo json_encode($array);
-    }
+			}
+		}
+	
+	$result = M ()->query ( $sql );
+		$array = array ();
+		for($i = 0; $i < count ( $result ); $i ++) {
+			
+			$array [$i] = array (
+					'text' => $result [$i] ['text'],
+					
+					'click_num' => $result [$i] ['click_num'] 
+			)
+			;
+		} 
+		echo json_encode ( $array );
+		
+		/* $data = array (
+				'name' => array (
+						'可口可乐',
+						'百事可乐',
+						'非常可乐' 
+				),
+				'data' => array (
+						11,
+						12,
+						13 
+				) 
+		);
+		echo json_encode ( $data ); */
+		// echo I('post.line_id'); 
+	}
+	
+	
+	
 }
