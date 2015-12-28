@@ -99,291 +99,322 @@
                     <ul class="movie">
                         <li><img src="__PUBLIC__/images/movie_1.png" alt="">
 
-                            <h1>
+                            <!-- <h1>
                                 <a href="">致青春</a>
                             </h1>
 
-                            <p>阿汤哥继续玩命</p>
+                            <p>阿汤哥继续玩命</p> -->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" class="movie_upload" method="get">
+                                <form id="video1">
                                     <div>
                                         <p>电影文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value">
-                                        <input name="ye" class="ye">
-                                        <input type="button"
-                                               value="打开"
-                                               class="button"
-                                               onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
+                                        <input name="ye" class="ye" >
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text" name="image_des">
+                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text" name="text_des"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="video1" name="position">
+                                    <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交" onclick="upload(3)">
+                                        <input type="button" value="提交" onclick="upload('video1')">
                                     </div>
                                 </form>
 
                             </div>
                         </li>
-                        <li><img src="__PUBLIC__/images/movie_1.png" alt="">
+                        
+                        
+                        <li><img src="__PUBLIC__/images/movie_2.png" alt="">
 
-                            <h1>
-                                <a href="">碟中谍</a>
+                            <!-- <h1>
+                                <a href="">致青春</a>
                             </h1>
 
-                            <p>阿汤哥继续玩命</p>
+                            <p>阿汤哥继续玩命</p> -->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="video2">
                                     <div>
                                         <p>电影文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
+                                        <input name="ye" class="ye" >
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="video2" name="position">
+                                    <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('video2')">
                                     </div>
                                 </form>
+
                             </div>
                         </li>
-                        <li><img src="__PUBLIC__/images/movie_1.png" alt="">
+                        
+                        <li><img src="__PUBLIC__/images/movie_3.png" alt="">
 
-                            <h1>
-                                <a href="">碟中谍</a>
+                            <!-- <h1>
+                                <a href="">致青春</a>
                             </h1>
 
-                            <p>阿汤哥继续玩命</p>
+                            <p>阿汤哥继续玩命</p> -->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="video3">
                                     <div>
                                         <p>电影文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
+                                        <input name="ye" class="ye" >
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="video3" name="position">
+                                    <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('video3')">
                                     </div>
                                 </form>
+
                             </div>
                         </li>
-                        <li><img src="__PUBLIC__/images/movie_1.png" alt="">
+                        
+                        <li><img src="__PUBLIC__/images/movie_3.png" alt="">
 
-                            <h1>
-                                <a href="">碟中谍</a>
+                            <!-- <h1>
+                                <a href="">致青春</a>
                             </h1>
 
-                            <p>阿汤哥继续玩命</p>
+                            <p>阿汤哥继续玩命</p> -->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="video4">
                                     <div>
                                         <p>电影文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
+                                        <input name="ye" class="ye" >
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="video4" name="position">
+                                    <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('video4')">
                                     </div>
                                 </form>
+
                             </div>
                         </li>
-                        <li><img src="__PUBLIC__/images/movie_1.png" alt="">
+                        
+                        
+                        <li><img src="__PUBLIC__/images/movie_3.png" alt="">
 
-                            <h1>
-                                <a href="">碟中谍</a>
+                            <!-- <h1>
+                                <a href="">致青春</a>
                             </h1>
 
-                            <p>阿汤哥继续玩命</p>
+                            <p>阿汤哥继续玩命</p> -->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="video5">
                                     <div>
                                         <p>电影文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
+                                        <input name="ye" class="ye" >
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="video5" name="position">
+                                    <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('video5')">
                                     </div>
                                 </form>
+
                             </div>
                         </li>
-                        <li><img src="__PUBLIC__/images/movie_1.png" alt="">
+                        
+                        
+                        
+                        <li><img src="__PUBLIC__/images/movie_3.png" alt="">
 
-                            <h1>
-                                <a href="">碟中谍</a>
+                            <!-- <h1>
+                                <a href="">致青春</a>
                             </h1>
 
-                            <p>阿汤哥继续玩命</p>
+                            <p>阿汤哥继续玩命</p> -->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="video6">
                                     <div>
                                         <p>电影文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
+                                        <input name="ye" class="ye" >
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="video6" name="position">
+                                    <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('video6')">
                                     </div>
                                 </form>
+
                             </div>
                         </li>
-                        <li><img src="__PUBLIC__/images/movie_1.png" alt="">
+                        
+                        
+                        
+                        
+                        <li><img src="__PUBLIC__/images/movie_3.png" alt="">
 
-                            <h1>
-                                <a href="">碟中谍</a>
+                            <!-- <h1>
+                                <a href="">致青春</a>
                             </h1>
 
-                            <p>阿汤哥继续玩命</p>
+                            <p>阿汤哥继续玩命</p> -->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="video7">
                                     <div>
                                         <p>电影文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
+                                        <input name="ye" class="ye" >
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="video7" name="position">
+                                    <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('video7')">
                                     </div>
                                 </form>
+
                             </div>
                         </li>
-                        <li><img src="__PUBLIC__/images/movie_1.png" alt="">
+                        
+                        
+                        
+                        <li><img src="__PUBLIC__/images/movie_3.png" alt="">
 
-                            <h1>
-                                <a href="">碟中谍</a>
+                            <!-- <h1>
+                                <a href="">致青春</a>
                             </h1>
 
-                            <p>阿汤哥继续玩命</p>
+                            <p>阿汤哥继续玩命</p> -->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="video8">
                                     <div>
                                         <p>电影文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
+                                        <input name="ye" class="ye" >
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="video8" name="position">
+                                    <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('video8')">
                                     </div>
                                 </form>
+
                             </div>
                         </li>
-                        <div class="clear"></div>
+                
+                    
+                    	<div class="clear"></div>
                     </ul>
 
-
-                    <ul class="clear"></ul>
+                    <ul class="clear"></ul> 
                 </li>
                 <li>
                     <div class="subtitle_1">
@@ -393,138 +424,149 @@
                         <div class="clear"></div>
                     </div>
                     <ul class="book">
+                    
                         <li><img src="__PUBLIC__/images/book_1.png" alt="">
 
-                            <p>
+                            <!-- <p>
                                 <a href="">美女的超级保镖</a>
-                            </p>
+                            </p> -->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="book1">
                                     <div>
                                         <p>电子书文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value"accept="text/plain"> 
+                                        <input name="ye" class="ye"> 
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                       <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="book1" name="position">
+                                    <input type="hidden" value="3" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                    <input type="button" value="提交" onclick="upload('book1')">
                                     </div>
                                 </form>
                             </div>
                         </li>
+                        
                         <li><img src="__PUBLIC__/images/book_1.png" alt="">
 
-                            <p>
+                            <!-- <p>
                                 <a href="">美女的超级保镖</a>
-                            </p>
+                            </p> -->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="book2">
                                     <div>
                                         <p>电子书文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value"accept="text/plain"> 
+                                        <input name="ye" class="ye"> 
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                       <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="book2" name="position">
+                                    <input type="hidden" value="3" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                    <input type="button" value="提交" onclick="upload('book2')">
                                     </div>
                                 </form>
                             </div>
                         </li>
+                        
                         <li><img src="__PUBLIC__/images/book_1.png" alt="">
 
-                            <p>
+                            <!-- <p>
                                 <a href="">美女的超级保镖</a>
-                            </p>
+                            </p> -->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="book3">
                                     <div>
                                         <p>电子书文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value"accept="text/plain"> 
+                                        <input name="ye" class="ye"> 
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                       <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="book3" name="position">
+                                    <input type="hidden" value="3" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                    <input type="button" value="提交" onclick="upload('book3')">
                                     </div>
                                 </form>
                             </div>
                         </li>
+                        
                         <li><img src="__PUBLIC__/images/book_1.png" alt="">
 
-                            <p>
+                            <!-- <p>
                                 <a href="">美女的超级保镖</a>
-                            </p>
+                            </p> -->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="book4">
                                     <div>
                                         <p>电子书文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value"accept="text/plain"> 
+                                        <input name="ye" class="ye"> 
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                       <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="book4" name="position">
+                                    <input type="hidden" value="3" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                    <input type="button" value="提交" onclick="upload('book4')">
                                     </div>
                                 </form>
                             </div>
                         </li>
+                        
+                        
+                        
                         <div class="clear"></div>
                     </ul>
                     <ul class="clear"></ul>
@@ -536,112 +578,124 @@
 
                         <div class="clear"></div>
                     </div>
+                    
+                    
                     <ul class="app">
+                    
                         <li><img src="__PUBLIC__/images/app.png" alt="">
 
-                            <h1>
+                            <!-- <h1>
                                 <a href="">16wifi</a>
-                            </h1>
+                            </h1> 
 
-                            <p>11.2M</p>
+                            <p>11.2M</p>-->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="app1">
                                     <div>
                                         <p>APP文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value" accept=".apk"> 
+                                        <input name="ye" class="ye"> 
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="app1" name="position">
+                                    <input type="hidden" value="4" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('app1')">
                                     </div>
                                 </form>
                             </div>
                         </li>
+                        
                         <li><img src="__PUBLIC__/images/app.png" alt="">
 
-                            <h1>
+                            <!-- <h1>
                                 <a href="">16wifi</a>
-                            </h1>
+                            </h1> 
 
-                            <p>11.2M</p>
+                            <p>11.2M</p>-->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="app2">
                                     <div>
                                         <p>APP文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value" accept=".apk"> 
+                                        <input name="ye" class="ye"> 
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="app2" name="position">
+                                    <input type="hidden" value="4" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('app2')">
                                     </div>
                                 </form>
                             </div>
                         </li>
+                        
+                        
                         <li><img src="__PUBLIC__/images/app.png" alt="">
 
-                            <h1>
+                            <!-- <h1>
                                 <a href="">16wifi</a>
-                            </h1>
+                            </h1> 
 
-                            <p>11.2M</p>
+                            <p>11.2M</p>-->
 
                             <div class="dis">
-                                <p>Close</p>
+                                <p>X</p>
 
-                                <form action="form" method="get">
+                                <form id="app3">
                                     <div>
                                         <p>APP文件：</p>
-                                        <input type="file" class="file" name="j"
-                                               onchange="ye.value=value"> <input name="ye"
-                                                                                 class="ye"> <input type="button"
-                                                                                                    value="打开"
-                                                                                                    class="button"
-                                                                                                    onclick=j.click()>
+                                        <input type="file" class="file" name="file" onchange="ye.value=value" accept=".apk"> 
+                                        <input name="ye" class="ye"> 
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="text">
+                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input name="ye1" class="ye1"> 
+                                        <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
                                         <p>文字简介：</p>
-                                        <input type="text"> <br>
+                                        <input type="text" name="text"> <br>
                                     </div>
+                                    <input type="hidden" value="app3" name="position">
+                                    <input type="hidden" value="4" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交">
+                                        <input type="button" value="提交" onclick="upload('app3')">
                                     </div>
                                 </form>
                             </div>
                         </li>
+                        
+                        
+                        
                         <div class="clear"></div>
                     </ul>
                     <ul class="clear"></ul>
@@ -668,24 +722,51 @@ $(function() {
 	}
 })
 
-    function upload(type) {
-        x = $(".movie_upload").serializeArray();
-        /* var condition="type:"+type;
-         $.each(x, function(i, field){
-         condition+=", ";
-         condition+=field.name+":'"+field.value+"'";
-         });
-         document.write(x[0].name); */
-        $.post("upload", {
-            type: 1,
-            ye: x[0].value/* ,
-             image_des:"sdfsd",
-             text_des:"sdsd" */
-        }, function (data, status) {
-            if (status == 4 || status == "success") {
-                document.write(data + "success!");
+/**
+     * 将数组转化为字符串,用下划线分隔
+     * @param arr 要转化的数组
+     */
+    function arr_to_str(arr) {
+        var str = '';
+        for (var i = 0; i < arr.length; i++) {
+            if (i > 0) {
+                str += '_';
             }
-        });
+            str+=arr[i];
+        }
+        return str;
+    } 
+
+function upload(position) {
+	var busArr = new Array();
+	for (var i = 0; i < checkedIdList.length; i++) {
+		if (checkedIdList[i].isChecked)
+			busArr[i] = checkedIdList[i].id;
+	}
+	if (busArr.length > 0) {
+	    var ids = arr_to_str(busArr);
+		var form = $("#" + position)[0];
+	    var formData = new FormData(form);
+	    formData.append('ids', ids);
+		
+	    $.ajax({
+	        url: "{:U('Media/upload')}",
+	        type: 'POST',
+	        cache: false,
+	        data: formData,
+	        processData: false,
+	        contentType: false
+	    }).done(function (res) {
+	        $(".dis").slideUp();
+	        getDisplay();
+	    }).fail(function (res) {
+	        alert(res);
+	    });
+	}else{
+		alert("没有选中车辆!");
+	}
+	
+        
     }
     
 /**

@@ -291,24 +291,28 @@
     		if (checkedIdList[i].isChecked)
     			busArr[i] = checkedIdList[i].id;
     	}
-        var ids = arr_to_str(busArr);
-        var form = $("#" + id)[0];
-        var formData = new FormData(form);
-        formData.append('ids', ids);
-        $.ajax({
-            url: "{:U('Media/add')}",
-            type: 'POST',
-            cache: false,
-            data: formData,
-            processData: false,
-            contentType: false
-        }).done(function (res) {
-            $(".dis").hide();
-            getDeviceInfo();
-        }).fail(function (res) {
-            alert(res)
-        });
-    }
+    	if (busArr.length > 0) {
+	        var ids = arr_to_str(busArr);
+	        var form = $("#" + id)[0];
+	        var formData = new FormData(form);
+	        formData.append('ids', ids);
+	        $.ajax({
+	            url: "{:U('Media/add')}",
+	            type: 'POST',
+	            cache: false,
+	            data: formData,
+	            processData: false,
+	            contentType: false
+	        }).done(function (res) {
+	            $(".dis").hide();
+	            getDeviceInfo();
+	        }).fail(function (res) {
+	            alert(res)
+	        });
+	    }else{
+			alert("没有选中车辆!");
+		}
+}
 
     /**
      * 将数组转化为字符串,用下划线分隔

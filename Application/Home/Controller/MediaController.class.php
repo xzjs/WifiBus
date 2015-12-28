@@ -72,6 +72,70 @@ class MediaController extends BaseController
         }
         echo json_encode($error_data);
     }
+    
+    /**
+     * 上传电影、电子书、apk等文件
+     */
+    public function upload() {
+    	$error_data['status']=0;
+    	$file_name=$this->upload_file();
+    
+    	$Media = D('Media');
+    	if ($Media->create()) {
+    		$Media->url=$file_name;
+    		$name_str=explode(".",$file_name);
+    		$Media->img=$name_str[0].'.jpg';
+    		$media_id=$Media->add();
+    		if($media_id){
+    			$buses=explode('_',I('post.ids'));
+    			foreach ($buses as $bus) {
+    				$DeviceModel=D('Device');
+    				$condition['bus_id']=$bus;
+    				$devices=$DeviceModel->where($condition)->relation(true)->select();
+    				$m='';
+    				foreach ($devices as $device) {
+    					$media=$device['Media'];
+    					$m=$media['position']==I('post.position')?$media:$m;
+    				}
+    				$dmModel=M('Device_media');
+    				$result=false;
+    				if($m==''){
+    					$data=array(
+    							'device_id'=>$device['id'],
+    							'media_id'=>$media_id
+    					);
+    					$result=$dmModel->add($data);
+    				}else{
+    					$condition=array(
+    							'device_id'=>$device['id'],
+    							'media_id'=>$media_id
+    					);
+    					$dm=$dmModel->where($condition)->find();
+    					$dm['media_id']=$media_id;
+    					$result=$dmModel->save($dm);
+    				}
+    				if($result){
+    					$CommandCtrl=A('Command');
+    					$cmd_result1=$CommandCtrl->add($device['id'],'Contentsupdate',C('IP').':'.C('PORT').'/WifiBus/Update/|'.$file_name.'|'.I('post.position').'.'.$name_str[1]);
+    					$cmd_result2=$CommandCtrl->add($device['id'],'Contentsupdate',C('IP').':'.C('PORT').'/WifiBus/Update/|'.$name_str[0].'.jpg'.'|'.I('post.position').'.jpg');
+    					if($cmd_result1&&$cmd_result2){
+    						$error_data['status']=0;
+    						$error_data['data']='成功';
+    					}else{
+    						$error_data['data']='命令插入错误';
+    					}
+    				}else{
+    					$error_data['data']= '添加关系表失败';
+    				}
+    			}
+    		}else{
+    			$error_data['data']= '上传失败';
+    		}
+    	} else {
+    		$error_data['data']= $Media->getError();
+    	}
+    	$this->ajaxReturn($error_data);
+    }
 
     /**
      * 查询媒体
@@ -170,20 +234,5 @@ class MediaController extends BaseController
     }
 
 
-    public function get_img($device_ids){
-    	/* $Device=M('Device');
-    		$result=M()->query('select a.url,a.position from think_media as a,think_device_ad as b where b.device_id='.$device_ids[0].
-    		' and a.id=b.ad_id');
-    		$img_or_null=$result[0]['a.url'];
-    		for($i=0;$i<count($device_ids);$i++){
-    		$result=$Device->field('ssid')->find($device_ids[$i]);
-    		if($img_or_null!=$result['ssid']){
-    		$img_or_null='';
-    		break;
-    		}
-    		}
-    		return $img_or_null; */
-    	$result=M()->query('select url,text from think_media limit 0,6');
-    	return $result;
-    }
+    
 }
