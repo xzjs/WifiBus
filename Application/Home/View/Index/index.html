@@ -40,7 +40,7 @@
             </ul>
         </div>
         <div class="display">
-            <select id="line_selector" onchange="get_bus_list('{:U('Bus/select')}',this.value,'bus_no_selector')">
+            <select id="line_selector" onchange="get_bus_list_line('{:U('Bus/select')}',this.value,'bus_no_selector')">
                 <volist name="line_list" id="vo" empty=" ">
                     <option value={$vo.id}>{$vo.name}</option>
                 </volist>
@@ -55,7 +55,8 @@
             </div>
             <ul class="select" id="bus_no_selector">
                 <volist name="bus_list" id="vo" empty=" ">
-                    <li><a href="#">{$vo.no}</a></li>
+                
+                    <li><a href="#" onclick="show_bus('__CONTROLLER__/bus/str/{$vo.id}/flag/0','')">{$vo.no}</a></li>
                 </volist>
             </ul>
         </div>
@@ -65,7 +66,7 @@
                 <ul>
                 	<volist name="line_list" id="vo" empty=" ">
                   	  <li><a href="javascript:void(0);"
-                           onclick="ajax('__CONTROLLER__/bus/str/+{$vo.id}','{$vo.name}')">{$vo.name}</a></li>
+                           onclick="show_line('__CONTROLLER__/bus/str/{$vo.id}/flag/1','{$vo.name}')">{$vo.name}</a></li>
                 	</volist>
                 </ul>
             </div>
@@ -94,7 +95,7 @@ $(function () {
         }
     });
 })
-   var myChartWork = echarts.init(document.getElementById('workNormal'));
+    var myChartWork = echarts.init(document.getElementById('workNormal'));
     var myChartOnline = echarts.init(document.getElementById('onlinePeople'));
     var myChartFlow = echarts.init(document.getElementById('flow'));
     var myChartAd = echarts.init(document.getElementById('adClick'));
@@ -103,10 +104,116 @@ $(function () {
     var b = 35;
     var c = 30;
     var d = 40;
- 
-    ajax("__CONTROLLER__/all", '');
-    var int = self.setInterval("chart()", 3000);
-
+    var line;
+    
+    function ajax($url, line) {
+    	//alert($url);
+        jQuery.ajax({
+              url: $url,
+              dataType: "json",
+              success: function (results) {
+              	map.clearOverlays()
+              //	alert($url);
+              	var data=eval(results);
+              	
+                  get_map(line,data );
+                  
+              }
+          });
+      }
+      var ding_id;
+      ding_id=setInterval(
+    		  function (){ajax("__CONTROLLER__/all", '')},
+              5000
+      );
+    
+     
+      function get_map(line, array) {
+      	
+          	//alert("纯首页无条件");
+                      var x;
+                       for (x in array) {
+                          var a = array[x]['p_x'];
+                          var b = array[x]['p_y'];
+                          var pt = new BMap.Point(a, b);
+                          var num = array[x]['flag'];
+                          var img;
+                          switch (num) {
+                              case 0:
+                                  img = "__PUBLIC__/images/green_left.png";
+                                  break;
+                              case 1:
+                                  img = "__PUBLIC__/images/red_left.png";
+                                  break;
+                              
+                              default :
+                                  img = "__PUBLIC__/images/green_right.png";
+                                  break;
+                          }
+                          var myIcon = new BMap.Icon(img, new BMap.Size(50, 20));
+                          var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
+                          map.addOverlay(marker2);
+                       //  alert("dd"); // 创建标注
+                        
+                          	 var content =  '<div style="margin:0;line-height:20px;padding:2px;font-size: 12px">'
+                          		 + '公交车牌号：'
+                    				+  array[x]['car_no']	
+                          	    + '<br/>在线人数：'
+                   				+  array[x]['online_num']
+                   				+ '<br/>已用流量：'
+                   				+  array[x]['flow_num']
+                   				+ '<br/>磁盘使用率：' 
+                   				+  array[x]['cipan_use']
+                                  +'<br/>本地资源访问人数：'
+                   				+ 1
+                   				+'</div>';
+                          addClickHandler(content, marker2);
+                      }
+              
+      }
+   
+    var int = self.setInterval("chart()", 3000); 
+    var line;
+    function show_bus($url, line) {
+	   	 clearInterval(ding_id);
+	    	//alert($url);
+	        jQuery.ajax({
+	              url: $url,
+	              dataType: "json",
+	              success: function (results) {
+	              	map.clearOverlays()
+	              //	alert($url);
+	              	var data=eval(results);
+	              	
+	                  get_map(line,data );
+	                  
+	              }
+	          });
+	        ding_id=setInterval(
+	       		  function (){show_bus($url, line)},
+	                 5000
+	         );
+	      }
+ function show_line($url, line) {
+	 line=line;
+	// alert("线路循环");
+	 clearInterval(ding_id);
+    jQuery.ajax({
+        url: $url,
+        dataType: "json",
+        success: function (results) {
+        	map.clearOverlays()
+       // 	alert($url);
+        	var data=eval(results);
+        	get_map_line(line,data );
+        		
+        }
+    });
+    ding_id=setInterval(
+     		  function (){show_line($url, line)},
+               5000
+       );
+}
     var map = new BMap.Map("allmap");            // 创建Map实例
     map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 13);
      var opts = {
@@ -119,6 +226,7 @@ $(function () {
     function chart() {
         // 正在工作设备量
         var num = Math.random();
+      
         num = 0.5 - num;
         a += num;
         var optionWork = workOption(a, "__CONTROLLER__/work/f/work/num/" + a);
@@ -139,21 +247,19 @@ $(function () {
        myChartFlow.setOption(optionFlow);
        myChartAd.setOption(optionAd);
     }
-    
-    function ajax($url, line) {
-        jQuery.ajax({
-            url: $url,
-            dataType: "json",
-            success: function (results) {
-            	var data=eval(results);
-                get_map(line,data );
-            }
-        });
+   
+   
+
+    function addClickHandler(content, marker) {
+        marker.addEventListener("click", function (e) {
+                    openInfo(content, e)
+                }
+        );
     }
-    
-    function get_map(line, array) {
+    function get_map_line(line, array) {
+    	
         // 百度地图API功能
-       
+
         var busline = new BMap.BusLineSearch(map, {
             renderOptions: {map: map, panel: "r-result"},
             onGetBusListComplete: function (result) {
@@ -168,18 +274,15 @@ $(function () {
             var busName = line;
             busline.getBusList(busName);
         }
-
-        setTimeout(function () {
-            busSearch();
-        }, 1500);
-      
-
-        setTimeout(function () {
+         busSearch();
+         setTimeout(
+        		 function () {
+        			 //alert("线路");
                     var x;
                      for (x in array) {
                         var a = array[x]['p_x'];
                         var b = array[x]['p_y'];
-                    //  alert( a);	
+                    //  	
                         var pt = new BMap.Point(a, b);
                         var num = array[x]['flag'];
                         var img;
@@ -214,11 +317,9 @@ $(function () {
                  				+'</div>';
                         addClickHandler(content, marker2);
                     }
-                }
-                ,
-                2500
-        )
-        ;
+         },800);
+        
+        
     }
 
     function addClickHandler(content, marker) {
@@ -227,7 +328,6 @@ $(function () {
                 }
         );
     }
-
     function openInfo(content, e) {
         var p = e.target;
         var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
