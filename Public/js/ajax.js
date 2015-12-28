@@ -248,6 +248,7 @@ function get_bus_list(url,id,display) {
 		
 		}
 	});
+	
 }
 /**
  * 根据车牌号搜索车辆
