@@ -40,7 +40,7 @@ class BaseController extends Controller
         $upload->autoSub = false;
         $upload->saveName = '_' . time(); // 上传文件
         $info = $upload->upload();
-        echo $info ['file'] ['savename'];
+        //echo $info ['file'] ['savename'];
         return $info ['file'] ['savename'];
     }
 }

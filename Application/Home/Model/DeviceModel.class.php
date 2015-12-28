@@ -1,7 +1,7 @@
 <?php
 namespace Home\Model;
-use Think\Model;
-class DeviceModel extends Model {
+use Think\Model\RelationModel;
+class DeviceModel extends RelationModel {
     // 定义自动验证
     protected $_validate    =   array(
     		array('mac','require','mac不能为空'),
@@ -17,6 +17,12 @@ class DeviceModel extends Model {
      */
     protected $_auto = array (
         array('time','time',3,'function'), // 对update_time字段在更新的时候写入当前时间戳
-    		
+    );
+
+    /**
+     * @var array 关联模型数组
+     */
+    protected $_link = array(
+        'Media'=> self::MANY_TO_MANY,
     );
  }
