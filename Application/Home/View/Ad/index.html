@@ -312,10 +312,12 @@
     function arr_to_str(arr) {
         var str = '';
         for (var i = 0; i < arr.length; i++) {
-            if (i > 0) {
-                str += '_';
+            if(arr[i].isChecked){
+                if(str!=''){
+                    str += '_';
+                }
+                str += arr[i].id;
             }
-            str += arr[i].id;
         }
         return str;
     }
