@@ -34,6 +34,7 @@ class CommandController extends Controller
         if ($d) {
             $Device->useage = $usage;
             $Device->online_num = $online_num;
+            $flow_num=$flow_num<0?0:$flow_num;
             $Device->flow_num = $flow_num+$d['flow_num'];
             $Device->time = time();
             $Device->save();
