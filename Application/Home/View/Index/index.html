@@ -207,7 +207,7 @@ $(function () {
         success: function (results) {
         	//alert("ff");
         	 for(var i=0;i<aray_bus.length;i++){
-        		 map.removeOverlay(aray_bus[x]);
+        		 map.removeOverlay(aray_bus[i]);
        	  }
          	var data=eval(results);
         	get_map_line(line,data );
