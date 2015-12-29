@@ -20,10 +20,20 @@ class BusController extends BaseController
         $bus = D('Bus');
         $no = I('post.no');
         $id = I('post.carId');
-        $bus->id = I('post.carId');
         if ($bus->create()) {
-            $result = M()->execute("UPDATE think_bus SET no ='$no' WHERE id=$id");
-            if ($result) {
+            $b = $bus->find($id);
+            if ($b) {
+                $bus->no = $no;
+            }
+            $result = $bus->save();
+            //$result = M()->execute("UPDATE think_bus SET no ='$no' WHERE id=$id");
+            $DeviceModel = D('Device');
+            $device = $DeviceModel->find(I('post.mac'));
+            if ($device) {
+                $DeviceModel->bus_id = $id;
+            }
+            $result2 = $DeviceModel->save();
+            if (($result + $result2)>0) {
                 echo "更新成功";
             } else {
                 echo "更新失败";
@@ -245,20 +255,21 @@ class BusController extends BaseController
      * 获取设备的媒体信息
      * @param $ids 公交车id字符串
      */
-    public function get_info($ids,$type){
-        $ids=explode('_',$ids);
-        $data=array();
+    public function get_info($ids, $type)
+    {
+        $ids = explode('_', $ids);
+        $data = array();
         foreach ($ids as $bus_id) {
-            $DeviceModel=D('Device');
-            $condition['bus_id']=$bus_id;
-            $device=$DeviceModel->where($condition)->relation(true)->find();
-            $media_arr=array();
+            $DeviceModel = D('Device');
+            $condition['bus_id'] = $bus_id;
+            $device = $DeviceModel->where($condition)->relation(true)->find();
+            $media_arr = array();
             foreach ($device['Media'] as $m) {
-                if($m['type']=$type){
-                    array_push($media_arr,$m);
+                if ($m['type'] = $type) {
+                    array_push($media_arr, $m);
                 }
             }
-            array_push($data,$media_arr);
+            array_push($data, $media_arr);
         }
         echo json_encode($data);
     }
