@@ -36,6 +36,9 @@ class CommandController extends Controller
             $Device->online_num = $online_num;
             $flow_num=$flow_num<0?0:$flow_num;
             $Device->flow_num = $flow_num+$d['flow_num'];
+            $DeviceCtrl=A('Device');
+            $FlowCtrl=A('Flow');
+            $FlowCtrl->update($flow_num,$DeviceCtrl->get_id($mac));
             $Device->time = time();
             $Device->save();
             $Bus = D('Bus');
