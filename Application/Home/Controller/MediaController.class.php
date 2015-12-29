@@ -92,6 +92,8 @@ class MediaController extends BaseController
     				$DeviceModel=D('Device');
     				$condition['bus_id']=$bus;
     				$devices=$DeviceModel->where($condition)->relation(true)->select();
+    				if(!$devices)
+    					continue;
     				$device=$devices[0];
     				$m='';
     				foreach ($device['Media'] as $media) {
