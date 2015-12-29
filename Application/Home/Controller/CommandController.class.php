@@ -42,11 +42,11 @@ class CommandController extends Controller
             if ($b) {
                 if ($lon * $lat) {
                     $du=floor($lat/100);
-                    $lat=$du+($lat-$du*100)/6000;
+                    $new_lon=$du+($lat-$du*100)/6000;
                     $du=floor($lon/100);
-                    $lon=$du+($lon-$du*100)/6000;
-                    $Bus->position_x = $lat;
-                    $Bus->position_y = $lon;
+                    $new_lat=$du+($lon-$du*100)/6000;
+                    $Bus->position_x = $new_lon;
+                    $Bus->position_y = $new_lat;
                     $Bus->save();
                 }
             }
