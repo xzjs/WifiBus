@@ -278,6 +278,16 @@ class DeviceController extends Controller
     	}
     	return 0;//更新成功！
     }
-    
-    
+
+    /**
+     * 通过mac获取设备的id
+     * @param $mac 设备mac
+     * @return int 0或者id
+     */
+    public function get_id($mac){
+        $DeviceModel=D('Device');
+        $condition['mac']=$mac;
+        $result=$DeviceModel->where($condition)->find();
+        return $result?$result['id']:0;
+    }
 }
