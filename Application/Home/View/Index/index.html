@@ -174,6 +174,7 @@ $(function () {
    
     var int = self.setInterval("chart()", 3000); 
     var line;
+    var aray_bus=new Array();
     function show_bus($url, line) {
 	   	 clearInterval(ding_id);
 	   	 
@@ -182,6 +183,7 @@ $(function () {
 	              url: $url,
 	              dataType: "json",
 	              success: function (results) {
+	            	 
 	              	map.clearOverlays()
 	              //	alert($url);
 	              	var data=eval(results);
@@ -203,9 +205,11 @@ $(function () {
         url: $url,
         dataType: "json",
         success: function (results) {
-        	map.clearOverlays()
-       // 	alert($url);
-        	var data=eval(results);
+        	//alert("ff");
+        	 for(var i=0;i<aray_bus.length;i++){
+        		 map.removeOverlay(aray_bus[x]);
+       	  }
+         	var data=eval(results);
         	get_map_line(line,data );
         		
         }
@@ -276,10 +280,12 @@ $(function () {
             busline.getBusList(busName);
         }
          busSearch();
+         
          setTimeout(
         		 function () {
         			 //alert("线路");
                     var x;
+                
                      for (x in array) {
                         var a = array[x]['p_x'];
                         var b = array[x]['p_y'];
@@ -301,7 +307,12 @@ $(function () {
                         }
                         var myIcon = new BMap.Icon(img, new BMap.Size(50, 20));
                         var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
+                      //  marker2.setLabel(new BMap.Label("1嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎",{offset:new BMap.Size(10,-10)}));
                         map.addOverlay(marker2);
+                       aray_bus[x]=marker2;
+                     //  alert("leng"+aray_bus.length);
+                //  alert("f"+aray_bus[x].getLabel().content);
+                 
                      //  alert("dd"); // 创建标注
                       
                         	 var content =  '<div style="margin:0;line-height:20px;padding:2px;font-size: 12px">'
