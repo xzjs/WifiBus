@@ -67,10 +67,10 @@
                     <div class="cont2">
                         <label>设备MAC地址</label>
                         <select name="mac">
-                            <option value="mac1" checked="checked">12311fwxcv</option>
-                            <option value="mac2">fwefxx</option>
-                            <option value="mac3">fwefcvxgvber</option>
-                            <option value="mac4">xxxhiwnxcwdf</option>
+                        <volist id="vo" name="mac_list">
+                         <option value={$vo.id} checked="checked">{$vo.mac}</option>
+                        </volist>
+                            
                         </select>
                     </div>
                     <input type="submit" value="确定">

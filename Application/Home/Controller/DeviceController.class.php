@@ -12,6 +12,11 @@ use Think\Controller;
  */
 class DeviceController extends Controller
 {
+	public function mac_select(){
+		$DeviceModel=D("Device");
+		return $DeviceModel->select();
+		//$result=M()->query("select mac from")
+	}
 /**
  * 更新设备所属车辆
  */
