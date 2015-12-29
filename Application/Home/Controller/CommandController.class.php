@@ -34,7 +34,7 @@ class CommandController extends Controller
         if ($d) {
             $Device->useage = $usage;
             $Device->online_num = $online_num;
-            $Device->flow_num = $flow_num;
+            $Device->flow_num = $flow_num+$d['flow_num'];
             $Device->time = time();
             $Device->save();
             $Bus = D('Bus');
@@ -42,11 +42,11 @@ class CommandController extends Controller
             if ($b) {
                 if ($lon * $lat) {
                     $du=floor($lat/100);
-                    $lat=$du+($lat-$du)/6000;
+                    $new_lon=$du+($lat-$du*100)/6000;
                     $du=floor($lon/100);
-                    $lon=$du+($lon-$du)/6000;
-                    $Bus->position_x = $lat;
-                    $Bus->position_y = $lon;
+                    $new_lat=$du+($lon-$du*100)/6000;
+                    $Bus->position_x = $new_lon;
+                    $Bus->position_y = $new_lat;
                     $Bus->save();
                 }
             }

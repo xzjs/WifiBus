@@ -321,14 +321,15 @@
     function arr_to_str(arr) {
         var str = '';
         for (var i = 0; i < arr.length; i++) {
-            if (i > 0) {
-                str += '_';
+            if(arr[i].isChecked){
+                if(str!=''){
+                    str += '_';
+                }
+                str += arr[i].id;
             }
-            str+=arr[i];
         }
         return str;
     }
-
 
     function change_img(ids) {
         $.get("{:U('Bus/get_info')}/ids/" + ids + "/type/1", function (data, status) {
@@ -372,65 +373,4 @@
     	}
         change_img(arr_to_str(busArr));
     }
-
-
-    
-    
-    
-    
-    
-
-/**
- * 创建全局变量
- */
-/* $(function() {
-	var lineList = $(".line_array");
-	for(var i=0;i<lineList.length;i++){
-		checkedLineArr[i]=lineList[i].checked;
-	}
-	getDisplay();
-	$(".dis_button").click(function() {
-		var data = new FormData();
-		/* $.each($(this).parent().find('.file')[0].files, function(i, file) {
-		 	data.append('upload_file'+i, file);
-		}); */
-		//data.append('text_dsc', $(this).parent().find('#text_dsc').val);
-		//data.append('img_dsc', $(this).parent().find('#img_dsc').val);
-		//data.append('img', $(this).parent().find('.file')[0].files[0]);
-		/*var a=$(this).parent().find('#text_dsc').val;
-            $.ajax({
-                url: 'upload',
-                type: "POST",
-                data: data,+
-                success: function (data, status) {
-                    alert(data);
-                   
-                }
-            })
-        $(this).parent().parent().parent().slideUp();
-	});
-}) */
-
- 
-/**
- * 获取选中check列表的ssid和网速上限
- */
-/* function getDisplay() {
-	
-		$.post('get_img', {
-			//ids : busArr,
-		}, function(data, status) {
-			if (status == 4 || status == "success") {
-				var img_list = eval(data);
-				$('img#img_display1').attr('src',img_list[0].img);
-				$('img#img_display2').attr('src',img_list[1].img);
-				$('img#img_display3').attr('src',img_list[2].img);
-				$('img#img_display4').attr('src',img_list[3].img);
-				$('img#img_display5').attr('src',img_list[4].img);
-				$('img#img_display6').attr('src',img_list[5].img);
-			}
-		});
-	
-} */
-
 </script>

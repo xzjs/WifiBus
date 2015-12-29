@@ -40,13 +40,6 @@
         <!-- 以下三个search_car div分别对应上面li中的三条线路 hideTemp-->
         <div id="search_car" class="search_car hide">
             <ul id="ul_bus_list" class="ul_bus_list">
-                <li>
-                    <a href="javascript:void(0)" data-id="">鲁nx234</a>
-                    <a href="javascript:void(0)" title="删除" data-id="" class="car_del"><img
-                            src="/WifiBus/Public/images/usr_d.png" alt="删除"></a>
-                    <a href="javascript:void(0)" title="编辑" data-id="" class="car_edt"><img
-                            src="/WifiBus/Public/images/usr_e.png" alt="编辑"></a>
-                </li>
             </ul>
             <div class="car_button">
                 <a class="car_add_con" href="javascript:void(0)">添加</a>
@@ -67,10 +60,10 @@
                     <div class="cont2">
                         <label>设备MAC地址</label>
                         <select name="mac">
-                            <option value="mac1" checked="checked">12311fwxcv</option>
-                            <option value="mac2">fwefxx</option>
-                            <option value="mac3">fwefcvxgvber</option>
-                            <option value="mac4">xxxhiwnxcwdf</option>
+                            <volist id="vo" name="mac_list">
+                                <option value={$vo.id} checked="checked">{$vo.mac}</option>
+                            </volist>
+
                         </select>
                     </div>
                     <input type="submit" value="确定">
@@ -89,7 +82,7 @@
                 </li>
             </ul>
         </form>
-        <!--   <form method="post" action="upload" enctype="multipart/form-data" id="mLineForm">
+        <!--<form method="post" action="upload" enctype="multipart/form-data" id="mLineForm" class="hide">
             <ul class="user_click">
                 <li class="line_alladd">
                     <a title="关闭">X</a>
@@ -103,7 +96,7 @@
                     <a href="/wifibus/Download/模板.xlsx" class="sign">请点击此处下载表格样本</a>
                 </li>
             </ul>
-        </form> -->
+        </form>-->
         <!--  <form method="post" action="upload" enctype="multipart/form-data">
             <ul class="user_click">
                 <li class="line_add"><a>X</a>
@@ -483,10 +476,10 @@
         }
     }
 
-    var line_id=0;
+    var line_id = 0;
 
     function showCarDialog(lineId) {
-        line_id=lineId;
+        line_id = lineId;
         $("#ul_bus_list").parent().removeClass("hide");
         showCar(lineId);
     }
@@ -504,7 +497,7 @@
                         info = "";
                 $.each(list, function (index, value) {
                     value = list[index];
-                    info += "<li><a href='javascript:void(0)' data-id='" + value.id + "'>" + value.no + "</a><a href='javascript:void(0)' data-id='" + value.id + "' title='删除' class='car_del'><img src='/WifiBus/Public/images/usr_d.png' alt='删除'></a><a href='javascript:void(0)' data-id='" + value.id + "' data-no='"+value.no+"' title='编辑' class='car_edt'><img src='/WifiBus/Public/images/usr_e.png' alt='编辑'></a>";
+                    info += "<li><a href='javascript:void(0)' data-id='" + value.id + "'>" + value.no + "</a><a href='javascript:void(0)' data-id='" + value.id + "' title='删除' class='car_del'><img src='/WifiBus/Public/images/usr_d.png' alt='删除'></a><a href='javascript:void(0)' data-id='" + value.id + "' data-no='" + value.no + "' title='编辑' class='car_edt'><img src='/WifiBus/Public/images/usr_e.png' alt='编辑'></a>";
                     $("#ul_bus_list").html(info);
                 })
             }
@@ -529,8 +522,8 @@
                 type: 'POST',
                 data: {
                     line_id: lineId,
-                    no:$("#carForm input[type=text]").val(),
-                    mac:$("#carForm select option:selected").text()
+                    no: $("#carForm input[type=text]").val(),
+                    mac: $("#carForm select option:selected").val()
                 },
                 success: function (data, status) {
                     alert(data);
@@ -567,7 +560,7 @@
     //修改车辆
     $('#ul_bus_list').delegate('.car_edt', 'click', function () {
         var id = $(this).attr("data-id");
-        var no=$(this).attr("data-no");
+        var no = $(this).attr("data-no");
         $("#carForm").removeClass('hide');
         $("#carForm input[type=text]").val(no);
         $("#carForm input[type=submit]").unbind('click');
@@ -576,8 +569,9 @@
                 url: '../Bus/update_no',
                 type: "POST",
                 data: {
-                    no:$("#carForm input[type=text]").val(),
-                    carId:id
+                    no: $("#carForm input[type=text]").val(),
+                    carId: id,
+                    mac: $("#carForm select option:selected").val()
                 },
                 success: function (data, status) {
                     alert(data);

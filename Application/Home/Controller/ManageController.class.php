@@ -5,11 +5,17 @@ namespace Home\Controller;
 use Think\Controller;
 
 class ManageController extends Controller {
-	
+	public function mac_select(){
+		
+	}
 	/**
 	 * 加载初始界面
 	 */
 	public function line_manage() {
+		$device=A("Device");
+		$result=$device->mac_select();
+		$this->assign("mac_list",$result);
+		//$this->show;
 		$this->assign('title','用户控制');
 		$this->assign('class3','action');
 		$Line = A ( 'Line' );
