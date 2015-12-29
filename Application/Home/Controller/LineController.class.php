@@ -59,10 +59,14 @@ class LineController extends Controller
         $Bus = D('Bus');
         $device = D('Device');
         $post=I('post.');
-        if ($Bus->create() && $device->create()) {
+        if ($Bus->create()) {
             $result = $Bus->add();
-            $device->bus_id = $result;
-            $flag = $device->add();
+            //$flag = $device->add();
+            $d=$device->find(I('post.mac'));
+            if($d){
+                $device->bus_id = $result;
+            }
+            $flag=$device->save();
             if ($flag && $result) {
                 echo '添加成功';
             } else {
