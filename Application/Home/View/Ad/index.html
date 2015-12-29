@@ -286,24 +286,33 @@
      * @param id form id
      */
     function upload(id) {
-        var ids = arr_to_str(checkedIdList);
-        var form = $("#" + id)[0];
-        var formData = new FormData(form);
-        formData.append('ids', ids);
-        $.ajax({
-            url: "{:U('Media/add')}",
-            type: 'POST',
-            cache: false,
-            data: formData,
-            processData: false,
-            contentType: false
-        }).done(function (res) {
-            $(".dis").hide();
-            getDeviceInfo();
-        }).fail(function (res) {
-            alert(res)
-        });
-    }
+    	var busArr = new Array();
+    	for (var i = 0; i < checkedIdList.length; i++) {
+    		if (checkedIdList[i].isChecked)
+    			busArr[i] = checkedIdList[i].id;
+    	}
+    	if (busArr.length > 0) {
+	        var ids = arr_to_str(busArr);
+	        var form = $("#" + id)[0];
+	        var formData = new FormData(form);
+	        formData.append('ids', ids);
+	        $.ajax({
+	            url: "{:U('Media/add')}",
+	            type: 'POST',
+	            cache: false,
+	            data: formData,
+	            processData: false,
+	            contentType: false
+	        }).done(function (res) {
+	            $(".dis").hide();
+	            getDeviceInfo();
+	        }).fail(function (res) {
+	            alert(res)
+	        });
+	    }else{
+			alert("没有选中车辆!");
+		}
+}
 
     /**
      * 将数组转化为字符串,用下划线分隔
@@ -312,10 +321,12 @@
     function arr_to_str(arr) {
         var str = '';
         for (var i = 0; i < arr.length; i++) {
-            if (i > 0) {
-                str += '_';
+            if(arr[i].isChecked){
+                if(str!=''){
+                    str += '_';
+                }
+                str += arr[i].id;
             }
-            str += arr[i].id;
         }
         return str;
     }
@@ -354,7 +365,12 @@
         })
     }
 
-    function getDeviceInfo() {
-        change_img(arr_to_str(checkedIdList));
+    function getDisplay(){
+    	var busArr = new Array();
+    	for (var i = 0; i < checkedIdList.length; i++) {
+    		if (checkedIdList[i].isChecked)
+    			busArr[i] = checkedIdList[i].id;
+    	}
+        change_img(arr_to_str(busArr));
     }
 </script>

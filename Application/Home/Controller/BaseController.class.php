@@ -32,15 +32,12 @@ class BaseController extends Controller
      */
     public function upload_file()
     {
-        $suffix = I('post.suffix');
         $upload = new \Think\Upload(); // 实例化上传类
         $upload->maxSize = 3145728; // 设置附件上传大小
-        $upload->exts = array($suffix); // 设置附件上传类型
         $upload->rootPath = "./Update/"; // 设置附件上传根目录
         $upload->autoSub = false;
         $upload->saveName = '_' . time(); // 上传文件
         $info = $upload->upload();
-        //echo $info ['file'] ['savename'];
         return $info ['file'] ['savename'];
     }
 }
