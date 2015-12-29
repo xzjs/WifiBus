@@ -95,7 +95,7 @@ function getCheckedList(changedCheck) {
 	}else if(pORc=="car"){
 		busCheckChange(changedCheck);
 	}
-	getDeviceInfo();
+	getDisplay();
 }
 
 /**
@@ -198,6 +198,36 @@ function Bus(parent_id,id,isChecked){
  * 
  * @param str：线路Id
  */
+function get_bus_list_line(url,id,display) {
+
+	$.post(url, {
+		is_getbuslist : 1,
+		line_id : id
+	}, function(data, status) {
+
+		if (status == 4 || status == "success") {
+			var bus_info = eval(data);
+			var bus_list = "";
+			//alert("d");
+			for (var i = 0; i < bus_info.length; i++) {
+				                                            
+				bus_list += "<li>" +
+						"<a href='#' onclick=show_bus('/WifiBus/index.php/Home/Index/bus/str/"+bus_info[i].id+"/flag/0','')>"+ bus_info[i].no + "</a>"
+						+"</li>";
+			}
+			//alert(bus_list);
+			$("ul#"+display).html(bus_list);
+		
+		}
+	});
+}
+
+
+/**
+ * 显示某线路上的车辆的车牌号列表
+ * 
+ * @param str：线路Id
+ */
 function get_bus_list(url,id,display) {
 
 	$.post(url, {
@@ -218,8 +248,34 @@ function get_bus_list(url,id,display) {
 		
 		}
 	});
+	
 }
-
+/**
+ * 根据车牌号搜索车辆
+ * 
+ * @param str：搜索关键字
+ */
+function search_bus_index(url,keys) {
+	
+	$.post(url, {
+		is_getbuslist : 1,
+		search_keys : keys
+	}, function(data, status) {
+		
+		if (status == 4 || status == "success") {
+			var bus_info = eval(data);
+			var bus_list = "";
+			
+			for (var i = 0; i < bus_info.length; i++) {
+				bus_list += "<li>" +
+				"<a href='#' onclick=show_bus('/WifiBus/index.php/Home/Index/bus/str/"+bus_info[i].id+"/flag/0','')>"+ bus_info[i].no + "</a>"
+				+"</li>";
+				}
+			
+			$("ul#bus_no_selector").html(bus_list);
+		}
+	});
+}
 
 
 /**
@@ -228,16 +284,18 @@ function get_bus_list(url,id,display) {
  * @param str：搜索关键字
  */
 function search_bus(url,keys) {
-	//alert("dd");
+	
 	$.post(url, {
 		is_getbuslist : 1,
 		search_keys : keys
 	}, function(data, status) {
-	
+		
 		if (status == 4 || status == "success") {
 			var bus_info = eval(data);
 			var bus_list = "";
+			
 			for (var i = 0; i < bus_info.length; i++) {
+			
 				bus_list += "<li><a href='#' onclick='getAdInfo_bus("+bus_info[i].id+")' >" + bus_info[i].no + "</a></li>";
 			}
 			
