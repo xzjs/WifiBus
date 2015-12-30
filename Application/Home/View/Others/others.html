@@ -113,8 +113,8 @@
                         <p>重启设备</p>
                     </div>
                     <div class="reaset">
-                        <form action="{:U('Device/cmd')}" method="post">
-                            <input type="submit" value="重启">
+                        <form>
+                            <input type="button" value="重启" onclick="set_reboot()">
                         </form>
                     </div>
                 </li>
@@ -219,5 +219,27 @@ function set_flow_limit(flow_limit){
 	}
 }
 
-
+function set_reboot(){
+    var busArr = new Array();
+    for (var i = 0; i < checkedIdList.length; i++) {
+        if (checkedIdList[i].isChecked)
+            busArr[i] = checkedIdList[i].id;
+    }
+    if (busArr.length > 0) {
+        $.post('reboot', {
+            ids : busArr,
+        }, function(data, status) {
+            if (status == 4 || status == "success") {
+                if(data==0)
+                    alert('设置成功！');
+                else if(data==1)
+                    alert('设备操作失败！');
+                else if(data==2)
+                    alert("数据库更新失败！");
+            }
+        });
+    }else{
+        alert("没有选中车辆!");
+    }
+}
 </script>

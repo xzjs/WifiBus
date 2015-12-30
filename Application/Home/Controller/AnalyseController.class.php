@@ -14,7 +14,18 @@ use Think\Controller;
  * @package Home\Controller
  */
 class AnalyseController extends Controller {
-
+	/**
+	 * mac查询time
+	 */
+	public function select_mac(){
+	$mac=I("post.mac");
+	//
+		$result = M()->query("SELECT TIME FROM think_device WHERE mac='$mac' ORDER BY TIME DESC");
+	$date=date('Y-m-d H:i:s',$result[0]['time']);
+		
+		echo json_encode($date);
+	}
+	
 	/**
 	 * ssh查询车牌号mac
 	 */

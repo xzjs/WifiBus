@@ -290,4 +290,14 @@ class DeviceController extends Controller
         $result=$DeviceModel->where($condition)->find();
         return $result?$result['id']:0;
     }
+
+    public function reboot($device_ids){
+        $Device=M('Device');
+        $Command=A('Command');
+        $cmd_str="Reboot";
+        for($i=0;$i<count($device_ids);$i++){
+            $cmd_result=$Command->add($device_ids[$i],$cmd_str);
+        }
+        return 0;//更新成功！
+    }
 }
