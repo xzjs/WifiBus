@@ -19,7 +19,6 @@ class AnalyseController extends Controller {
 	 */
 	public function select_busno(){
 		$busno=I("post.busno");
-		//
 		$result = M()->query
 		("SELECT think_device.TIME,think_bus.no FROM think_device ,think_bus WHERE think_bus.no LIKE '%$busno'AND think_device.bus_id=think_bus.id ORDER BY TIME DESC
 				");
