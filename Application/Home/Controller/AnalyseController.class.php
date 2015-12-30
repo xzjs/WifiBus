@@ -14,15 +14,17 @@ use Think\Controller;
  * @package Home\Controller
  */
 class AnalyseController extends Controller {
+
 	/**
-	 * mac查询time
+	 * busno查询time
 	 */
-	public function select_mac(){
-	$mac=I("post.mac");
-	//
-		$result = M()->query("SELECT TIME FROM think_device WHERE mac='$mac' ORDER BY TIME DESC");
-	$date=date('Y-m-d H:i:s',$result[0]['time']);
-		
+	public function select_busno(){
+		$busno=I("post.busno");
+		$result = M()->query
+		("SELECT think_device.TIME,think_bus.no FROM think_device ,think_bus WHERE think_bus.no LIKE '%$busno'AND think_device.bus_id=think_bus.id ORDER BY TIME DESC
+				");
+		$date=date('Y-m-d H:i:s',$result[0]['time']);
+
 		echo json_encode($date);
 	}
 	
@@ -31,7 +33,7 @@ class AnalyseController extends Controller {
 	 */
 	public function select(){
 		
-		$result = M()->query("SELECT b.id,b.no, d.mac FROM think_device AS d,think_bus AS b WHERE b.id=d.bus_id");
+		$result = M()->query("SELECT d.id,b.no, d.mac FROM think_device AS d,think_bus AS b WHERE b.id=d.bus_id and(UNIX_TIMESTAMP(NOW())-d.TIME) >30");
 		
 		for($i=0;$i<count($result);$i++){
 			$array[$i]=array(

@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>
+</head>
+<body>
+<div style="width:90%;height:90%;background-color:white;float:center;border:1px ;margin-left: auto;
+margin-right: auto;">
+ <div id="left_top" class="left_top" style="border:1px solid #dddddd;float: left;width: 18%; height:150px;">
+  	
+			<form  method="post" name="qusetorderForm" id="qusetorderForm">
+			     	<table  class="table1" >
+					<tr>
+					
+					</table>
+					<table  class="table2" >
+					</tr>
+					<tr >
+						<!-- <td> <select id="leibie" name="leibie">
+								<option selected="" value="1">姓名</option>
+								<option value="2">电话</option>
+								<option value="3">工号</option>
+						</select>
+						</td> -->
+						<td align="center">
+							<input type="context" size="20" id="questcontext" name="questcontext" />
+				<td ><input type="button" value="查询"
+					onclick="javascript:serachByquest(1);" class="buttom">
+					</td>
+					<td>
+					<input type="context" size="20" id="time" name="time" />
+					</td>
+					</tr>
+					
+				</table>
+			</form>
+		
+  </div>
+</div>
+<script type="text/javascript">
+	
+/**
+ * ajax获取bus_no_mac
+ */
+ function serachByquest(){
+
+	var busno=document.getElementById("questcontext").value;
+	//alert("dd"+mac);
+	 $(function () {
+			$.post("{:U('Analyse/select_busno')}", 
+		{
+				busno:busno,
+			
+		}, function(data, status) {
+			if (status == 4 || status == "success") {
+			//alert(data);
+			//data="dd";
+			document.getElementById("time").value=data;
+			}
+		});
+		}
+		)
+}
+   
+    </script>  
+</body>
+</html>
