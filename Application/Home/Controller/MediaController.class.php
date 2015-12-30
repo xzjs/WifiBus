@@ -28,10 +28,9 @@ class MediaController extends BaseController
                 foreach ($buses as $bus) {
                     $DeviceModel=D('Device');
                     $condition['bus_id']=$bus;
-                    $devices=$DeviceModel->where($condition)->relation(true)->select();
+                    $device=$DeviceModel->where($condition)->relation(true)->find();
                     $m='';
-                    foreach ($devices as $device) {
-                        $media=$device['Media'];
+                    foreach ($device['Media'] as $media) {
                         $m=$media['position']==I('post.position')?$media:$m;
                     }
                     $dmModel=M('Device_media');
@@ -45,7 +44,7 @@ class MediaController extends BaseController
                     }else{
                         $condition=array(
                             'device_id'=>$device['id'],
-                            'media_id'=>$media_id
+                            'media_id'=>$m['id']
                         );
                         $dm=$dmModel->where($condition)->find();
                         $dm['media_id']=$media_id;
