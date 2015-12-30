@@ -66,7 +66,7 @@
                 <ul>
                 	<volist name="line_list" id="vo" empty=" ">
                   	  <li><a href="javascript:void(0);"
-                           onclick="show_line('__CONTROLLER__/bus/str/{$vo.id}/flag/1','{$vo.name}')">{$vo.name}</a></li>
+                           onclick="show_line('__CONTROLLER__/bus/str/{$vo.id}/flag/1','{$vo.name}','{$vo.id}')">{$vo.name}</a></li>
                 	</volist>
                 </ul>
             </div>
@@ -172,13 +172,12 @@ $(function () {
               
       }
    
-    var int = self.setInterval("chart()", 3000); 
+    var int = self.setInterval("chart()", 1000); 
     var line;
     var aray_bus=new Array();
     function show_bus($url, line) {
 	   	 clearInterval(ding_id);
 	   	 
-	    	//alert($url);
 	        jQuery.ajax({
 	              url: $url,
 	              dataType: "json",
@@ -197,7 +196,8 @@ $(function () {
 	                 5000
 	         );
 	      }
- function show_line($url, line) {
+ function show_line($url, line,id) {
+	 line_id=id;
 	 line=line;
 	 clearInterval(ding_id); 
 	 only_show_line(line);
@@ -209,7 +209,6 @@ $(function () {
 }
  function only_show_line(line){
 	 // 百度地图API功能
-
     var busline = new BMap.BusLineSearch(map, {
         renderOptions: {map: map, panel: "r-result"},
         onGetBusListComplete: function (result) {
@@ -236,12 +235,23 @@ $(function () {
     };
 
     function chart() {
+    	var id=line_id;
+    	$.post("get_char_info", {
+            line_id:id,
+        }, function (data, status) {
+            if (status == 4 || status == "success") {
+            	var chart_info = eval(data);
+            	var optionWork = workOption(chart_info.work,'{:U('Index/work')}'+"/f/work/line_id/"+id);
+                myChartWork.setOption(optionWork);
+            }
+        });
+    	
         // 正在工作设备量
         var num = Math.random();
-      
+        "__CONTROLLER__/work/f/work/num/" + a
         num = 0.5 - num;
-        a += num;
-        var optionWork = workOption(a);
+        
+        
         //在线人数
         b += num;
         var optionOnline = onlineOption(b);
@@ -254,10 +264,9 @@ $(function () {
         // 广告点击量
         d += num;
         var optionAd = adOption(d);
-       myChartWork.setOption(optionWork);
-       myChartOnline.setOption(optionOnline);
-       myChartFlow.setOption(optionFlow);
-       myChartAd.setOption(optionAd);
+        myChartOnline.setOption(optionOnline);
+        myChartFlow.setOption(optionFlow);
+        myChartAd.setOption(optionAd);
     }
    
    
@@ -332,8 +341,6 @@ $(function () {
                         addClickHandler(content, marker2);
                     }
          },800);
-        
-        
     }
 
     function addClickHandler(content, marker) {
@@ -351,23 +358,6 @@ $(function () {
     }
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    var int=self.setInterval("chart()",1000)
     
     
 </script>

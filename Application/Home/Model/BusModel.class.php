@@ -12,7 +12,7 @@ class BusModel extends RelationModel
      */
     protected $_validate = array(
         array('line_id', 'require', '线路Id不能为空！'),
-    		array('no','require','车牌号不能为空'),
+    	array('no','require','车牌号不能为空'),
     		//array('no','','车牌号名称已经存在！',0,'unique',1),
     		//array('no','','车牌号名称已经存在！',0,'unique',2),
     );

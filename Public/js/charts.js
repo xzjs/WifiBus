@@ -46,7 +46,7 @@ var labelBottom = {
 };
 
 // 正在工作设备量
-function workOption(a) {
+function workOption(a,url) {
     var optionWork = {
         legend: {
             orient: 'vertical',
@@ -67,7 +67,7 @@ function workOption(a) {
                 color: '#FF7F50',
                 textAlign: 'center'
             },
-            link: './index-work.html',
+            link: url,
             target: 'self'
 
         },

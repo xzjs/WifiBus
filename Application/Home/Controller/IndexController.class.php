@@ -79,11 +79,24 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
      * @param $f 图例
      * @param $num 数值
      */
-    public function work($f,$num){
-        $this->assign('title','详细状态');
-        $this->assign('class1','action');
+    public function work($f='work',$line_id=0){
+    	$this->assign('title','详细状态');
+    	$this->assign('class1','action');
+    	$Line = A ( 'Line' );
+    	$data = $Line->getLineList ();
+    	$this->assign ( 'line_list', $data );
         $this->assign('f',$f);
+        $device=A('Device');
+        $num=$device->get_device_state($line_id);
+        
+        
         $this->assign('num',$num);
         $this->show();
+    }
+    
+    public function get_char_info() {
+    	$device=A('Device');
+    	$char_info['work']=$device->get_device_state(I('param.line_id'));
+    	$this->ajaxReturn($char_info);
     }
 }
