@@ -71,9 +71,24 @@ class OthersController extends Controller {
     		if(count($result)>0)
     			array_push($device_ids,$result['id']);
     	}
+    	
     	$Device=A('Device');
     	$result=$Device->set_network_limit($device_ids,$network_limit);
     	$this->ajaxReturn($result);
     }
     
+    public function reboot($ids){
+    	$id_list=$ids;
+    	$device=M('Device');
+    	$device_ids=array();
+    	for($i=0;$i<count($id_list);$i++){
+    		$condition['bus_id']=$id_list[$i];
+    		$result=$device->where($condition)->field('id')->find();
+    		if(count($result)>0)
+    			array_push($device_ids,$result['id']);
+    	}
+    	$Device=A('Device');
+    	$result=$Device->reboot($device_ids);
+    	$this->ajaxReturn($result);
+    }
 }

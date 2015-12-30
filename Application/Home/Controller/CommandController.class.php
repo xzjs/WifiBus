@@ -11,6 +11,17 @@ use Think\Controller;
 
 class CommandController extends Controller
 {
+/**
+ * 查询失联设备
+ * 返回mac,bus_id
+ */
+public function  select_dead_devic(){
+	$de=D('Device');
+	$result=$de->where("(UNIX_TIMESTAMP(NOW())-TIME) >30")->select();
+	echo json_encode($result);
+	
+}
+
     /**
      * 心跳接口
      * @param $mac 设备mac
