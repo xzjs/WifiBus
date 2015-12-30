@@ -104,7 +104,7 @@ $(function () {
     var b = 35;
     var c = 30;
     var d = 40;
-    var line;
+    var line_id=0;
     
     function ajax($url, line) {
     	//alert($url);
@@ -241,19 +241,19 @@ $(function () {
       
         num = 0.5 - num;
         a += num;
-        var optionWork = workOption(a, "__CONTROLLER__/work/f/work/num/" + a);
+        var optionWork = workOption(a);
         //在线人数
         b += num;
-        var optionOnline = onlineOption(b, "__CONTROLLER__/work/f/online/num/" + b);
+        var optionOnline = onlineOption(b);
         // 流量
         c += 0.01;
         if(c>85){
             c=30;
         }
-        var optionFlow = flowOption(c, "__CONTROLLER__/work/f/flow/num/" + c);
+        var optionFlow = flowOption(c);
         // 广告点击量
         d += num;
-        var optionAd = adOption(d, "__CONTROLLER__/work/f/ad/num/" + d);
+        var optionAd = adOption(d);
        myChartWork.setOption(optionWork);
        myChartOnline.setOption(optionOnline);
        myChartFlow.setOption(optionFlow);
@@ -349,4 +349,25 @@ $(function () {
        
         map.openInfoWindow(infoWindow, point); //开启信息窗口
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    var int=self.setInterval("chart()",1000)
+    
+    
 </script>

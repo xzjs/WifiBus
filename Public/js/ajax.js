@@ -340,3 +340,17 @@ $(function () {
     });
 })
 
+
+/**
+ * 获取所有设备的正常工作率
+ */
+function check_device_state(id){
+	/*$.post("/wifibus/index.php/Home/Log/get_device_state", {
+		line_id: 
+    }, function (datas, status) {
+        if (status == 4 || status == "success") {
+            
+
+        }
+    });*/
+}
