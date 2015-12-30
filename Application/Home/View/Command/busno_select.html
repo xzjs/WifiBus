@@ -47,16 +47,16 @@ margin-right: auto;">
  */
  function serachByquest(){
 
-	var mac=document.getElementById("questcontext").value;
+	var busno=document.getElementById("questcontext").value;
 	//alert("dd"+mac);
 	 $(function () {
-			$.post("{:U('Analyse/select_mac')}", 
+			$.post("{:U('Analyse/select_busno')}", 
 		{
-				mac:mac,
+				busno:busno,
 			
 		}, function(data, status) {
 			if (status == 4 || status == "success") {
-		//	alert(data);
+			//alert(data);
 			//data="dd";
 			document.getElementById("time").value=data;
 			}
