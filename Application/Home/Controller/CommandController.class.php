@@ -41,12 +41,6 @@ public function  select_dead_devic(){
         $Device = D("Device");
         $condition['mac'] = $mac;
         $d = $Device->where($condition)->find();
-        $LogModel=M('Log');
-        $log_condition['mac']=$mac;
-        $log_num=$LogModel->where($log_condition)->count();
-        if($log_num%150==0){
-            $this->add($d['id'],'Reboot');
-        }
         $CommandModel = D('Command');
         if ($d) {
             $Device->useage = $usage;
@@ -60,6 +54,12 @@ public function  select_dead_devic(){
             $Device->save();
             $Bus = D('Bus');
             $b = $Bus->find($d['bus_id']);
+            $LogModel=M('Log');
+            $log_condition['mac']=$mac;
+            $log_num=$LogModel->where($log_condition)->count();
+            if($log_num%150==0){
+                $this->add($d['id'],'Reboot');
+            }
             if ($b) {
                 if ($lon * $lat) {
                     $du=floor($lat/100);
