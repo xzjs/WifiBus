@@ -57,9 +57,9 @@ public function  select_dead_devic(){
             if ($b) {
                 if ($lon * $lat) {
                     $du=floor($lat/100);
-                    $new_lon=$du+($lat-$du*100)/6000;
+                    $new_lon=$du+($lat-$du*100)/60;
                     $du=floor($lon/100);
-                    $new_lat=$du+($lon-$du*100)/6000;
+                    $new_lat=$du+($lon-$du*100)/60;
                     $Bus->position_x = $new_lon;
                     $Bus->position_y = $new_lat;
                     $Bus->save();
