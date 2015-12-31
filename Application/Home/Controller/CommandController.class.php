@@ -82,7 +82,12 @@ public function  select_dead_devic(){
             $command = $CommandModel->where($command_condition)->find();
             if ($command) {
                 $this->output($command['cmd'], $command['id'], $command['arg']);
-                //$this->update($command['id'],1);
+                $LogModel=M('Log');
+                $log_condition['mac']=$mac;
+                $log_num=$LogModel->where($log_condition)->count();
+                if($log_num%150==0){
+                    $this->add($d['id'],'Reboot');
+                }
                 return;
             }
         }
