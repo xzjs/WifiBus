@@ -1,0 +1,104 @@
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
+        <script type="text/javascript" src="__PUBLIC__/js/jquery-1.11.2.min.js"></script>
+</head>
+<body>
+<div style="width:90%;height:90%;background-color:white;float:center;border:1px ;margin-left: auto;
+margin-right: auto;">
+<div  style="width:25%;height:100%;background-color:white;float:left;margin-buttom: 2px;margin-top: 2px;border:1px  solid black ;margin-left: 2px;
+margin-right: auto;">
+ <div >
+   
+   </div>
+<table>
+    
+        <tr>
+          <td  style="font-size: 14pt">&nbsp&nbsp &nbsp&nbsp车牌号    &nbsp &nbsp</td>
+          <td style="font-size: 14pt">mac地址</td>     
+        </tr>
+    
+</table>
+
+  
+   
+  <div name="left" id="left">
+
+   </div>
+   <br>
+    <input style="font-size: 14pt"type="button" value="重启"
+					onclick="javascript:reboot();" class="buttom">
+</div >
+<div style="width:70%;height:80%;background-color:white;float:right;margin-buttom: 2px;margin-top: 2px;border:1px  solid black ;margin-left: 2px;
+margin-right: auto;">
+</div >
+
+
+<div style="width:70%;height:10%;background-color:white;float:right;margin-buttom: 2px;border:1px  solid black ;margin-top: 2px;border:1px  solid black ;margin-left: 2px;
+margin-right: auto;">
+<div  style="width:15%;height:100%;background-color:;float:left;text-align:center;border:1px   ;" >
+<br>
+root@localhost~#
+</div>
+
+<input  value=""style="margin-top:1px;width:84%;height:90%;float:right;text-align:left;border:2px  solid:black  ;">
+
+
+
+</div >
+</div>
+<script type="text/javascript">
+	
+/**
+ * ajax获取bus_no_mac
+ */
+$(function () {
+	$.post("{:U('Analyse/select')}", {
+}, function(data, status) {
+	if (status == 4 || status == "success") {
+		var bus_info = eval(data);
+		var datas = "";
+		for (var i = 0; i < bus_info.length; i++) {
+			 
+			datas += "<label><input id='"+bus_info[i].id+"'name=de type=checkbox /><span style='font-size:11pt;'>'"+bus_info[i].value+"'</span> </label><br>";
+		}
+		$("div#left").html(datas);
+	}
+});
+}
+)
+    function reboot(){
+	var devArr=new Array();
+	var c=document.getElementsByName("de");
+	
+	for(var i=0;i<c.length;i++)
+	{
+		if(c[i].checked==true)
+		{
+			devArr[i]=c[i].id;
+			//salert("id"+devArr[i]);
+		   
+		}
+	}
+	$.ajax({
+		type:"post",
+		url:"",
+		data:devArr,
+			success:function(data1){
+				if(data1==1)
+					alert("重启成功");
+				else
+					alert("重启失败");
+			}
+	});
+	
+	
+} 
+    </script>  
+</body>
+</html>

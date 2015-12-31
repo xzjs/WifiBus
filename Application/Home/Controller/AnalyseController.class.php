@@ -15,11 +15,10 @@ use Think\Controller;
  */
 class AnalyseController extends Controller {
 	/**
-	 * mac查询time
+	 * busno查询time
 	 */
 	public function select_busno(){
 		$busno=I("post.busno");
-		//
 		$result = M()->query
 		("SELECT think_device.TIME,think_bus.no FROM think_device ,think_bus WHERE think_bus.no LIKE '%$busno'AND think_device.bus_id=think_bus.id ORDER BY TIME DESC
 				");
@@ -34,18 +33,19 @@ class AnalyseController extends Controller {
 	public function select_mac(){
 	$mac=I("post.mac");
 	//
-		$result = M()->query("SELECT think_device.TIME,think_bus.no FROM think_device ,think_bus WHERE think_device.mac='$mac' AND think_device.bus_id=think_bus.id ORDER BY TIME DESC");
-	$date=date('Y-m-d H:i:s',$result[0]['time']);
+		$result = M()->query("SELECT think_device.TIME,think_bus.no FROM think_device ,think_bus WHERE think_device.mac='2e:60:c5:ab:3d:0a'AND think_device.bus_id=think_bus.id ORDER BY TIME DESC");
+	
+		$date=date('Y-m-d H:i:s',$result[0]['time']);
 		
 		echo json_encode($date);
 	}
 	
 	/**
-	 * ssh查询车牌号mac
+	 * ssh查询失联车的车牌号和mac
 	 */
 	public function select(){
 		
-		$result = M()->query("SELECT b.id,b.no, d.mac FROM think_device AS d,think_bus AS b WHERE b.id=d.bus_id");
+		$result = M()->query("SELECT d.id,b.no, d.mac FROM think_device AS d,think_bus AS b WHERE b.id=d.bus_id and(UNIX_TIMESTAMP(NOW())-d.TIME) >30");
 		
 		for($i=0;$i<count($result);$i++){
 			$array[$i]=array(

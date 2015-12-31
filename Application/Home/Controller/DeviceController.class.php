@@ -322,5 +322,4 @@ class DeviceController extends Controller
     	
     }
     
-    
 }
