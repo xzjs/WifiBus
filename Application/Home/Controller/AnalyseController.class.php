@@ -14,6 +14,7 @@ use Think\Controller;
  * @package Home\Controller
  */
 class AnalyseController extends Controller {
+
 	/**
 	 * busno查询time
 	 */
@@ -23,25 +24,12 @@ class AnalyseController extends Controller {
 		("SELECT think_device.TIME,think_bus.no FROM think_device ,think_bus WHERE think_bus.no LIKE '%$busno'AND think_device.bus_id=think_bus.id ORDER BY TIME DESC
 				");
 		$date=date('Y-m-d H:i:s',$result[0]['time']);
-	
+
 		echo json_encode($date);
 	}
 	
 	/**
-	 * mac查询time
-	 */
-	public function select_mac(){
-	$mac=I("post.mac");
-	//
-		$result = M()->query("SELECT think_device.TIME,think_bus.no FROM think_device ,think_bus WHERE think_device.mac='2e:60:c5:ab:3d:0a'AND think_device.bus_id=think_bus.id ORDER BY TIME DESC");
-	
-		$date=date('Y-m-d H:i:s',$result[0]['time']);
-		
-		echo json_encode($date);
-	}
-	
-	/**
-	 * ssh查询失联车的车牌号和mac
+	 * ssh查询车牌号mac
 	 */
 	public function select(){
 		
