@@ -11,30 +11,31 @@ use Think\Controller;
 
 class CommandController extends Controller
 {
-/**
- * 查询失联设备
- * 返回mac,bus_id
- */
-public function  select_dead_devic(){
-	$de=D('Device');
-	$result=$de->where("(UNIX_TIMESTAMP(NOW())-TIME) >30")->select();
-	echo json_encode($result);
-	
-}
+    /**
+     * 查询失联设备
+     * 返回mac,bus_id
+     */
+    public function select_dead_devic()
+    {
+        $de = D('Device');
+        $result = $de->where("(UNIX_TIMESTAMP(NOW())-TIME) >30")->select();
+        echo json_encode($result);
+
+    }
 
     /**
      * 心跳接口
-     * @param $mac 设备mac
-     * @param $lon 经度
-     * @param $lat 纬度
-     * @param $online_num 在线人数
-     * @param $usage 使用率
-     * @param $flow_num 使用流量
+     * @param 设备mac|string $mac 设备mac
+     * @param 经度|int $lon 经度
+     * @param 纬度|int $lat 纬度
+     * @param 在线人数|int $online_num 在线人数
+     * @param 使用率|int $usage 使用率
+     * @param 使用流量|int $flow_num 使用流量
      * @param int|string $cmd 操作命令
      * @param int $arg 参数
-     * @throws 命令更新异常
+     * @throws
      */
-    public function ping($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd = 0, $arg = 0)
+    public function ping($mac='0e:60:11:ba:3d:0a', $lon=0, $lat=0, $online_num=0, $usage=0, $flow_num=0, $cmd = 0, $arg = 0)
     {
         $LogCtrl = A('Log');
         $LogCtrl->add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg);
@@ -45,27 +46,27 @@ public function  select_dead_devic(){
         if ($d) {
             $Device->useage = $usage;
             $Device->online_num = $online_num;
-            $flow_num=$flow_num<0?0:$flow_num;
-            $Device->flow_num = $flow_num+$d['flow_num'];
-            $DeviceCtrl=A('Device');
-            $FlowCtrl=A('Flow');
-            $FlowCtrl->update($flow_num,$DeviceCtrl->get_id($mac));
+            $flow_num = $flow_num < 0 ? 0 : $flow_num;
+            $Device->flow_num = $flow_num + $d['flow_num'];
+            $DeviceCtrl = A('Device');
+            $FlowCtrl = A('Flow');
+            $FlowCtrl->update($flow_num, $DeviceCtrl->get_id($mac));
             $Device->time = time();
             $Device->save();
             $Bus = D('Bus');
             $b = $Bus->find($d['bus_id']);
-            $LogModel=M('Log');
-            $log_condition['mac']=$mac;
-            $log_num=$LogModel->where($log_condition)->count();
-            if($log_num%150==0){
-                $this->add($d['id'],'Reboot');
+            $LogModel = M('Log');
+            $log_condition['mac'] = $mac;
+            $log_num = $LogModel->where($log_condition)->count();
+            if ($log_num % 150 == 0) {
+                $this->add($d['id'], 'Reboot');
             }
             if ($b) {
                 if ($lon * $lat) {
-                    $du=floor($lat/100);
-                    $new_lon=$du+($lat-$du*100)/60;
-                    $du=floor($lon/100);
-                    $new_lat=$du+($lon-$du*100)/60;
+                    $du = floor($lat / 100);
+                    $new_lon = $du + ($lat - $du * 100) / 60;
+                    $du = floor($lon / 100);
+                    $new_lat = $du + ($lon - $du * 100) / 60;
                     $Bus->position_x = $new_lon;
                     $Bus->position_y = $new_lat;
                     $Bus->save();
@@ -76,7 +77,7 @@ public function  select_dead_devic(){
                     'status' => 2,
                     'return_arg' => $arg
                 );
-                if(!$CommandModel->where("id=$cmd")->save($data_c)){
+                if (!$CommandModel->where("id=$cmd")->save($data_c)) {
                     throw exception;
                 }
             }

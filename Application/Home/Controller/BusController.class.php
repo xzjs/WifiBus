@@ -10,7 +10,7 @@ use Think\Controller;
  * @author xiuge
  *
  */
-class BusController extends BaseController
+class BusController extends Controller
 {
     /**
      * 更新bus车牌号

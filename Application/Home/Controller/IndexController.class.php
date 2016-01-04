@@ -110,4 +110,6 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
     	$chart['work']=$result['work'];
     	$this->ajaxReturn($chart);
     }
+
+   
 }
