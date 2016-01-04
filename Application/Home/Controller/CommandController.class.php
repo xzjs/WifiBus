@@ -25,17 +25,17 @@ class CommandController extends Controller
 
     /**
      * 心跳接口
-     * @param $mac 设备mac
-     * @param $lon 经度
-     * @param $lat 纬度
-     * @param $online_num 在线人数
-     * @param $usage 使用率
-     * @param $flow_num 使用流量
+     * @param 设备mac|string $mac 设备mac
+     * @param 经度|int $lon 经度
+     * @param 纬度|int $lat 纬度
+     * @param 在线人数|int $online_num 在线人数
+     * @param 使用率|int $usage 使用率
+     * @param 使用流量|int $flow_num 使用流量
      * @param int|string $cmd 操作命令
      * @param int $arg 参数
-     * @throws 命令更新异常
+     * @throws
      */
-    public function ping($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd = 0, $arg = 0)
+    public function ping($mac='0e:60:11:ba:3d:0a', $lon=0, $lat=0, $online_num=0, $usage=0, $flow_num=0, $cmd = 0, $arg = 0)
     {
         $LogCtrl = A('Log');
         $LogCtrl->add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg);
