@@ -241,7 +241,7 @@ $(function () {
         }, function (data, status) {
             if (status == 4 || status == "success") {
             	var chart_info = eval(data);
-            	var optionWork = workOption(chart_info.work,'{:U('Index/work')}'+"/f/work/line_id/"+id);
+            	var optionWork = workOption(chart_info.work,'{:U('Index/work')}'+"/f/work");
                 myChartWork.setOption(optionWork);
             }
         });

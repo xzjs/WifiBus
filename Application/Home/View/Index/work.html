@@ -2,6 +2,9 @@
     <div class="container_title">
         <div class="left">
             <ul>
+            	<li class="box_one">
+                    <a></a>
+                </li>
                 <li class="box_two">
                     <a></a>
                 </li>
@@ -9,6 +12,27 @@
         </div>
         <div id="main-work"></div>
         <div class="clr"></div>
+        
+        <div class="display">
+            <select id="line_selector" onchange="get_buses('{:U('Bus/select')}',this.value,'bus_no_selector')">
+                <volist name="line_list" id="vo" empty=" ">
+                    <option value={$vo.id}>{$vo.name}</option>
+                </volist>
+            </select>
+
+            <div class="search">
+                <p>
+                    <input type="text" id="search_keys"> <a><img
+                        src="__PUBLIC__/images/home_search.png" alt=""
+                        onclick="search_buses('{:U('Bus/select')}',$('#search_keys').val())"></a>
+                </p>
+            </div>
+            <ul class="select" id="bus_no_selector">
+                <volist name="bus_list" id="vo" empty=" ">
+                    <li><a href="#" onclick="bus_selected('{$vo.id}')">{$vo.no}</a></li>
+                </volist>
+            </ul>
+        </div>
        
         <div class="road_display">
             <div class="road_display">
@@ -16,7 +40,7 @@
 	                <ul>
 	                	<volist name="line_list" id="vo" empty=" ">
 	                  	  <li><a href="javascript:void(0);"
-	                           onclick="show_line('__CONTROLLER__/bus/str/{$vo.id}/flag/1','{$vo.name}','{$vo.id}')">{$vo.name}</a></li>
+	                           onclick="line_selected('{$vo.id}')">{$vo.name}</a></li>
 	                	</volist>
 	                </ul>
 	            </div>
@@ -196,46 +220,130 @@
     var num = '{$num}';
     var optionWork;
     
-    switch (f) {
-        case 'work':
-            optionWork = workOption(num);
-            break;
-        case 'online':
-                optionWork=onlineOption(num);
-            break;
-        case 'flow':
-                optionWork=flowOption(num);
-            break;
-        case 'ad':
-                optionWork=adOption(num);
-            break;
-        default :
-            break;
+    line_selected(0);
+    
+    /**
+     * 获取该线路信息
+     * @param str：线路Id
+     */
+    function line_selected(line_id){
+    	switch (f) {
+	        case 'work':
+	            get_work_info(line_id);
+	            optionWork=workOption(num);
+	            break;
+	        case 'online':
+	               //optionWork=onlineOption(num);
+	            break;
+	        case 'flow':
+	            get_flow_info('line',line_id);
+	            break;
+	        case 'ad':
+	                //optionWork=adOption(num);
+	            break;
+	        default :
+	            break;
+    	}
+    	myChartWork.setOption(optionWork);
     }
-    myChartWork.setOption(optionWork);
     
-    
-    
-    function changeNum(line_id) {
+    function bus_selected(bus_id){
     	
-        //var num = ;
-        switch (f) {
-            case 'work':
-                optionWork = workOption(num);
-                break;
-            case 'online':
-                    optionWork=onlineOption(num);
-                break;
-            case 'flow':
-                    optionWork=flowOption(num);
-                break;
-            case 'ad':
-                    optionWork=adOption(num);
-                break;
-            default :
-                break;
-        }
-        myChartWork.setOption(optionWork);
+    	switch (f) {
+	        case 'work':
+	        	
+	            break;
+	        case 'online':
+	                //optionWork=onlineOption(num);
+	            break;
+	        case 'flow':
+	        	get_flow_info('line',line_id);
+	            break;
+	        case 'ad':
+	                //optionWork=adOption(num);
+	            break;
+	        default :
+	            break;
+	    }
+	    myChartWork.setOption(optionWork);
+    }
+    
+    /**
+     * 显示某线路上的车辆的车牌号列表
+     * @param str：线路Id
+     */
+    function get_buses(url,id,display) {
+
+    	$.post(url, {
+    		is_getbuslist : 1,
+    		line_id : id
+    	}, function(data, status) {
+
+    		if (status == 4 || status == "success") {
+    			var bus_info = eval(data);
+    			var bus_list = "";
+    			//alert("d");
+    			for (var i = 0; i < bus_info.length; i++) {
+    				                                            
+    				bus_list += "<li>" +
+    						"<a href='#' onclick=line_selected("+bus_info[i].id+")>"+ bus_info[i].no + "</a>"
+    						+"</li>";
+    			}
+    			//alert(bus_list);
+    			$("ul#"+display).html(bus_list);
+    		
+    		}
+    	});
+    }
+    
+    /**
+     * 根据车牌号搜索车辆
+     * 
+     * @param str：搜索关键字
+     */
+    function search_buses(url,keys) {
+    	
+    	$.post(url, {
+    		is_getbuslist : 1,
+    		search_keys : keys
+    	}, function(data, status) {
+    		
+    		if (status == 4 || status == "success") {
+    			var bus_info = eval(data);
+    			var bus_list = "";
+    			
+    			for (var i = 0; i < bus_info.length; i++) {
+    				bus_list += "<li>" +
+    				"<a href='#' onclick=bus_selected("+bus_info[i].id+")>"+ bus_info[i].no + "</a>"
+    				+"</li>";
+    				}
+    			
+    			$("ul#bus_no_selector").html(bus_list);
+    		}
+    	});
+    }
+    
+    function get_work_info(line_id){
+    	/* $.post(url, {
+    		is_getbuslist : 1,
+    		line_id : id
+    	}, function(data, status) {
+
+    		if (status == 4 || status == "success") {
+    			var bus_info = eval(data);
+    			var bus_list = "";
+    			//alert("d");
+    			for (var i = 0; i < bus_info.length; i++) {
+    				                                            
+    				bus_list += "<li>" +
+    						"<a href='#' onclick=line_selected("+bus_info[i].id+")>"+ bus_info[i].no + "</a>"
+    						+"</li>";
+    			}
+    			//alert(bus_list);
+    			$("ul#"+display).html(bus_list);
+    		
+    		}
+    	}); */
     }
     
 </script>

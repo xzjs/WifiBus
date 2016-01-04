@@ -85,7 +85,11 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
     	$Line = A ( 'Line' );
     	$data = $Line->getLineList ();
     	$this->assign ( 'line_list', $data );
+    	$Bus=A('Bus');
+    	$data = $Bus->select(0,$data[0][id],'',0);
+    	$this->assign ( 'bus_list', $data );
         $this->assign('f',$f);
+        
         $device=A('Device');
         $num=$device->get_device_state($line_id);
         
