@@ -11,16 +11,17 @@ use Think\Controller;
 
 class CommandController extends Controller
 {
-/**
- * 查询失联设备
- * 返回mac,bus_id
- */
-public function  select_dead_devic(){
-	$de=D('Device');
-	$result=$de->where("(UNIX_TIMESTAMP(NOW())-TIME) >30")->select();
-	echo json_encode($result);
-	
-}
+    /**
+     * 查询失联设备
+     * 返回mac,bus_id
+     */
+    public function select_dead_devic()
+    {
+        $de = D('Device');
+        $result = $de->where("(UNIX_TIMESTAMP(NOW())-TIME) >30")->select();
+        echo json_encode($result);
+
+    }
 
     /**
      * 心跳接口
@@ -45,27 +46,27 @@ public function  select_dead_devic(){
         if ($d) {
             $Device->useage = $usage;
             $Device->online_num = $online_num;
-            $flow_num=$flow_num<0?0:$flow_num;
-            $Device->flow_num = $flow_num+$d['flow_num'];
-            $DeviceCtrl=A('Device');
-            $FlowCtrl=A('Flow');
-            $FlowCtrl->update($flow_num,$DeviceCtrl->get_id($mac));
+            $flow_num = $flow_num < 0 ? 0 : $flow_num;
+            $Device->flow_num = $flow_num + $d['flow_num'];
+            $DeviceCtrl = A('Device');
+            $FlowCtrl = A('Flow');
+            $FlowCtrl->update($flow_num, $DeviceCtrl->get_id($mac));
             $Device->time = time();
             $Device->save();
             $Bus = D('Bus');
             $b = $Bus->find($d['bus_id']);
-            $LogModel=M('Log');
-            $log_condition['mac']=$mac;
-            $log_num=$LogModel->where($log_condition)->count();
-            if($log_num%150==0){
-                $this->add($d['id'],'Reboot');
+            $LogModel = M('Log');
+            $log_condition['mac'] = $mac;
+            $log_num = $LogModel->where($log_condition)->count();
+            if ($log_num % 150 == 0) {
+                $this->add($d['id'], 'Reboot');
             }
             if ($b) {
                 if ($lon * $lat) {
-                    $du=floor($lat/100);
-                    $new_lon=$du+($lat-$du*100)/60;
-                    $du=floor($lon/100);
-                    $new_lat=$du+($lon-$du*100)/60;
+                    $du = floor($lat / 100);
+                    $new_lon = $du + ($lat - $du * 100) / 60;
+                    $du = floor($lon / 100);
+                    $new_lat = $du + ($lon - $du * 100) / 60;
                     $Bus->position_x = $new_lon;
                     $Bus->position_y = $new_lat;
                     $Bus->save();
@@ -76,7 +77,7 @@ public function  select_dead_devic(){
                     'status' => 2,
                     'return_arg' => $arg
                 );
-                if(!$CommandModel->where("id=$cmd")->save($data_c)){
+                if (!$CommandModel->where("id=$cmd")->save($data_c)) {
                     throw exception;
                 }
             }

@@ -41,4 +41,8 @@ class LogController extends BaseController
             $LogModel->add($data);
         }
     }
+
+    public function clean(){
+
+    }
 }

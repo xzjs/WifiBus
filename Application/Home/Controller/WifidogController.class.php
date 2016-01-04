@@ -13,7 +13,7 @@ use Think\Controller;
  * Wifidog控制器
  * @package Home\Controller
  */
-class WifidogController extends BaseController
+class WifidogController extends Controller
 {
     public function login($gw_port=2060,$gw_address='192.168.18.1',$gw_id='0e:60:55:f3:3d:0a',$mac='假的'){
         $WifidoglogModel=M('Wifidoglog');

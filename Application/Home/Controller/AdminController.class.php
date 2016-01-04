@@ -8,7 +8,6 @@
 
 namespace Home\Controller;
 
-use Org\MyClass\Admin;
 use Think\Controller;
 use Think\Exception;
 
