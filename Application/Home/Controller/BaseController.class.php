@@ -40,4 +40,14 @@ class BaseController extends Controller
         $info = $upload->upload();
         return $info ['file'] ['savename'];
     }
+
+    /**
+     * 父类构造函数
+     */
+    public function __construct(){
+        parent::__construct();
+        if(!$_SESSION['admin']){
+            $this->error('请先登录',U('Admin/login'));
+        }
+    }
 }
