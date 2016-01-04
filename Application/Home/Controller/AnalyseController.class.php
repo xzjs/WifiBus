@@ -38,7 +38,7 @@ class AnalyseController extends Controller {
 		for($i=0;$i<count($result);$i++){
 			$array[$i]=array(
 					'id'=>$result[$i]['id'],
-					'value'=>$result[$i]['no'].";".$result[$i]['mac'],
+					'value'=> $result[$i]['no'].";".$result[$i]['mac'],
 			);
 		}
 		echo json_encode($array);

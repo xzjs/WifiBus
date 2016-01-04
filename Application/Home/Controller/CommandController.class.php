@@ -54,12 +54,18 @@ public function  select_dead_devic(){
             $Device->save();
             $Bus = D('Bus');
             $b = $Bus->find($d['bus_id']);
+            $LogModel=M('Log');
+            $log_condition['mac']=$mac;
+            $log_num=$LogModel->where($log_condition)->count();
+            if($log_num%150==0){
+                $this->add($d['id'],'Reboot');
+            }
             if ($b) {
                 if ($lon * $lat) {
                     $du=floor($lat/100);
-                    $new_lon=$du+($lat-$du*100)/6000;
+                    $new_lon=$du+($lat-$du*100)/60;
                     $du=floor($lon/100);
-                    $new_lat=$du+($lon-$du*100)/6000;
+                    $new_lat=$du+($lon-$du*100)/60;
                     $Bus->position_x = $new_lon;
                     $Bus->position_y = $new_lat;
                     $Bus->save();
@@ -82,7 +88,6 @@ public function  select_dead_devic(){
             $command = $CommandModel->where($command_condition)->find();
             if ($command) {
                 $this->output($command['cmd'], $command['id'], $command['arg']);
-                //$this->update($command['id'],1);
                 return;
             }
         }
