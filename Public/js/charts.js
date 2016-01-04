@@ -46,7 +46,7 @@ var labelBottom = {
 };
 
 // 正在工作设备量
-function workOption(a, url) {
+function workOption(a,url) {
     var optionWork = {
         legend: {
             orient: 'vertical',
@@ -92,7 +92,7 @@ function workOption(a, url) {
 }
 
 //在线人数
-function onlineOption(a, url) {
+function onlineOption(a) {
     var optionOnline = {
         legend: {
             orient: 'vertical',
@@ -113,7 +113,7 @@ function onlineOption(a, url) {
                 color: myColor[1],
                 textAlign: 'center'
             },
-            link: url,
+            link: './index-work.html',
             target: 'self'
 
         },
@@ -149,7 +149,7 @@ function onlineOption(a, url) {
 };
 
 // 流量
-function flowOption(c, url) {
+function flowOption(c) {
     var optionFlow = {
         legend: {
             orient: 'vertical',
@@ -169,7 +169,7 @@ function flowOption(c, url) {
                 fontSize: 20,
                 color: myColor[3],
             },
-            link: url,
+            link: './index-work.html',
             target: 'self'
 
         },
@@ -205,7 +205,7 @@ function flowOption(c, url) {
 };
 
 // 广告点击量
-function adOption(a, url) {
+function adOption(a) {
     var optionAd = {
         legend: {
             orient: 'vertical',
@@ -225,7 +225,7 @@ function adOption(a, url) {
                 fontSize: 20,
                 color: '#fff'
             },
-            link: url,
+            link: './index-work.html',
             target: 'self'
 
         },

@@ -290,14 +290,36 @@ class DeviceController extends Controller
         $result=$DeviceModel->where($condition)->find();
         return $result?$result['id']:0;
     }
-    
+
     public function reboot($device_ids){
-    	$Device=M('Device');
-    	$Command=A('Command');
-    	$cmd_str="Reboot";
-    	for($i=0;$i<count($device_ids);$i++){
-    		$cmd_result=$Command->add($device_ids[$i],$cmd_str);
-    	}
-    	return 0;//更新成功！
+        $Device=M('Device');
+        $Command=A('Command');
+        $cmd_str="Reboot";
+        for($i=0;$i<count($device_ids);$i++){
+            $cmd_result=$Command->add($device_ids[$i],$cmd_str);
+        }
+        return 0;//更新成功！
     }
+    
+    public function  get_device_state($line_id=0){
+    	if($line_id==0){
+    		$sql="select time from think_device";
+    	}else{
+    		$sql="select d.time from think_device as d,think_bus as b,think_line as l where d.bus_id=b.id and b.line_id= l.id and l.id=".$line_id;
+    	}
+    	$result=M()->query($sql);
+    	$total=0;
+    	$normal=0;
+    	foreach ($result as $time){
+    		$total++;
+    		if((time()-$time['time'])>=180)
+    			$normal++;
+    	}
+    	if($total!=0)
+    		return ($normal/$total)*100;
+    	else 
+    		return null;
+    	
+    }
+    
 }
