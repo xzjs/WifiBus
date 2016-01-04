@@ -302,23 +302,34 @@ class DeviceController extends Controller
     }
     
     public function  get_device_state($line_id=0){
+    	$work_info=array();
+    	$working=array();
+    	$unworking=array();
     	if($line_id==0){
-    		$sql="select time from think_device";
+    		$sql="select d.time as time,b.no as bus_no from think_device as d,think_bus as b,think_line as l where d.bus_id=b.id and b.line_id= l.id";
     	}else{
-    		$sql="select d.time from think_device as d,think_bus as b,think_line as l where d.bus_id=b.id and b.line_id= l.id and l.id=".$line_id;
+    		$sql="select d.time as time,b.no as bus_no from think_device as d,think_bus as b,think_line as l where d.bus_id=b.id and b.line_id= l.id and l.id=".$line_id;
     	}
     	$result=M()->query($sql);
     	$total=0;
     	$normal=0;
-    	foreach ($result as $time){
+    	foreach ($result as $bus){
     		$total++;
-    		if((time()-$time['time'])>=180)
+    		if((time()-$bus['time'])<=180){
     			$normal++;
+    			array_push($working, $bus['bus_no']);
+    		}else{
+    			array_push($unworking, $bus['bus_no']);
+    		}
     	}
-    	if($total!=0)
-    		return ($normal/$total)*100;
+    	if($total!=0){
+    		$work_info['work'] = ($normal/$total)*100;
+    		$work_info['working'] = $working;
+    		$work_info['unworking'] = $unworking;
+    	}
     	else 
-    		return null;
+    		$work_info['work'] = 0;
+    	return $work_info;
     	
     }
     

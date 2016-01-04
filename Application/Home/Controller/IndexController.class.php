@@ -94,13 +94,20 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
         $num=$device->get_device_state($line_id);
         
         
-        $this->assign('num',$num);
+        $this->assign('num',$num['work']);
         $this->show();
     }
     
     public function get_char_info() {
     	$device=A('Device');
-    	$char_info['work']=$device->get_device_state(I('param.line_id'));
-    	$this->ajaxReturn($char_info);
+    	$result=$device->get_device_state(I('param.line_id'));
+    	$this->ajaxReturn($result);
+    }
+    
+    public function get_char() {
+    	$device=A('Device');
+    	$result=$device->get_device_state(I('param.line_id'));
+    	$chart['work']=$result['work'];
+    	$this->ajaxReturn($chart);
     }
 }
