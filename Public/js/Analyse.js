@@ -77,7 +77,7 @@ function get_flow(line_id,bus_id){
 			var numList=new Array();
 			for (var i = 0; i < adInfo.length; i++) {
 				timeList[i]=adInfo[i].time;
-				numList[i]=adInfo[i].num/1024;
+				 numList[i]=adInfo[i].num/1024;
 			}
 		//	alert(numList);
 		    var adMainFlow = adMainFlowFunction(timeList,numList);
