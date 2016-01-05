@@ -235,42 +235,30 @@ $(function () {
         enableMessage: true//设置允许信息窗发送短息
     };
 
-    function chart() {
-    	var id=line_id;
-    	$.post("get_char", {
-            line_id:id,
-        }, function (data, status) {
-            if (status == 4 || status == "success") {
-            	var chart_info = eval(data);
-            	var optionWork = workOption(chart_info.work,'{:U('Index/work')}'+"/f/work");
-                myChartWork.setOption(optionWork);
-            }
-        });
-    	
-        // 正在工作设备量
-        var num = Math.random();
-        "__CONTROLLER__/work/f/work/num/" + a
-        num = 0.5 - num;
-
-
-
-
-        //在线人数
-        b += num;
-        var optionOnline = onlineOption(b);
-        // 流量
-        c += 0.01;
-        if(c>85){
-            c=30;
+function chart() {
+    var id=line_id;
+    $.post("get_char", {
+        line_id:id,
+    }, function (data, status) {
+        if (status == 4 || status == "success") {
+            var chart_info = eval(data);
+            var optionWork = workOption(chart_info.work,'{:U('Index/work')}'+"/f/work");
+            var optionFlow = flowOption(chart_info.flow);
+            var optionOnline = onlineOption(chart_info.terminal);
+            myChartWork.setOption(optionWork);
+            myChartFlow.setOption(optionFlow);
+            myChartOnline.setOption(optionOnline);
         }
-        var optionFlow = flowOption(c);
-        // 广告点击量
-        d += num;
-        var optionAd = adOption(d);
-        myChartOnline.setOption(optionOnline);
-        myChartFlow.setOption(optionFlow);
-        myChartAd.setOption(optionAd);
-    }
+    });
+
+    // 正在工作设备量
+    var num = Math.random();
+    "__CONTROLLER__/work/f/work/num/" + a
+    num = 0.5 - num;
+    d += num;
+    var optionAd = adOption(d);
+    myChartAd.setOption(optionAd);
+}
    
    
 
