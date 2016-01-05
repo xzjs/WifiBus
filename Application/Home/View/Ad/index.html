@@ -19,17 +19,17 @@
                 <form action="form">
                     <input type="text">
                     <input type="submit" value="搜索">
-
                     <div class="clr"></div>
                 </form>
                 <ul>
-                    <volist name="line_list" id="vo" empty=" " key="k">
-                        <if condition="($k eq 1)">
+                <volist name="line_list" id="vo" empty=" " key="k">
+                <if condition="($k eq 1)">
 
-                            <li class="showTemp"
-                                onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
-                                <input type="checkbox" name="roadLine" value={$vo.id} class="line_array">
-                                <a>{$vo.name}</a></li>
+                <li class="showTemp"
+                    onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
+                <input type="checkbox" name="roadLine" value={$vo.id} class="line_array">
+
+                    <a>{$vo.name}</a></li>
 
                             <else/>
 

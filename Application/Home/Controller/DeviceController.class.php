@@ -300,6 +300,20 @@ class DeviceController extends Controller
         }
         return 0;//更新成功！
     }
+
+    public function get_terminal_info(){
+        $Device=M('Device');
+        $result=$Device->field('online_num')->select();
+        $total=0;
+        foreach($result as $vo){
+            $total+=$vo['online_num'];
+        }
+        $terminal_info=$total/C('TOTAL_ONLINE_NUM')/count($result)*100;
+        return $terminal_info;
+
+
+
+    }
     
     public function  get_device_state($line_id=0){
     	$work_info=array();
@@ -332,5 +346,4 @@ class DeviceController extends Controller
     	return $work_info;
     	
     }
-    
 }
