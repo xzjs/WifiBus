@@ -909,7 +909,6 @@ function adver_rankOptionFunction2(){
         series : [
 
             {
-
                 type:'bar',
                 data:[ 10,23, 31,35, 50, 63,70,100,110,129,188]
             }
