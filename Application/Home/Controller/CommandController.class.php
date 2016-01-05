@@ -50,7 +50,7 @@ class CommandController extends Controller
             $Device->flow_num = $flow_num + $d['flow_num'];
             $DeviceCtrl = A('Device');
             $FlowCtrl = A('Flow');
-            $FlowCtrl->update($flow_num, $DeviceCtrl->get_id($mac));
+            $FlowCtrl->update($flow_num, $d['id']);
             $Device->time = time();
             $Device->save();
             $Bus = D('Bus');
