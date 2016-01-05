@@ -2,7 +2,7 @@
 namespace Home\Controller;
 use Think\Controller;
 class IndexController extends Controller {
-	
+
     public function index(){
         /*if(!isset($_SESSION['admin'])){
             $this->error('请先登录',U('Admin/login'));
@@ -17,7 +17,7 @@ class IndexController extends Controller {
     	$this->assign ( 'bus_list', $data );
     	$this->display ();
     }
-    
+
     public function bus($str,$flag){
     	if ($flag==0)$sql="SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.position_y,think_bus.no,think_device.online_num,think_device.flow_num,think_device.useage
  FROM think_device,think_bus
@@ -47,7 +47,7 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
     		);
     	}
     	echo json_encode($array);
-       
+
     }
 
     public function all(){
@@ -72,7 +72,7 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
     		);
     	}
     	echo json_encode($array);
-      	
+
     }
 
     /**
@@ -89,27 +89,29 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
     	$data = $Bus->select(0,$data[0][id],'',0);
     	$this->assign ( 'bus_list', $data );
         $this->assign('f',$f);
-        
+
         $device=A('Device');
         $num=$device->get_device_state($line_id);
-        
-        
+
+
         $this->assign('num',$num['work']);
         $this->show();
     }
-    
+
     public function get_char_info() {
     	$device=A('Device');
     	$result=$device->get_device_state(I('param.line_id'));
     	$this->ajaxReturn($result);
     }
-    
+
     public function get_char() {
     	$device=A('Device');
-    	$result=$device->get_device_state(I('param.line_id'));
-    	$chart['work']=$result['work'];
+    	$result1=$device->get_device_state(I('param.line_id'));
+    	$chart['work']=$result1['work'];
+		$flow=A('Flow');
+		$chart['flow']=$flow->get_flow_info();
+		$terminal=$device->get_terminal_info();
+		$chart['terminal']=$terminal;
     	$this->ajaxReturn($chart);
     }
-
-   
 }

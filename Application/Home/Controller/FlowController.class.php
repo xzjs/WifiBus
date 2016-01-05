@@ -43,4 +43,15 @@ class FlowController extends BaseController{
         }
         return false;
     }
+
+    public function get_flow_info(){
+        $FlowModel=M('Flow');
+        $result=$FlowModel->field('device_id,sum(num) as num')->group('device_id')->select();
+        $used_flow=0;
+        foreach($result as $vo){
+            $used_flow+=$vo['num']%(C('TOTAL_FLOW'))*100;
+        }
+        $flow_info=$used_flow/(C('TOTAL_FLOW')*count($result));
+        return $flow_info;
+    }
 }

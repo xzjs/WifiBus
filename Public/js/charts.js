@@ -123,12 +123,12 @@ function onlineOption(a,url) {
             radius: ['50%', '70%'],
             itemStyle: labelFromatter,
             data: [{
-                value: a,
+                value: (100-a),
                 name: '已经认证人数',
                 itemStyle: labelBottom
 
             }, {
-                value: (100 - a),
+                value: a,
                 name: '当前在线总人数',
                 itemStyle: {
                     normal: {
