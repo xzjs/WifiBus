@@ -9,7 +9,7 @@ namespace Home\Controller;
 
 use Think\Controller;
 
-class LogController extends BaseController
+class LogController extends Controller
 {
 
     /**
@@ -25,24 +25,23 @@ class LogController extends BaseController
      */
     public function add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg)
     {
-        if ($lon * $lat) {
-            $LogModel = M('Log');
-            $data = array(
-                'mac' => $mac,
-                'lon' => $lon,
-                'lat' => $lat,
-                'online_num' => $online_num,
-                'usage' => $usage,
-                'flow_num' => $flow_num,
-                'cmd' => $cmd,
-                'arg' => $arg,
-                'time' => time()
-            );
-            $LogModel->add($data);
+        $LogModel = M('Log');
+        $data = array(
+            'mac' => $mac,
+            'lon' => $lon,
+            'lat' => $lat,
+            'online_num' => $online_num,
+            'usage' => $usage,
+            'flow_num' => $flow_num,
+            'cmd' => $cmd,
+            'arg' => $arg,
+            'time' => time()
+        );
+        $LogModel->add($data);
+        $num=$LogModel->count();
+        if($num>200000){
+            $condition['id']=array('LT',$num-100000);
+            $LogModel->where($condition)->delete();
         }
-    }
-
-    public function clean(){
-
     }
 }
