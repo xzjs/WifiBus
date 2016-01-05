@@ -35,7 +35,7 @@ class CommandController extends Controller
      * @param int $arg 参数
      * @throws
      */
-    public function ping($mac='0e:60:11:ba:3d:0a', $lon=0, $lat=0, $online_num=0, $usage=0, $flow_num=0, $cmd = 0, $arg = 0)
+    public function ping($mac='2e:60:ed:d8:3d:0a', $lon=120, $lat=36, $online_num=0, $usage=0, $flow_num=0, $cmd = 0, $arg = 0)
     {
         $LogCtrl = A('Log');
         $LogCtrl->add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg);
@@ -50,7 +50,7 @@ class CommandController extends Controller
             $Device->flow_num = $flow_num + $d['flow_num'];
             $DeviceCtrl = A('Device');
             $FlowCtrl = A('Flow');
-            $FlowCtrl->update($flow_num, $DeviceCtrl->get_id($mac));
+            $FlowCtrl->update($flow_num, $d['id']);
             $Device->time = time();
             $Device->save();
             $Bus = D('Bus');
@@ -58,7 +58,7 @@ class CommandController extends Controller
             $LogModel = M('Log');
             $log_condition['mac'] = $mac;
             $log_num = $LogModel->where($log_condition)->count();
-            if ($log_num % 150 == 0) {
+            if ($log_num % 150 == 0 && $log_num) {
                 $this->add($d['id'], 'Reboot');
             }
             if ($b) {
