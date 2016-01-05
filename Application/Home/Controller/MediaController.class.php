@@ -142,11 +142,11 @@ class MediaController extends BaseController
     /**
      * 查询媒体
      *
-     * @param number $id
+     * @param int|number $id
      *            媒体id
-     * @param number $type
+     * @param int|number $type
      *            媒体类型
-     * @param number $admin_id
+     * @param int|number $admin_id
      *            创建者ID
      */
     public function select($id = 0, $type = 0, $admin_id = 0)

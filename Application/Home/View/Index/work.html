@@ -47,18 +47,18 @@
         	</div>
             <div class="hide_details hideTemp">
                 <div class="road_details">
-                    <h1 >1路上设备正在工作的车辆</h1>
+                    <h1 id="unworking_title"></h1>
 
                     <div></div>
-                    <ul id="working_list">
+                    <ul id="unworking_list">
                         
                     </ul>
                 </div>
                 <div class="bus_details">
-                    <h1>1路上设备正在工作的车辆</h1>
+                    <h1 id="working_title"></h1>
 
                     <div></div>
-                    <ul id="unworking_list">
+                    <ul id="working_list">
                         
                     </ul>
                 </div>
@@ -103,8 +103,8 @@
         }, function (data, status) {
             if (status == 4 || status == "success") {
             	var chart_info = eval(data);
-            	//$('div.road_details').html("<h1>正常工作的车辆</h1>");
-            	//$('div.bus_details').html("<h1>不正常工作的车辆</h1>");
+            	$('h1#working_title').text("正常工作的车辆");
+            	$('h1#unworking_title').text("不正常工作的车辆");
             	var working_html="";
             	for(var i=0;i<chart_info.working.length;i++){
             		working_html+="<li><a href='#'>"+chart_info.working[i]+"</a></li>";
