@@ -410,7 +410,7 @@ function adMainFlowFunction(date1,date2) {
         yAxis: [{
             type: 'value',
             axisLabel: {
-                formatter: '{value}',
+                formatter: '{value}M',
                 textStyle: {
                     fontFamily: 'Microsoft YaHei, sans-serif',
                     fontSize: 14,
