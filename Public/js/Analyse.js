@@ -21,7 +21,9 @@ function getAdInfo_bus(bus_id){
 	get_ad_click(0,bus_id);
 	get_flow(0,bus_id);
 	get_online_num(0,bus_id);
+
 	get_back(0,bus_id);
+	
 }
 function get_back(line_id,bus_id){
 	$.ajax({
@@ -43,11 +45,14 @@ function get_back(line_id,bus_id){
 	});
 }
 function get_online_num(line_id,bus_id){
+	//alert("bid"+bus_id);
+	//alert("lid"+line_id);
 	$.ajax({
 		type : "POST",
 		url : "../Analyse/get_online_num" ,
 		data:{line_id:line_id,bus_id:bus_id},
 		success : function(data) {
+		//	alert("ff");
 			adInfo = eval(data);
 			 var timeList=new Array();
 			var numList=new Array();
@@ -55,7 +60,7 @@ function get_online_num(line_id,bus_id){
 				timeList[i]=adInfo[i].time;
 				numList[i]=adInfo[i].num;
 			}
-		//	alert(timeList);
+			
 		        var adMainCustomer = adMainCustomerFunction(timeList,numList);
 		    myChartCustomerTime.setOption(adMainCustomer);
 		}
