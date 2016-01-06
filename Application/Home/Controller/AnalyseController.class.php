@@ -204,6 +204,19 @@ class AnalyseController extends Controller {
 	public function adver_rank() {
 		$this->assign('title','广告和流量分析');
 		$this->assign('class2','action');
+		$yestoday=strtotime("-24hours");
+		$sql="SELECT COUNT(l.id) AS num,b.no FROM think_log AS l,think_device AS d,think_bus AS b WHERE b.id=d.bus_id AND d.mac=l.mac AND l.time>".$yestoday." GROUP BY l.mac ORDER BY num DESC";
+		$result=M()->query($sql);
+		$max=$result[0]['num'];
+		for($i=0;$i<count($result);$i++){
+			$breakdown[$i]['no']=$result[$i]['no'];
+			$breakdown[$i]['breakdown']=($max-$result[$i]['num'])/$max;
+		}
+
+
+
+
+
 		$this->display ();
 	}
 	/**
