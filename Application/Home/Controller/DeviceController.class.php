@@ -329,7 +329,7 @@ class DeviceController extends Controller
     	}else{
     		$sql="select d.time as time,b.no as bus_no from think_device as d,think_bus as b,think_line as l where d.bus_id=b.id and b.line_id= l.id and l.id=".$line_id;
     	}
-    	$result=M()->query($sql);
+    	$result=M()->query($sql);    
     	$total=0;
     	$normal=0;
     	foreach ($result as $bus){
