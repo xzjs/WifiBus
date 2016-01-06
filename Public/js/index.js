@@ -238,7 +238,7 @@ $(document).ready(function() {
 					checkedLineArr[i] = lineList[i].checked;
 			}
 			checkedIdList.splice(0,checkedIdList.length);
-			$.post('/wifibus/index.php/Home/Bus/select', {
+			$.post('/WifiBus/index.php/Home/Bus/select', {
 				is_getbuslist:2,
 			}, function(data, status) {
 				if (status == 4 || status == "success") {
