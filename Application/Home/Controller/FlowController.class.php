@@ -44,6 +44,10 @@ class FlowController extends BaseController{
         return false;
     }
 
+    /**
+     * 获取流量使用率
+     * @return float 流量使用率
+     */
     public function get_flow_info(){
         $FlowModel=M('Flow');
         $result=$FlowModel->field('device_id,sum(num) as num')->group('device_id')->select();

@@ -72,12 +72,21 @@ class RemoteupdateController extends BaseController {
 	 * @param unknown $count
 	 */
 	public function get_position_info($result,$count) {
-		
+		if(GetHostByName($_SERVER['SERVER_NAME'])=="127.0.0.1"){
+			$ip=GetHostByName($_SERVER['SERVER_NAME']);
+		}elseif(GetHostByName($_SERVER['SERVER_NAME'])=="192.168.4.96"){
+			$ip=GetHostByName($_SERVER['SERVER_NAME']).":48093";
+		}elseif(GetHostByName($_SERVER['SERVER_NAME'])=="192.168.4.97"){
+			$ip=GetHostByName($_SERVER['SERVER_NAME']).":48082";
+		}
+
+
+
 		if($count==1){
 			if($result[0]['url'])
-				$result[0]['url']='http://'.GetHostByName($_SERVER['SERVER_NAME']).'/WifiBus/Update/'.$result[0]['url'];
+				$result[0]['url']='http://'.$ip.'/WifiBus/Update/'.$result[0]['url'];
 			if($result[0]['img'])
-				$result[0]['img']='http://'.GetHostByName($_SERVER['SERVER_NAME']).'/WifiBus/Update/'.$result[0]['img'];
+				$result[0]['img']='http://'.$ip.'/WifiBus/Update/'.$result[0]['img'];
 			return $result[0];
 		}else if(count($result)!=$count){
 			return null;
@@ -94,9 +103,9 @@ class RemoteupdateController extends BaseController {
 				return null;
 			else{
 				if($result[0]['url'])
-					$result[0]['url']='http://'.GetHostByName($_SERVER['SERVER_NAME']).'/WifiBus/Update/'.$result[0]['url'];
+					$result[0]['url']='http://'.$ip.'/WifiBus/Update/'.$result[0]['url'];
 				if($result[0]['img'])
-					$result[0]['img']='http://'.GetHostByName($_SERVER['SERVER_NAME']).'/WifiBus/Update/'.$result[0]['img'];
+					$result[0]['img']='http://'.$ip.'/WifiBus/Update/'.$result[0]['img'];
 				return $result[0];
 			}
 		}

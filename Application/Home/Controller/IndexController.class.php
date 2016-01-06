@@ -98,12 +98,18 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
         $this->show();
     }
 
+	/**
+	 * 获取正常工作和不正常工作列表
+	 */
     public function get_char_info() {
     	$device=A('Device');
     	$result=$device->get_device_state(I('param.line_id'));
     	$this->ajaxReturn($result);
     }
 
+	/**
+	 * 获取首页三个表的数据
+	 */
     public function get_char() {
     	$device=A('Device');
     	$result1=$device->get_device_state(I('param.line_id'));

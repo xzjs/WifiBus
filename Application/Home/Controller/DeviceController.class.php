@@ -301,6 +301,10 @@ class DeviceController extends Controller
         return 0;//更新成功！
     }
 
+    /**
+     * 获取链接设备的终端数量
+     * @return float
+     */
     public function get_terminal_info(){
         $Device=M('Device');
         $result=$Device->field('online_num')->select();
@@ -310,11 +314,12 @@ class DeviceController extends Controller
         }
         $terminal_info=$total/C('TOTAL_ONLINE_NUM')/count($result)*100;
         return $terminal_info;
-
-
-
     }
-    
+
+    /**
+     * @param int $line_id 线路ID
+     * @return array 正常工作和不正常工作设备列表
+     */
     public function  get_device_state($line_id=0){
     	$work_info=array();
     	$working=array();
@@ -324,7 +329,7 @@ class DeviceController extends Controller
     	}else{
     		$sql="select d.time as time,b.no as bus_no from think_device as d,think_bus as b,think_line as l where d.bus_id=b.id and b.line_id= l.id and l.id=".$line_id;
     	}
-    	$result=M()->query($sql);
+    	$result=M()->query($sql);    
     	$total=0;
     	$normal=0;
     	foreach ($result as $bus){
