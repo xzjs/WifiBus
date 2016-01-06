@@ -14,7 +14,43 @@ use Think\Controller;
  * @package Home\Controller
  */
 class AnalyseController extends Controller {
-
+/**分析页面获取前十上网用户
+ * 
+ */
+	public function fenxi_get_on_line(){
+	 $result=M()->query("SELECT TIME FROM think_wifidoglog WHERE TIME>UNIX_TIMESTAMP( CURDATE())
+				");
+		$array=array();
+		$num;
+		$now = strtotime ( "now " );
+		$now_h = date ( "H", $now ) ;
+	$time;
+	for($h = 0; $h<(date('H',strtotime("-0 hour"))+1); $h ++) {
+		$to [$h] = 0;
+	}
+				
+			for($i=0;$i<(date('H',strtotime("-0 hour"))+1);$i++){
+			$time[$i]=date('H',strtotime("-".$i."hour"));
+		
+		}
+		for($i=0;$i<count($result);$i++){
+			$shour = date ( "H", $result [$i] ['time'] );
+			$n = $now_h-$shour ;
+			
+			$to [$n] = $to [$n] + 1;
+		}
+		for($h = 0; $h<(date('H',strtotime("-0 hour"))+1); $h ++) {
+			$total [$h] = $to[$h];
+		}
+		$array=array(
+				"time"=>$time,
+				"num"=>$to,
+		);
+		
+	echo json_encode($array); 
+		//echo "ff".(date('H',strtotime("-0 hour"))+1);
+	}
+	
 	/**
 	 * busno查询time
 	 */
