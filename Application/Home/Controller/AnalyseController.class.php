@@ -14,7 +14,32 @@ use Think\Controller;
  * @package Home\Controller
  */
 class AnalyseController extends Controller {
-/**分析页面获取前十上网用户
+
+
+
+	/**分析页面获取前十上网用户
+	 *
+	 */
+	public function fenxi_get_on_line_top(){
+		$result=M()->query("	SELECT COUNT(think_wifidoglog.id) as value ,think_bus.no FROM think_wifidoglog,think_bus,think_device WHERE think_bus.id=think_device.bus_id AND think_device.mac=think_wifidoglog.device_mac GROUP BY think_wifidoglog.device_mac LIMIT 10
+				");
+		$busno;
+		$value;
+		for($h = 0; $h<count($result); $h ++) {
+			$busno[$h]=$result[$h]['no'];
+			$value[$h]=$result[$h]['value'];
+			
+		}
+		$array=array(
+				"busno"=>$busno,
+				"value"=>$value,
+		);
+	
+		echo json_encode($array);
+		//echo "ff".(date('H',strtotime("-0 hour"))+1);
+	}
+	
+/**分析上网用户走势
  * 
  */
 	public function fenxi_get_on_line(){

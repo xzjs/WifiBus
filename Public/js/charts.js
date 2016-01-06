@@ -871,7 +871,7 @@ function adver_rankOptionFunction3() {
     return option;
 }
 
-function adver_rankOptionFunction2(time,busno){
+function adver_rankOptionFunction2(busno,value){
     option = {
         title : {
             text: '当日上网用户TOP10',
@@ -898,7 +898,7 @@ function adver_rankOptionFunction2(time,busno){
         yAxis : [
             {
                 type : 'category',
-                data : ['鲁B123','鲁B124','鲁B125','鲁B126','鲁B127','鲁B128','鲁B127','鲁B129','鲁B138','鲁B139','鲁B130'],
+                data : busno,
                 axisLabel:{
                     textStyle:{
                         "color":"#FFFFFF"
@@ -910,7 +910,7 @@ function adver_rankOptionFunction2(time,busno){
 
             {
                 type:'bar',
-                data:[ 10,23, 31,35, 50, 63,70,100,110,129,188]
+                data:value
             }
         ]
     };
