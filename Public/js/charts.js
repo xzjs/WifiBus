@@ -956,6 +956,7 @@ function adver_rankOptionFunction1(time,value){
             }
         ],
         series: [
+                 
             {
                 name: '连接人次',
                 type: 'line',
