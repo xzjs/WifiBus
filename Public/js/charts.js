@@ -962,8 +962,8 @@ function adver_rankOptionFunction1(time,value){
                 data: value,
                 markPoint: {
                     data: [
-                        {type: 'max', name: '×î´óÖµ'},
-                        {type: 'min', name: '×îÐ¡Öµ'}
+                        {type: 'max', name: ''},
+                        {type: 'min', name: ''}
                     ]
                 }
 
