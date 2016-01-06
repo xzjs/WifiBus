@@ -78,12 +78,20 @@
 </div>
 <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
 <script type="text/javascript">
+    var breakdown = eval({$breakdown});
+    var no=new Array();
+    var num=new Array();
+    for(var i=0;i<breakdown.length;i++){
+        no[i]=breakdown[9-i].no;
+        num[i]=breakdown[9-i].breakdown;
+    }
+
     var myChartAdAnly1 = echarts.init(document.getElementById('adAnly1'));
     var myChartAdAnly2 = echarts.init(document.getElementById('adAnly2'));
     var myChartAdAnly3 = echarts.init(document.getElementById('adAnly3'));
 
     // 广告点击量客流量流量使用量
-    var adAnlyOption1 = adver_rankOptionFunction3();
+    var adAnlyOption1 = adver_rankOptionFunction3(no,num);
     // 广告点击量客流量时间
     var adAnlyOption2 = adver_rankOptionFunction2();
     // 广告点击量流量时间
