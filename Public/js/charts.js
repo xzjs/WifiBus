@@ -870,7 +870,7 @@ function adver_rankOptionFunction3(no,num) {
     return option;
 }
 
-function adver_rankOptionFunction2(){
+function adver_rankOptionFunction2(busno,value){
     option = {
         title : {
             text: '当日上网用户TOP10',
@@ -897,7 +897,7 @@ function adver_rankOptionFunction2(){
         yAxis : [
             {
                 type : 'category',
-                data : ['鲁B123','鲁B124','鲁B125','鲁B126','鲁B127','鲁B128','鲁B127','鲁B129','鲁B138','鲁B139','鲁B130'],
+                data : busno,
                 axisLabel:{
                     textStyle:{
                         "color":"#FFFFFF"
@@ -909,14 +909,14 @@ function adver_rankOptionFunction2(){
 
             {
                 type:'bar',
-                data:[ 10,23, 31,35, 50, 63,70,100,110,129,188]
+                data:value
             }
         ]
     };
     return option;
 }
 
-function adver_rankOptionFunction1(){
+function adver_rankOptionFunction1(time,value){
     option = {
         color:["#FF6666"],
         title: {
@@ -933,11 +933,7 @@ function adver_rankOptionFunction1(){
             {
                 type: 'category',
                 boundaryGap: false,
-                data: ['5:00', '6:00', '7:00', '8:00', '9:00', '10:00', '11:00',
-                    '12:00', '13:00', '14:00', '15:00', '16:00', '17:00',
-                    '18:00', '19:00', '20:00', '21:00', '22:00', '23:00',
-                    '24:00', '00:00', '01:00', '02:00', '03:00', '04:00',
-                    '05:00'],
+                data: time,
                 axisLabel:{
                     textStyle:{
                         "color":"#FFFFFF"
@@ -962,11 +958,11 @@ function adver_rankOptionFunction1(){
             {
                 name: '连接人次',
                 type: 'line',
-                data: [1, 3, 12, 13, 12, 13, 10, 15, 12, 10, 1, 6, 8, 9, 5, 5, 8, 1, 0, 0, 0, 0, 0, 0, 0],
+                data: value,
                 markPoint: {
                     data: [
-                        {type: 'max', name: '×î´óÖµ'},
-                        {type: 'min', name: '×îÐ¡Öµ'}
+                        {type: 'max', name: ''},
+                        {type: 'min', name: ''}
                     ]
                 }
 
