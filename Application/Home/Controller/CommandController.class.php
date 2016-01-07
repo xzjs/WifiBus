@@ -10,7 +10,32 @@ namespace Home\Controller;
 use Think\Controller;
 
 class CommandController extends Controller
+
 {
+	/**
+	 * 添加ssh功能
+	 * @param $device_id 设备id
+	 * @param $cmd 命令
+	 * @param int $arg 参数
+	 * @return mixed 插入的id或者falsedui
+	 */
+	public function ssh_add()
+	{
+		$device_id=I('post.device_id');
+	    $cmd='Ssh'; 
+	    $arg=I('post.arg');
+		$CommandModel = D('Command');
+		$data = array(
+				'device_id' => $device_id,
+				'cmd' => $cmd,
+				'arg' => $arg,
+				'status' => 0,
+				'time' => time()
+		);
+		$CommandModel->create($data, 1);
+		$result = $CommandModel->add();
+		echo $result;
+	}
     /**
      * 查询失联设备
      * 返回mac,bus_id
