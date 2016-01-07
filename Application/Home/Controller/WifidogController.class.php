@@ -22,14 +22,16 @@ class WifidogController extends Controller
             'time'=>array('gt',strtotime('today'))
         );
         $result=$WifidoglogModel->where($condition)->select();
-        $is_back=count($result)>0?1:0;
-        $data=array(
-            'mac'=>$mac,
-            'device_mac'=>$gw_id,
-            'time'=>time(),
-            'is_back'=>$is_back
-        );
-        $WifidoglogModel->add($data);
+        if(count($result)<2) {
+            $is_back = count($result) > 0 ? 1 : 0;
+            $data = array(
+                'mac' => $mac,
+                'device_mac' => $gw_id,
+                'time' => time(),
+                'is_back' => $is_back
+            );
+            $WifidoglogModel->add($data);
+        }
         $this->assign('url',"http://$gw_address:$gw_port/wifidog/auth?token=".time());
         $this->show();
     }
