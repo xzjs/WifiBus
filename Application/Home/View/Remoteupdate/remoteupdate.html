@@ -128,7 +128,7 @@
                                     <input type="hidden" value="video1" name="position">
                                     <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交" onclick="upload('video1')">
+                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'video1')">
                                     </div>
                                 </form>
 
@@ -774,31 +774,46 @@ $(function() {
         return str;
     } 
 
-function upload(position) {
+function upload(input,position) {
+    var a=new Array();
+    var b=new Array();
+    for(var i=0;i<input.length;i++){
+        a[i]=input[i].value;
+        b[i]=input[i].name;
+    }
+
+
+
+
 	var busArr = new Array();
 	for (var i = 0; i < checkedIdList.length; i++) {
 		if (checkedIdList[i].isChecked)
 			busArr[i] = checkedIdList[i].id;
 	}
 	if (busArr.length > 0) {
-	    var ids = arr_to_str(busArr);
-		var form = $("#" + position)[0];
-	    var formData = new FormData(form);
-	    formData.append('ids', ids);
-		
-	    $.ajax({
-	        url: "{:U('Media/upload')}",
-	        type: 'POST',
-	        cache: false,
-	        data: formData,
-	        processData: false,
-	        contentType: false
-	    }).done(function (res) {
-	        $(".dis").slideUp();
-	        getDisplay();
-	    }).fail(function (res) {
-	        alert(res);
-	    });
+        if((input[1].value=="")||(input[4].value=="")||(input[6].value==""))
+            alert("数据不能有空");
+        else{
+            var ids = arr_to_str(busArr);
+            var form = $("#" + position)[0];
+            var formData = new FormData(form);
+            formData.append('ids', ids);
+
+            $.ajax({
+                url: "{:U('Media/upload')}",
+                type: 'POST',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false
+            }).done(function (res) {
+                $(".dis").slideUp();
+                getDisplay();
+            }).fail(function (res) {
+                alert(res);
+            });
+        }
+
 	}else{
 		alert("没有选中车辆!");
 	}

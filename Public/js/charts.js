@@ -823,7 +823,7 @@ function adAnlyOptionFunction4() {
 //*********************************
 //排行分析
 //*********************************
-function adver_rankOptionFunction3() {
+function adver_rankOptionFunction3(no,num) {
     option = {
         color:["#669966"],
         title : {
@@ -851,7 +851,7 @@ function adver_rankOptionFunction3() {
         yAxis : [
             {
                 type : 'category',
-                data : ['鲁B123','鲁B124','鲁B125','鲁B126','鲁B127','鲁B128','鲁B127','鲁B129','鲁B138','鲁B139','鲁B130'],
+                data : no,
                 axisLabel:{
                     textStyle:{
                         "color":"#FFFFFF"
@@ -862,9 +862,8 @@ function adver_rankOptionFunction3() {
         series : [
 
             {
-
                 type:'bar',
-                data:[19, 23, 31,35, 50, 63,64,65,66,67,68,68,69,69]
+                data:num,
             }
         ]
     };
