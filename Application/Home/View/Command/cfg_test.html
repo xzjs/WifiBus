@@ -1,0 +1,21 @@
+{__NOLAYOUT__}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+</head>
+<body>
+设备mac
+<select name="mac">
+    <volist id="vo" name="macs">
+        <option value="{$vo.mac}">{$vo.mac}
+        <option>
+    </volist>
+</select>
+<br>
+上传文件<input type="file" name="file"><br>
+上传文件名称<input type="text" name="name"><br>
+<input type="submit" value="提交">
+</body>
+</html>

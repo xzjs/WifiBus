@@ -206,4 +206,27 @@ class CommandController extends Controller
             $this->show();
         }
     }
+
+    /**
+     * config文件测试
+     */
+    public function cfg_test(){
+        $DeviceCtrl = A('Device');
+        if (IS_POST) {
+            $BaseCtrl = A('Base');
+            $file_name = $BaseCtrl->upload_file();
+            $device_id = $DeviceCtrl->get_id(I('post.mac'));
+            $arg = '/WifiBus/Update/|' . $file_name . '|' . I('post.name');
+            $result = $this->add($device_id, 'FreeUpdate', $arg);
+            if ($result) {
+                $this->success('上传成功');
+            } else {
+                $this->error('上传失败');
+            }
+        } else {
+            $macs=$DeviceCtrl->mac_select();
+            $this->assign('macs',$macs);
+            $this->show();
+        }
+    }
 }
