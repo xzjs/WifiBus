@@ -11,7 +11,6 @@ use Think\Controller;
 
 class LogController extends Controller
 {
-
     /**
      * 日志添加功能
      * @param $mac 设备mac
