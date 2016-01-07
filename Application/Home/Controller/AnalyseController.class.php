@@ -21,7 +21,7 @@ class AnalyseController extends Controller {
 	 *
 	 */
 	public function fenxi_get_on_line_top(){
-		$result=M()->query("	SELECT COUNT(think_wifidoglog.id) as value ,think_bus.no FROM think_wifidoglog,think_bus,think_device WHERE think_bus.id=think_device.bus_id AND think_device.mac=think_wifidoglog.device_mac GROUP BY think_wifidoglog.device_mac LIMIT 10
+		$result=M()->query("SELECT COUNT(think_wifidoglog.id) AS VALUE ,think_bus.no FROM think_wifidoglog,think_bus,think_device WHERE think_wifidoglog.time>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_device.bus_id AND think_device.mac=think_wifidoglog.device_mac  GROUP BY think_wifidoglog.device_mac LIMIT 10
 				");
 		$busno;
 		$value;
