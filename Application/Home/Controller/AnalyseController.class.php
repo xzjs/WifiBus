@@ -16,7 +16,6 @@ use Think\Controller;
 class AnalyseController extends Controller {
 
 
-
 	/**分析页面获取前十上网用户
 	 *
 	 */
