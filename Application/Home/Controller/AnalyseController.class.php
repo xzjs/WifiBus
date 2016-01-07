@@ -269,7 +269,7 @@ class AnalyseController extends Controller
 		$yestoday=strtotime("-24hours");
 		$sql="SELECT COUNT(l.id) AS num,b.no FROM think_log AS l,think_device AS d,think_bus AS b WHERE b.id=d.bus_id AND d.mac=l.mac AND l.time>".$yestoday." GROUP BY l.mac ORDER BY num";
 		$result=M()->query($sql);
-		$max=$result[count($result)-1]['num'];
+		$max=24*60*12;
 		for($i=0;$i<10;$i++){
 			$breakdown[$i]['no']=$result[$i]['no'];
 			$breakdown[$i]['breakdown']=($max-$result[$i]['num'])/$max*100;
