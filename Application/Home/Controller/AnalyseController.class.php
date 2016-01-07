@@ -226,7 +226,6 @@ class AnalyseController extends Controller {
 		for($i=0;$i<count($result);$i++){
 			$dif= (int)((strtotime("now ")-(strtotime(date('Y-m-d', $result [$i] ['time']))))/86400);
 			$sum[$dif]=$sum[$dif]+$result [$i]['num'];
-				
 		}
 		for($i=0;$i<7;$i++){
 		
@@ -237,7 +236,6 @@ class AnalyseController extends Controller {
 			//echo 	$sum[$i];
 		}
 		echo json_encode($array);
-		
 	}
 	
 	public function index() {
