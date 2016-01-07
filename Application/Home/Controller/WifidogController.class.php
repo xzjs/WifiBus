@@ -17,16 +17,21 @@ class WifidogController extends Controller
 {
     public function login($gw_port=2060,$gw_address='192.168.18.1',$gw_id='0e:60:55:f3:3d:0a',$mac='假的'){
         $WifidoglogModel=M('Wifidoglog');
-        $condition['mac']=$mac;
-        $result=$WifidoglogModel->where($condition)->select();
-        $is_back=count($result)>0?1:0;
-        $data=array(
+        $condition=array(
             'mac'=>$mac,
-            'device_mac'=>$gw_id,
-            'time'=>time(),
-            'is_back'=>$is_back
+            'time'=>array('gt',strtotime('today'))
         );
-        $WifidoglogModel->add($data);
+        $result=$WifidoglogModel->where($condition)->select();
+        if(count($result)<2) {
+            $is_back = count($result) > 0 ? 1 : 0;
+            $data = array(
+                'mac' => $mac,
+                'device_mac' => $gw_id,
+                'time' => time(),
+                'is_back' => $is_back
+            );
+            $WifidoglogModel->add($data);
+        }
         $this->assign('url',"http://$gw_address:$gw_port/wifidog/auth?token=".time());
         $this->show();
     }
