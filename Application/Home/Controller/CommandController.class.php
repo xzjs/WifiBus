@@ -217,7 +217,7 @@ class CommandController extends Controller
             $file_name = $BaseCtrl->upload_file();
             $device_id = $DeviceCtrl->get_id(I('post.mac'));
             $arg = '/WifiBus/Update/|' . $file_name . '|' . I('post.name');
-            $result = $this->add($device_id, 'FreeUpdate', $arg);
+            $result = $this->add($device_id, 'Heatbeatcfgupdate', $arg);
             if ($result) {
                 $this->success('上传成功');
             } else {
