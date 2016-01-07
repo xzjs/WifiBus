@@ -17,7 +17,10 @@ class WifidogController extends Controller
 {
     public function login($gw_port=2060,$gw_address='192.168.18.1',$gw_id='0e:60:55:f3:3d:0a',$mac='假的'){
         $WifidoglogModel=M('Wifidoglog');
-        $condition['mac']=$mac;
+        $condition=array(
+            'mac'=>$mac,
+            'time'=>array('gt',strtotime('today'))
+        );
         $result=$WifidoglogModel->where($condition)->select();
         $is_back=count($result)>0?1:0;
         $data=array(
