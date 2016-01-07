@@ -13,14 +13,16 @@ use Think\Controller;
  * Class AnalyseController 广告流量分析控制器
  * @package Home\Controller
  */
-class AnalyseController extends Controller {
+class AnalyseController extends Controller
+{
+
 
 
 	/**分析页面获取前十上网用户
 	 *
 	 */
 	public function fenxi_get_on_line_top(){
-		$result=M()->query("SELECT COUNT(think_wifidoglog.id) AS VALUE ,think_bus.no FROM think_wifidoglog,think_bus,think_device WHERE think_wifidoglog.time>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_device.bus_id AND think_device.mac=think_wifidoglog.device_mac  GROUP BY think_wifidoglog.device_mac LIMIT 10
+		$result=M()->query("	SELECT COUNT(think_wifidoglog.id) as value ,think_bus.no FROM think_wifidoglog,think_bus,think_device WHERE think_bus.id=think_device.bus_id AND think_device.mac=think_wifidoglog.device_mac GROUP BY think_wifidoglog.device_mac LIMIT 10
 				");
 		$busno;
 		$value;
@@ -267,7 +269,7 @@ class AnalyseController extends Controller {
 		$yestoday=strtotime("-24hours");
 		$sql="SELECT COUNT(l.id) AS num,b.no FROM think_log AS l,think_device AS d,think_bus AS b WHERE b.id=d.bus_id AND d.mac=l.mac AND l.time>".$yestoday." GROUP BY l.mac ORDER BY num";
 		$result=M()->query($sql);
-		$max=$result[count($result)-1]['num'];
+		$max=24*60*12;
 		for($i=0;$i<10;$i++){
 			$breakdown[$i]['no']=$result[$i]['no'];
 			$breakdown[$i]['breakdown']=($max-$result[$i]['num'])/$max*100;

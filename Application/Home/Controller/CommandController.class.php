@@ -12,32 +12,31 @@ use Think\Controller;
 class CommandController extends Controller
 
 {
-	
-	
-	/**
-	 * 添加ssh功能
-	 * @param $device_id 设备id
-	 * @param $cmd 命令
-	 * @param int $arg 参数
-	 * @return mixed 插入的id或者falsedui
-	 */
-	public function ssh_add()
-	{
-		$device_id=I('post.device_id');
-	    $cmd='Ssh'; 
-	    $arg=I('post.arg');
-		$CommandModel = D('Command');
-		$data = array(
-				'device_id' => $device_id,
-				'cmd' => $cmd,
-				'arg' => $arg,
-				'status' => 0,
-				'time' => time()
-		);
-		$CommandModel->create($data, 1);
-		$result = $CommandModel->add();
-		echo $result;
-	}
+    /**
+     * 添加ssh功能
+     * @param $device_id 设备id
+     * @param $cmd 命令
+     * @param int $arg 参数
+     * @return mixed 插入的id或者falsedui
+     */
+    public function ssh_add()
+    {
+        $device_id = I('post.device_id');
+        $cmd = 'Ssh';
+        $arg = I('post.arg');
+        $CommandModel = D('Command');
+        $data = array(
+            'device_id' => $device_id,
+            'cmd' => $cmd,
+            'arg' => $arg,
+            'status' => 0,
+            'time' => time()
+        );
+        $CommandModel->create($data, 1);
+        $result = $CommandModel->add();
+        echo $result;
+    }
+
     /**
      * 查询失联设备
      * 返回mac,bus_id
@@ -62,7 +61,7 @@ class CommandController extends Controller
      * @param int $arg 参数
      * @throws
      */
-    public function ping($mac='2e:60:ed:d8:3d:0a', $lon=120, $lat=36, $online_num=0, $usage=0, $flow_num=0, $cmd = 0, $arg = 0)
+    public function ping($mac = '2e:60:ed:d8:3d:0a', $lon = 120, $lat = 36, $online_num = 0, $usage = 0, $flow_num = 0, $cmd = 0, $arg = 0)
     {
         $LogCtrl = A('Log');
         $LogCtrl->add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg);
@@ -182,5 +181,29 @@ class CommandController extends Controller
         $CommandModel = D('Command');
         $result = $CommandModel->find($id);
         echo json_encode($result);
+    }
+
+    /**
+     * 任意文件上传到任意位置测试函数
+     */
+    public function anyfile_test()
+    {
+        $DeviceCtrl = A('Device');
+        if (IS_POST) {
+            $BaseCtrl = A('Base');
+            $file_name = $BaseCtrl->upload_file();
+            $device_id = $DeviceCtrl->get_id(I('post.mac'));
+            $arg = '/WifiBus/Update/|' . $file_name . '|' . I('post.name') . '|' . I('post.url');
+            $result = $this->add($device_id, 'FreeUpdate', $arg);
+            if ($result) {
+                $this->success('上传成功');
+            } else {
+                $this->error('上传失败');
+            }
+        } else {
+            $macs=$DeviceCtrl->mac_select();
+            $this->assign('macs',$macs);
+            $this->show();
+        }
     }
 }
