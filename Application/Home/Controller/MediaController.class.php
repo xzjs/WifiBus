@@ -11,6 +11,25 @@ use Think\Controller;
  */
 class MediaController extends BaseController
 {
+	/**
+	 * 上传固件升级文件
+	 */
+	public function upload_devicefile() {
+		$error_data['status']=0;
+		$file_name=$this->upload_file();
+	    $CommandCtrl=A('Command');
+	    $device_id=A('Device')->get_id(I('post.mac'));
+	//   $device_idhh=$device->get_id(I('post.mac'));
+	  // $file_name=I('post.ye');
+	   
+	  $this->success('ok');
+		$cmd_result1=$CommandCtrl->add($device_id,'Firmwareupdate','/WifiBus/Update/|'.$file_name.'|'.'heatbeat');
+	 if($cmd_result1>0)
+	 $this->success('ok');
+	  //  $cmd_result2=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$name_str[0].'.jpg'.'|'.I('post.position').'.jpg');
+	 			
+	}
+	
 
     /**
      * 添加媒体
