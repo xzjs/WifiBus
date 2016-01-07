@@ -52,7 +52,7 @@ class MediaController extends BaseController
                     }
                     if($result){
                         $CommandCtrl=A('Command');
-                        $cmd_result=$CommandCtrl->add($device['id'],'Contentsupdate',C('IP').':'.C('PORT').'/WifiBus/Update/|'.$img.'|'.I('post.position').'.'.I('post.suffix'));
+                        $cmd_result=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$img.'|'.I('post.position').'.'.I('post.suffix'));
                         if($cmd_result){
                             $error_data['status']=0;
                             $error_data['data']='成功';
@@ -118,8 +118,8 @@ class MediaController extends BaseController
     				}
     				if($result){
     					$CommandCtrl=A('Command');
-    					$cmd_result1=$CommandCtrl->add($device['id'],'Contentsupdate',C('IP').':'.C('PORT').'/WifiBus/Update/|'.$file_name.'|'.I('post.position').'.'.$name_str[1]);
-    					$cmd_result2=$CommandCtrl->add($device['id'],'Contentsupdate',C('IP').':'.C('PORT').'/WifiBus/Update/|'.$name_str[0].'.jpg'.'|'.I('post.position').'.jpg');
+    					$cmd_result1=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$file_name.'|'.I('post.position').'.'.$name_str[1]);
+    					$cmd_result2=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$name_str[0].'.jpg'.'|'.I('post.position').'.jpg');
     					if($cmd_result1&&$cmd_result2){
     						$error_data['status']=0;
     						$error_data['data']='成功';
