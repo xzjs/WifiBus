@@ -12,6 +12,8 @@ use Think\Controller;
 class CommandController extends Controller
 
 {
+	
+	
 	/**
 	 * 添加ssh功能
 	 * @param $device_id 设备id
