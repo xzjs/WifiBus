@@ -272,7 +272,8 @@ class AnalyseController extends Controller
 		$max=24*60*12;
 		for($i=0;$i<10;$i++){
 			$breakdown[$i]['no']=$result[$i]['no'];
-			$breakdown[$i]['breakdown']=($max-$result[$i]['num'])/$max*100;
+			$tmp=($max-$result[$i]['num'])/$max*100;
+			$breakdown[$i]['breakdown']=round($tmp,2);
 		}
 		$this->assign('breakdown',json_encode($breakdown));
 		$this->display ();
