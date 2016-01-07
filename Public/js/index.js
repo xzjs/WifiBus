@@ -307,20 +307,30 @@ $(document).ready(function() {
 		$(".dis").hide();
 		$(this).next().stop(true, false).slideToggle();
 
-	});
+	});//显示下拉栏中的内容
+
 	$(".subtitle_1+ul>li>img,.adv_other_set>li>img").click(function(e) {
-		$(".dis").hide().removeClass('canDrag');
-		// 弹出框位置设置在当前显示窗口的中央处
-		var disPosition = $(window).scrollTop()+ $(window).height()/2 - 180;
-		$(this).siblings('div.dis').css('top', disPosition).stop(true, false)
-			.slideToggle().addClass('canDrag');
-		// 拖曳功能
-		drag();
-		var ev = e || window.event;
-		if (ev.stopPropagation) {
-			ev.stopPropagation();
-		} else if (window.event) {
-			window.event.cancelBubble = true;
+		var busArr = new Array();
+		for (var i = 0; i < checkedIdList.length; i++) {
+			if (checkedIdList[i].isChecked)
+				busArr[i] = checkedIdList[i].id;
+		}
+		if (busArr.length > 0) {
+			$(".dis").hide().removeClass('canDrag');
+			// 弹出框位置设置在当前显示窗口的中央处
+			var disPosition = $(window).scrollTop() + $(window).height() / 2 - 180;
+			$(this).siblings('div.dis').css('top', disPosition).stop(true, false)
+					.slideToggle().addClass('canDrag');
+			// 拖曳功能
+			drag();
+			var ev = e || window.event;
+			if (ev.stopPropagation) {
+				ev.stopPropagation();
+			} else if (window.event) {
+				window.event.cancelBubble = true;
+			}
+		}else{
+			alert("没有选中车辆!");
 		}
 	});
 	$(".dis").click(function(e) {
