@@ -398,16 +398,16 @@ body{
 }
 
 .remote_search{
-    width: 161px;
+    width: 191px;
     height:30px;
     background: #f3f5f7;
     border-radius:2px;
-    position: fixed;
+    position: absolute;
     left: 260px;
 }
 .remote_search p>input{
     border: none;
-    width:121px ;
+    width:151px ;
     height: 30px;
     float: left;
     background: none;
@@ -416,6 +416,7 @@ body{
     width: 28px;
     height: 27px;
     float: right;
+    cursor:pointer;
 }
 
 

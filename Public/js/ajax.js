@@ -284,7 +284,6 @@ function search_bus_index(url,keys) {
  * @param str：搜索关键字
  */
 function search_bus(url,keys) {
-	
 	$.post(url, {
 		is_getbuslist : 1,
 		search_keys : keys
