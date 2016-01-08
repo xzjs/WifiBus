@@ -863,7 +863,7 @@ function search_bus_list(url,keys) {
 
             for (var i = 0; i < bus_info.length; i++) {
                 bus_list += "<li>" +
-                        "<input class= 'bus_array' type='checkbox' id="+bus_info[i].id+" name='car' value="+ bus_info[i].no +" onchange='getCheckedList(this)'> <a>"+bus_info[i].no+"</a>"
+                        "<input class= 'bus_array' type='checkbox' id="+bus_info[i].id+" name='car' value="+ bus_info[i].id +" onchange='getCheckedList(this)'> <a>"+bus_info[i].no+"</a>"
                         +"</li>";
             }
 
