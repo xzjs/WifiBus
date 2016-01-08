@@ -160,14 +160,14 @@ class AnalyseController extends Controller
 		$bus_id =I('post.bus_id');
 		$time=time()-6*86400;
 		if ($bus_id == 0 && $line_id == 0) {
-			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400)";
+			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=0";
 		}
 		else{if ($bus_id == 0) {
 			
-			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_mac  IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)";	
+			$sql="SELECT TIME FROM think_wifidoglog WHERE  is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_mac  IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id )";	
 			}
 			else {
-			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";	
+			$sql="SELECT TIME FROM think_wifidoglog WHERE is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";	
 			}
 		}
 	
