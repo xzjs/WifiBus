@@ -854,7 +854,7 @@ function search_bus_list(url,keys) {
 
     $.post(url, {
         is_getbuslist : 1,
-        search_keys : keys
+        search_keys : keys,
     }, function(data, status) {
 
         if (status == 4 || status == "success") {
