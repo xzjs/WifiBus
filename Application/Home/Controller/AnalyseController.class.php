@@ -39,7 +39,7 @@ class AnalyseController extends Controller
 		echo json_encode($array);
 		//echo "ff".(date('H',strtotime("-0 hour"))+1);
 	}
-	
+	 
 /**分析上网用户走势
  * 
  */
@@ -141,13 +141,16 @@ class AnalyseController extends Controller
        	
 	
 		}
-		for($i=0;$i<7;$i++){
-	
-			$array[$i]=array(
-					'time'=>$base->weekday((strtotime("now ")-(86400*$i))),
+	//	$base->weekday((strtotime("now ")-(86400*$i))),
+		$j=0;
+		for($i=6;$i>=0;$i--){
+		
+			$array[$j]=array(
+					'time'=>date('m-d',(strtotime("now ")-(86400*$i))),
 					'num'=>$sum[$i],
 			);
-			//echo 	$sum[$i];
+			$j++;
+		
 		}
 		echo json_encode($array);
 	
@@ -185,12 +188,14 @@ class AnalyseController extends Controller
 			$sum[$dif]=$sum[$dif]+1;
 	
 		}
-		for($i=0;$i<7;$i++){
+		$j=0;
+		for($i=6;$i>=0;$i--){
 	
-			$array[$i]=array(
-					'time'=>$base->weekday((strtotime("now ")-(86400*$i))),
+			$array[$j]=array(
+					'time'=>date('m-d',(strtotime("now ")-(86400*$i))),
 					'num'=>$sum[$i],
 			);
+			$j++;
 			//echo 	$sum[$i];
 		}
 		echo json_encode($array);
@@ -229,12 +234,14 @@ class AnalyseController extends Controller
 			$sum[$dif]=$sum[$dif]+$result [$i]['num'];
 				
 		}
-		for($i=0;$i<7;$i++){
+		$j=0;
+		for($i=6;$i>=0;$i--){
 		
-			$array[$i]=array(
-					'time'=>$base->weekday((strtotime("now ")-(86400*$i))),
+			$array[$j]=array(
+					'time'=>date('m-d',(strtotime("now ")-(86400*$i))),
 					'num'=>$sum[$i],
 			);
+			$j++;
 			//echo 	$sum[$i];
 		}
 		echo json_encode($array);
@@ -320,12 +327,14 @@ GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 			$sum[$dif]=$sum[$dif]+$result [$i]['click_num'];
 				
 		}
-		for($i=0;$i<7;$i++){
+		$j=0;
+		for($i=6;$i>=0;$i--){
 		
-			$array[$i]=array(
-					'time'=>($base->weekday((strtotime("now ")-(86400*$i)))),
+			$array[$j]=array(
+					'time'=>date('m-d',(strtotime("now ")-(86400*$i))),
 					'num'=>$sum[$i],
 			);
+			$j++;
 			//echo 	$array[1][time];
 		}
 		echo json_encode($array); 
