@@ -851,7 +851,8 @@ function adver_rankOptionFunction3(no,num) {
         yAxis : [
             {
                 type : 'category',
-                data : no,
+              //  data : no[6],no[5],no[4],no[3],no[2],no[1],no[0],
+                data:no,
                 axisLabel:{
                     textStyle:{
                         "color":"#FFFFFF"
@@ -863,6 +864,7 @@ function adver_rankOptionFunction3(no,num) {
 
             {
                 type:'bar',
+                //data:num[6],num[5],num[4],num[3],num[2],num[1],num[0],
                 data:num,
             }
         ]

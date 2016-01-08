@@ -22,7 +22,7 @@ class AnalyseController extends Controller
 	 *
 	 */
 	public function fenxi_get_on_line_top(){
-		$result=M()->query("	SELECT COUNT(think_wifidoglog.id) as value ,think_bus.no FROM think_wifidoglog,think_bus,think_device WHERE think_bus.id=think_device.bus_id AND think_device.mac=think_wifidoglog.device_mac GROUP BY think_wifidoglog.device_mac LIMIT 10
+		$result=M()->query("	SELECT COUNT(think_wifidoglog.id) as value ,think_bus.no FROM think_wifidoglog,think_bus,think_device WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) and think_bus.id=think_device.bus_id AND think_device.mac=think_wifidoglog.device_mac GROUP BY think_wifidoglog.device_mac LIMIT 10
 				");
 		$busno;
 		$value;
@@ -39,7 +39,7 @@ class AnalyseController extends Controller
 		echo json_encode($array);
 		//echo "ff".(date('H',strtotime("-0 hour"))+1);
 	}
-	
+	 
 /**分析上网用户走势
  * 
  */
@@ -141,13 +141,16 @@ class AnalyseController extends Controller
        	
 	
 		}
-		for($i=0;$i<7;$i++){
-	
-			$array[$i]=array(
-					'time'=>$base->weekday((strtotime("now ")-(86400*$i))),
+	//	$base->weekday((strtotime("now ")-(86400*$i))),
+		$j=0;
+		for($i=6;$i>=0;$i--){
+		
+			$array[$j]=array(
+					'time'=>date('m-d',(strtotime("now ")-(86400*$i))),
 					'num'=>$sum[$i],
 			);
-			//echo 	$sum[$i];
+			$j++;
+		
 		}
 		echo json_encode($array);
 	
@@ -160,14 +163,14 @@ class AnalyseController extends Controller
 		$bus_id =I('post.bus_id');
 		$time=time()-6*86400;
 		if ($bus_id == 0 && $line_id == 0) {
-			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400)";
+			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=0";
 		}
 		else{if ($bus_id == 0) {
 			
-			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_mac  IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)";	
+			$sql="SELECT TIME FROM think_wifidoglog WHERE  is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_mac  IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id )";	
 			}
 			else {
-			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";	
+			$sql="SELECT TIME FROM think_wifidoglog WHERE is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";	
 			}
 		}
 	
@@ -185,12 +188,14 @@ class AnalyseController extends Controller
 			$sum[$dif]=$sum[$dif]+1;
 	
 		}
-		for($i=0;$i<7;$i++){
+		$j=0;
+		for($i=6;$i>=0;$i--){
 	
-			$array[$i]=array(
-					'time'=>$base->weekday((strtotime("now ")-(86400*$i))),
+			$array[$j]=array(
+					'time'=>date('m-d',(strtotime("now ")-(86400*$i))),
 					'num'=>$sum[$i],
 			);
+			$j++;
 			//echo 	$sum[$i];
 		}
 		echo json_encode($array);
@@ -229,12 +234,14 @@ class AnalyseController extends Controller
 			$sum[$dif]=$sum[$dif]+$result [$i]['num'];
 				
 		}
-		for($i=0;$i<7;$i++){
+		$j=0;
+		for($i=6;$i>=0;$i--){
 		
-			$array[$i]=array(
-					'time'=>$base->weekday((strtotime("now ")-(86400*$i))),
+			$array[$j]=array(
+					'time'=>date('m-d',(strtotime("now ")-(86400*$i))),
 					'num'=>$sum[$i],
 			);
+			$j++;
 			//echo 	$sum[$i];
 		}
 		echo json_encode($array);
@@ -320,12 +327,14 @@ GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 			$sum[$dif]=$sum[$dif]+$result [$i]['click_num'];
 				
 		}
-		for($i=0;$i<7;$i++){
+		$j=0;
+		for($i=6;$i>=0;$i--){
 		
-			$array[$i]=array(
-					'time'=>($base->weekday((strtotime("now ")-(86400*$i)))),
+			$array[$j]=array(
+					'time'=>date('m-d',(strtotime("now ")-(86400*$i))),
 					'num'=>$sum[$i],
 			);
+			$j++;
 			//echo 	$array[1][time];
 		}
 		echo json_encode($array); 
