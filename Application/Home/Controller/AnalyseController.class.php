@@ -213,19 +213,19 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 	 * 流量——时间关系查询
 	 */
 	public function get_flow(){
-		$line_id = I('post.line_id');
-		$bus_id =I('post.bus_id');
+		$line_id = 0;
+		$bus_id =0;
 		$time=time()-6*86400;
 		if ($bus_id == 0 && $line_id == 0) {
-			$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400)";
+			$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400)";
 		}
 		else {
 			if ($bus_id == 0) {
-				$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)";
+				$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)";
 				
 			}
 			else{
-				$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";
+				$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";
 				
 			}
 		}
@@ -238,7 +238,9 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 			$sum[$h] = 0;
 		}
 		for($i=0;$i<count($result);$i++){
+			//echo date('Y-m-d', $result [$i] ['time'])."<br>";
 			$dif= (int)((strtotime("now ")-(strtotime(date('Y-m-d', $result [$i] ['time']))))/86400);
+			//echo $dif;
 			$sum[$dif]=$sum[$dif]+$result [$i]['num'];
 				
 		}
@@ -252,6 +254,7 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 			$j++;
 			//echo 	$sum[$i];
 		}
+		//echo json_encode($sum);
 		echo json_encode($array);
 		
 	}
