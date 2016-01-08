@@ -22,7 +22,9 @@ class AnalyseController extends Controller
 	 *
 	 */
 	public function fenxi_get_on_line_top(){
-		$result=M()->query("	SELECT COUNT(think_wifidoglog.id) as value ,think_bus.no FROM think_wifidoglog,think_bus,think_device WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) and think_bus.id=think_device.bus_id AND think_device.mac=think_wifidoglog.device_mac GROUP BY think_wifidoglog.device_mac LIMIT 10
+		$result=M()->query("	SELECT COUNT(think_wifidoglog.id) AS VALUE ,think_bus.no FROM think_wifidoglog,think_bus,think_device 
+WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_device.bus_id AND
+ think_device.mac=think_wifidoglog.device_mac GROUP BY think_wifidoglog.device_mac ORDER BY VALUE  LIMIT 10
 				");
 		$busno;
 		$value;
@@ -44,7 +46,7 @@ class AnalyseController extends Controller
  * 
  */
 	public function fenxi_get_on_line(){
-	 $result=M()->query("SELECT TIME FROM think_wifidoglog WHERE TIME>UNIX_TIMESTAMP( CURDATE())
+	 $result=M()->query("SELECT TIME FROM think_wifidoglog WHERE TIME>UNIX_TIMESTAMP( CURDATE())and is_back=0
 				");
 		$array=array();
 		$num;
@@ -165,8 +167,8 @@ class AnalyseController extends Controller
 	 * 客流量——时间关系查询
 	 */
 	public function get_online_num(){
-		$line_id = I('post.line_id');
-		$bus_id =I('post.bus_id');
+		$line_id = 0;
+		$bus_id =0;
 		$time=time()-6*86400;
 		if ($bus_id == 0 && $line_id == 0) {
 			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=0";
