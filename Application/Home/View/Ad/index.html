@@ -16,11 +16,7 @@
 
         <div class="userLeftBar">
             <div class="search_line_far">
-                <form action="form">
-                    <input type="text">
-                    <input type="submit" value="搜索">
-                    <div class="clr"></div>
-                </form>
+
                 <ul>
                 <volist name="line_list" id="vo" empty=" " key="k">
                 <if condition="($k eq 1)">
@@ -46,18 +42,20 @@
                 <div class="clr"></div>
             </div>
 
+            <div class="remote_search">
+                <p>
+                    <input type="text" id="search_keys" > <a><img
+                        src="__PUBLIC__/images/home_search.png" alt=""
+                        onclick="search_bus_list('{:U('Bus/select')}',$('#search_keys').val())"></a>
+                </p>
+            </div>
 
             <div class="search_car_far">
-                <form action="form">
-                    <input type="text">
-                    <input type="submit" value="搜索">
 
-                    <div class="clr"></div>
-                </form>
 
                 <ul id="bus_list_check">
+                    <br/><br/>
                     <volist name="bus_list" id="vo" empty=" ">
-                        <li>
                         <li><input class="bus_array" type="checkbox" id={$line_list[0].id} name="car" value={$vo.id}
                                    onchange="getCheckedList(this)"> <a>{$vo.no}</a></li>
                     </volist>
@@ -280,6 +278,32 @@
             checkedLineArr[i] = lineList[i].checked;
         }
     })
+
+    /**
+     * 根据车牌号搜索车辆
+     * @param str：搜索关键字
+     */
+    function search_bus_list(url,keys) {
+
+        $.post(url, {
+            is_getbuslist : 1,
+            search_keys : keys,
+        }, function(data, status) {
+
+            if (status == 4 || status == "success") {
+                var bus_info = eval(data);
+                var bus_list = "<br/><br/>";
+
+                for (var i = 0; i < bus_info.length; i++) {
+                    bus_list += "<li>" +
+                            "<input class= 'bus_array' type='checkbox' id="+bus_info[i].id+" name='car' value="+ bus_info[i].id +" onchange='getCheckedList(this)'> <a>"+bus_info[i].no+"</a>"
+                            +"</li>";
+                }
+
+                $("ul#bus_list_check").html(bus_list);
+            }
+        });
+    }
 
     /**
      * 文件上传函数
