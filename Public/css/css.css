@@ -222,7 +222,7 @@ body{
 .container_subtitle>img+ul>li>p>a{
     color: #fff;
     line-height: 60px;
-    font: 
+    font:
 }
 .container_subtitle>img+ul>li>p>a:hover{
     color: #ef4f2f;
@@ -396,6 +396,29 @@ body{
     top: 26px;
     left: 146px;
 }
+
+.remote_search{
+    width: 161px;
+    height:30px;
+    background: #f3f5f7;
+    border-radius:2px;
+    position: fixed;
+    left: 260px;
+}
+.remote_search p>input{
+    border: none;
+    width:121px ;
+    height: 30px;
+    float: left;
+    background: none;
+}
+.remote_search p>a>img{
+    width: 28px;
+    height: 27px;
+    float: right;
+}
+
+
 .search p>input{
     border: none;
     width:121px ;
