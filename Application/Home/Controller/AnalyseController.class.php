@@ -51,26 +51,32 @@ class AnalyseController extends Controller
 		$now = strtotime ( "now " );
 		$now_h = date ( "H", $now ) ;
 	$time;
+	$j=0;
 	for($h = 0; $h<(date('H',strtotime("-0 hour"))+1); $h ++) {
 		$to [$h] = 0;
 	}
 				
-			for($i=0;$i<(date('H',strtotime("-0 hour"))+1);$i++){
-			$time[$i]=date('H',strtotime("-".$i."hour"));
+			for($i=(date('H',strtotime("-0 hour")));$i>=0;$i--){
+				
+			$time[$j]=date('H',strtotime("-".$i."hour"));
+			$j++;
 		
 		}
+		
 		for($i=0;$i<count($result);$i++){
 			$shour = date ( "H", $result [$i] ['time'] );
 			$n = $now_h-$shour ;
 			
-			$to [$n] = $to [$n] + 1;
+			$to[$n] = $to[$n] + 1;
 		}
+		$p=(date('H',strtotime("-0 hour")));
 		for($h = 0; $h<(date('H',strtotime("-0 hour"))+1); $h ++) {
-			$total [$h] = $to[$h];
+			$total [$h] = $to[$p];
+			$p--;
 		}
 		$array=array(
 				"time"=>$time,
-				"num"=>$to,
+				"num"=>$total,
 		);
 		
 	echo json_encode($array); 
