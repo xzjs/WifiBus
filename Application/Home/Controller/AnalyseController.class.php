@@ -167,8 +167,8 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 	 * 客流量——时间关系查询
 	 */
 	public function get_online_num(){
-		$line_id = 0;
-		$bus_id =0;
+		$line_id = I('post.line_id');
+		$bus_id =I('post.bus_id');
 		$time=time()-6*86400;
 		if ($bus_id == 0 && $line_id == 0) {
 			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=0";
@@ -213,8 +213,8 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 	 * 流量——时间关系查询
 	 */
 	public function get_flow(){
-		$line_id = 0;
-		$bus_id =0;
+		$line_id = I('post.line_id');
+		$bus_id =I('post.bus_id');
 		$time=time()-6*86400;
 		if ($bus_id == 0 && $line_id == 0) {
 			$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400)";
@@ -249,8 +249,10 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 		
 			$array[$j]=array(
 					'time'=>date('m-d',(strtotime("now ")-(86400*$i))),
-					'num'=>$sum[$i],
+					'num'=>(int)($sum[$i]/1024),
+					
 			);
+			//echo (int)($sum[$i]/1024)."<br>";
 			$j++;
 			//echo 	$sum[$i];
 		}
