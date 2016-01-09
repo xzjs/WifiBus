@@ -33,7 +33,7 @@ class BusController extends Controller
                 $DeviceModel->bus_id = $id;
             }
             $result2 = $DeviceModel->save();
-            if (($result + $result2)>0) {
+            if (($result + $result2) > 0) {
                 echo "更新成功";
             } else {
                 echo "更新失败";
@@ -242,10 +242,23 @@ class BusController extends Controller
         }
     }
 
+    /**
+     * 显示公交车信息
+     */
     public function index()
     {
         $BusModel = D('Bus');
         $buses = $BusModel->relation(true)->select();
+        $LogCtrl = D('Log');
+        for ($i = 0; $i < count($buses); $i++) {
+            $condition = array(
+                'mac' => $buses[$i]['Device']['mac'],
+                'heartbeat' => array('neq', 0)
+            );
+            $log = $LogCtrl->where($condition)->order('time desc')->find();
+            $buses[$i]['heartbeat'] = $log['heartbeat'];
+        }
+
         $this->assign('data', $buses);
         //var_dump($buses);
         $this->show();
