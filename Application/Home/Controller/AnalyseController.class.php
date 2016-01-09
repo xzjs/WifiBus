@@ -22,7 +22,9 @@ class AnalyseController extends Controller
 	 *
 	 */
 	public function fenxi_get_on_line_top(){
-		$result=M()->query("	SELECT COUNT(think_wifidoglog.id) as value ,think_bus.no FROM think_wifidoglog,think_bus,think_device WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) and think_bus.id=think_device.bus_id AND think_device.mac=think_wifidoglog.device_mac GROUP BY think_wifidoglog.device_mac LIMIT 10
+		$result=M()->query("	SELECT COUNT(think_wifidoglog.id) AS VALUE ,think_bus.no FROM think_wifidoglog,think_bus,think_device 
+WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_device.bus_id AND
+ think_device.mac=think_wifidoglog.device_mac GROUP BY think_wifidoglog.device_mac ORDER BY VALUE  LIMIT 10
 				");
 		$busno;
 		$value;
@@ -44,33 +46,39 @@ class AnalyseController extends Controller
  * 
  */
 	public function fenxi_get_on_line(){
-	 $result=M()->query("SELECT TIME FROM think_wifidoglog WHERE TIME>UNIX_TIMESTAMP( CURDATE())
+	 $result=M()->query("SELECT TIME FROM think_wifidoglog WHERE TIME>UNIX_TIMESTAMP( CURDATE())and is_back=0
 				");
 		$array=array();
 		$num;
 		$now = strtotime ( "now " );
 		$now_h = date ( "H", $now ) ;
 	$time;
+	$j=0;
 	for($h = 0; $h<(date('H',strtotime("-0 hour"))+1); $h ++) {
 		$to [$h] = 0;
 	}
 				
-			for($i=0;$i<(date('H',strtotime("-0 hour"))+1);$i++){
-			$time[$i]=date('H',strtotime("-".$i."hour"));
+			for($i=(date('H',strtotime("-0 hour")));$i>=0;$i--){
+				
+			$time[$j]=date('H',strtotime("-".$i."hour"));
+			$j++;
 		
 		}
+		
 		for($i=0;$i<count($result);$i++){
 			$shour = date ( "H", $result [$i] ['time'] );
 			$n = $now_h-$shour ;
 			
-			$to [$n] = $to [$n] + 1;
+			$to[$n] = $to[$n] + 1;
 		}
+		$p=(date('H',strtotime("-0 hour")));
 		for($h = 0; $h<(date('H',strtotime("-0 hour"))+1); $h ++) {
-			$total [$h] = $to[$h];
+			$total [$h] = $to[$p];
+			$p--;
 		}
 		$array=array(
 				"time"=>$time,
-				"num"=>$to,
+				"num"=>$total,
 		);
 		
 	echo json_encode($array); 
@@ -209,15 +217,15 @@ class AnalyseController extends Controller
 		$bus_id =I('post.bus_id');
 		$time=time()-6*86400;
 		if ($bus_id == 0 && $line_id == 0) {
-			$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400)";
+			$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400)";
 		}
 		else {
 			if ($bus_id == 0) {
-				$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)";
+				$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)";
 				
 			}
 			else{
-				$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";
+				$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";
 				
 			}
 		}
@@ -230,7 +238,9 @@ class AnalyseController extends Controller
 			$sum[$h] = 0;
 		}
 		for($i=0;$i<count($result);$i++){
+			//echo date('Y-m-d', $result [$i] ['time'])."<br>";
 			$dif= (int)((strtotime("now ")-(strtotime(date('Y-m-d', $result [$i] ['time']))))/86400);
+			//echo $dif;
 			$sum[$dif]=$sum[$dif]+$result [$i]['num'];
 				
 		}
@@ -239,11 +249,14 @@ class AnalyseController extends Controller
 		
 			$array[$j]=array(
 					'time'=>date('m-d',(strtotime("now ")-(86400*$i))),
-					'num'=>$sum[$i],
+					'num'=>(int)($sum[$i]/1024),
+					
 			);
+			//echo (int)($sum[$i]/1024)."<br>";
 			$j++;
 			//echo 	$sum[$i];
 		}
+		//echo json_encode($sum);
 		echo json_encode($array);
 		
 	}
