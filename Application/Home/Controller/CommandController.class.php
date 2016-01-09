@@ -51,20 +51,20 @@ class CommandController extends Controller
 
     /**
      * 心跳接口
-     * @param 设备mac|string $mac 设备mac
-     * @param 经度|int $lon 经度
-     * @param 纬度|int $lat 纬度
-     * @param 在线人数|int $online_num 在线人数
-     * @param 使用率|int $usage 使用率
-     * @param 使用流量|int $flow_num 使用流量
+     * @param string $mac 设备mac
+     * @param int $lon 经度
+     * @param int $lat 纬度
+     * @param int $online_num 在线人数
+     * @param int $usage 使用率
+     * @param int $flow_num 使用流量
      * @param int|string $cmd 操作命令
      * @param int $arg 参数
      * @throws
      */
-    public function ping($mac = '2e:60:ed:d8:3d:0a', $lon = 120, $lat = 36, $online_num = 0, $usage = 0, $flow_num = 0, $cmd = 0, $arg = 0)
+    public function ping($mac = '2e:60:ed:d8:3d:0a', $lon = 120, $lat = 36, $online_num = 0, $usage = 0, $flow_num = 0, $cmd = 0, $arg = 0, $heartbeat = 0)
     {
         $LogCtrl = A('Log');
-        $LogCtrl->add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg);
+        $LogCtrl->add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg, $heartbeat);
         $Device = D("Device");
         $condition['mac'] = $mac;
         $d = $Device->where($condition)->find();
@@ -201,8 +201,8 @@ class CommandController extends Controller
                 $this->error('上传失败');
             }
         } else {
-            $macs=$DeviceCtrl->mac_select();
-            $this->assign('macs',$macs);
+            $macs = $DeviceCtrl->mac_select();
+            $this->assign('macs', $macs);
             $this->show();
         }
     }
@@ -210,7 +210,8 @@ class CommandController extends Controller
     /**
      * config文件测试
      */
-    public function cfg_test(){
+    public function cfg_test()
+    {
         $DeviceCtrl = A('Device');
         if (IS_POST) {
             $BaseCtrl = A('Base');
@@ -224,8 +225,8 @@ class CommandController extends Controller
                 $this->error('上传失败');
             }
         } else {
-            $macs=$DeviceCtrl->mac_select();
-            $this->assign('macs',$macs);
+            $macs = $DeviceCtrl->mac_select();
+            $this->assign('macs', $macs);
             $this->show();
         }
     }
