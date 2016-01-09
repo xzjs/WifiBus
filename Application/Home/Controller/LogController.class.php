@@ -25,7 +25,7 @@ class LogController extends Controller
     public function add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg, $heartbeat)
     {
         $LogModel = M('Log');
-        $data = [
+        $data = array(
             'mac' => $mac,
             'lon' => $lon,
             'lat' => $lat,
@@ -36,7 +36,7 @@ class LogController extends Controller
             'arg' => $arg,
             'heartbeat' => $heartbeat,
             'time' => time()
-        ];
+        );
         $LogModel->add($data);
         $num = $LogModel->count();
         if ($num > 200000) {
