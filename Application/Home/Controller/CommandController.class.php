@@ -61,10 +61,10 @@ class CommandController extends Controller
      * @param int $arg 参数
      * @throws
      */
-    public function ping($mac = '2e:60:ed:d8:3d:0a', $lon = 120, $lat = 36, $online_num = 0, $usage = 0, $flow_num = 0, $cmd = 0, $arg = 0, $heartbeat = 0)
+    public function ping($mac = '2e:60:ed:d8:3d:0a', $lon = 120, $lat = 36, $online_num = 0, $usage = 0, $flow_num = 0, $cmd = 0, $arg = 0, $ver = 0)
     {
         $LogCtrl = A('Log');
-        $LogCtrl->add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg, $heartbeat);
+        $LogCtrl->add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg, $ver);
         $Device = D("Device");
         $condition['mac'] = $mac;
         $d = $Device->where($condition)->find();
