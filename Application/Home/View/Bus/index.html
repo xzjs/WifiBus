@@ -26,6 +26,7 @@
         <td>在线人数</td>
         <td>流量</td>
         <td>heartbeat版本号</td>
+        <td>待发送命令</td>
     </tr>
     <volist name="data" id="vo">
         <tr>
@@ -39,6 +40,7 @@
             <td>{$vo.Device.online_num}</td>
             <td>{$vo.Device.flow_num}</td>
             <td>{$vo.heartbeat}</td>
+            <td>{$vo.cmd}</td>
         </tr>
     </volist>
 </table>

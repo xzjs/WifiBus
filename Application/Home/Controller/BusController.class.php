@@ -250,6 +250,7 @@ class BusController extends Controller
         $BusModel = D('Bus');
         $buses = $BusModel->relation(true)->select();
         $LogCtrl = D('Log');
+        $CommandCtrl=D('Command');
         for ($i = 0; $i < count($buses); $i++) {
             $condition = array(
                 'mac' => $buses[$i]['Device']['mac'],
@@ -257,6 +258,12 @@ class BusController extends Controller
             );
             $log = $LogCtrl->where($condition)->order('time desc')->find();
             $buses[$i]['heartbeat'] = $log['heartbeat'];
+            $cmd_condition=array(
+                'device_id'=>$buses[$i]['Device']['id'],
+                'status'=>0
+            );
+            $cmd=$CommandCtrl->where($cmd_condition)->order('time')->find();
+            $buses[$i]['cmd']=$cmd['cmd'];
         }
 
         $this->assign('data', $buses);
