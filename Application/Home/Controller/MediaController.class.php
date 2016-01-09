@@ -23,7 +23,7 @@ class MediaController extends BaseController
 	  // $file_name=I('post.ye');
 	   
 	  $this->success('ok');
-		$cmd_result1=$CommandCtrl->add($device_id,'Firmwareupdate','/WifiBus/Update/|'.$file_name.'|'.'heatbeat');
+		$cmd_result1=$CommandCtrl->add($device_id,'Firmwareupdate','/WifiBus/Update/|'.$file_name.'|'.'heartbeat');
 	 if($cmd_result1>0)
 	 $this->success('ok');
 	  //  $cmd_result2=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$name_str[0].'.jpg'.'|'.I('post.position').'.jpg');

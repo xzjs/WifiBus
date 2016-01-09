@@ -44,10 +44,10 @@ class BaseController extends Controller
     /**
      * 父类构造函数
      */
-    public function __construct(){
+    /*public function __construct(){
         parent::__construct();
-        /*if(!$_SESSION['admin']){
+        if(!$_SESSION['admin']){
             $this->error('请先登录',U('Admin/login'));
-        }*/
-    }
+        }
+    }*/
 }
