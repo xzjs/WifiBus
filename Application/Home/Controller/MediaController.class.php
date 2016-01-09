@@ -71,7 +71,7 @@ class MediaController extends BaseController
                     }
                     if($result){
                         $CommandCtrl=A('Command');
-                        $cmd_result=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$img.'|'.I('post.position').'.'.I('post.suffix'));
+                        $cmd_result=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$img.'|'.I('post.position').'.jpg');
                         if($cmd_result){
                             $error_data['status']=0;
                             $error_data['data']='成功';
@@ -88,7 +88,7 @@ class MediaController extends BaseController
         } else {
             $error_data['data']= $Media->getError();
         }
-        echo json_encode($error_data);
+        $this->ajaxReturn($error_data);
     }
     
     /**
@@ -253,7 +253,4 @@ class MediaController extends BaseController
             $this->error($Media->getError());
         }
     }
-
-
-    
 }

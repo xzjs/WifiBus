@@ -16,11 +16,9 @@
 
         <div class="userLeftBar">
             <div class="search_line_far">
-
                 <ul>
                 <volist name="line_list" id="vo" empty=" " key="k">
                 <if condition="($k eq 1)">
-
                 <li class="showTemp"
                     onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
                 <input type="checkbox" name="roadLine" value={$vo.id} class="line_array">
@@ -78,19 +76,21 @@
                     </div>
                     <ul class="movie">
                         <li>
-                            <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="">
+                            <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="" >
 
                             <div class="dis">
                                 <p>X</p>
 
                                 <form id="ad1">
                                     <div>
-                                        <p>广告链接: </p>
+                                        <p>广告链接： </p>
                                         <input type="url" name="url">
                                     </div>
                                     <div>
-                                        <p>广告图片：</p>
-                                        <input type="file" name="file" accept="image/jpeg">
+                                        <p>广告图片： </p>
+                                        <input type="file" class="file" name="file" onchange="ye1.value=value" accept="image/jpeg">
+                                        <input name="ye1" class="ye1">
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
                                     </div>
                                     <div>
                                         <p>文字简介： </p>
@@ -98,15 +98,178 @@
                                     </div>
                                     <input type="hidden" value="ad1" name="position">
                                     <input type="hidden" value="1" name="type">
-                                    <input type="hidden" value="jpg" name="suffix">
 
                                     <div class="dis_button">
-                                        <input type="button" value="提交" onclick="upload('ad1')">
+                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'ad1')">
                                     </div>
                                 </form>
                             </div>
                         </li>
+
+
                         <li>
+                            <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="" >
+
+                            <div class="dis">
+                                <p>X</p>
+
+                                <form id="ad2">
+                                    <div>
+                                        <p>广告链接： </p>
+                                        <input type="url" name="url">
+                                    </div>
+                                    <div>
+                                        <p>广告图片： </p>
+                                        <input type="file" class="file" name="file" onchange="ye1.value=value" accept="image/jpeg">
+                                        <input name="ye1" class="ye1">
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
+                                    </div>
+                                    <div>
+                                        <p>文字简介： </p>
+                                        <input type="text" name="text">
+                                    </div>
+                                    <input type="hidden" value="ad2" name="position">
+                                    <input type="hidden" value="1" name="type">
+
+                                    <div class="dis_button">
+                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'ad2')">
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+
+                        <li>
+                            <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="" >
+
+                            <div class="dis">
+                                <p>X</p>
+
+                                <form id="ad3">
+                                    <div>
+                                        <p>广告链接： </p>
+                                        <input type="url" name="url">
+                                    </div>
+                                    <div>
+                                        <p>广告图片： </p>
+                                        <input type="file" class="file" name="file" onchange="ye1.value=value" accept="image/jpeg">
+                                        <input name="ye1" class="ye1">
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
+                                    </div>
+                                    <div>
+                                        <p>文字简介： </p>
+                                        <input type="text" name="text">
+                                    </div>
+                                    <input type="hidden" value="ad3" name="position">
+                                    <input type="hidden" value="1" name="type">
+
+                                    <div class="dis_button">
+                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'ad3')">
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <li>
+                            <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="" >
+
+                            <div class="dis">
+                                <p>X</p>
+
+                                <form id="ad4">
+                                    <div>
+                                        <p>广告链接： </p>
+                                        <input type="url" name="url">
+                                    </div>
+                                    <div>
+                                        <p>广告图片： </p>
+                                        <input type="file" class="file" name="file" onchange="ye1.value=value" accept="image/jpeg">
+                                        <input name="ye1" class="ye1">
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
+                                    </div>
+                                    <div>
+                                        <p>文字简介： </p>
+                                        <input type="text" name="text">
+                                    </div>
+                                    <input type="hidden" value="ad4" name="position">
+                                    <input type="hidden" value="1" name="type">
+
+                                    <div class="dis_button">
+                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'ad4')">
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <li>
+                            <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="" >
+
+                            <div class="dis">
+                                <p>X</p>
+
+                                <form id="ad5">
+                                    <div>
+                                        <p>广告链接： </p>
+                                        <input type="url" name="url">
+                                    </div>
+                                    <div>
+                                        <p>广告图片： </p>
+                                        <input type="file" class="file" name="file" onchange="ye1.value=value" accept="image/jpeg">
+                                        <input name="ye1" class="ye1">
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
+                                    </div>
+                                    <div>
+                                        <p>文字简介： </p>
+                                        <input type="text" name="text">
+                                    </div>
+                                    <input type="hidden" value="ad5" name="position">
+                                    <input type="hidden" value="1" name="type">
+
+                                    <div class="dis_button">
+                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'ad5')">
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+
+
+
+                        <li>
+                            <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="" >
+
+                            <div class="dis">
+                                <p>X</p>
+
+                                <form id="ad6">
+                                    <div>
+                                        <p>广告链接： </p>
+                                        <input type="url" name="url">
+                                    </div>
+                                    <div>
+                                        <p>广告图片： </p>
+                                        <input type="file" class="file" name="file" onchange="ye1.value=value" accept="image/jpeg">
+                                        <input name="ye1" class="ye1">
+                                        <input type="button" value="打开" class="button" onclick=file.click()>
+                                    </div>
+                                    <div>
+                                        <p>文字简介： </p>
+                                        <input type="text" name="text">
+                                    </div>
+                                    <input type="hidden" value="ad6" name="position">
+                                    <input type="hidden" value="1" name="type">
+
+                                    <div class="dis_button">
+                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'ad6')">
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+
+
+
+                      <!--  <li>
                             <img class="imgs" src="__PUBLIC__/images/field.jpg" alt="">
 
                             <div class="dis">
@@ -250,7 +413,7 @@
                                     </div>
                                 </form>
                             </div>
-                        </li>
+                        </li>-->
                         <div class="clear"></div>
                     </ul>
                     <p></p>
@@ -308,7 +471,7 @@
      * 文件上传函数
      * @param id form id
      */
-    function upload(id) {
+    /*function upload(id) {
     	var busArr = new Array();
     	for (var i = 0; i < checkedIdList.length; i++) {
     		if (checkedIdList[i].isChecked)
@@ -328,14 +491,69 @@
 	            contentType: false
 	        }).done(function (res) {
 	            $(".dis").hide();
-	            getDeviceInfo();
+	            getDisplay();
 	        }).fail(function (res) {
 	            alert(res)
 	        });
 	    }else{
 			alert("没有选中车辆!");
 		}
-}
+}*/
+
+
+    /**
+     * 文件后缀验证
+     */
+    function validateFile(sourceStr,type){
+        var FileListType=type;
+        var destStr = sourceStr.substring(sourceStr.lastIndexOf(".")+1,sourceStr.length)
+        if(FileListType.indexOf(destStr) == -1){
+            return false;
+        }
+        return true;
+    }
+
+    function upload(input,position) {
+        var busArr = new Array();
+        for (var i = 0; i < checkedIdList.length; i++) {
+            if (checkedIdList[i].isChecked)
+                busArr[i] = checkedIdList[i].id;
+        }
+
+        var type=input[1].accept;
+        if(input[0].value=="")
+            alert("广告链接不能为空！");
+        else if(input[1].value=="")
+            alert("广告图片不能为空！");
+        else if(input[4].value=="")
+            alert("文字简介不能为空！");
+        else{
+            if(!validateFile(input[1].value,"jpg")){
+                alert("图片简介文件格式只能为jpg！");
+                return;
+            }
+
+            var ids = arr_to_str(busArr);
+
+            var form = $("#" + position)[0];
+            var formData = new FormData(form);
+            formData.append('ids', ids);
+
+            $.ajax({
+                url: "{:U('Media/add')}",
+                type: 'POST',
+                cache: false,
+                data: formData,
+                processData: false,
+                contentType: false
+            }).done(function (res) {
+                $(".dis").slideUp();
+                getDisplay();
+            }).fail(function (res) {
+                alert(res);
+            });
+        }
+    }
 
     /**
      * 将数组转化为字符串,用下划线分隔
@@ -344,48 +562,53 @@
     function arr_to_str(arr) {
         var str = '';
         for (var i = 0; i < arr.length; i++) {
-            if(arr[i].isChecked){
                 if(str!=''){
                     str += '_';
                 }
-                str += arr[i].id;
-            }
+                str += arr[i];
         }
         return str;
     }
 
     function change_img(ids) {
-        $.get("{:U('Bus/get_info')}/ids/" + ids + "/type/1", function (data, status) {
-            var medias = $.parseJSON(data);
-            console.log(medias);
-            var position_arr = new Array('ad1', 'ad2', 'ad3', 'ad4', 'ad5', 'ad6');
-            var img_arr = new Array('field.jpg', 'field.jpg', 'field.jpg', 'field.jpg', 'field.jpg', 'field.jpg');
-            for (var i = 0; i < position_arr.length; i++) {
-                var flag=true;
-                for (var j = 0; j < medias.length; j++) {
-                    for (var k = 0; k < medias[j].length; k++) {
-                        if (medias[j][k].position == position_arr[i]) {
-                            if (flag) {
-                                flag=false;
-                                img_arr[i] = medias[j][k].img;
-                            } else {
-                                if (img_arr[i] != medias[j][k].img) {
-                                    img_arr[i] = 'field.jpg';
-                                    break;
+        if(ids!="") {
+            $.get("{:U('Bus/get_info')}/ids/" + ids + "/type/1", function (data, status) {
+                var medias = $.parseJSON(data);
+                console.log(medias);
+                var position_arr = new Array('ad1', 'ad2', 'ad3', 'ad4', 'ad5', 'ad6');
+                var img_arr = new Array('field.jpg', 'field.jpg', 'field.jpg', 'field.jpg', 'field.jpg', 'field.jpg');
+                for (var i = 0; i < position_arr.length; i++) {
+                    var flag = true;
+                    for (var j = 0; j < medias.length; j++) {
+                        for (var k = 0; k < medias[j].length; k++) {
+                            if (medias[j][k].position == position_arr[i]) {
+                                if (flag) {
+                                    flag = false;
+                                    img_arr[i] = medias[j][k].img;
+                                } else {
+                                    if (img_arr[i] != medias[j][k].img) {
+                                        img_arr[i] = 'field.jpg';
+                                        break;
+                                    }
                                 }
                             }
                         }
-                    }
-                    if (img_arr[i] == 'field.jpg') {
-                        break;
+                        if (img_arr[i] == 'field.jpg') {
+                            break;
+                        }
                     }
                 }
-            }
+                var imgs = $(".imgs");
+                for (var i = 0; i < imgs.length; i++) {
+                    imgs[i].src = "__ROOT__/Update/" + img_arr[i];
+                }
+            })
+        }else{
             var imgs = $(".imgs");
             for (var i = 0; i < imgs.length; i++) {
-                imgs[i].src = "__ROOT__/Update/" + img_arr[i];
+                imgs[i].src = "__PUBLIC__/images/field.jpg";
             }
-        })
+        }
     }
 
     function getDisplay(){
@@ -394,6 +617,47 @@
     		if (checkedIdList[i].isChecked)
     			busArr[i] = checkedIdList[i].id;
     	}
-        change_img(arr_to_str(busArr));
+        if (busArr.length > 0) {
+            $.post('get_media_info', {
+                ids : busArr,
+            }, function(data, status) {
+                if (status == 4 || status == "success") {
+                    var device_info = eval(data);
+                    var imgs = $(".imgs");
+
+                    if(device_info.ad1!=null)
+                        imgs[0].src=device_info.ad1.img;
+                    else
+                        imgs[0].src="__PUBLIC__/images/field.jpg";
+
+                    if(device_info.ad2!=null)
+                        imgs[1].src=device_info.ad2.img;
+                    else
+                        imgs[1].src="__PUBLIC__/images/field.jpg";
+
+                    if(device_info.ad3!=null)
+                        imgs[2].src=device_info.ad3.img;
+                    else
+                        imgs[2].src="__PUBLIC__/images/field.jpg";
+                    if(device_info.ad4!=null)
+                        imgs[3].src=device_info.ad4.img;
+                    else
+                        imgs[3].src="__PUBLIC__/images/field.jpg";
+                    if(device_info.ad5!=null)
+                        imgs[4].src=device_info.ad5.img;
+                    else
+                        imgs[4].src="__PUBLIC__/images/field.jpg";
+                    if(device_info.ad6!=null)
+                        imgs[5].src=device_info.ad6.img;
+                    else
+                        imgs[5].src="__PUBLIC__/images/field.jpg";
+                }
+            });
+        }else{
+            var imgs = $(".imgs");
+            for (var i = 0; i < imgs.length; i++) {
+                imgs[i].src = "__PUBLIC__/images/field.jpg";
+            }
+        }
     }
 </script>
