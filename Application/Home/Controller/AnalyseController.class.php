@@ -169,7 +169,6 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 	public function get_online_num(){
 		$line_id = I('post.line_id');
 		$bus_id =I('post.bus_id');
-		$time=time()-6*86400;
 		if ($bus_id == 0 && $line_id == 0) {
 			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=0";
 		}
@@ -185,14 +184,11 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 		
 		$result=M()->query($sql);
 		$array=array();
-		$base=A('Base');
-		$today=$base->weekday(strtotime("now "));
-		//f "d".$today;
 		for ($h = 0; $h <7; $h++) {
 			$sum[$h] = 0;
 		}
 		for($i=0;$i<count($result);$i++){
-			$dif= (int)((strtotime("now ")-(strtotime(date('Y-m-d', $result [$i] ['time']))))/86400);
+			$dif= (int)((strtotime('tomorrow')-($result [$i] ['time']))/86400);
 			$sum[$dif]=$sum[$dif]+1;
 	
 		}
@@ -200,7 +196,7 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 		for($i=6;$i>=0;$i--){
 	
 			$array[$j]=array(
-					'time'=>date('m-d',(strtotime("now ")-(86400*$i))),
+					'time'=>date('m-d',(time()-(86400*$i))),
 					'num'=>$sum[$i],
 			);
 			$j++;
@@ -234,6 +230,7 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 		$base=A('Base');
 		$today=$base->weekday(strtotime("now "));
 		//f "d".$today;
+		//$sum=array();
 		for ($h = 0; $h <7; $h++) {
 			$sum[$h] = 0;
 		}
