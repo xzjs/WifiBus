@@ -676,7 +676,7 @@ body{
     background: #fff;
     border-radius: 4px;
 }
-.search_line_far ul a,.search_car_far ul a{
+.search_line_far ul a ,.search_car_far ul a{
     font: 18px '微软雅黑', sans-serif;
     display: block;
     line-height: 52px;
@@ -685,6 +685,18 @@ body{
     text-align: center;
     cursor: pointer;
 }
+
+.search_car_far ul label{
+    font: 18px '微软雅黑', sans-serif;
+    display: block;
+    line-height: 52px;
+    height: 52px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+}
+
+
 .search_line_far ul a:hover{
     background-color: #336ca6;
 }

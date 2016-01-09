@@ -43,21 +43,20 @@ function get_bus_list_check(url, id, display, order) {
 						function(data, status) {
 							if (status == 4 || status == "success") {
 								var bus_info = eval(data);
-								var bus_list = "";
+								var bus_list = "<br/><br/>";
 								
 								for (var i = 0; i < bus_info.length; i++) {
 									var a=getCheckState(bus_info[i].id);
 									if(a==true){
-										var str=" checked='true' ";
+										var str=" checked='true' ";  
 									}else{
 										var str=" ";
 									} 
-									bus_list += "<li><input type='checkbox' class='bus_array' id="
-											+ id +str
+									bus_list += "<li><label for="+bus_info[i].id+">"+bus_info[i].no+"</label><input type='checkbox' class='bus_array' id="
+											+ bus_info[i].id +str +"data-line="+id+
 											+ " onchange='getCheckedList(this)' name='car' value="
 											+ bus_info[i].id
-											+ "> <a>"
-											+ bus_info[i].no + "</a></li>";
+											+ "></li>";
 								}
 								$("ul#" + display).html(bus_list);
 								var lineList = $(".line_array");
@@ -128,14 +127,14 @@ function busCheckChange(theBus){
 	var lineList = $(".line_array");
 	if(!theBus.checked){
 		for(var i=0;i<lineList.length;i++){
-			if(lineList[i].value==theBus.id)
+			if(lineList[i].value==$(theBus).attr('data-line'))
 				lineList[i].checked=false;
 				checkedLineArr[i] = lineList[i].checked;
 		}
 		if(getBusIndex(theBus.value)!=-1){
 			checkedIdList[getBusIndex(theBus.value)].isChecked=theBus.checked;
 		}else{
-			checkedIdList.push(new Bus(theBus.id,theBus.value,false));//增加到选中check列表
+			checkedIdList.push(new Bus($(theBus).attr('data-line'),theBus.value,false));//增加到选中check列表
 		}
 	}else{
 		var flag=new Boolean(true);
@@ -144,7 +143,7 @@ function busCheckChange(theBus){
 				flag=false;
 		}
 		for(var i=0;i<lineList.length;i++){
-			if(lineList[i].value==theBus.id)
+			if(lineList[i].value==$(theBus).attr('data-line'))
 				lineList[i].checked=flag;
 				checkedLineArr[i] = lineList[i].checked;
 		}
@@ -152,7 +151,7 @@ function busCheckChange(theBus){
 	if(getBusIndex(theBus.value)!=-1){
 		checkedIdList[getBusIndex(theBus.value)].isChecked=theBus.checked;
 	}else{
-		checkedIdList.push(new Bus(theBus.id,theBus.value,theBus.checked));//增加到选中check列表
+		checkedIdList.push(new Bus($(theBus).attr('data-line'),theBus.value,theBus.checked));//增加到选中check列表
 	}
 }
 
