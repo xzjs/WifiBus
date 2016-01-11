@@ -588,10 +588,10 @@ body{
 }
 .adv_footer>ul>li{
     float: left;
-    width: 390px;
+    width: 375px;
     height: 230px;
     background-color: #ddd;
-    margin-right: -100px;
+    margin-right: -75px;
 }
 
 /*********************************************/
