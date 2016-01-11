@@ -15,8 +15,10 @@ use Think\Controller;
  */
 class AnalyseController extends Controller
 {
-
-
+/* function test(){
+	echo (int)( date ( "H", "1452456000" ));
+}
+ */
 
 	/**分析页面获取前十上网用户
 	 *
@@ -60,13 +62,13 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 				
 			for($i=(date('H',strtotime("-0 hour")));$i>=0;$i--){
 				
-			$time[$j]=date('H',strtotime("-".$i."hour"));
+			$time[$j]=(int)date('H',strtotime("-".$i."hour"));
 			$j++;
 		
 		}
 		
 		for($i=0;$i<count($result);$i++){
-			$shour = date ( "H", $result [$i] ['time'] );
+			$shour =( date ( "H", $result [$i] ['time'] ));
 			$n = $now_h-$shour ;
 			
 			$to[$n] = $to[$n] + 1;

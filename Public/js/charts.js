@@ -874,6 +874,7 @@ function adver_rankOptionFunction3(no,num) {
 
 function adver_rankOptionFunction2(busno,value){
     option = {
+
         title : {
             text: '当日上网用户TOP10',
             textStyle:{
@@ -920,6 +921,7 @@ function adver_rankOptionFunction2(busno,value){
 
 function adver_rankOptionFunction1(time,value){
     option = {
+
         color:["#FF6666"],
         title: {
             text: '当日用户上网走势',
@@ -934,9 +936,11 @@ function adver_rankOptionFunction1(time,value){
         xAxis: [
             {
                 type: 'category',
+               
                 boundaryGap: false,
                 data: time,
                 axisLabel:{
+                	formatter: '{value}时',
                     textStyle:{
                         "color":"#FFFFFF"
                     }
