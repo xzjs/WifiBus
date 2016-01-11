@@ -22,7 +22,7 @@ class MediaController extends BaseController
 	//   $device_idhh=$device->get_id(I('post.mac'));
 	  // $file_name=I('post.ye');
 	   
-	  $this->success('ok');
+
 		$cmd_result1=$CommandCtrl->add($device_id,'Firmwareupdate','/WifiBus/Update/|'.$file_name.'|'.'heartbeat');
 	 if($cmd_result1>0)
 	 $this->success('ok');
