@@ -457,49 +457,18 @@
                 var bus_list = "<br/><br/>";
 
                 for (var i = 0; i < bus_info.length; i++) {
-                    bus_list += "<li>" +
-                            "<input class= 'bus_array' type='checkbox' name='car' value="+ bus_info[i].id +" onchange='getCheckedList(this)'> <a>"+bus_info[i].no+"</a>"
-                            +"</li>";
+
+                    bus_list += "<li><label for="+bus_info[i].id+">"+bus_info[i].no+"</label><input type='checkbox' class='bus_array' id="
+                            + bus_info[i].id
+                            + " onchange='getCheckedList(this)' name='car' value="
+                            + bus_info[i].id
+                            + "></li>"
                 }
 
                 $("ul#bus_list_check").html(bus_list);
             }
         });
     }
-
-    /**
-     * 文件上传函数
-     * @param id form id
-     */
-    /*function upload(id) {
-    	var busArr = new Array();
-    	for (var i = 0; i < checkedIdList.length; i++) {
-    		if (checkedIdList[i].isChecked)
-    			busArr[i] = checkedIdList[i].id;
-    	}
-    	if (busArr.length > 0) {
-	        var ids = arr_to_str(busArr);
-	        var form = $("#" + id)[0];
-	        var formData = new FormData(form);
-	        formData.append('ids', ids);
-	        $.ajax({
-	            url: "{:U('Media/add')}",
-	            type: 'POST',
-	            cache: false,
-	            data: formData,
-	            processData: false,
-	            contentType: false
-	        }).done(function (res) {
-	            $(".dis").hide();
-	            getDisplay();
-	        }).fail(function (res) {
-	            alert(res)
-	        });
-	    }else{
-			alert("没有选中车辆!");
-		}
-}*/
-
 
     /**
      * 文件后缀验证
@@ -512,6 +481,12 @@
         }
         return true;
     }
+
+
+    /**
+     * 文件上传函数
+     * @param id form id
+     */
 
     function upload(input,position) {
         var busArr = new Array();

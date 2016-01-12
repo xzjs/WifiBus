@@ -1641,7 +1641,8 @@ search_car> div+ul{
     font-style: normal;
     font-size: 11px;
     cursor: pointer;
-    margin-bottom : 50px
+    position: absolute;
+    bottom: 50px;
 }
 
 

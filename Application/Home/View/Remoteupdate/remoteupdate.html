@@ -51,8 +51,6 @@
 
 
             <div class="search_car_far">
-
-
                 <ul id="bus_list_check">
                     <br/>
                     <br/>
@@ -861,9 +859,12 @@ function search_bus_list(url,keys) {
             var bus_list = "<br/><br/>";
 
             for (var i = 0; i < bus_info.length; i++) {
-                bus_list += "<li>" +""
-                        "<input class= 'bus_array' type='checkbox' name='car' value="+ bus_info[i].id +" onchange='getCheckedList(this)'> <a>"+bus_info[i].no+"</a>"
-                        +"</li>";
+
+                bus_list += "<li><label for="+bus_info[i].id+">"+bus_info[i].no+"</label><input type='checkbox' class='bus_array' id="
+                        + bus_info[i].id
+                        + " onchange='getCheckedList(this)' name='car' value="
+                        + bus_info[i].id
+                        + "></li>"
             }
 
             $("ul#bus_list_check").html(bus_list);

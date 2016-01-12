@@ -16,7 +16,6 @@ class MediaController extends BaseController
 	 */
 	public function upload_devicefile() {
 		$error_data['status']=0;
-		
 		//$file_name=$this->upload_file();
 		$upload = new \Think\Upload(); // 实例化上传类
 		$upload->maxSize = 9999999999999; // 设置附件上传大小
@@ -33,8 +32,8 @@ class MediaController extends BaseController
 
 		$cmd_result1=$CommandCtrl->add($device_id,'Firmwareupdate','/WifiBus/Update/|'.$file_name.'|'.'heartbeat');
 	 if($cmd_result1>0)
-	 	//echo $file_name;
-	 $this->success('ok');
+	 	echo $file_name;
+	 //$this->success('ok');
 	  //  $cmd_result2=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$name_str[0].'.jpg'.'|'.I('post.position').'.jpg');
 	 			
 	}
