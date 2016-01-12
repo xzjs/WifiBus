@@ -26,6 +26,7 @@ class BaseController extends Controller
         }
         return false;
     }
+    
 
     /**
      * 文件上传

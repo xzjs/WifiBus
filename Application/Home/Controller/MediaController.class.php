@@ -22,7 +22,6 @@ class MediaController extends BaseController
 		$upload->rootPath = "./Update/"; // 设置附件上传根目录
 		$upload->autoSub = false;
 		$upload->saveName = '_' . time(); // 上传文件
-        var_dump($upload);
 		$info = $upload->upload();
 		$file_name=$info ['file'] ['savename'];
 	    $CommandCtrl=A('Command');
