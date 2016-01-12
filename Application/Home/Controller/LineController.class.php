@@ -19,8 +19,14 @@ class LineController extends Controller
     public function select()
     {
         $line = D('Line');
-        //$id=I('post.id');
-        $data = $line->field('id as lineId,name as lineName')->order('id')->select();
+        $linename=I('post.linename');
+        if($linename)
+        { $condition['name'] = $linename;
+        $data = $line->field('id as lineId,name as lineName')->where($condition)->order('id')->select();
+        }
+        else
+        	$data = $line->field('id as lineId,name as lineName')->order('id')->select();
+        	 
         $a = json_encode($data);
         echo $a;
     }
