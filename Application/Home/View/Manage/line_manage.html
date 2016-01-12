@@ -16,9 +16,9 @@
         </div>
         <div id="allmap" class="big_map"></div>
         <div class="search_line">
-            <form action="form">
-                <input type="text">
-                <input type="submit" value="提交">
+            <form action="" method="post">
+                <input type="text" id="lineName" name="lineName">
+                <input type="button" onclick="showLine()" value="提交">
             </form>
             <ul id="ul_line_list">
                 <li>
@@ -455,13 +455,14 @@
     //刷新线路列表
     function showLine(id) {
         var lineId = id || "";
+        var linename=$('#lineName').val();
         if (!id) {
             $.ajax({
                 url: "../Line/select",
                 type: "POST",
                 data: {
                     sqlType: 0,
-                    lineId: lineId
+                    linename: linename
                 },
                 success: function (data, status) {
                     var list = $.parseJSON(data),
