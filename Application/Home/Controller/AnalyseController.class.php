@@ -25,7 +25,7 @@ class AnalyseController extends Controller
 	 */
 	public function fenxi_get_on_line_top(){
 		$result=M()->query("	SELECT COUNT(think_wifidoglog.id) AS VALUE ,think_bus.no FROM think_wifidoglog,think_bus,think_device 
-WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_device.bus_id AND
+WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_device.bus_id AND
  think_device.mac=think_wifidoglog.device_mac GROUP BY think_wifidoglog.device_mac ORDER BY VALUE  LIMIT 10
 				");
 		$busno;
@@ -39,7 +39,15 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 				"busno"=>$busno,
 				"value"=>$value,
 		);
-	
+		if(count ( $result )==0){
+			for($i = 0; $i < 5;$i++){
+				$array [$i] = array (
+						'text' => "",
+							
+						'click_num' => 0
+				);
+			}
+		}
 		echo json_encode($array);
 		//echo "ff".(date('H',strtotime("-0 hour"))+1);
 	}
@@ -56,9 +64,11 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 		$now_h = date ( "H", $now ) ;
 	$time;
 	$j=0;
+	$total;
 	for($h = 0; $h<(date('H',strtotime("-0 hour"))+1); $h ++) {
 		$to [$h] = 0;
-	}
+		$total [$h] = 0;
+	}	
 				
 			for($i=(date('H',strtotime("-0 hour")));$i>=0;$i--){
 				
@@ -73,18 +83,22 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 			
 			$to[$n] = $to[$n] + 1;
 		}
-		$p=(date('H',strtotime("-0 hour")));
+		
+		$p= count($to)-1;
+	
 		for($h = 0; $h<(date('H',strtotime("-0 hour"))+1); $h ++) {
 			$total [$h] = $to[$p];
 			$p--;
+			
 		}
 		$array=array(
 				"time"=>$time,
 				"num"=>$total,
 		);
-		
+	
+	//echo  json_encode($total); 
 	echo json_encode($array); 
-		//echo "ff".(date('H',strtotime("-0 hour"))+1);
+	
 	}
 	
 	/**
@@ -348,8 +362,8 @@ GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 	
 	}
 public function get_ad_click_top() {
-		 $line_id = I('post.line_id');
-		$bus_id =I('post.bus_id');	
+		 $line_id = 0;
+		$bus_id =0	;
 		if ($bus_id == 0 && $line_id == 0) {
 			$sql = 'SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac WHERE mac.media_id=md.id GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6';
 		} else {
@@ -376,7 +390,16 @@ public function get_ad_click_top() {
 			)
 			;
 		} 
-		echo json_encode ( $array );
+		if(count ( $result )==0){
+	for($i = 0; $i < 5;$i++){
+			$array [$i] = array (
+					'text' => "",
+					
+					'click_num' => 0
+			);
+		}
+		}
+		echo json_encode($array);
 		
 		/* $data = array (
 				'name' => array (
