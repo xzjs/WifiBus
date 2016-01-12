@@ -828,14 +828,12 @@ body{
     height: 110px;
 }
 .movie{
-    display: none;
     width: 770px;
     border-radius: 4px;
     background: #fff;
     margin: 10px 0 0 0 ;
 }
 .book{
-    display: none;
     width: 770px;
     border-radius: 4px;
     background: #fff;
@@ -862,7 +860,6 @@ body{
     margin: 6px 15px 10px 30px;
 }
 .app{
-    display: none;
     width: 770px;
     border-radius: 4px;
     background: #fff;

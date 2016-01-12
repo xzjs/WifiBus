@@ -39,7 +39,7 @@
                 <div class="clr"></div>
             </ul>
         </div>
-        <div class="display">
+        <div class="display" >
             <select id="line_selector" onchange="get_bus_list_line('{:U('Bus/select')}',this.value,'bus_no_selector')">
                 <volist name="line_list" id="vo" empty=" ">
                     <option value={$vo.id}>{$vo.name}</option>
@@ -55,7 +55,6 @@
             </div>
             <ul class="select" id="bus_no_selector">
                 <volist name="bus_list" id="vo" empty=" ">
-                
                     <li><a href="#" onclick="show_bus('__CONTROLLER__/bus/str/{$vo.id}/flag/0','')">{$vo.no}</a></li>
                 </volist>
             </ul>
