@@ -239,8 +239,6 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 		$array=array();
 		$base=A('Base');
 		$today=$base->weekday(strtotime("now "));
-		//f "d".$today;
-		//$sum=array();
 		for ($h = 0; $h <7; $h++) {
 			$sum[$h] = 0;
 		}
@@ -294,7 +292,7 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 		$this->assign('title','广告和流量分析');
 		$this->assign('class2','action');
 		$yestoday=strtotime("-24hours");
-		$sql="SELECT COUNT(l.id) AS num,b.no FROM think_log AS l,think_device AS d,think_bus AS b WHERE b.id=d.bus_id AND d.mac=l.mac AND l.time>".$yestoday." GROUP BY l.mac ORDER BY num limit 10";
+		$sql="SELECT COUNT(l.id) AS num,d.mac,b.no FROM (SELECT * FROM think_log WHERE think_log.time>".$yestoday.") AS l RIGHT JOIN think_device AS d ON d.mac=l.mac RIGHT JOIN think_bus AS b ON b.id=d.bus_id GROUP BY d.mac ORDER BY num";
 		$result=M()->query($sql);
 		$max=24*60*12;
 		for($i=0;$i<10;$i++){
