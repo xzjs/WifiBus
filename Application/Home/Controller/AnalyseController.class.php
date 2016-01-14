@@ -119,7 +119,7 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 	 */
 	public function select(){
 		
-		$result = M()->query("SELECT d.id,b.no, d.mac FROM think_device AS d,think_bus AS b WHERE b.id=d.bus_id and(UNIX_TIMESTAMP(NOW())-d.TIME) >30");
+		$result = M()->query("SELECT d.id,b.no, d.mac FROM think_device AS d,think_bus AS b WHERE b.id=d.bus_id and(UNIX_TIMESTAMP(NOW())-d.TIME) ");
 		
 		for($i=0;$i<count($result);$i++){
 			$array[$i]=array(

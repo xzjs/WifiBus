@@ -105,20 +105,21 @@ $(function () {
 			        			 $.ajax({
 			        					type:"get",
 			        					url:"../Command/get_result/id/"+id,
+			        					
 			         				     success:function(data2){
+			         				    
 			         				    	// alert("f"+data2);
 			         				    	var t=eval("("+data2+")");
-			        				    	//alert("ff"+t.id);
+			         				   	alert(t.return_arg);;
 			        				    	  var content= $("#feedback").val()+'\n'+" "+
-			        				    	 $("#in").val()+'\n'+"  "+
-			        				    	 +t.return_arg;  			        		
+			        				    	 $("#in").val()+'\n'+"  "+t.return_arg;  			        		
 			        				    	 $("#feedback").val(content);
 			        				    	 $("#in").val("");
 			        				    	
 			        				     }
 			        				     });
 			        		 },
-			        		 6000);
+			        		 10000);
 				
 					}
 				else
