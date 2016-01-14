@@ -17,11 +17,14 @@ class LineController extends Controller
      * 线路查询
      */
     public function select()
+    
     {
+     
         $line = D('Line');
         $linename=I('post.linename');
-        if($linename)
+        if($linename!=null)
         { $condition['name'] = $linename;
+     
         $data = $line->field('id as lineId,name as lineName')->where($condition)->order('id')->select();
         }
         else
