@@ -588,7 +588,7 @@ body{
 }
 .adv_footer>ul>li{
     float: left;
-    width: 375px;
+    width: 28%;
     height: 230px;
     background-color: #ddd;
     margin-right: -75px;

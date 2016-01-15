@@ -35,19 +35,19 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 			$value[$h]=$result[$h]['value'];
 			
 		}
-		$array=array(
-				"busno"=>$busno,
-				"value"=>$value,
-		);
+		
 		if(count ( $result )==0){
 			for($i = 0; $i < 5;$i++){
-				$array [$i] = array (
-						'text' => "",
-							
-						'click_num' => 0
-				);
+				$busno[$i]="";
+				$value[$i]="0";
 			}
 		}
+		
+			$array=array(
+					"busno"=>$busno,
+					"value"=>$value,
+			);
+		
 		echo json_encode($array);
 		//echo "ff".(date('H',strtotime("-0 hour"))+1);
 	}
@@ -119,7 +119,7 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 	 */
 	public function select(){
 		
-		$result = M()->query("SELECT d.id,b.no, d.mac FROM think_device AS d,think_bus AS b WHERE b.id=d.bus_id and(UNIX_TIMESTAMP(NOW())-d.TIME) >30");
+		$result = M()->query("SELECT d.id,b.no, d.mac FROM think_device AS d,think_bus AS b WHERE b.id=d.bus_id and(UNIX_TIMESTAMP(NOW())-d.TIME) ");
 		
 		for($i=0;$i<count($result);$i++){
 			$array[$i]=array(
@@ -309,8 +309,8 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 	 * @param number $bus_id
 	 */
 	public function get_ad_click() {
-		$line_id = 35;
-		$bus_id =0;
+	$line_id = I('post.line_id');
+		$bus_id =I('post.bus_id');
 		 if ($bus_id == 0 && $line_id == 0) {
 			$sql="SELECT SUM(mac.click_num) AS click_num,md.text,mac.time FROM think_media AS md,think_mediaclick AS mac 
 WHERE mac.media_id=md.id AND mac.time>(UNIX_TIMESTAMP(NOW())-6*86400)
@@ -360,8 +360,8 @@ GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 	
 	}
 public function get_ad_click_top() {
-		 $line_id = 0;
-		$bus_id =0	;
+		$line_id = I('post.line_id');
+		$bus_id =I('post.bus_id');
 		if ($bus_id == 0 && $line_id == 0) {
 			$sql = 'SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac WHERE mac.media_id=md.id GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6';
 		} else {
