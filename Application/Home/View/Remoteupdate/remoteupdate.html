@@ -1,3 +1,27 @@
+<?php session_start(); ?>
+
+<style type="text/css">
+    .progress{
+        width:100%;
+        border:1px solid #4da8fe;
+        border-radius:40px;
+        height:20px;
+        position:relative;
+    }
+    .progress .label{
+        position:relative;
+        text-align:center;
+    }
+    .progress .bar{
+        position:absolute;
+        left:0;top:0;
+        background:#4D90FE;
+        height:20px;
+        border-radius:40px;
+        min-width:20px;
+    }
+</style>
+
 <div class="out_container_title">
     <div class="container_title">
         <div class="left">
@@ -90,7 +114,6 @@
                     <div class="subtitle_1">
                         <p>设置本地存储更新--电影</p>
                         <a href="#"></a>
-
                         <div class="clear"></div>
                     </div>
 
@@ -107,7 +130,9 @@
                             <div class="dis">
                                 <p>X</p>
 
-                                <form id="video1">
+                                <form id="video1" enctype="multipart/form-data" style="margin:15px 0">
+
+                                    <input type="hidden" name="<?php echo ini_get('session.upload_progress.name');?>" value="test" />
                                     <div>
                                         <p>电影文件：</p>
                                         <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
@@ -116,8 +141,8 @@
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
-                                        <input name="ye1" class="ye1"> 
+                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg">
+                                        <input name="ye1" class="ye1">
                                         <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
                                     <div>
@@ -130,6 +155,10 @@
                                         <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'video1')">
                                     </div>
                                 </form>
+                                <div id="progress" class="progress" style="margin:0 0 0 0;display:none;" >
+                                    <div class="bar" style="width:0%;margin:0 0 0 0;" ></div>
+                                    <div class="label" style="margin:0 0 0 0;">0%</div>
+                                </div>
 
                             </div>
                         </li>
@@ -780,55 +809,73 @@ function upload(input,position) {
             busArr[i] = checkedIdList[i].id;
     }
 
-    var type=input[0].accept;
-        if(input[1].value=="")
-            alert("上传文件不能为空！");
-        else if(input[4].value=="")
-            alert("图片简介不能为空！");
-        else if(input[6].value=="")
-            alert("文字简介不能为空！");
-        else{
-            if(type=="video/mp4"){
-                if(!validateFile(input[1].value,"mp4")){
-                    alert("电影文件格式只能为mp4！");
-                    return;
-                }
-            }else if(type=="text/plain"){
-                if(!validateFile(input[1].value,"txt")){
-                    alert("电子书文件格式只能为txt！");
-                    return;
-                }
-            }else if(type==".apk"){
-                if(!validateFile(input[1].value,"apk")){
-                    alert("APP文件格式只能为apk！");
-                    return;
-                }
-            }
-            if(!validateFile(input[4].value,"jpg")){
-                alert("图片简介文件格式只能为jpg！");
+    var type = input[1].accept;
+    if (input[2].value == "")
+        alert("上传文件不能为空！");
+    else if (input[5].value == "")
+        alert("图片简介不能为空！");
+    else if (input[7].value == "")
+        alert("文字简介不能为空！");
+    else {
+        if (type == "video/mp4") {
+            if (!validateFile(input[2].value, "mp4")) {
+                alert("电影文件格式只能为mp4！");
                 return;
             }
-
-            var ids = arr_to_str(busArr);
-            var form = $("#" + position)[0];
-            var formData = new FormData(form);
-            formData.append('ids', ids);
-
-            $.ajax({
-                url: "{:U('Media/upload')}",
-                type: 'POST',
-                cache: false,
-                data: formData,
-                processData: false,
-                contentType: false
-            }).done(function (res) {
-                $(".dis").slideUp();
-                getDisplay();
-            }).fail(function (res) {
-                alert(res);
-            });
+        } else if (type == "text/plain") {
+            if (!validateFile(input[2].value, "txt")) {
+                alert("电子书文件格式只能为txt！");
+                return;
+            }
+        } else if (type == ".apk") {
+            if (!validateFile(input[2].value, "apk")) {
+                alert("APP文件格式只能为apk！");
+                return;
+            }
         }
+        if (!validateFile(input[5].value, "jpg")) {
+            alert("图片简介文件格式只能为jpg！");
+            return;
+        }
+
+        var ids = arr_to_str(busArr);
+        var form = $("#" + position)[0];
+        var formData = new FormData(form);
+        formData.append('ids', ids);
+        $('#progress').show();
+        setTimeout('fetch_progress()', 100);
+
+        $.ajax({
+            url: "{:U('Media/upload')}",
+            type: 'POST',
+            cache: true,
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function (res) {
+            $(".dis").slideUp();
+            getDisplay();
+        }).fail(function (res) {
+            alert("上传失败！");
+        });
     }
+}
+
+
+function fetch_progress(){
+    $.get('/WifiBus/index.php/Home/Media/progress',{ '<?php echo ini_get("session.upload_progress.name"); ?>' : 'test'}, function(data){
+        var progress = parseInt(data);
+
+        $('#progress .label').html(progress + '%');
+        $('#progress .bar').css('width', progress + '%');
+
+        if(progress < 100){
+            setTimeout('fetch_progress()', 100);
+        }else{
+            $('#progress .label').html('完成!');
+        }
+    }, 'html');
+}
 
 /**
  * 文件后缀验证
@@ -877,110 +924,110 @@ function search_bus_list(url,keys) {
  * 获取选中check列表的展示信息
  */
  function getDisplay() {
- 	var busArr = new Array();
- 	for (var i = 0; i < checkedIdList.length; i++) {
- 		if (checkedIdList[i].isChecked)
- 			busArr[i] = checkedIdList[i].id;
- 	}
- 	if (busArr.length > 0) {
- 		$.post('get_media_info', {
- 			ids : busArr,
- 		}, function(data, status) {
- 			if (status == 4 || status == "success") {
- 				var device_info = eval(data);
- 				if(device_info.video1!=null)
- 					$('img.video1').attr('src',device_info.video1.img);
- 				else
- 					$('img.video1').attr('src','__PUBLIC__/images/movie_2.png');
- 				if(device_info.video2!=null)
- 					$('img.video2').attr('src',device_info.video2.img);
- 				else
- 					$('img.video2').attr('src','__PUBLIC__/images/movie_2.png');
- 				if(device_info.video3!=null)
- 					$('img.video3').attr('src',device_info.video3.img);
- 				else
- 					$('img.video3').attr('src','__PUBLIC__/images/movie_2.png');
- 				if(device_info.video4!=null)
- 					$('img.video4').attr('src',device_info.video4.img);
- 				else
- 					$('img.video4').attr('src','__PUBLIC__/images/movie_2.png');
- 				if(device_info.video5!=null)
- 					$('img.video5').attr('src',device_info.video5.img);
- 				else
- 					$('img.video5').attr('src','__PUBLIC__/images/movie_2.png');
- 				if(device_info.video6!=null)
- 					$('img.video6').attr('src',device_info.video6.img);
- 				else
- 					$('img.video6').attr('src','__PUBLIC__/images/movie_2.png');
- 				if(device_info.video7!=null)
- 					$('img.video7').attr('src',device_info.video7.img);
- 				else
- 					$('img.video7').attr('src','__PUBLIC__/images/movie_2.png');
- 				if(device_info.video8!=null)
- 					$('img.video8').attr('src',device_info.video8.img);
- 				else
- 					$('img.video8').attr('src','__PUBLIC__/images/movie_2.png');
- 				
- 				
- 				
- 				if(device_info.book1!=null)
- 					$('img.book1').attr('src',device_info.book1.img);
- 				else
- 					$('img.book1').attr('src','__PUBLIC__/images/book_1.png');
- 				if(device_info.book2!=null)
- 					$('img.book2').attr('src',device_info.book2.img);
- 				else
- 					$('img.book2').attr('src','__PUBLIC__/images/book_1.png');
- 				if(device_info.book3!=null)
- 					$('img.book3').attr('src',device_info.book3.img);
- 				else
- 					$('img.book3').attr('src','__PUBLIC__/images/book_1.png');
- 				if(device_info.book4!=null)
- 					$('img.book4').attr('src',device_info.book4.img);
- 				else
- 					$('img.book4').attr('src','__PUBLIC__/images/book_1.png');
- 				
- 				
- 				if(device_info.app1!=null)
- 					$('img.app1').attr('src',device_info.app1.img);
- 				else
- 					$('img.app1').attr('src','__PUBLIC__/images/app.png');
- 				if(device_info.app2!=null)
- 					$('img.app2').attr('src',device_info.app2.img);
- 				else
- 					$('img.app2').attr('src','__PUBLIC__/images/app.png');
- 				if(device_info.app3!=null)
- 					$('img.app3').attr('src',device_info.app3.img);
- 				else
- 					$('img.app3').attr('src','__PUBLIC__/images/app.png');
- 				if(device_info.app4!=null)
- 					$('img.app4').attr('src',device_info.app4.img);
- 				else
- 					$('img.app4').attr('src','__PUBLIC__/images/app.png');
- 				
- 			}
- 		});
- 	}else{
-				$('img.video1').attr('src','__PUBLIC__/images/movie_2.png');
-				$('img.video2').attr('src','__PUBLIC__/images/movie_2.png');
-				$('img.video3').attr('src','__PUBLIC__/images/movie_2.png');
-				$('img.video4').attr('src','__PUBLIC__/images/movie_2.png');
-				$('img.video5').attr('src','__PUBLIC__/images/movie_2.png');
-				$('img.video6').attr('src','__PUBLIC__/images/movie_2.png');
-				$('img.video7').attr('src','__PUBLIC__/images/movie_2.png');
-				$('img.video8').attr('src','__PUBLIC__/images/movie_2.png');
-				
-				$('img.book1').attr('src','__PUBLIC__/images/book_1.png');
-				$('img.book2').attr('src','__PUBLIC__/images/book_1.png');
-				$('img.book3').attr('src','__PUBLIC__/images/book_1.png');
-				$('img.book4').attr('src','__PUBLIC__/images/book_1.png');
-				
-				$('img.app1').attr('src','__PUBLIC__/images/app.png');
-				$('img.app2').attr('src','__PUBLIC__/images/app.png');
-				$('img.app3').attr('src','__PUBLIC__/images/app.png');
-				$('img.app4').attr('src','__PUBLIC__/images/app.png');
- 	}
- }
+    var busArr = new Array();
+    for (var i = 0; i < checkedIdList.length; i++) {
+        if (checkedIdList[i].isChecked)
+            busArr[i] = checkedIdList[i].id;
+    }
+    if (busArr.length > 0) {
+        $.post('get_media_info', {
+            ids: busArr,
+        }, function (data, status) {
+            if (status == 4 || status == "success") {
+                var device_info = eval(data);
+                if (device_info.video1 != null)
+                    $('img.video1').attr('src', device_info.video1.img);
+                else
+                    $('img.video1').attr('src', '__PUBLIC__/images/movie_2.png');
+                if (device_info.video2 != null)
+                    $('img.video2').attr('src', device_info.video2.img);
+                else
+                    $('img.video2').attr('src', '__PUBLIC__/images/movie_2.png');
+                if (device_info.video3 != null)
+                    $('img.video3').attr('src', device_info.video3.img);
+                else
+                    $('img.video3').attr('src', '__PUBLIC__/images/movie_2.png');
+                if (device_info.video4 != null)
+                    $('img.video4').attr('src', device_info.video4.img);
+                else
+                    $('img.video4').attr('src', '__PUBLIC__/images/movie_2.png');
+                if (device_info.video5 != null)
+                    $('img.video5').attr('src', device_info.video5.img);
+                else
+                    $('img.video5').attr('src', '__PUBLIC__/images/movie_2.png');
+                if (device_info.video6 != null)
+                    $('img.video6').attr('src', device_info.video6.img);
+                else
+                    $('img.video6').attr('src', '__PUBLIC__/images/movie_2.png');
+                if (device_info.video7 != null)
+                    $('img.video7').attr('src', device_info.video7.img);
+                else
+                    $('img.video7').attr('src', '__PUBLIC__/images/movie_2.png');
+                if (device_info.video8 != null)
+                    $('img.video8').attr('src', device_info.video8.img);
+                else
+                    $('img.video8').attr('src', '__PUBLIC__/images/movie_2.png');
+
+
+                if (device_info.book1 != null)
+                    $('img.book1').attr('src', device_info.book1.img);
+                else
+                    $('img.book1').attr('src', '__PUBLIC__/images/book_1.png');
+                if (device_info.book2 != null)
+                    $('img.book2').attr('src', device_info.book2.img);
+                else
+                    $('img.book2').attr('src', '__PUBLIC__/images/book_1.png');
+                if (device_info.book3 != null)
+                    $('img.book3').attr('src', device_info.book3.img);
+                else
+                    $('img.book3').attr('src', '__PUBLIC__/images/book_1.png');
+                if (device_info.book4 != null)
+                    $('img.book4').attr('src', device_info.book4.img);
+                else
+                    $('img.book4').attr('src', '__PUBLIC__/images/book_1.png');
+
+
+                if (device_info.app1 != null)
+                    $('img.app1').attr('src', device_info.app1.img);
+                else
+                    $('img.app1').attr('src', '__PUBLIC__/images/app.png');
+                if (device_info.app2 != null)
+                    $('img.app2').attr('src', device_info.app2.img);
+                else
+                    $('img.app2').attr('src', '__PUBLIC__/images/app.png');
+                if (device_info.app3 != null)
+                    $('img.app3').attr('src', device_info.app3.img);
+                else
+                    $('img.app3').attr('src', '__PUBLIC__/images/app.png');
+                if (device_info.app4 != null)
+                    $('img.app4').attr('src', device_info.app4.img);
+                else
+                    $('img.app4').attr('src', '__PUBLIC__/images/app.png');
+
+            }
+        });
+    } else {
+        $('img.video1').attr('src', '__PUBLIC__/images/movie_2.png');
+        $('img.video2').attr('src', '__PUBLIC__/images/movie_2.png');
+        $('img.video3').attr('src', '__PUBLIC__/images/movie_2.png');
+        $('img.video4').attr('src', '__PUBLIC__/images/movie_2.png');
+        $('img.video5').attr('src', '__PUBLIC__/images/movie_2.png');
+        $('img.video6').attr('src', '__PUBLIC__/images/movie_2.png');
+        $('img.video7').attr('src', '__PUBLIC__/images/movie_2.png');
+        $('img.video8').attr('src', '__PUBLIC__/images/movie_2.png');
+
+        $('img.book1').attr('src', '__PUBLIC__/images/book_1.png');
+        $('img.book2').attr('src', '__PUBLIC__/images/book_1.png');
+        $('img.book3').attr('src', '__PUBLIC__/images/book_1.png');
+        $('img.book4').attr('src', '__PUBLIC__/images/book_1.png');
+
+        $('img.app1').attr('src', '__PUBLIC__/images/app.png');
+        $('img.app2').attr('src', '__PUBLIC__/images/app.png');
+        $('img.app3').attr('src', '__PUBLIC__/images/app.png');
+        $('img.app4').attr('src', '__PUBLIC__/images/app.png');
+    }
+
+}
 
 </script>
 
