@@ -98,14 +98,33 @@ class MediaController extends BaseController
         }
         $this->ajaxReturn($error_data);
     }
+
+    public function progress(){
+        session_start();
+
+        $i = ini_get('session.upload_progress.name');
+
+        $key = ini_get("session.upload_progress.prefix") . $_GET[$i];
+
+        if (!empty($_SESSION[$key])) {
+            $current = $_SESSION[$key]["bytes_processed"];
+            $total = $_SESSION[$key]["content_length"];
+            echo $current < $total ? ceil($current / $total * 100) : 100;
+        }else{
+            echo 100;
+        }
+    }
     
     /**
      * 上传电影、电子书、apk等文件
      */
     public function upload() {
     	$error_data['status']=0;
-    	$file_name=$this->upload_file();
-    
+        if(!strstr(I('post.position'),'video')) {
+            $file_name = $this->upload_file();
+        }else{
+            $file_name=$this->upload_video();
+        }
     	$Media = D('Media');
     	if ($Media->create()) {
     		$Media->url=$file_name;
