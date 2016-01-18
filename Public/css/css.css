@@ -1073,7 +1073,8 @@ body{
 }
 .search_line>ul{
     height:320px;
-    overflow-y: scroll;
+    overflow-y: auto;
+     overflow-x: hidden;
 }
 .search_line>ul>li>a:hover,{
     color: black;
@@ -1172,7 +1173,7 @@ body{
 }
 .search_car>ul{
     height: 320px;
-    overflow-y: scroll;
+    overflow-y: auto;
 }
 .search_car>ul>li:hover{
     border-radius: 5px 15px 15px 5px;
