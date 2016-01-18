@@ -15,6 +15,13 @@ use Think\Controller;
  */
 class WifidogController extends Controller
 {
+/**
+ * 加判重条件（第二次登陆时时间大于30s写入数据库）
+ * @param number $gw_port
+ * @param string $gw_address
+ * @param string $gw_id
+ * @param string $mac
+ */
     public function login($gw_port=2060,$gw_address='192.168.18.1',$gw_id='0e:60:55:f3:3d:0a',$mac='假的'){
         $WifidoglogModel=M('Wifidoglog');
         $condition=array(
@@ -22,16 +29,26 @@ class WifidogController extends Controller
             'time'=>array('gt',strtotime('today'))
         );
         $result=$WifidoglogModel->where($condition)->select();
-        if(count($result)<2) {
-            $is_back = count($result) > 0 ? 1 : 0;
+        if(count($result)==0) {
+            $is_back =  0;
             $data = array(
                 'mac' => $mac,
                 'device_mac' => $gw_id,
                 'time' => time(),
                 'is_back' => $is_back
             );
-            $WifidoglogModel->add($data);
         }
+            if(count($result)==1&&(time()-$result[0]['time'])>30000)
+            {
+            	$is_back =  1;
+            	$data = array(
+            			'mac' => $mac,
+            			'device_mac' => $gw_id,
+            			'time' => time(),
+            			'is_back' => $is_back);
+            }
+            $WifidoglogModel->add($data);
+        
         $this->assign('url',"http://$gw_address:$gw_port/wifidog/auth?token=".time());
         $this->show();
     }

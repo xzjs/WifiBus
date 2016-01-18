@@ -24,7 +24,7 @@ class AnalyseController extends Controller
 	 *
 	 */
 	public function fenxi_get_on_line_top(){
-		$result=M()->query("	SELECT COUNT(think_wifidoglog.id) AS VALUE ,think_bus.no FROM think_wifidoglog,think_bus,think_device 
+		$result=M()->query("	SELECT DISTINCT(think_wifidoglog.mac) ,COUNT(think_wifidoglog.id) AS VALUE ,think_bus.no FROM think_wifidoglog,think_bus,think_device 
 WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_device.bus_id AND
  think_device.mac=think_wifidoglog.device_mac GROUP BY think_wifidoglog.device_mac ORDER BY VALUE  LIMIT 10
 				");
@@ -56,7 +56,7 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
  * 
  */
 	public function fenxi_get_on_line(){
-	 $result=M()->query("SELECT TIME FROM think_wifidoglog WHERE TIME>UNIX_TIMESTAMP( CURDATE())and is_back=0
+	 $result=M()->query("SELECT DISTINCT (mac) , TIME FROM think_wifidoglog WHERE TIME>UNIX_TIMESTAMP( CURDATE())and is_back=0
 				");
 		$array=array();
 		$num;
@@ -138,15 +138,15 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 		$bus_id =I('post.bus_id');
 		
 		if ($bus_id == 0 && $line_id == 0) {
-		$sql="SELECT mac,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=1";
+		$sql="SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1";
 		}
 		else{
 			if ($bus_id == 0) {
-				$sql="SELECT mac,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=1  AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)
+				$sql="SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1  AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)
 			";
 			}
 			else{
-				$sql="SELECT mac,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=1   AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";
+				$sql="SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1   AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";
 			}
 		}
 		
@@ -180,14 +180,14 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 		$line_id = I('post.line_id');
 		$bus_id =I('post.bus_id');
 		if ($bus_id == 0 && $line_id == 0) {
-			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=0";
+			$sql="SELECT DISTINCT (mac) ,TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=0";
 		}
 		else{if ($bus_id == 0) {
 			
-			$sql="SELECT TIME FROM think_wifidoglog WHERE  is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_mac  IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id )";	
+			$sql="SELECT DISTINCT (mac) ,TIME FROM think_wifidoglog WHERE  is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_mac  IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id )";	
 			}
 			else {
-			$sql="SELECT TIME FROM think_wifidoglog WHERE is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";	
+			$sql="SELECT DISTINCT (mac) ,TIME FROM think_wifidoglog WHERE is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";	
 			}
 		}
 	
@@ -313,7 +313,7 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 		$bus_id =I('post.bus_id');
 		 if ($bus_id == 0 && $line_id == 0) {
 			$sql="SELECT SUM(mac.click_num) AS click_num,md.text,mac.time FROM think_media AS md,think_mediaclick AS mac 
-WHERE mac.media_id=md.id AND mac.time>(UNIX_TIMESTAMP(NOW())-6*86400)
+WHERE mac.media_id=md.id AND mac.time>(UNIX_TIMESTAMP(NOW())-7*86400)
 GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 		}
 		else {
@@ -322,13 +322,13 @@ GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 				$sql="SELECT SUM(mac.click_num) AS click_num,md.text,mac.time FROM think_media AS md,think_mediaclick AS mac 
                         WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT media_id FROM think_device_media WHERE device_id IN (SELECT  think_device.id FROM think_device,think_bus,think_line
                        WHERE think_line.id=think_bus.line_id AND think_line.id=$line_id AND think_device.bus_id=think_bus.id)
-                               )  AND mac.time>(UNIX_TIMESTAMP(NOW())-6*86400) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
+                               )  AND mac.time>(UNIX_TIMESTAMP(NOW())-7*86400) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 			//echo "dd";
 			}
 			else{
 				$sql="  SELECT SUM(mac.click_num) AS click_num,md.text ,mac.time FROM think_media AS md,think_mediaclick AS mac 
      WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT think_device_media.media_id FROM think_device_media ,think_device 
-                 WHERE think_device_media.device_id=think_device.id AND think_device.bus_id=$bus_id)  AND mac.time>(UNIX_TIMESTAMP(NOW())-6*86400) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
+                 WHERE think_device_media.device_id=think_device.id AND think_device.bus_id=$bus_id)  AND mac.time>(UNIX_TIMESTAMP(NOW())-7*86400) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 			}
 		}
 		$result=M()->query($sql);
