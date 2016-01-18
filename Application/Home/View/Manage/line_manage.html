@@ -17,8 +17,8 @@
         <div id="allmap" class="big_map"></div>
         <div class="search_line">
             <form action="" method="post">
-                <input type="text" id="lineName" name="lineName">
-                <input type="button" onclick="showLine()" value="提交">
+                <input style="border: none" type="text" id="lineName" name="lineName"> &nbsp; &nbsp;
+                <input style="border: none" type="button" onclick="showLine()" value="提交">
             </form>
             <ul id="ul_line_list">
                 <li>
@@ -31,10 +31,10 @@
                             src="/WifiBus/Public/images/usr_g.png" alt="车辆"></a>
                 </li>
             </ul>
-            <div class="line_button">
+            <div style=" margin:0 auto ;text-align:center;padding-top：20px"class="line_button">
+         
                 <a class="we_click line_add_con">添加</a>
-                <!--<a class="we_click line_alladd_con">批量添加</a>-->
-                <div class="clr"></div>
+              
             </div>
         </div>
         <!-- 以下三个search_car div分别对应上面li中的三条线路 hideTemp-->
@@ -275,10 +275,10 @@
                     $("#ul_line_list").html("");
                     }
                     else{
-                    $.each(list, function (index, value) {
+               	     $.each(list, function (index, value) {
                     	   
                         value = list[index];
-                        info += "<li><a onclick=showCarDialog(" + value.lineid + ") class='line_name' data-id='" + value.lineid + "'>" + value.linename + "</a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='删除' class='line_del'><img src='/WifiBus/Public/images/usr_d.png' alt='删除'></a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='编辑' class='line_edt' data-name='" + value.linename + "'><img src='/WifiBus/Public/images/usr_e.png' alt='编辑'></a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='车辆' class='line_slec' onclick=showCarDialog(" + value.lineid + ")><img src='/WifiBus/Public/images/usr_g.png' alt='车辆'></a></li>";
+                        info += "<li><a  href='javascript:void(0)'onclick=showCarDialog(" + value.lineid + ") class='line_name' data-id='" + value.lineid + "'>" + value.linename + "</a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='删除' class='line_del'><img src='/WifiBus/Public/images/usr_d.png' alt='删除'></a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='编辑' class='line_edt' data-name='" + value.linename + "'><img src='/WifiBus/Public/images/usr_e.png' alt='编辑'></a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='车辆' class='line_slec' onclick=showCarDialog(" + value.lineid + ")><img src='/WifiBus/Public/images/usr_g.png' alt='车辆'></a></li>";
                         $("#ul_line_list").html(info);
                     })}
                 }

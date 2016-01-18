@@ -340,7 +340,7 @@ function adMainTimeFunction(date1, date2) {
             trigger: 'axis'
         },
         legend: {
-            data: [ '本周'],
+            data: [ ''],
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 12,
@@ -371,7 +371,7 @@ function adMainTimeFunction(date1, date2) {
             }
         }],
         series: [{
-            name: '本周',
+            name: '',
             type: 'line',
             data: [date2[0], date2[1], date2[2], date2[3], date2[4], date2[5], date2[6]],
         }]

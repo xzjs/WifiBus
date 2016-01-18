@@ -173,6 +173,7 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 		echo json_encode($array);
 	
 	}
+	
 	/**
 	 * 客流量——时间关系查询
 	 */
@@ -399,20 +400,7 @@ public function get_ad_click_top() {
 		}
 		echo json_encode($array);
 		
-		/* $data = array (
-				'name' => array (
-						'可口可乐',
-						'百事可乐',
-						'非常可乐' 
-				),
-				'data' => array (
-						11,
-						12,
-						13 
-				) 
-		);
-		echo json_encode ( $data ); */
-		// echo I('post.line_id'); 
+	
 	}
 	
 	

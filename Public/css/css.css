@@ -588,7 +588,7 @@ body{
 }
 .adv_footer>ul>li{
     float: left;
-    width: 28%;
+    width: 28.5%;
     height: 230px;
     background-color: #ddd;
     margin-right: -75px;
@@ -1067,7 +1067,7 @@ body{
     position: absolute;
     left: 53px;
     top: 60px;
-    height: 468px;
+    height: 438px;
 }
 .search_line>ul{
     height:320px;
@@ -1090,9 +1090,10 @@ body{
     margin: 18px 0 5px 0px;
 }
 .search_line form input{
+	    font: 15px '宋体', sans-serif;
     height: 30px;
-    border-radius: 8px;
-    font-size:14px;
+    border-radius: 4px;
+ 
     background: #fff;
 }
 .search_line form>input[type=text]{
@@ -1141,13 +1142,13 @@ body{
     width: 140%;
 }
 .search_line .line_button{
-    margin: 0;
+    margin: :0 auto 0 auto;
     width: 100%;
     position: absolute;
-    bottom: 24px;
+    bottom: 14px;
 }
 .search_line .we_click{
-    font: 16px '微软雅黑', sans-serif;
+    font: 15px '宋体', sans-serif;
     display: block;
     float:left;
     width: 43%;
@@ -1159,8 +1160,8 @@ body{
     cursor: pointer;
     -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-    margin:0 8px;
-    font-weight: bold;
+    margin:0 8px 0 60px;
+    
 }
 .search_car{
     top: 88px;
@@ -1193,21 +1194,21 @@ body{
     text-align: center;
 }
 .search_car .car_add_con{
-    font: 16px '微软雅黑', sans-serif;
+    font: 15px '宋体', sans-serif;
     display: block;
     width: 80%;
     left: 50%;
     transform:translateX(8%); 
     height: 44px;
     background: #66cccc;
-    border-radius: 28px;
+    border-radius: 8px;
     text-align: center;
     line-height: 44px;
     cursor: pointer;
     -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
     margin:0 8px;
-    font-weight: bold;
+  
 }
 .user_click>li{
     position: absolute;
@@ -1278,7 +1279,7 @@ body{
     width: 28%;
 }
 .user_click>li>input:last-child{
-    font: 16px '微软雅黑', sans-serif;
+    font: 15px '宋体', sans-serif;
     width: 30%;
     height: 34px;
     background: #fff;
@@ -1288,7 +1289,7 @@ body{
     cursor: pointer;
     -webkit-box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
     box-shadow: inset 0 3px 5px rgba(0, 0, 0, .125);
-    font-weight: bold;
+    border:none;
     margin-top: 6%;
     margin-left:62.5%;
     color: #666; 
