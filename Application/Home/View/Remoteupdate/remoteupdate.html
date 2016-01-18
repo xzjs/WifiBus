@@ -152,10 +152,10 @@
                                     <input type="hidden" value="video1" name="position">
                                     <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'video1')">
+                                        <input type="button" value="提交" onclick="upload_video($(this).parent().parent().find('input'),'video1')">
                                     </div>
                                 </form>
-                                <div id="progress" class="progress" style="margin:0 0 0 0;display:none;" >
+                                <div id="progress" class="progress" style="margin:0 0 0 0;" >
                                     <div class="bar" style="width:0%;margin:0 0 0 0;" ></div>
                                     <div class="label" style="margin:0 0 0 0;">0%</div>
                                 </div>
@@ -175,7 +175,9 @@
                             <div class="dis">
                                 <p>X</p>
 
-                                <form id="video2">
+                                <form id="video2" enctype="multipart/form-data" style="margin:15px 0">
+
+                                    <input type="hidden" name="<?php echo ini_get('session.upload_progress.name');?>" value="test" />
                                     <div>
                                         <p>电影文件：</p>
                                         <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
@@ -195,9 +197,14 @@
                                     <input type="hidden" value="video2" name="position">
                                     <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'video2')">
+                                        <input type="button" value="提交" onclick="upload_video($(this).parent().parent().find('input'),'video2')">
                                     </div>
                                 </form>
+
+                                <div id="progress" class="progress" style="margin:0 0 0 0;" >
+                                    <div class="bar" style="width:0%;margin:0 0 0 0;" ></div>
+                                    <div class="label" style="margin:0 0 0 0;">0%</div>
+                                </div>
 
                             </div>
                         </li>
@@ -213,7 +220,9 @@
                             <div class="dis">
                                 <p>X</p>
 
-                                <form id="video3">
+                                <form id="video3" enctype="multipart/form-data" style="margin:15px 0">
+
+                                    <input type="hidden" name="<?php echo ini_get('session.upload_progress.name');?>" value="test" />
                                     <div>
                                         <p>电影文件：</p>
                                         <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
@@ -233,9 +242,13 @@
                                     <input type="hidden" value="video3" name="position">
                                     <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'video3')">
+                                        <input type="button" value="提交" onclick="upload_video($(this).parent().parent().find('input'),'video3')">
                                     </div>
                                 </form>
+                                <div id="progress" class="progress" style="margin:0 0 0 0;" >
+                                    <div class="bar" style="width:0%;margin:0 0 0 0;" ></div>
+                                    <div class="label" style="margin:0 0 0 0;">0%</div>
+                                </div>
 
                             </div>
                         </li>
@@ -251,7 +264,9 @@
                             <div class="dis">
                                 <p>X</p>
 
-                                <form id="video4">
+                                <form id="video4" enctype="multipart/form-data" style="margin:15px 0">
+
+                                    <input type="hidden" name="<?php echo ini_get('session.upload_progress.name');?>" value="test" />
                                     <div>
                                         <p>电影文件：</p>
                                         <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
@@ -271,9 +286,13 @@
                                     <input type="hidden" value="video4" name="position">
                                     <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'video4')">
+                                        <input type="button" value="提交" onclick="upload_video($(this).parent().parent().find('input'),'video4')">
                                     </div>
                                 </form>
+                                <div id="progress" class="progress" style="margin:0 0 0 0;" >
+                                    <div class="bar" style="width:0%;margin:0 0 0 0;" ></div>
+                                    <div class="label" style="margin:0 0 0 0;">0%</div>
+                                </div>
 
                             </div>
                         </li>
@@ -290,7 +309,9 @@
                             <div class="dis">
                                 <p>X</p>
 
-                                <form id="video5">
+                                <form id="video5" enctype="multipart/form-data" style="margin:15px 0">
+
+                                    <input type="hidden" name="<?php echo ini_get('session.upload_progress.name');?>" value="test" />
                                     <div>
                                         <p>电影文件：</p>
                                         <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
@@ -310,9 +331,13 @@
                                     <input type="hidden" value="video5" name="position">
                                     <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'video5')">
+                                        <input type="button" value="提交" onclick="upload_video($(this).parent().parent().find('input'),'video5')">
                                     </div>
                                 </form>
+                                <div id="progress" class="progress" style="margin:0 0 0 0;" >
+                                    <div class="bar" style="width:0%;margin:0 0 0 0;" ></div>
+                                    <div class="label" style="margin:0 0 0 0;">0%</div>
+                                </div>
 
                             </div>
                         </li>
@@ -330,7 +355,9 @@
                             <div class="dis">
                                 <p>X</p>
 
-                                <form id="video6">
+                                <form id="video6" enctype="multipart/form-data" style="margin:15px 0">
+
+                                    <input type="hidden" name="<?php echo ini_get('session.upload_progress.name');?>" value="test" />
                                     <div>
                                         <p>电影文件：</p>
                                         <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
@@ -350,9 +377,13 @@
                                     <input type="hidden" value="video6" name="position">
                                     <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'video6')">
+                                        <input type="button" value="提交" onclick="upload_video($(this).parent().parent().find('input'),'video6')">
                                     </div>
                                 </form>
+                                <div id="progress" class="progress" style="margin:0 0 0 0;" >
+                                    <div class="bar" style="width:0%;margin:0 0 0 0;" ></div>
+                                    <div class="label" style="margin:0 0 0 0;">0%</div>
+                                </div>
 
                             </div>
                         </li>
@@ -371,7 +402,9 @@
                             <div class="dis">
                                 <p>X</p>
 
-                                <form id="video7">
+                                <form id="video7" enctype="multipart/form-data" style="margin:15px 0">
+
+                                    <input type="hidden" name="<?php echo ini_get('session.upload_progress.name');?>" value="test" />
                                     <div>
                                         <p>电影文件：</p>
                                         <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
@@ -391,9 +424,13 @@
                                     <input type="hidden" value="video7" name="position">
                                     <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'video7')">
+                                        <input type="button" value="提交" onclick="upload_video($(this).parent().parent().find('input'),'video7')">
                                     </div>
                                 </form>
+                                <div id="progress" class="progress" style="margin:0 0 0 0;" >
+                                    <div class="bar" style="width:0%;margin:0 0 0 0;" ></div>
+                                    <div class="label" style="margin:0 0 0 0;">0%</div>
+                                </div>
 
                             </div>
                         </li>
@@ -411,7 +448,9 @@
                             <div class="dis">
                                 <p>X</p>
 
-                                <form id="video8">
+                                <form id="video8" enctype="multipart/form-data" style="margin:15px 0">
+
+                                    <input type="hidden" name="<?php echo ini_get('session.upload_progress.name');?>" value="test" />
                                     <div>
                                         <p>电影文件：</p>
                                         <input type="file" class="file" name="file" onchange="ye.value=value" accept="video/mp4">
@@ -431,9 +470,13 @@
                                     <input type="hidden" value="video8" name="position">
                                     <input type="hidden" value="2" name="type">
                                     <div class="dis_button">
-                                        <input type="button" value="提交" onclick="upload($(this).parent().parent().find('input'),'video8')">
+                                        <input type="button" value="提交" onclick="upload_video($(this).parent().parent().find('input'),'video8')">
                                     </div>
                                 </form>
+                                <div id="progress" class="progress" style="margin:0 0 0 0;" >
+                                    <div class="bar" style="width:0%;margin:0 0 0 0;" ></div>
+                                    <div class="label" style="margin:0 0 0 0;">0%</div>
+                                </div>
 
                             </div>
                         </li>
@@ -800,9 +843,78 @@ $(function() {
             str+=arr[i];
         }
         return str;
-    } 
+    }
+
+
+/**
+ * 电子书和app上传
+ */
+
 
 function upload(input,position) {
+    var busArr = new Array();
+    for (var i = 0; i < checkedIdList.length; i++) {
+        if (checkedIdList[i].isChecked)
+            busArr[i] = checkedIdList[i].id;
+    }
+
+    var type=input[0].accept;
+    if(input[1].value=="")
+        alert("上传文件不能为空！");
+    else if(input[4].value=="")
+        alert("图片简介不能为空！");
+    else if(input[6].value=="")
+        alert("文字简介不能为空！");
+    else{
+        if(type=="video/mp4"){
+            if(!validateFile(input[1].value,"mp4")){
+                alert("电影文件格式只能为mp4！");
+                return;
+            }
+        }else if(type=="text/plain"){
+            if(!validateFile(input[1].value,"txt")){
+                alert("电子书文件格式只能为txt！");
+                return;
+            }
+        }else if(type==".apk"){
+            if(!validateFile(input[1].value,"apk")){
+                alert("APP文件格式只能为apk！");
+                return;
+            }
+        }
+        if(!validateFile(input[4].value,"jpg")){
+            alert("图片简介文件格式只能为jpg！");
+            return;
+        }
+
+        var ids = arr_to_str(busArr);
+        var form = $("#" + position)[0];
+        var formData = new FormData(form);
+        formData.append('ids', ids);
+
+        $.ajax({
+            url: "{:U('Media/upload')}",
+            type: 'POST',
+            cache: false,
+            data: formData,
+            processData: false,
+            contentType: false
+        }).done(function (res) {
+            $(".dis").slideUp();
+            for(var i=0;i<input.length;i++){
+                input[i].value="";
+            }
+            getDisplay();
+        }).fail(function (res) {
+            alert(res);
+        });
+    }
+}
+
+/**
+ * 视频文件上传
+ */
+function upload_video(input,position) {
     var busArr = new Array();
     for (var i = 0; i < checkedIdList.length; i++) {
         if (checkedIdList[i].isChecked)
@@ -854,6 +966,9 @@ function upload(input,position) {
             contentType: false
         }).done(function (res) {
             $(".dis").slideUp();
+            for(var i=0;i<input.length;i++){
+                input[i].value="";
+            }
             getDisplay();
         }).fail(function (res) {
             alert("上传失败！");
