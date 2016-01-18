@@ -840,7 +840,7 @@ function adver_rankOptionFunction3(no,num) {
         xAxis : [
             {
                 type : 'value',
-                boundaryGap : [0, 0.001],
+                boundaryGap : [0, 1],
                 axisLabel:{
                     textStyle:{
                         "color":"#FFFFFF"
@@ -864,7 +864,6 @@ function adver_rankOptionFunction3(no,num) {
 
             {
                 type:'bar',
-                //data:num[6],num[5],num[4],num[3],num[2],num[1],num[0],
                 data:num,
             }
         ]

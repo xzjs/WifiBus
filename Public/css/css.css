@@ -844,6 +844,7 @@ body{
 }
 .book>li>img{
     width: 133px;
+    height: 180px;
     padding: 5px;
     cursor: pointer;
 }
@@ -874,8 +875,9 @@ body{
     margin: 0 17px 0 8px;
 }
 .app>li>img{
-    padding:11px 13px 0 0px;
-    width: 60px;
+    padding:10px;
+    width: 70px;
+    height: 70px;
     cursor: pointer;
 }
 .app>li>h1>a{

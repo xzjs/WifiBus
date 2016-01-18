@@ -16,7 +16,7 @@ use Think\Exception;
  * Class AdminController
  * @package Home\Controller
  */
-class AdminController extends Controller
+class AdminController extends BaseController
 {
     /**
      * 登录
@@ -137,4 +137,28 @@ class AdminController extends Controller
             $this->error('删除失败');
         }
     }
+
+    public function upload(){
+        if(is_uploaded_file($_FILES['file1']['tmp_name'])){
+            $a=$this->upload_file();
+            var_dump($a);
+        }
+    }
+
+    public function progress(){
+        session_start();
+
+        $i = ini_get('session.upload_progress.name');
+
+        $key = ini_get("session.upload_progress.prefix") . $_GET[$i];
+
+        if (!empty($_SESSION[$key])) {
+            $current = $_SESSION[$key]["bytes_processed"];
+            $total = $_SESSION[$key]["content_length"];
+            echo $current < $total ? ceil($current / $total * 100) : 100;
+        }else{
+            echo 100;
+        }
+    }
+
 }

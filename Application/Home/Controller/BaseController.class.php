@@ -46,11 +46,11 @@ class BaseController extends Controller
      */
     public function upload_video(){
         $name='_' . time();
-        $name_str1=explode(".",$_FILES['file']['tmp_name']);
-        $name_str2=explode(".",$_FILES['img']['tmp_name']);
-        move_uploaded_file($_FILES['file']['tmp_name'], "./Update/".$name.'.mp4');
-        move_uploaded_file($_FILES['img']['tmp_name'], "./Update/".$name.'.jpg');
-        return $name.'.jpg';
+        $file_name=explode(".",$_FILES['file']['name']);
+        $img_name=explode(".",$_FILES['img']['name']);
+        move_uploaded_file($_FILES['file']['tmp_name'], "./Update/".$name.".".$file_name[1]);
+        move_uploaded_file($_FILES['img']['tmp_name'], "./Update/".$name.".".$img_name[1]);
+        return $name.".".$file_name[1];
     }
 
     /**
