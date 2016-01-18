@@ -875,7 +875,7 @@ body{
     margin: 0 17px 0 8px;
 }
 .app>li>img{
-    padding:11px 13px 0 0px;
+    padding:11px 13px 10px 0px;
     width: 60px;
     height: 80px;
     cursor: pointer;
