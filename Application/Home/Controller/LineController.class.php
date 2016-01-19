@@ -23,7 +23,7 @@ class LineController extends Controller
         $line = D('Line');
         $linename=I('post.linename');
         if($linename!=null)
-        { $condition['name'] = $linename;
+        { $condition['name'] = array('like','%'.$linename.'%');
      
         $data = $line->field('id as lineId,name as lineName')->where($condition)->order('id')->select();
         }
