@@ -13,7 +13,6 @@ use Think\Controller;
  */
 class AdController extends Controller
 {
-
 	/**
 	 * “广告设置”页面
 	 */
