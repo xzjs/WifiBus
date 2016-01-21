@@ -840,6 +840,7 @@ function adver_rankOptionFunction3(no,num) {
         xAxis : [
             {
                 type : 'value',
+                max : 100,
                 boundaryGap : [0, 1],
                 axisLabel:{
                     textStyle:{
