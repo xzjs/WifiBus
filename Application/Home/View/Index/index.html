@@ -132,6 +132,7 @@ $(function () {
           	//alert("纯首页无条件");
                       var x;
                        for (x in array) {
+                    	  
                           var a = array[x]['p_x'];
                           var b = array[x]['p_y'];
                           var pt = new BMap.Point(a, b);
@@ -149,7 +150,7 @@ $(function () {
                                   img = "__PUBLIC__/images/green_right.png";
                                   break;
                           }
-                          var myIcon = new BMap.Icon(img, new BMap.Size(50, 20));
+                          var myIcon = new BMap.Icon(img, new BMap.Size(30, 30));
                           marker2[i] = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
                           map.addOverlay(marker2[i]);
                        //  alert("dd"); // 创建标注
@@ -162,9 +163,7 @@ $(function () {
                    				+ '<br/>已用流量：'
                    				+  array[x]['flow_num']
                    				+ '<br/>磁盘使用率：' 
-                   				+  array[x]['cipan_use']
-                                  +'<br/>本地资源访问人数：'
-                   				+ 1
+                   				
                    				+'</div>';
                    				marker2[i].enableDragging();
                           addClickHandler(content, marker2[i]);
@@ -336,8 +335,7 @@ function chart() {
                  				+  array[x]['flow_num']
                  				+ '<br/>磁盘使用率：' 
                  				+  array[x]['cipan_use']
-                                +'<br/>本地资源访问人数：'
-                 				+ 1
+                               
                  				+'</div>';
                         addClickHandler(content, marker2);
                     }

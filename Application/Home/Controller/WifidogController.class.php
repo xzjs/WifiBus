@@ -38,8 +38,8 @@ class WifidogController extends Controller
                 'is_back' => $is_back
             );
         }
-            if(count($result)==1&&(time()-$result[0]['time'])>30000)
-            {
+        if((count($result)==1)&&((time()-$result[0]['time'])>30))
+        {
             	$is_back =  1;
             	$data = array(
             			'mac' => $mac,
@@ -47,7 +47,7 @@ class WifidogController extends Controller
             			'time' => time(),
             			'is_back' => $is_back);
             }
-            $WifidoglogModel->add($data);
+                $WifidoglogModel->add($data);
         
         $this->assign('url',"http://$gw_address:$gw_port/wifidog/auth?token=".time());
         $this->show();
