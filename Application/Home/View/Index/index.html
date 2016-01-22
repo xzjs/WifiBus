@@ -128,7 +128,7 @@ $(function () {
     
      
       function get_map(line, array) {
-      	
+    	  var marker2=[],i=0;
           	//alert("纯首页无条件");
                       var x;
                        for (x in array) {
@@ -150,8 +150,8 @@ $(function () {
                                   break;
                           }
                           var myIcon = new BMap.Icon(img, new BMap.Size(50, 20));
-                          var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
-                          map.addOverlay(marker2);
+                          marker2[i] = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
+                          map.addOverlay(marker2[i]);
                        //  alert("dd"); // 创建标注
                         
                           	 var content =  '<div style="margin:0;line-height:20px;padding:2px;font-size: 12px">'
@@ -166,8 +166,15 @@ $(function () {
                                   +'<br/>本地资源访问人数：'
                    				+ 1
                    				+'</div>';
-                          addClickHandler(content, marker2);
+                   				marker2[i].enableDragging();
+                          addClickHandler(content, marker2[i]);
+                      	i++;
                       }
+                       var markerClusterer = new BMapLib.MarkerClusterer(map, {
+       					markers:marker2,
+       					girdSize:70,
+       					maxZoom:12,
+       					});//点聚合
                       // alert("d"+x);
               
       }
