@@ -163,7 +163,8 @@ $(function () {
                    				+ '<br/>已用流量：'
                    				+  array[x]['flow_num']
                    				+ '<br/>磁盘使用率：' 
-                   				
+                   				 +  array[x]['cipan_use']
+                                 
                    				+'</div>';
                    				marker2[i].enableDragging();
                           addClickHandler(content, marker2[i]);
@@ -316,7 +317,7 @@ function chart() {
                                 img = "__PUBLIC__/images/green_right.png";
                                 break;
                         }
-                        var myIcon = new BMap.Icon(img, new BMap.Size(50, 20));
+                        var myIcon = new BMap.Icon(img, new BMap.Size(30, 30));
                         var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
                       //  marker2.setLabel(new BMap.Label("1嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎",{offset:new BMap.Size(10,-10)}));
                         map.addOverlay(marker2);
