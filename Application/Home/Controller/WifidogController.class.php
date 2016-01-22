@@ -37,8 +37,7 @@ class WifidogController extends Controller
                 'time' => time(),
                 'is_back' => $is_back
             );
-        }
-        if((count($result)==1)&&((time()-$result[0]['time'])>30))
+        }elseif((count($result)==1)&&((time()-$result[0]['time'])>30))
         {
             	$is_back =  1;
             	$data = array(
