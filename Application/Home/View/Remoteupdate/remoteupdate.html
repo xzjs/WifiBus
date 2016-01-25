@@ -963,10 +963,12 @@ function upload_video(input,position) {
             processData: false,
             contentType: false
         }).done(function (res) {
+            $('#progress .label').html( '0%');
+            $('#progress .bar').css('width', '0%');
             $(".dis").slideUp();
-            for(var i=0;i<input.length;i++){
-                input[i].value="";
-            }
+            input[2].value = "";
+            input[5].value = "";
+            input[7].value = "";
             getDisplay();
         }).fail(function (res) {
             alert("上传失败！");

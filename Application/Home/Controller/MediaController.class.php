@@ -25,16 +25,25 @@ class MediaController extends BaseController
 		$info = $upload->upload();
 		$file_name=$info ['file'] ['savename'];
 	    $CommandCtrl=A('Command');
-	    $device_id=A('Device')->get_id(I('post.mac'));
-	//   $device_idhh=$device->get_id(I('post.mac'));
-	  // $file_name=I('post.ye');
-	   
+        if(I('post.mac')=="all devices"){
+            $device_list=M('Device')->field('mac')->select();
+            foreach($device_list as $vo){
+                $device_id=A('Device')->get_id($vo['mac']);
+                $cmd_result1=$CommandCtrl->add($device_id,'Firmwareupdate','/WifiBus/Update/|'.$file_name.'|'.'heartbeat');
+                if($cmd_result1>0)
+                    echo $file_name;
+            }
+        }else{
+            $device_id = A('Device')->get_id(I('post.mac'));
+            //$device_idhh=$device->get_id(I('post.mac'));
+            // $file_name=I('post.ye');
+            $cmd_result1 = $CommandCtrl->add($device_id, 'Firmwareupdate', '/WifiBus/Update/|' . $file_name . '|' . 'heartbeat');
+            if ($cmd_result1 > 0)
+                echo $file_name;
+            //$this->success('ok');
+            //$cmd_result2=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$name_str[0].'.jpg'.'|'.I('post.position').'.jpg');
 
-		$cmd_result1=$CommandCtrl->add($device_id,'Firmwareupdate','/WifiBus/Update/|'.$file_name.'|'.'heartbeat');
-	 if($cmd_result1>0)
-	 	echo $file_name;
-	 //$this->success('ok');
-	  //  $cmd_result2=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$name_str[0].'.jpg'.'|'.I('post.position').'.jpg');
+        }
 	 			
 	}
 	
