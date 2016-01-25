@@ -77,6 +77,8 @@
         <p>2016 all rights reserved</p>
     </div>
 </div>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+	<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
 <script type="text/javascript">
 	
@@ -115,7 +117,7 @@ $(function () {
               //	alert($url);
               	var data=eval(results);
               	
-                  get_map(line,data );
+                  get_map(line,data);
                   
               }
           });
@@ -125,15 +127,11 @@ $(function () {
     		  function (){ajax("__CONTROLLER__/all", '')},
               5000
       );
-    
-     
       function get_map(line, array) {
     	  var marker2=[],i=0;
-          	//alert("纯首页无条件");
-                      var x;
-                       for (x in array) {
-                    	  
-                          var a = array[x]['p_x'];
+          var x;
+            for (x in array) {
+                    	  var a = array[x]['p_x'];
                           var b = array[x]['p_y'];
                           var pt = new BMap.Point(a, b);
                           var num = array[x]['flag'];
@@ -153,7 +151,7 @@ $(function () {
                           var myIcon = new BMap.Icon(img, new BMap.Size(30, 30));
                           marker2[i] = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
                           map.addOverlay(marker2[i]);
-                       //  alert("dd"); // 创建标注
+                   //  alert("dd"); // 创建标注
                         
                           	 var content =  '<div style="margin:0;line-height:20px;padding:2px;font-size: 12px">'
                           		 + '公交车牌号：'
@@ -170,13 +168,24 @@ $(function () {
                           addClickHandler(content, marker2[i]);
                       	i++;
                       }
-                       var markerClusterer = new BMapLib.MarkerClusterer(map, {
+        	/* marker2[i].addEventListener("click", 
+				 (function(e){
+						// js 闭包
+						return function(){
+							map.centerAndZoom(point[e], 13);
+							
+						}      
+                    })(i)); */
+                      /*  var markerClusterer = new BMapLib.MarkerClusterer(map, {
        					markers:marker2,
        					girdSize:70,
        					maxZoom:12,
-       					});//点聚合
-                      // alert("d"+x);
-              
+       					}); *///点聚合
+       					
+  var markerClusterer = new BMapLib.MarkerClusterer(map, {
+	  markers:marker2
+	  });
+           console.log(marker2);   
       }
    
     var int = self.setInterval("chart()", 1000);

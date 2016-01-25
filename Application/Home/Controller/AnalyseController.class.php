@@ -15,10 +15,11 @@ use Think\Controller;
  */
 class AnalyseController extends Controller
 {
-/* function test(){
-	echo (int)( date ( "H", "1452456000" ));
+function test(){
+	echo date ( "H:i:s", time());
+	//echo (int)( date ( "H", "1452456000" ));
 }
- */
+ 
 
 	/**分析页面获取前十上网用户
 	 *
@@ -143,8 +144,7 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 		else{
 			if ($bus_id == 0) {
 				$sql="SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1  AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)
-			";
-			}
+			";}
 			else{
 				$sql="SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1   AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";
 			}

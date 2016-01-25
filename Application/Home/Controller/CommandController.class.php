@@ -84,7 +84,8 @@ class CommandController extends Controller
             $LogModel = M('Log');
             $log_condition['mac'] = $mac;
             $log_num = $LogModel->where($log_condition)->count();
-            if ($log_num % 300 == 0 && $log_num) {
+            $debug=$d['debug'];
+            if ($log_num % 300 == 0 && $log_num && $debug==0) {
                 $this->add($d['id'], 'Reboot');
             }
             if ($b) {
