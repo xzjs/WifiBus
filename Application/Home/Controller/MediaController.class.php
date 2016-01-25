@@ -16,17 +16,34 @@ class MediaController extends BaseController
 	 */
 	public function upload_devicefile() {
 		$error_data['status']=0;
-		$file_name=$this->upload_file();
+		//$file_name=$this->upload_file();
+		$upload = new \Think\Upload(); // 实例化上传类
+		$upload->maxSize = 9999999999999; // 设置附件上传大小
+		$upload->rootPath = "./Update/"; // 设置附件上传根目录
+		$upload->autoSub = false;
+		$upload->saveName = '_' . time(); // 上传文件
+		$info = $upload->upload();
+		$file_name=$info ['file'] ['savename'];
 	    $CommandCtrl=A('Command');
-	    $device_id=A('Device')->get_id(I('post.mac'));
-	//   $device_idhh=$device->get_id(I('post.mac'));
-	  // $file_name=I('post.ye');
-	   
-	  $this->success('ok');
-		$cmd_result1=$CommandCtrl->add($device_id,'Firmwareupdate','/WifiBus/Update/|'.$file_name.'|'.'heartbeat');
-	 if($cmd_result1>0)
-	 $this->success('ok');
-	  //  $cmd_result2=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$name_str[0].'.jpg'.'|'.I('post.position').'.jpg');
+        if(I('post.mac')=="all devices"){
+            $device_list=M('Device')->field('mac')->select();
+            foreach($device_list as $vo){
+                $device_id=A('Device')->get_id($vo['mac']);
+                $cmd_result1=$CommandCtrl->add($device_id,'Firmwareupdate','/WifiBus/Update/|'.$file_name.'|'.'heartbeat');
+                if($cmd_result1>0)
+                    echo $file_name;
+            }
+        }else{
+            $device_id = A('Device')->get_id(I('post.mac'));
+            //$device_idhh=$device->get_id(I('post.mac'));
+            // $file_name=I('post.ye');
+            $cmd_result1 = $CommandCtrl->add($device_id, 'Firmwareupdate', '/WifiBus/Update/|' . $file_name . '|' . 'heartbeat');
+            if ($cmd_result1 > 0)
+                echo $file_name;
+            //$this->success('ok');
+            //$cmd_result2=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$name_str[0].'.jpg'.'|'.I('post.position').'.jpg');
+
+        }
 	 			
 	}
 	
@@ -71,7 +88,7 @@ class MediaController extends BaseController
                     }
                     if($result){
                         $CommandCtrl=A('Command');
-                        $cmd_result=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$img.'|'.I('post.position').'.'.I('post.suffix'));
+                        $cmd_result=$CommandCtrl->add($device['id'],'Contentsupdate','/WifiBus/Update/|'.$img.'|'.I('post.position').'.jpg');
                         if($cmd_result){
                             $error_data['status']=0;
                             $error_data['data']='成功';
@@ -88,7 +105,23 @@ class MediaController extends BaseController
         } else {
             $error_data['data']= $Media->getError();
         }
-        echo json_encode($error_data);
+        $this->ajaxReturn($error_data);
+    }
+
+    public function progress(){
+        session_start();
+
+        $i = ini_get('session.upload_progress.name');
+
+        $key = ini_get("session.upload_progress.prefix") . $_GET[$i];
+
+        if (!empty($_SESSION[$key])) {
+            $current = $_SESSION[$key]["bytes_processed"];
+            $total = $_SESSION[$key]["content_length"];
+            echo $current < $total ? ceil($current / $total * 100) : 100;
+        }else{
+            echo 100;
+        }
     }
     
     /**
@@ -96,8 +129,11 @@ class MediaController extends BaseController
      */
     public function upload() {
     	$error_data['status']=0;
-    	$file_name=$this->upload_file();
-    
+        if(!strstr(I('post.position'),'video')) {
+            $file_name = $this->upload_file();
+        }else{
+            $file_name=$this->upload_video();
+        }
     	$Media = D('Media');
     	if ($Media->create()) {
     		$Media->url=$file_name;
@@ -253,7 +289,4 @@ class MediaController extends BaseController
             $this->error($Media->getError());
         }
     }
-
-
-    
 }

@@ -15,15 +15,17 @@ use Think\Controller;
  */
 class AnalyseController extends Controller
 {
-
-
+/* function test(){
+	echo (int)( date ( "H", "1452456000" ));
+}
+ */
 
 	/**分析页面获取前十上网用户
 	 *
 	 */
 	public function fenxi_get_on_line_top(){
-		$result=M()->query("	SELECT COUNT(think_wifidoglog.id) AS VALUE ,think_bus.no FROM think_wifidoglog,think_bus,think_device 
-WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_device.bus_id AND
+		$result=M()->query("	SELECT DISTINCT(think_wifidoglog.mac) ,COUNT(think_wifidoglog.id) AS VALUE ,think_bus.no FROM think_wifidoglog,think_bus,think_device 
+WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_device.bus_id AND
  think_device.mac=think_wifidoglog.device_mac GROUP BY think_wifidoglog.device_mac ORDER BY VALUE  LIMIT 10
 				");
 		$busno;
@@ -33,11 +35,19 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 			$value[$h]=$result[$h]['value'];
 			
 		}
-		$array=array(
-				"busno"=>$busno,
-				"value"=>$value,
-		);
-	
+		
+		if(count ( $result )==0){
+			for($i = 0; $i < 5;$i++){
+				$busno[$i]="";
+				$value[$i]="0";
+			}
+		}
+		
+			$array=array(
+					"busno"=>$busno,
+					"value"=>$value,
+			);
+		
 		echo json_encode($array);
 		//echo "ff".(date('H',strtotime("-0 hour"))+1);
 	}
@@ -46,7 +56,7 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
  * 
  */
 	public function fenxi_get_on_line(){
-	 $result=M()->query("SELECT TIME FROM think_wifidoglog WHERE TIME>UNIX_TIMESTAMP( CURDATE())and is_back=0
+	 $result=M()->query("SELECT DISTINCT (mac) , TIME FROM think_wifidoglog WHERE TIME>UNIX_TIMESTAMP( CURDATE())and is_back=0
 				");
 		$array=array();
 		$num;
@@ -54,35 +64,41 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 		$now_h = date ( "H", $now ) ;
 	$time;
 	$j=0;
+	$total;
 	for($h = 0; $h<(date('H',strtotime("-0 hour"))+1); $h ++) {
 		$to [$h] = 0;
-	}
+		$total [$h] = 0;
+	}	
 				
 			for($i=(date('H',strtotime("-0 hour")));$i>=0;$i--){
 				
-			$time[$j]=date('H',strtotime("-".$i."hour"));
+			$time[$j]=(int)date('H',strtotime("-".$i."hour"));
 			$j++;
 		
 		}
 		
 		for($i=0;$i<count($result);$i++){
-			$shour = date ( "H", $result [$i] ['time'] );
+			$shour =( date ( "H", $result [$i] ['time'] ));
 			$n = $now_h-$shour ;
 			
 			$to[$n] = $to[$n] + 1;
 		}
-		$p=(date('H',strtotime("-0 hour")));
+		
+		$p= count($to)-1;
+	
 		for($h = 0; $h<(date('H',strtotime("-0 hour"))+1); $h ++) {
 			$total [$h] = $to[$p];
 			$p--;
+			
 		}
 		$array=array(
 				"time"=>$time,
 				"num"=>$total,
 		);
-		
+	
+	//echo  json_encode($total); 
 	echo json_encode($array); 
-		//echo "ff".(date('H',strtotime("-0 hour"))+1);
+	
 	}
 	
 	/**
@@ -103,7 +119,7 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 	 */
 	public function select(){
 		
-		$result = M()->query("SELECT d.id,b.no, d.mac FROM think_device AS d,think_bus AS b WHERE b.id=d.bus_id and(UNIX_TIMESTAMP(NOW())-d.TIME) >30");
+		$result = M()->query("SELECT d.id,b.no, d.mac FROM think_device AS d,think_bus AS b WHERE b.id=d.bus_id and(UNIX_TIMESTAMP(NOW())-d.TIME) ");
 		
 		for($i=0;$i<count($result);$i++){
 			$array[$i]=array(
@@ -122,15 +138,15 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 		$bus_id =I('post.bus_id');
 		
 		if ($bus_id == 0 && $line_id == 0) {
-		$sql="SELECT mac,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=1";
+		$sql="SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1";
 		}
 		else{
 			if ($bus_id == 0) {
-				$sql="SELECT mac,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=1  AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)
+				$sql="SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1  AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)
 			";
 			}
 			else{
-				$sql="SELECT mac,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=1   AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";
+				$sql="SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1   AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";
 			}
 		}
 		
@@ -157,6 +173,7 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 		echo json_encode($array);
 	
 	}
+	
 	/**
 	 * 客流量——时间关系查询
 	 */
@@ -164,14 +181,14 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 		$line_id = I('post.line_id');
 		$bus_id =I('post.bus_id');
 		if ($bus_id == 0 && $line_id == 0) {
-			$sql="SELECT TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND is_back=0";
+			$sql="SELECT DISTINCT (mac) ,TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=0";
 		}
 		else{if ($bus_id == 0) {
 			
-			$sql="SELECT TIME FROM think_wifidoglog WHERE  is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_mac  IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id )";	
+			$sql="SELECT DISTINCT (mac) ,TIME FROM think_wifidoglog WHERE  is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_mac  IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id )";	
 			}
 			else {
-			$sql="SELECT TIME FROM think_wifidoglog WHERE is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-6*86400) AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";	
+			$sql="SELECT DISTINCT (mac) ,TIME FROM think_wifidoglog WHERE is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";	
 			}
 		}
 	
@@ -223,8 +240,6 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 		$array=array();
 		$base=A('Base');
 		$today=$base->weekday(strtotime("now "));
-		//f "d".$today;
-		//$sum=array();
 		for ($h = 0; $h <7; $h++) {
 			$sum[$h] = 0;
 		}
@@ -278,7 +293,7 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 		$this->assign('title','广告和流量分析');
 		$this->assign('class2','action');
 		$yestoday=strtotime("-24hours");
-		$sql="SELECT COUNT(l.id) AS num,b.no FROM think_log AS l,think_device AS d,think_bus AS b WHERE b.id=d.bus_id AND d.mac=l.mac AND l.time>".$yestoday." GROUP BY l.mac ORDER BY num limit 10";
+		$sql="SELECT COUNT(l.id) AS num,d.mac,b.no FROM (SELECT * FROM think_log WHERE think_log.time>".$yestoday.") AS l RIGHT JOIN think_device AS d ON d.mac=l.mac RIGHT JOIN think_bus AS b ON b.id=d.bus_id GROUP BY d.mac ORDER BY num";
 		$result=M()->query($sql);
 		$max=24*60*12;
 		for($i=0;$i<10;$i++){
@@ -295,11 +310,11 @@ WHERE  think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_d
 	 * @param number $bus_id
 	 */
 	public function get_ad_click() {
-		$line_id = 35;
-		$bus_id =0;
+	$line_id = I('post.line_id');
+		$bus_id =I('post.bus_id');
 		 if ($bus_id == 0 && $line_id == 0) {
 			$sql="SELECT SUM(mac.click_num) AS click_num,md.text,mac.time FROM think_media AS md,think_mediaclick AS mac 
-WHERE mac.media_id=md.id AND mac.time>(UNIX_TIMESTAMP(NOW())-6*86400)
+WHERE mac.media_id=md.id AND mac.time>(UNIX_TIMESTAMP(NOW())-7*86400)
 GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 		}
 		else {
@@ -308,13 +323,13 @@ GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 				$sql="SELECT SUM(mac.click_num) AS click_num,md.text,mac.time FROM think_media AS md,think_mediaclick AS mac 
                         WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT media_id FROM think_device_media WHERE device_id IN (SELECT  think_device.id FROM think_device,think_bus,think_line
                        WHERE think_line.id=think_bus.line_id AND think_line.id=$line_id AND think_device.bus_id=think_bus.id)
-                               )  AND mac.time>(UNIX_TIMESTAMP(NOW())-6*86400) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
+                               )  AND mac.time>(UNIX_TIMESTAMP(NOW())-7*86400) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 			//echo "dd";
 			}
 			else{
 				$sql="  SELECT SUM(mac.click_num) AS click_num,md.text ,mac.time FROM think_media AS md,think_mediaclick AS mac 
      WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT think_device_media.media_id FROM think_device_media ,think_device 
-                 WHERE think_device_media.device_id=think_device.id AND think_device.bus_id=$bus_id)  AND mac.time>(UNIX_TIMESTAMP(NOW())-6*86400) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
+                 WHERE think_device_media.device_id=think_device.id AND think_device.bus_id=$bus_id)  AND mac.time>(UNIX_TIMESTAMP(NOW())-7*86400) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 			}
 		}
 		$result=M()->query($sql);
@@ -346,8 +361,8 @@ GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
 	
 	}
 public function get_ad_click_top() {
-		 $line_id = I('post.line_id');
-		$bus_id =I('post.bus_id');	
+		$line_id = I('post.line_id');
+		$bus_id =I('post.bus_id');
 		if ($bus_id == 0 && $line_id == 0) {
 			$sql = 'SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac WHERE mac.media_id=md.id GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6';
 		} else {
@@ -374,22 +389,18 @@ public function get_ad_click_top() {
 			)
 			;
 		} 
-		echo json_encode ( $array );
+		if(count ( $result )==0){
+	for($i = 0; $i < 5;$i++){
+			$array [$i] = array (
+					'text' => "",
+					
+					'click_num' => 0
+			);
+		}
+		}
+		echo json_encode($array);
 		
-		/* $data = array (
-				'name' => array (
-						'可口可乐',
-						'百事可乐',
-						'非常可乐' 
-				),
-				'data' => array (
-						11,
-						12,
-						13 
-				) 
-		);
-		echo json_encode ( $data ); */
-		// echo I('post.line_id'); 
+	
 	}
 	
 	

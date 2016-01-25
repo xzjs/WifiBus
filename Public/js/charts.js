@@ -340,7 +340,7 @@ function adMainTimeFunction(date1, date2) {
             trigger: 'axis'
         },
         legend: {
-            data: [ '本周'],
+            data: [ ''],
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 12,
@@ -371,7 +371,7 @@ function adMainTimeFunction(date1, date2) {
             }
         }],
         series: [{
-            name: '本周',
+            name: '',
             type: 'line',
             data: [date2[0], date2[1], date2[2], date2[3], date2[4], date2[5], date2[6]],
         }]
@@ -840,7 +840,8 @@ function adver_rankOptionFunction3(no,num) {
         xAxis : [
             {
                 type : 'value',
-                boundaryGap : [0, 0.001],
+                max : 100,
+                boundaryGap : [0, 1],
                 axisLabel:{
                     textStyle:{
                         "color":"#FFFFFF"
@@ -864,7 +865,6 @@ function adver_rankOptionFunction3(no,num) {
 
             {
                 type:'bar',
-                //data:num[6],num[5],num[4],num[3],num[2],num[1],num[0],
                 data:num,
             }
         ]
@@ -874,6 +874,7 @@ function adver_rankOptionFunction3(no,num) {
 
 function adver_rankOptionFunction2(busno,value){
     option = {
+
         title : {
             text: '当日上网用户TOP10',
             textStyle:{
@@ -920,6 +921,7 @@ function adver_rankOptionFunction2(busno,value){
 
 function adver_rankOptionFunction1(time,value){
     option = {
+
         color:["#FF6666"],
         title: {
             text: '当日用户上网走势',
@@ -934,9 +936,11 @@ function adver_rankOptionFunction1(time,value){
         xAxis: [
             {
                 type: 'category',
+               
                 boundaryGap: false,
                 data: time,
                 axisLabel:{
+                	formatter: '{value}时',
                     textStyle:{
                         "color":"#FFFFFF"
                     }

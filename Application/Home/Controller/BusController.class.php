@@ -293,4 +293,5 @@ class BusController extends Controller
         }
         echo json_encode($data);
     }
+
 }

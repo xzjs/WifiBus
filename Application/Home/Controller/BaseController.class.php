@@ -42,6 +42,18 @@ class BaseController extends Controller
     }
 
     /**
+     * 电影上传
+     */
+    public function upload_video(){
+        $name='_' . time();
+        $file_name=explode(".",$_FILES['file']['name']);
+        $img_name=explode(".",$_FILES['img']['name']);
+        move_uploaded_file($_FILES['file']['tmp_name'], "./Update/".$name.".".$file_name[1]);
+        move_uploaded_file($_FILES['img']['tmp_name'], "./Update/".$name.".".$img_name[1]);
+        return $name.".".$file_name[1];
+    }
+
+    /**
      * 父类构造函数
      */
     /*public function __construct(){
@@ -50,4 +62,24 @@ class BaseController extends Controller
             $this->error('请先登录',U('Admin/login'));
         }
     }*/
+
+
+    /**
+     * 实时返回上传进度
+     */
+    public function progress(){
+        session_start();
+
+        $i = ini_get('session.upload_progress.name');
+
+        $key = ini_get("session.upload_progress.prefix") . $_GET[$i];
+
+        if (!empty($_SESSION[$key])) {
+            $current = $_SESSION[$key]["bytes_processed"];
+            $total = $_SESSION[$key]["content_length"];
+            echo $current < $total ? ceil($current / $total * 100) : 100;
+        }else{
+            echo 100;
+        }
+    }
 }

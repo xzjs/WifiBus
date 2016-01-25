@@ -271,8 +271,6 @@ class DeviceController extends Controller
     		else{
     			$data['id']=$device_ids[$i];
     			$result=$Device->data($data)->save();
-    			if(!$result)
-    				return 2;//更新失败！
     		}
     		
     	}
