@@ -24,6 +24,7 @@ class WifidogController extends Controller
  */
     public function login($gw_port=2060,$gw_address='192.168.18.1',$gw_id='0e:60:55:f3:3d:0a',$mac='假的'){
         if (!S($gw_address . '.' . $mac . '.' . '0')) {
+            $a=strtotime("tomorrow")-time();
             S($gw_address . '.' . $mac . '.' . '0', time(),strtotime("tomorrow")-time());
             $data = array(
                 'mac' => $mac,
@@ -31,7 +32,9 @@ class WifidogController extends Controller
                 'time' => S($gw_address . '.' . $mac . '.' . '0'),
                 'is_back' => 0);
         } elseif (!S($gw_address . '.' . $mac . '.' . '1') && (time() - S($gw_address . '.' . $mac . '.' . '0') > 30)) {
+            $b=time() - S($gw_address . '.' . $mac . '.' . '0');
             S($gw_address . '.' . $mac . '.' . '1', time(), strtotime("tomorrow")-time());
+            $c=strtotime("tomorrow")-time();
             $data = array(
                 'mac' => $mac,
                 'device_mac' => $gw_id,

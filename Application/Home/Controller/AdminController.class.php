@@ -39,7 +39,6 @@ class AdminController extends BaseController
         } else {
             $this->error($Admin->getError());
         }
-
     }
 
     /**
