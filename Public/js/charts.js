@@ -488,7 +488,7 @@ function adMainCustomerFunction(date1,date2) {
 function adMainTurnBackFunction(date1,date2) {
     var tempOption = {
         title: {
-            text: '回头率时间关系图',
+            text: '回头量时间关系图',
             x: 'center',
             y: 'bottom',
             textStyle: {
