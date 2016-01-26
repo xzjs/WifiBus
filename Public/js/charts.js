@@ -124,7 +124,7 @@ function onlineOption(a,url) {
             itemStyle: labelFromatter,
             data: [{
                 value: (100-a),
-                name: '已经认证人数',
+                name: '可承载人数',
                 itemStyle: labelBottom
 
             }, {
