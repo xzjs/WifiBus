@@ -524,7 +524,7 @@ function adMainTurnBackFunction(date1,date2) {
             }
         }],
         series: [{
-            name: '回头率',
+            name: '回头量',
             type: 'line',
             data: [date2[0], date2[1], date2[2], date2[3], date2[4], date2[5], date2[6]],
             itemStyle: {
