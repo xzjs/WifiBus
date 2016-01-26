@@ -159,7 +159,7 @@ $(function () {
                           	    + '<br/>在线人数：'
                    				+  array[x]['online_num']
                    				+ '<br/>已用流量：'
-                   				+  array[x]['flow_num']
+                   				+  parseInt(array[x]['flow_num']/1024)+'M'
                    				+ '<br/>磁盘使用率：' 
                    				 +  array[x]['cipan_use']
                                  
@@ -168,24 +168,15 @@ $(function () {
                           addClickHandler(content, marker2[i]);
                       	i++;
                       }
-        	/* marker2[i].addEventListener("click", 
-				 (function(e){
-						// js 闭包
-						return function(){
-							map.centerAndZoom(point[e], 13);
-							
-						}      
-                    })(i)); */
-                      /*  var markerClusterer = new BMapLib.MarkerClusterer(map, {
-       					markers:marker2,
-       					girdSize:70,
-       					maxZoom:12,
-       					}); *///点聚合
+            //alert("总览刷新了");
+        	
        					
-  var markerClusterer = new BMapLib.MarkerClusterer(map, {
-	  markers:marker2
-	  });
-           console.log(marker2);   
+ /*  var markerClusterer = new BMapLib.MarkerClusterer(map, {
+	  markers:marker2,
+		girdSize:70,
+		maxZoom:12,
+	  }); */
+          
       }
    
     var int = self.setInterval("chart()", 1000);
@@ -215,6 +206,7 @@ $(function () {
  function show_line($url, line,id) {
 	 line_id=id;
 	 line=line;
+		map.clearOverlays();
 	 clearInterval(ding_id); 
 	 only_show_line(line);
 	 get_map_line($url,line);
@@ -293,63 +285,112 @@ function chart() {
     	        url: $url,
     	        dataType: "json",
     	        success: function (results) {
-    	        	//alert("ff");
+    	        
     	        	 for(var i=0;i<aray_bus.length;i++){
     	        		 map.removeOverlay(aray_bus[i]);
+    	        		//	alert("ff");
     	       	  }
     	         	 array=eval(results);
     	        		
     	        }
     	    });
-         
-         setTimeout(
-        		 function () {
-        			 //alert("线路");
-                    var x;
-                
-                     for (x in array) {
-                        var a = array[x]['p_x'];
-                        var b = array[x]['p_y'];
-                    //  	
-                        var pt = new BMap.Point(a, b);
-                        var num = array[x]['flag'];
-                        var img;
-                        switch (num) {
-                            case 0:
-                                img = "__PUBLIC__/images/green_left.png";
-                                break;
-                            case 1:
-                                img = "__PUBLIC__/images/red_left.png";
-                                break;
-                            
-                            default :
-                                img = "__PUBLIC__/images/green_right.png";
-                                break;
-                        }
-                        var myIcon = new BMap.Icon(img, new BMap.Size(30, 30));
-                        var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
-                      //  marker2.setLabel(new BMap.Label("1嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎",{offset:new BMap.Size(10,-10)}));
-                        map.addOverlay(marker2);
-                       aray_bus[x]=marker2;
-                     //  alert("leng"+aray_bus.length);
-                //  alert("f"+aray_bus[x].getLabel().content);
+        
+    	  setTimeout(
+
+         		 function () {
+
+         			 //alert("线路");
+
+                     var x;
+
                  
-                     //  alert("dd"); // 创建标注
-                      
-                        	 var content =  '<div style="margin:0;line-height:20px;padding:2px;font-size: 12px">'
-                        		 + '公交车牌号：'
-                  				+  array[x]['car_no']	
-                        	    + '<br/>在线人数：'
-                 				+  array[x]['online_num']
-                 				+ '<br/>已用流量：'
-                 				+  array[x]['flow_num']
-                 				+ '<br/>磁盘使用率：' 
-                 				+  array[x]['cipan_use']
-                               
-                 				+'</div>';
-                        addClickHandler(content, marker2);
-                    }
-         },800);
+
+                      for (x in array) {
+
+                         var a = array[x]['p_x'];
+
+                         var b = array[x]['p_y'];
+
+                     //  	
+
+                         var pt = new BMap.Point(a, b);
+
+                         var num = array[x]['flag'];
+
+                         var img;
+
+                         switch (num) {
+
+                             case 0:
+
+                                 img = "__PUBLIC__/images/green_left.png";
+
+                                 break;
+
+                             case 1:
+
+                                 img = "__PUBLIC__/images/red_left.png";
+
+                                 break;
+
+                             
+
+                             default :
+
+                                 img = "__PUBLIC__/images/green_right.png";
+
+                                 break;
+
+                         }
+
+                         var myIcon = new BMap.Icon(img, new BMap.Size(30, 30));
+
+                         var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
+
+                       //  marker2.setLabel(new BMap.Label("1嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎",{offset:new BMap.Size(10,-10)}));
+
+                         map.addOverlay(marker2);
+
+                        aray_bus[x]=marker2;
+
+                      //  alert("leng"+aray_bus.length);
+
+                 //  alert("f"+aray_bus[x].getLabel().content);
+
+                  
+
+                      //  alert("dd"); // 创建标注
+
+                       
+
+                         	 var content =  '<div style="margin:0;line-height:20px;padding:2px;font-size: 12px">'
+
+                         		 + '公交车牌号：'
+
+                   				+  array[x]['car_no']	
+
+                         	    + '<br/>在线人数：'
+
+                  				+  array[x]['online_num']
+
+                  				+ '<br/>已用流量：'
+
+                  				+  array[x]['flow_num']
+
+                  				+ '<br/>磁盘使用率：' 
+
+                  				+  array[x]['cipan_use']
+
+                                
+
+                  				+'</div>';
+
+                         addClickHandler(content, marker2);
+
+                     }
+
+          },800);
+         
     }
 
     function addClickHandler(content, marker) {
