@@ -673,7 +673,7 @@
                                     </div>
                                     <div>
                                         <p>图片简介：</p>
-                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg"> 
+                                        <input type="file" class="file" name="img" onchange="ye1.value=value" accept="image/jpeg">
                                         <input name="ye1" class="ye1"> 
                                         <input type="button" value="打开" class="button" onclick=img.click()>
                                     </div>
@@ -954,7 +954,7 @@ function upload_video(input,position) {
         formData.append('ids', ids);
         $('#progress').show();
         setTimeout('fetch_progress()', 100);
-
+        $(input[10]).attr("disabled","disabled");
         $.ajax({
             url: "{:U('Media/upload')}",
             type: 'POST',
@@ -987,7 +987,8 @@ function fetch_progress(){
         if(progress < 100){
             setTimeout('fetch_progress()', 100);
         }else{
-            $('#progress .label').html('完成!');
+            $('#progress .label').html( '0%');
+            $('#progress .bar').css('width', '0%');
         }
     }, 'html');
 }
