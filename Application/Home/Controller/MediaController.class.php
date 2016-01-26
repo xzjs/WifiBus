@@ -9,8 +9,17 @@ use Think\Controller;
  * @author xiuge
  *
  */
+
 class MediaController extends BaseController
 {
+
+	public function test($aaa){
+        var_dump(S('abc'));
+        S('abc',$aaa,3);
+	}
+
+
+
 	/**
 	 * 上传固件升级文件
 	 */
