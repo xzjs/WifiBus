@@ -5,7 +5,7 @@
  * 加载线路列表(暂未用到)
  */
 function load_line() {
-	$.post("Line/select", {
+	$.post("{:U('Line/select')}", {
 		is_ajax : 1
 	}, function(data, status) {
 		if (status == 4 || status == "success") {
@@ -328,7 +328,7 @@ function search_line(url,key){
  * ajax获取天气
  */
 $(function () {
-    $.post("/WifiBus/index.php/Home/Weather/get_weather", {
+    $.post("{:U('Weather/get_weather')}", {
         city_code: 370200,
     }, function (datas, status) {
         if (status == 4 || status == "success") {
