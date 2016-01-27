@@ -81,21 +81,7 @@
 	<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
 <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
 <script type="text/javascript">
-	
-/**
- * ajax获取天气
- */
-$(function () {
 
-    $.post("{:U('Weather/get_weather')}", {
-        city_code: 370200,
-    }, function (datas, status) {
-        if (status == 4 || status == "success") {
-            $("div#weather").html(datas);
-
-        }
-    });
-})
     var myChartWork = echarts.init(document.getElementById('workNormal'));
     var myChartOnline = echarts.init(document.getElementById('onlinePeople'));
     var myChartFlow = echarts.init(document.getElementById('flow'));
