@@ -284,7 +284,7 @@ function adMainFunction(text,click_num) {
             trigger: 'axis'
         },
         legend: {
-            data: ['2015年'],
+            data: [''],
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 16,
