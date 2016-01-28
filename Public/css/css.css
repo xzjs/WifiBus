@@ -963,11 +963,17 @@ body{
 
 }
 .dis_button>input{
-    font: 16px '微软雅黑', sans-serif;
+     font: 16px '微软雅黑', sans-serif;
+     color: #fff;
+     background: #3385ff;
+     cursor: pointer;
+ }
+.dis_button>input.end{
     color: #fff;
-    background: #3385ff;
+    background: #ccc;
     cursor: pointer;
 }
+
 /*********************************************/
 /*用户控制-其他设置*/
 /*********************************************/

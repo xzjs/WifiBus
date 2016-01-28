@@ -954,6 +954,7 @@ function upload_video(input,position) {
         formData.append('ids', ids);
         $('#progress').show();
         setTimeout('fetch_progress()', 100);
+        $(input[10]).addClass('end');
         $(input[10]).attr("disabled","disabled");
         $.ajax({
             url: "{:U('Media/upload')}",
@@ -965,6 +966,7 @@ function upload_video(input,position) {
         }).done(function (res) {
             $('#progress .label').html( '0%');
             $('#progress .bar').css('width', '0%');
+            $(input[10]).removeClass('end');
             $(".dis").slideUp();
             input[2].value = "";
             input[5].value = "";

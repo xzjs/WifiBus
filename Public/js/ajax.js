@@ -5,7 +5,7 @@
  * 加载线路列表(暂未用到)
  */
 function load_line() {
-	$.post("Line/select", {
+	$.post("{:U('Line/select')}", {
 		is_ajax : 1
 	}, function(data, status) {
 		if (status == 4 || status == "success") {
