@@ -345,6 +345,39 @@ $(document).ready(function() {
 		$(this).parent().slideUp();
 	});
 
+	var all=$(".select li a");
+	$(".select li a").click(function() {
+		$(this).addClass("selected");
+	});
+
+	var allSelect = $(".select li a");
+
+	allSelect.click(function(){
+		allSelect.removeClass('selected');
+		$(this).addClass('selected');
+
+	})
+
+	var allLine = $(".left_display ul li a");
+	allLine.click(function(){
+		allLine.removeClass('selected');
+		$(this).addClass('selected');
+
+	})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 	// --------------------------
 	// 拖曳功能
 	// --------------------------
