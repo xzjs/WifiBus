@@ -57,8 +57,9 @@ class AdController extends Controller
     public function select()
     {
         $Ad = M('Ad');
+        $lineid=I('param.line_id');
     	if(I('param.line_id',0)!=0){
-    		$result=$Ad->where('line_id='.I('param.line_id'))->order('click_num desc')->limit(6)->select();
+    		$result=$Ad->where('line_id=%d',$lineid)->order('click_num desc')->limit(6)->select();
     		$this->ajaxReturn($result);
     	}else{
     		if ($id != 0)

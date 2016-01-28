@@ -1588,7 +1588,7 @@ class Model {
             return $this->data;
         }
         if(is_object($data)){
-            $data   =   get_object_vars($data);
+            $data = get_object_vars($data);
         }elseif(is_string($data)){
             parse_str($data,$data);
         }elseif(!is_array($data)){

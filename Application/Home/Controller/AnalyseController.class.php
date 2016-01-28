@@ -16,7 +16,10 @@ use Think\Controller;
 class AnalyseController extends Controller
 {
 function test(){
-	echo date ( "H:i:s", time());
+	$id=97;
+$result=M()->query('select * from think_bus where id=%s ',$id);
+echo $result[0]['no'];
+
 	//echo (int)( date ( "H", "1452456000" ));
 }
  
@@ -25,7 +28,7 @@ function test(){
 	 *
 	 */
 	public function fenxi_get_on_line_top(){
-		$result=M()->query("	SELECT DISTINCT(think_wifidoglog.mac) ,COUNT(think_wifidoglog.id) AS VALUE ,think_bus.no FROM think_wifidoglog,think_bus,think_device 
+		$result=M()->query("SELECT DISTINCT(think_wifidoglog.mac) ,COUNT(think_wifidoglog.id) AS VALUE ,think_bus.no FROM think_wifidoglog,think_bus,think_device 
 WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURDATE()) AND think_bus.id=think_device.bus_id AND
  think_device.mac=think_wifidoglog.device_mac GROUP BY think_wifidoglog.device_mac ORDER BY VALUE  LIMIT 10
 				");
@@ -107,6 +110,7 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 	 */
 	public function select_busno(){
 		$busno=I("post.busno");
+		
 		$result = M()->query
 		("SELECT think_device.TIME,think_bus.no FROM think_device ,think_bus WHERE think_bus.no LIKE '%$busno'AND think_device.bus_id=think_bus.id ORDER BY TIME DESC
 				");
@@ -137,20 +141,21 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 	public function get_back(){
 		$line_id = I('post.line_id');
 		$bus_id =I('post.bus_id');
-		
 		if ($bus_id == 0 && $line_id == 0) {
-		$sql="SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1";
+		$result=M()->query("SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1");
 		}
 		else{
 			if ($bus_id == 0) {
-				$sql="SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1  AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)
-			";}
+				$result=M()->query('SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1  AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=%s)',$line_id);
+				 
+			}
 			else{
-				$sql="SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1   AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";
+				
+				$result=M()->query('SELECT DISTINCT (mac) ,TIME,DATE,is_back FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=1   AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=%s)',$bus_id);
 			}
 		}
 		
-     	$result=M()->query($sql);
+		
 		$array=array();
 		for ($h = 0; $h <7; $h++) {
 			$sum[$h] = 0;
@@ -181,19 +186,17 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 		$line_id = I('post.line_id');
 		$bus_id =I('post.bus_id');
 		if ($bus_id == 0 && $line_id == 0) {
-			$sql="SELECT DISTINCT (mac) ,TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=0";
+		$result=M()->query("SELECT DISTINCT (mac) ,TIME FROM think_wifidoglog WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND is_back=0");
 		}
 		else{if ($bus_id == 0) {
 			
-			$sql="SELECT DISTINCT (mac) ,TIME FROM think_wifidoglog WHERE  is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_mac  IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id )";	
+			$result=M()->query('SELECT DISTINCT (mac) ,TIME FROM think_wifidoglog WHERE  is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_mac  IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=%d)',$line_id);	
 			}
 			else {
-			$sql="SELECT DISTINCT (mac) ,TIME FROM think_wifidoglog WHERE is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";	
+			$result=M()->query('SELECT DISTINCT (mac) ,TIME FROM think_wifidoglog WHERE is_back=0 and  TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_mac IN(SELECT think_device.mac FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=%d)',$bus_id);	
 			}
 		}
 	
-		
-		$result=M()->query($sql);
 		$array=array();
 		for ($h = 0; $h <7; $h++) {
 			$sum[$h] = 0;
@@ -224,19 +227,17 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 		$bus_id =I('post.bus_id');
 		$time=time()-6*86400;
 		if ($bus_id == 0 && $line_id == 0) {
-			$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400)";
+			$result=M()->query('SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400)');
 		}
 		else {
 			if ($bus_id == 0) {
-				$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.line_id=$line_id)";
-				
+				$result=M()->query("SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_bus.line_id=%d AND think_device.bus_id=think_bus.id )",$line_id);
 			}
 			else{
-				$sql="SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=$bus_id)";
-				
+				$result=M()->query("SELECT num,TIME FROM think_flow WHERE   TIME>(UNIX_TIMESTAMP(NOW())-7*86400) AND device_id IN(SELECT think_device.id FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id AND think_bus.id=%d)",$bus_id);	
 			}
 		}
-		$result=M()->query($sql);
+		
 		$array=array();
 		$base=A('Base');
 		$today=$base->weekday(strtotime("now "));
@@ -313,26 +314,26 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 	$line_id = I('post.line_id');
 		$bus_id =I('post.bus_id');
 		 if ($bus_id == 0 && $line_id == 0) {
-			$sql="SELECT SUM(mac.click_num) AS click_num,md.text,mac.time FROM think_media AS md,think_mediaclick AS mac 
+			$result=M()->query("SELECT SUM(mac.click_num) AS click_num,md.text,mac.time FROM think_media AS md,think_mediaclick AS mac 
 WHERE mac.media_id=md.id AND mac.time>(UNIX_TIMESTAMP(NOW())-7*86400)
-GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
+GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6");
 		}
 		else {
 			if ($bus_id == 0) {
 		
-				$sql="SELECT SUM(mac.click_num) AS click_num,md.text,mac.time FROM think_media AS md,think_mediaclick AS mac 
+			$result=M()->query("SELECT SUM(mac.click_num) AS click_num,md.text,mac.time FROM think_media AS md,think_mediaclick AS mac 
                         WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT media_id FROM think_device_media WHERE device_id IN (SELECT  think_device.id FROM think_device,think_bus,think_line
-                       WHERE think_line.id=think_bus.line_id AND think_line.id=$line_id AND think_device.bus_id=think_bus.id)
-                               )  AND mac.time>(UNIX_TIMESTAMP(NOW())-7*86400) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
+                       WHERE think_line.id=think_bus.line_id AND think_line.id=%d AND think_device.bus_id=think_bus.id)
+                               )  AND mac.time>(UNIX_TIMESTAMP(NOW())-7*86400) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6",$line_id);
 			//echo "dd";
 			}
 			else{
-				$sql="  SELECT SUM(mac.click_num) AS click_num,md.text ,mac.time FROM think_media AS md,think_mediaclick AS mac 
+				$result=M()->query("  SELECT SUM(mac.click_num) AS click_num,md.text ,mac.time FROM think_media AS md,think_mediaclick AS mac 
      WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT think_device_media.media_id FROM think_device_media ,think_device 
-                 WHERE think_device_media.device_id=think_device.id AND think_device.bus_id=$bus_id)  AND mac.time>(UNIX_TIMESTAMP(NOW())-7*86400) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
+                 WHERE think_device_media.device_id=think_device.id AND think_device.bus_id=%d)  AND mac.time>(UNIX_TIMESTAMP(NOW())-7*86400) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6",$bus_id);
 			}
 		}
-		$result=M()->query($sql);
+		
 		//$MediaModel=D('Media');
 		$array=array();
 		$base=A('Base');
@@ -364,21 +365,22 @@ public function get_ad_click_top() {
 		$line_id = I('post.line_id');
 		$bus_id =I('post.bus_id');
 		if ($bus_id == 0 && $line_id == 0) {
-			$sql = 'SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac WHERE mac.media_id=md.id GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6';
+	$result = M ()->query('SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac WHERE mac.media_id=md.id GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6');
 		} else {
 			if ($bus_id == 0) {
-				$sql = "SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac 
+			$result = M ()->query("SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac 
                         WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT media_id FROM think_device_media WHERE device_id IN (SELECT  think_device.id FROM think_device,think_bus,think_line
-                       WHERE think_line.id=think_bus.line_id AND think_line.id=$line_id AND think_device.bus_id=think_bus.id)
-                               ) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6" ;
+                       WHERE think_line.id=think_bus.line_id AND think_line.id=%d AND think_device.bus_id=think_bus.id)
+                               ) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6",$line_id) ;
 			} 
 			else {
-			$sql="SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac 
-                 WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT think_device_media.media_id FROM think_device_media ,think_device WHERE think_device_media.device_id=think_device.id AND think_device.bus_id=$bus_id) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6";
+			$result = M ()->query("SELECT SUM(mac.click_num) AS click_num,md.text FROM think_media AS md,think_mediaclick AS mac 
+                 WHERE mac.media_id=md.id   AND mac.media_id IN(SELECT think_device_media.media_id FROM think_device_media ,think_device WHERE think_device_media.device_id=think_device.id AND 
+                 		think_device.bus_id=%d) GROUP BY mac.media_id ORDER BY  click_num DESC LIMIT 6",$bus_id);
 			}
 		}
 	
-	$result = M ()->query ( $sql );
+	
 		$array = array ();
 		for($i = 0; $i < count ( $result ); $i ++) {
 			
