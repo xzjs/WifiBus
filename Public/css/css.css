@@ -461,10 +461,17 @@ body{
     padding: 0 0 0 18px;
     color: #fff;
 }
+
 .select>li>a:hover{
     color: #fff;
     background: #336ca6;
 }
+
+.selected{
+    color: #fff;
+    background: #336ca6;
+}
+
 .left_display{
     width: 159px;
     min-height: 530px;
@@ -492,9 +499,10 @@ body{
     color: #fff;
     text-align: center;
 }
+
 .left_display>ul>li>a:hover{
-    
     background: #336ca6;
+    color: #fff;
 }
 .hide_details{
     position: absolute;
@@ -968,6 +976,7 @@ body{
      background: #3385ff;
      cursor: pointer;
  }
+
 .dis_button>input.end{
     color: #fff;
     background: #ccc;

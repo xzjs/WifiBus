@@ -296,7 +296,6 @@ function search_bus(url,keys) {
 			
 				bus_list += "<li><a href='#' onclick='getAdInfo_bus("+bus_info[i].id+")' >" + bus_info[i].no + "</a></li>";
 			}
-			
 			$("ul#bus_no_selector").html(bus_list);
 		}
 	});
