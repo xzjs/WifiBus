@@ -355,27 +355,13 @@ $(document).ready(function() {
 	allSelect.click(function(){
 		allSelect.removeClass('selected');
 		$(this).addClass('selected');
-
 	})
 
 	var allLine = $(".left_display ul li a");
 	allLine.click(function(){
 		allLine.removeClass('selected');
 		$(this).addClass('selected');
-
 	})
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 	// --------------------------
