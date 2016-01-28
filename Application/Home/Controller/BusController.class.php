@@ -18,17 +18,17 @@ class BusController extends Controller
     public function update_no()
     {
         $bus = D('Bus');
-        $no = I('post.no');
-        $id = I('post.carId');
+        //$no = I('post.no');
+       // $id = I('post.carId');
         if ($bus->create()) {
-            $b = $bus->find($id);
+            $b = $bus->find($_POST["carId"]);
             if ($b) {
-                $bus->no = $no;
+                $bus->no = $_POST["no"];
             }
             $result = $bus->save();
             //$result = M()->execute("UPDATE think_bus SET no ='$no' WHERE id=$id");
             $DeviceModel = D('Device');
-            $device = $DeviceModel->find(I('post.mac'));
+            $device = $DeviceModel->find($_POST["mac"]);
             if ($device) {
                 $DeviceModel->bus_id = $id;
             }
@@ -59,7 +59,7 @@ class BusController extends Controller
             if ($result) {
 
                 $device->bus_id = $result;
-                $device->mac = I('post.mac');
+                $device->mac = $_POST["mac"];
 
                 $flag = $device->add();
                 if ($flag > 0)
