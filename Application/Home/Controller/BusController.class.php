@@ -36,7 +36,7 @@ class BusController extends Controller
             if (($result + $result2) > 0) {
                 echo "更新成功";
             } else {
-                echo "更新失败";
+                echo "更新失败".I('post.no').$_POST["mac"];
             }
         } else {
             echo $bus->getError();
