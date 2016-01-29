@@ -143,6 +143,13 @@ class LineController extends Controller
         $id = I('post.id');
         //echo $name;
         if ($Line->create()) {
+        	$where[name]=$name;
+        $re=$Line->where($where)->select();
+        if($re){
+        	echo '此线路名存在！';
+        }
+        
+        	else{
 
             $result = M()->execute("UPDATE think_line SET name='$name' WHERE id=$id");
 
@@ -151,6 +158,7 @@ class LineController extends Controller
             } else {
                 echo '更新失败！';
             }
+        }
         } else {
             //echo "ee";
             echo $Line->getError();
