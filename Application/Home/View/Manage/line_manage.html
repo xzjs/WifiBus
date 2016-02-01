@@ -48,6 +48,7 @@
             </div>
         </div>
         <div class="clear"></div>
+        
         <form id="carForm" class="hide">
             <ul class="user_click">
                 <li class="car_add">
@@ -59,12 +60,13 @@
                     </div>
                     <div class="cont2">
                         <label>设备MAC地址</label>
-                        <select name="mac">
+                        <!-- <select name="mac">
                             <volist id="vo" name="mac_list">
                                 <option value={$vo.id} checked="checked">{$vo.mac}</option>
                             </volist>
 
-                        </select>
+                        </select> -->
+                         <input type="text" name="carMac">
                     </div>
                     <input type="submit" value="确定">
                 </li>
@@ -344,8 +346,8 @@
                 type: 'POST',
                 data: {
                     line_id: lineId,
-                    no: $("#carForm input[type=text]").val(),
-                    mac: $("#carForm select option:selected").val()
+                    no: $("#carForm input[name=carNum]").val(),
+                    mac:$("#carForm input[name=carMac]").val(),
                 },
                 success: function (data, status) {
                     alert(data);
@@ -391,14 +393,14 @@
                 url: '../Bus/update_no',
                 type: "POST",
                 data: {
-                    no: $("#carForm input[type=text]").val(),
+                    no: $("#carForm input[name=carNum]").val(),
                     carId: id,
-                    mac: $("#carForm select option:selected").val()
+                    mac:$("#carForm input[name=carMac]").val(),
                 },
                 success: function (data, status) {
                     alert(data);
                     showLine();
-                    $("#carForm input[type=text]").val("");
+                    $("#carForm input[name=carNum]").val("");
                     $("#carForm").addClass('hide');
                     showCar(line_id);
                 }

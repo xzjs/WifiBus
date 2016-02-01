@@ -109,15 +109,20 @@ WHERE  think_wifidoglog.is_back=0 and think_wifidoglog.TIME>UNIX_TIMESTAMP( CURD
 	 * busno查询time
 	 */
 	public function select_busno(){
-		$busno=I("post.busno");
-		$condition[think_bus.no]=array("like","%".$busno);
-		$result = M()->table(think_device ,think_bus)->field(think_device.TIME,think_bus.no)->where($condition)->select();
+		//$busno=I('post.busno');
+		$busno=8521;
+	 	$condition['b.no']=array("like","%".$busno);
+	 	$condition['a.bus_id']=
+		$result = M()->table(array('think_device'=> a ,'think_bus'=> b ))->field('a.time')->where($condition and 'a.bus_id=b.id')->order('a.time desc')->select();
+		
 		/* $result = M()->query
 		("SELECT think_device.TIME,think_bus.no FROM think_device ,think_bus WHERE think_bus.no LIKE '%$busno'AND think_device.bus_id=think_bus.id ORDER BY TIME DESC
-				"); */
+				");  
+		echo M()->getLastSql ; */
 		$date=date('Y-m-d H:i:s',$result[0]['time']);
+		
 
-		echo json_encode($date);
+		echo json_encode($date); 
 	}
 	
 	/**
