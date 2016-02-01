@@ -136,7 +136,7 @@ class MediaController extends BaseController
     /**
      * 上传电影、电子书、apk等文件
      */
-    public function upload() {
+    public function upload( ) {
     	$error_data['status']=0;
         if(strstr(I('post.position'),'video')) {
             $file_name=$this->upload_video('video');
