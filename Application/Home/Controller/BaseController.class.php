@@ -11,6 +11,15 @@ use Think\Controller;
 
 class BaseController extends Controller
 {
+    public static $VIDEO_HEIGHT=224;
+    public static $VIDEO_WIDE=400;
+    public static $BOOK_HEIGHT=213;
+    public static $BOOK_WIDE=305;
+    public static $APP_HEIGHT=256;
+    public static $APP_WIDE=256;
+    public static $AD_HEIGHT=142;
+    public static $AD_WIDE=434;
+
 
     /**
      * 根据时间戳返回星期几
@@ -30,7 +39,7 @@ class BaseController extends Controller
     /**
      * 文件上传
      */
-    public function upload_file()
+    public function upload_file($type)
     {
         $upload = new \Think\Upload(); // 实例化上传类
         $upload->maxSize = 9999999999999; // 设置附件上传大小
@@ -38,6 +47,13 @@ class BaseController extends Controller
         $upload->autoSub = false;
         $upload->saveName = '_' . time(); // 上传文件
         $info = $upload->upload();
+        $name_str=explode(".",$info ['file'] ['savename']);
+        if($type=="book")
+            $this->imagecropper("./Update/".$name_str[0].".jpg",self::$BOOK_WIDE,self::$BOOK_HEIGHT);
+        elseif($type=="app")
+            $this->imagecropper("./Update/".$name_str[0].".jpg",self::$APP_WIDE,self::$APP_HEIGHT);
+        elseif($type=="ad")
+            $this->imagecropper("./Update/".$name_str[0].".jpg",self::$AD_WIDE,self::$AD_HEIGHT);
         return $info ['file'] ['savename'];
     }
 
@@ -50,6 +66,7 @@ class BaseController extends Controller
         $img_name=explode(".",$_FILES['img']['name']);
         move_uploaded_file($_FILES['file']['tmp_name'], "./Update/".$name.".".$file_name[1]);
         move_uploaded_file($_FILES['img']['tmp_name'], "./Update/".$name.".".$img_name[1]);
+        $this->imagecropper("./Update/".$name.".".$img_name[1],self::$VIDEO_WIDE,self::$VIDEO_HEIGHT);
         return $name.".".$file_name[1];
     }
 
@@ -82,4 +99,79 @@ class BaseController extends Controller
             echo 100;
         }
     }
+
+    /**
+     * @param $source_path
+     * @param $target_width
+     * @param $target_height
+     * @return bool 裁剪缩放图片
+     */
+    function imagecropper($source_path, $target_width, $target_height)
+    {
+        $source_info   = getimagesize($source_path);
+        $source_width  = $source_info[0];
+        $source_height = $source_info[1];
+        $source_mime   = $source_info['mime'];
+        $source_ratio  = $source_height / $source_width;
+        $target_ratio  = $target_height / $target_width;
+
+        // 源图过高
+        if ($source_ratio > $target_ratio)
+        {
+            $cropped_width  = $source_width;
+            $cropped_height = $source_width * $target_ratio;
+            $source_x = 0;
+            $source_y = ($source_height - $cropped_height) / 2;
+        }
+        // 源图过宽
+        elseif ($source_ratio < $target_ratio)
+        {
+            $cropped_width  = $source_height / $target_ratio;
+            $cropped_height = $source_height;
+            $source_x = ($source_width - $cropped_width) / 2;
+            $source_y = 0;
+        }
+        // 源图适中
+        else
+        {
+            $cropped_width  = $source_width;
+            $cropped_height = $source_height;
+            $source_x = 0;
+            $source_y = 0;
+        }
+
+        switch ($source_mime)
+        {
+            case 'image/gif':
+                $source_image = imagecreatefromgif($source_path);
+                break;
+
+            case 'image/jpeg':
+                $source_image = imagecreatefromjpeg($source_path);
+                break;
+
+            case 'image/png':
+                $source_image = imagecreatefrompng($source_path);
+                break;
+
+            default:
+                return false;
+                break;
+        }
+
+        $target_image  = imagecreatetruecolor($target_width, $target_height);
+        $cropped_image = imagecreatetruecolor($cropped_width, $cropped_height);
+
+        // 裁剪
+        imagecopy($cropped_image, $source_image, 0, 0, $source_x, $source_y, $cropped_width, $cropped_height);
+        // 缩放
+        imagecopyresampled($target_image, $cropped_image, 0, 0, 0, 0, $target_width, $target_height, $cropped_width, $cropped_height);
+
+        header('Content-Type: image/jpeg');
+        imagejpeg($target_image,$source_path);
+        imagedestroy($source_image);
+        imagedestroy($target_image);
+        imagedestroy($cropped_image);
+    }
+
 }

@@ -63,7 +63,7 @@ class MediaController extends BaseController
     public function add()
     {
         $error_data['status']=0;
-        $img=$this->upload_file();
+        $img=$this->upload_file("ad");
         $Media = D('Media');
         if ($Media->create()) {
             $Media->img=$img;
@@ -136,12 +136,14 @@ class MediaController extends BaseController
     /**
      * 上传电影、电子书、apk等文件
      */
-    public function upload() {
+    public function upload( ) {
     	$error_data['status']=0;
-        if(!strstr(I('post.position'),'video')) {
-            $file_name = $this->upload_file();
-        }else{
-            $file_name=$this->upload_video();
+        if(strstr(I('post.position'),'video')) {
+            $file_name=$this->upload_video('video');
+        }elseif(strstr(I('post.position'),'book')){
+            $file_name = $this->upload_file('book');
+        }elseif(strstr(I('post.position'),'app')){
+            $file_name = $this->upload_file('app');
         }
     	$Media = D('Media');
     	if ($Media->create()) {
