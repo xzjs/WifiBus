@@ -61,22 +61,41 @@ class LineController extends Controller {
 	 * 线路上添加一辆车
 	 */
 	public function adds() {
+	
 		$Bus = D ( 'Bus' );
 		$device = D ( 'Device' );
+	
 		
-		if ($Bus->create ()) {
-			
-			$mac = I ( 'post.mac' );
+			$mac = I('post.mac');
+			$no=I('post.no');
+			$line_id=I('post.line_id');
+			if ($Bus->create ()) {
 			// $flag = $device->add();
-			$d = M ()->query ( "SELECT * FROM think_device WHERE mac='$mac'" );
+			$d = M ()->query ( "SELECT * FROM think_device WHERE mac='$mac'  and bus_id IS NOT  NULL " );
 			if ($d) {
 				echo "mac已存在";
 			} else {
-				$result = $Bus->add ();
+				
+				$Bus->no=$no;
+				$Bus->line_id=$line_id;
+				$result=$Bus->add();
+				$date ['mac'] = $mac;
+				$date ['bus_id'] = $result;
+				
 				if ($result) {
-					$date ['mac'] = $mac;
-					$date ['bus_id'] = $result;
+					
+					 if(M()->query ( "SELECT * FROM think_device WHERE mac='$mac' and bus_id IS NULL" ))
+					 { 
+					/// var_dump("UPDATE  think_device SET bus_id=$result WHERE mac='$mac'");
+					 	$flag = M()->execute("UPDATE  think_device SET bus_id=$result WHERE mac='$mac'");
+					 
+					 	
+					 }
+					 else{
+					 	
 					$flag = $device->add ( $date );
+					
+					 }
 					if ($flag) {
 						echo '添加成功';
 					} else {
@@ -84,12 +103,12 @@ class LineController extends Controller {
 					}
 				} else {
 					echo '添加失败';
-				}
-				;
-			}
-		} else {
+				};
+				
+			}} else {
 			echo $Bus->getError () . $device->getError ();
 		}
+		
 	}
 	
 	/**
@@ -192,7 +211,8 @@ class LineController extends Controller {
 	 * @param $line_id 线路id        	
 	 * @return mixed 车辆数组
 	 */
-	public function get_buses($line_id) {
+	public function get_buses() {
+		$line_id=41;
 		$LineModel = D ( 'Line' );
 		$line = $LineModel->find ( $line_id );
 		$BusModel = D ( 'Bus' );

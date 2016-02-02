@@ -1,410 +1,820 @@
 <div class="out_container_title">
+
     <div class="container_title">
+
         <div class="left">
+
             <ul>
+
                 <li class="box_three">
+
                     <a></a>
+
                 </li>
+
                 <li class="box_four">
+
                     <a href="{:U('Remoteupdate/remoteupdate')}"></a>
+
                 </li>
+
                 <li class="box_five">
+
                     <a href="{:U('Others/others')}"></a>
+
                 </li>
+
                 <div class="weather" id="weather" style="color:#ccc">
+
             </ul>
+
         </div>
+
         <div id="allmap" class="big_map"></div>
+
         <div class="search_line">
+
             <form action="" method="post">
+
                 <input style="border: none" type="text" id="lineName" name="lineName"> &nbsp; &nbsp;
+
                 <input style="border: none" type="button" onclick="showLine()" value="提交">
+
             </form>
+
             <ul id="ul_line_list">
+
                 <li>
+
                     <a href="javascript:void(0)" data-id="38" class='line_name'>黄岛线路123路</a>
+
                     <a href='javascript:void(0)' title='删除' data-id="38" class='line_del'><img
+
                             src='/WifiBus/Public/images/usr_d.png' alt='删除'></a>
+
                     <a href='javascript:void(0)' title="编辑" data-id="38" data-name='黄岛线路123路' class="line_edt"><img
+
                             src="/WifiBus/Public/images/usr_e.png" alt="编辑"></a>
+
                     <a href="javascript:void(0)" title="车辆" data-id="38" class="line_slec"><img
+
                             src="/WifiBus/Public/images/usr_g.png" alt="车辆"></a>
+
                 </li>
+
             </ul>
+
             <div style=" margin:0 auto ;text-align:center;padding-top：20px"class="line_button">
+
          
+
                 <a class="we_click line_add_con">添加</a>
+
               
+
             </div>
+
         </div>
+
         <!-- 以下三个search_car div分别对应上面li中的三条线路 hideTemp-->
+
         <div id="search_car" class="search_car hide">
+
             <ul id="ul_bus_list" class="ul_bus_list">
+
             </ul>
+
             <div class="car_button">
+
                 <a class="car_add_con" href="javascript:void(0)">添加</a>
 
+
+
                 <div class="clr"></div>
+
             </div>
+
         </div>
+
         <div class="clear"></div>
+
         
+
         <form id="carForm" class="hide">
+
             <ul class="user_click">
+
                 <li class="car_add">
+
                     <a href="javascript:close('carForm')" title="关闭">X</a>
 
+
+
                     <div class="cont1">
+
                         <label>车牌号</label>
+
                         <input type="text" name="carNum">
+
                     </div>
+
                     <div class="cont2">
+
                         <label>设备MAC地址</label>
+
                         <!-- <select name="mac">
+
                             <volist id="vo" name="mac_list">
+
                                 <option value={$vo.id} checked="checked">{$vo.mac}</option>
+
                             </volist>
 
+
+
                         </select> -->
+
                          <input type="text" name="carMac">
+
                     </div>
+
                     <input type="submit" value="确定">
+
                 </li>
+
             </ul>
+
         </form>
+
         <form id="lineForm" class="hide">
+
             <ul class="user_click">
+
                 <li class="line_edit"><a href="javascript:close('lineForm')" title="关闭">X</a>
 
+
+
                     <div>
+
                         <label>公交线路</label>
+
                         <input type="text">
+
                     </div>
+
                     <input type="submit" value="确定">
+
                 </li>
+
             </ul>
+
         </form>
+
        
+
     </div>
+
     <div class="clear"></div>
+
 </div>
+
 <script type="text/javascript">
+
     // 百度地图API功能
+
     var map = new BMap.Map("allmap"); // 创建Map实例
+
     map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 13); // 初始化地图,设置中心点坐标和地图级别
+
     map.addControl(new BMap.MapTypeControl()); //添加地图类型控件
+
     map.setCurrentCity("青岛"); // 设置地图显示的城市 此项是必须设置的
+
     map.enableScrollWheelZoom(true); //开启鼠标滚轮缩放
 
+
+
     function func(url, line, url1, id, display) {
+
         ajax(url, line);
+
         get_bus_list(url1, id, display)
+
     }
+
+
 
     function ajax(url, line) {
+
         jQuery.ajax({
+
             url: url,
+
             dataType: "json",
+
             success: function (results) {
+
                 map1(line, results.data);
+
             }
+
         });
+
     }
+
+
 
     function map1(line, array) {
+
         // 百度地图API功能
+
         var map = new BMap.Map("allmap"); // 创建Map实例
+
         map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 13);
 
+
+
         var busline = new BMap.BusLineSearch(map, {
+
             renderOptions: {
+
                 map: map,
+
                 panel: "r-result"
+
             },
+
             onGetBusListComplete: function (result) {
+
                 if (result) {
+
                     var fstLine = result.getBusListItem(0); //获取第一个公交列表显示到map上
+
                     busline.getBusLine(fstLine);
+
                 }
+
             }
+
         });
+
+
 
         function busSearch() {
+
             var busName = line;
+
             busline.getBusList(busName);
+
         }
 
+
+
         setTimeout(function () {
+
             busSearch();
+
         }, 1500);
 
+
+
         setTimeout(function () {
+
                     var x;
+
                     for (x in array) {
+
                         var a = array[x][0];
+
                         var b = array[x][1];
+
                         var pt = new BMap.Point(a, b);
+
                         var num = Math.round(Math.random() * 5);
+
                         var img;
+
                         switch (num) {
+
                             case 0:
+
                                 img = "__PUBLIC__/images/red_left.png";
+
                                 break;
+
                             case 1:
+
                                 img = "__PUBLIC__/images/green_left.png";
+
                                 break;
+
                             case 2:
+
                                 img = "__PUBLIC__/images/green_left.png";
+
                                 break;
+
                             case 3:
+
                                 img = "__PUBLIC__/images/red_right.png";
+
                                 break;
+
                             case 4:
+
                                 img = "__PUBLIC__/images/green_right.png";
+
                                 break;
+
                             case 5:
+
                                 img = "__PUBLIC__/images/green_right.png";
+
                                 break;
+
                             default:
+
                                 img = "__PUBLIC__/images/green_right.png";
+
                                 break;
+
                         }
+
                         var myIcon = new BMap.Icon(img, new BMap.Size(50, 30));
+
                         var marker2 = new BMap.Marker(pt, {
+
                             icon: myIcon
+
                         }); // 创建标注
+
                         map.addOverlay(marker2);
+
                     }
+
                 },
+
                 2500
+
         );
+
     }
+
+
 
     //线路与车辆管理
+
     $(function () {
+
         //删除线路
+
         showLine();
+
         $('#ul_line_list').delegate('.line_del', 'click', function () {
+
             var flag = window.confirm("你确定删除该条线路信息么？");
+
             if (flag) {
+
                 var lineId = parseInt($(this).attr("data-id"));
+
                 //此处传值与数据库交互
+
                 $.ajax({
+
                     url: '../Line/delete',
+
                     type: "POST",
+
                     data: {
+
                         sqlType: 0,
+
                         id: lineId
+
                     },
+
                     success: function (data, status) {
+
                         alert(data);
+
                         showLine();
+
                     }
+
+
 
                 });
+
             }
+
         });
 
+
+
         //修改线路
+
         $('#ul_line_list').delegate('.line_edt', 'click', function () {
+
             var lineInfo = $(this).attr("data-name");
+
             $("#lineForm").removeClass('hide');
+
             $("#lineForm input[type=text]").val(lineInfo);
+
             var lineId = parseInt($(this).attr("data-id"));
+
             $("#lineForm input[type=submit]").unbind('click');
+
             $("#lineForm input[type=submit]").on("click", function () {
+
                 $.ajax({
+
                     url: '../Line/update',
+
                     type: "POST",
+
                     data: {
+
                         sqlType: 0,
+
                         id: lineId,
+
                         name: $("#lineForm input[type=text]").val()
+
                     },
+
                     success: function (data, status) {
+
                         alert(data);
+
                         showLine();
+
                         $("#lineForm input[type=text]").val("");
+
                         $("#lineForm").addClass('hide');
 
+
+
                     }
+
                 })
+
             })
+
         })
+
        
 
+
+
         //添加线路 
+
         $(".line_add_con").on("click", function () {
+
             $("#lineForm").removeClass('hide');
+
             $("#lineForm input[type=submit]").unbind('click');
+
             $("#lineForm input[type=submit]").on("click", function () {
+
                 $.ajax({
+
                     url: '../Line/add',
+
                     type: "POST",
+
                     data: {
+
                         sqlType: 0,
+
                         name: $("#lineForm input[type=text]").val()
+
                     },
+
                     success: function (data, status) {
+
                         alert(data);
+
                         $("#lineForm input[type=text]").val("");
+
                         $("#lineForm").addClass('hide');
+
                         showLine();
+
                     }
+
                 })
+
             })
+
         })
+
     }) 
+
     //刷新线路列表
+
     function showLine(id) {
+
         var lineId = id || "";
+
         var linename=$('#lineName').val();
+
         if (!id) {
+
             $.ajax({
+
                 url: "../Line/select",
+
                 type: "POST",
+
                 data: {
+
                     sqlType: 0,
+
                     linename: linename
+
                 },
+
                 success: function (data, status) {
+
                     var list = $.parseJSON(data),
+
                             info = "";
+
                    
+
                     if(list.length==0)
+
                     {
+
                     
+
                     $("#ul_line_list").html("");
+
                     }
+
                     else{
+
                	     $.each(list, function (index, value) {
+
                     	   
+
                         value = list[index];
+
                         info += "<li><a  href='javascript:void(0)'onclick=showCarDialog(" + value.lineid + ") class='line_name' data-id='" + value.lineid + "'>" + value.linename + "</a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='删除' class='line_del'><img src='/WifiBus/Public/images/usr_d.png' alt='删除'></a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='编辑' class='line_edt' data-name='" + value.linename + "'><img src='/WifiBus/Public/images/usr_e.png' alt='编辑'></a><a href='javascript:void(0)' data-id='" + value.lineid + "' title='车辆' class='line_slec' onclick=showCarDialog(" + value.lineid + ")><img src='/WifiBus/Public/images/usr_g.png' alt='车辆'></a></li>";
+
                         $("#ul_line_list").html(info);
+
                     })}
+
                 }
+
             })
+
         }
+
     }
+
+
 
     var line_id = 0;
 
+
+
     function showCarDialog(lineId) {
+
         line_id = lineId;
+
        
+
         document.getElementById('search_car').style.display ="block";
+
          $("#ul_bus_list").parent().removeClass("hide");
+
          //alert("d"+$("#ul_bus_list").Class);
+
         showCar(lineId);
+
          }
 
+
+
     function showCar(lineId) {
+
     	 
+
         $.ajax({
+
             url: "{:U('Line/get_buses')}",
+
             type: "GET",
+
             data: {
+
                 line_id: lineId
+
             },
+
             success: function (data, status) {
+
                 console.log(data);
+
              
+
                 var list = $.parseJSON(data).buses,
+
                         info = "";
+
                 $("#ul_bus_list").html("");
+               // alert(list.length);
                 $.each(list, function (index, value) {
-                	 
-                    value = list[index];
-                    info += "<li><a href='javascript:void(0)' data-id='" + value.id + "'>" + value.no + "</a><a href='javascript:void(0)' data-id='" + value.id + "' title='删除' class='car_del'><img src='/WifiBus/Public/images/usr_d.png' alt='删除'></a><a href='javascript:void(0)' data-id='" + value.id + "' data-no='" + value.no + "' title='编辑' class='car_edt'><img src='/WifiBus/Public/images/usr_e.png' alt='编辑'></a>";
-                   
+                  value = list[index];
+
+                    info += "<li><a href='javascript:void(0)' data-id='" + value.id + "'>" + value.no + "</a><a href='javascript:void(0)' data-id='" + value.id + "' title='删除' class='car_del'><img src='/WifiBus/Public/images/usr_d.png' alt='删除'></a><a href='javascript:void(0)' data-id='" + value.id + "' data-no='" + value.no +  "' data-mac='" +value.Device.mac +  "'title='编辑' class='car_edt'><img src='/WifiBus/Public/images/usr_e.png' alt='编辑'></a>";
+
                     $("#ul_bus_list").html(info);
-                   
+
+                 //   alert( index);
+//
                   //  $("#ul_bus_list").html(info);
+
                 }) 
+
              //   alert($("#ul_bus_list").html());
+
                // alert("a"+info);
+
             }
+
         })
+
     }
 
+
+
     //关闭窗口
+
     function close(id) {
+
         $("#" + id).addClass('hide');
+
     }
+
+
+
 
 
     //添加车辆
+
     $(".car_add_con").on("click", function () {
+
         $("#carForm").removeClass('hide');
+
         $("#carForm input[type=submit]").unbind('click');
+
         var lineId = line_id;
+
         $("#carForm input[type=submit]").on("click", function () {
+
             //console.log($("#carForm select option:selected").text());
+
             $.ajax({
+
                 url: "{:U('Line/adds')}",
+
                 type: 'POST',
+
                 data: {
+
                     line_id: lineId,
+
                     no: $("#carForm input[name=carNum]").val(),
+
                     mac:$("#carForm input[name=carMac]").val(),
+
                 },
+
                 success: function (data, status) {
+
                     alert(data);
+
                     $("#carForm input[text]").val("");
-                    $("#carForm").addClass('hide');
-                    showCar(lineId);
+
+                   if(data=='添加成功'){
+                	   $("#carForm").addClass('hide');
+                   }
+   	              showCar(lineId);
+
                 }
+
             })
+
         })
+
     })
+
+
 
     //删除车辆
+
     $('#ul_bus_list').delegate('.car_del', 'click', function () {
+
         var flag = window.confirm("你确定删除该车辆么？");
+
         if (flag) {
+
             var busId = parseInt($(this).attr("data-id"));
+
             //此处传值与数据库交互
+
             $.ajax({
+
                 url: '../Bus/delete',
+
                 type: "GET",
+
                 data: {
+
                     sqlType: 0,
+
                     id: busId
+
                 },
+
                 success: function (data, status) {
+
                     alert(data);
+
                     showCar(line_id);
+
                 }
+
+
 
             });
+
         }
+
     });
 
+
+
     //修改车辆
+
     $('#ul_bus_list').delegate('.car_edt', 'click', function () {
+
         var id = $(this).attr("data-id");
+
         var no = $(this).attr("data-no");
+        var mac = $(this).attr("data-mac");
+
         $("#carForm").removeClass('hide');
-        $("#carForm input[type=text]").val(no);
+
+        $("#carForm input[name=carNum]").val(no);
+        $("#carForm input[name=carMac]").val(mac);
+
         $("#carForm input[type=submit]").unbind('click');
+
         $("#carForm input[type=submit]").on("click", function () {
+
             $.ajax({
+
                 url: '../Bus/update_no',
+
                 type: "POST",
+
                 data: {
+
                     no: $("#carForm input[name=carNum]").val(),
+
                     carId: id,
+
                     mac:$("#carForm input[name=carMac]").val(),
+
                 },
+
                 success: function (data, status) {
+
                     alert(data);
+
                     showLine();
+
                     $("#carForm input[name=carNum]").val("");
-                    $("#carForm").addClass('hide');
+                    if(data=='更新成功'){
+                 	   $("#carForm").addClass('hide');
+                    }
+
+                    
+
                     showCar(line_id);
+
                 }
+
             })
+
         })
+
     })
+
 </script>
