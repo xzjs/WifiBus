@@ -899,9 +899,9 @@ function upload(input,position) {
             contentType: false
         }).done(function (res) {
             $(".dis").slideUp();
-            for(var i=0;i<input.length;i++){
-                input[i].value="";
-            }
+            input[1].value = "";
+            input[4].value = "";
+            input[6].value = "";
             getDisplay();
         }).fail(function (res) {
             alert(res);
@@ -1018,20 +1018,16 @@ function search_bus_list(url,keys) {
         is_getbuslist : 1,
         search_keys : keys,
     }, function(data, status) {
-
         if (status == 4 || status == "success") {
             var bus_info = eval(data);
             var bus_list = "<br/><br/>";
-
             for (var i = 0; i < bus_info.length; i++) {
-
                 bus_list += "<li><label for="+bus_info[i].id+">"+bus_info[i].no+"</label><input type='checkbox' class='bus_array' id="
                         + bus_info[i].id
                         + " onchange='getCheckedList(this)' name='car' value="
                         + bus_info[i].id
                         + "></li>"
             }
-
             $("ul#bus_list_check").html(bus_list);
         }
     });
