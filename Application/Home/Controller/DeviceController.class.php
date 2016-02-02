@@ -20,11 +20,21 @@ class DeviceController extends Controller
 /**
  * 更新设备所属车辆
  */
+	public function update_bus_update($mac,$result){
+
+		//var_dump("UPDATE  think_device SET bus_id=$result WHERE mac='$mac'");
+		$result=M()->execute("UPDATE  think_device SET bus_id=$result WHERE mac='$mac'");
+		return  $result;
+	}
+	
+	
+	/**
+	 * 更新设备所属车辆
+	 */
 	public function update_bus($bus_line){
 		$result=M()->execute("UPDATE  think_device SET bus_id=NULL WHERE bus_id=$bus_line");
 		return  $result;
 	}
-	
     /**
      * 添加设备
      */
