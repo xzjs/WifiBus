@@ -699,9 +699,10 @@
 
                     alert(data);
 
-                    $("#carForm input[text]").val("");
-
+                   
                    if(data=='添加成功'){
+                	   $("#carForm input[name=carNum]").val("");
+                       $("#carForm input[name=carMac]").val("");
                 	   $("#carForm").addClass('hide');
                    }
    	              showCar(lineId);
@@ -802,6 +803,8 @@
 
                     $("#carForm input[name=carNum]").val("");
                     if(data=='更新成功'){
+                    	   $("#carForm input[name=carNum]").val("");
+                           $("#carForm input[name=carMac]").val("");
                  	   $("#carForm").addClass('hide');
                     }
 
