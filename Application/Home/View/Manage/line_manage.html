@@ -667,7 +667,8 @@
     $(".car_add_con").on("click", function () {
 
         $("#carForm").removeClass('hide');
-
+        $("#carForm input[name=carNum]").val("");
+        $("#carForm input[name=carMac]").val("");
         $("#carForm input[type=submit]").unbind('click');
 
         var lineId = line_id;
@@ -698,8 +699,7 @@
 
                    
                    if(data=='添加成功'){
-                	   $("#carForm input[name=carNum]").val("");
-                       $("#carForm input[name=carMac]").val("");
+                	  
                 	   $("#carForm").addClass('hide');
                    }
    	              showCar(lineId);
