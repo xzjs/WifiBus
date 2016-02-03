@@ -212,7 +212,7 @@ class LineController extends Controller {
 	 * @return mixed 车辆数组
 	 */
 	public function get_buses() {
-		$line_id=41;
+		$line_id=I('get.line_id');
 		$LineModel = D ( 'Line' );
 		$line = $LineModel->find ( $line_id );
 		$BusModel = D ( 'Bus' );

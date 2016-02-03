@@ -619,10 +619,7 @@
             success: function (data, status) {
 
                 console.log(data);
-
-             
-
-                var list = $.parseJSON(data).buses,
+               var list = $.parseJSON(data).buses,
 
                         info = "";
 
@@ -769,7 +766,9 @@
 
         var no = $(this).attr("data-no");
         var mac = $(this).attr("data-mac");
-
+        var no_old = $(this).attr("data-no");
+        var mac_old = $(this).attr("data-mac");
+        
         $("#carForm").removeClass('hide');
 
         $("#carForm input[name=carNum]").val(no);
@@ -786,7 +785,9 @@
                 type: "POST",
 
                 data: {
-
+                	no_old:no_old,
+                	mac_old:mac_old,
+                	
                     no: $("#carForm input[name=carNum]").val(),
 
                     carId: id,
@@ -801,15 +802,18 @@
 
                     showLine();
 
-                    $("#carForm input[name=carNum]").val("");
                     if(data=='更新成功'){
-                    	   $("#carForm input[name=carNum]").val("");
-                           $("#carForm input[name=carMac]").val("");
+                    	   
                  	   $("#carForm").addClass('hide');
                     }
 
-                    
-
+                    if(data=='mac名称已经存在！'){
+                    	
+                        $("#carForm input[name=carMac]").val("");
+                    }
+                 if(data=='车牌号名称已经存在！'){
+                	 $("#carForm input[name=carNum]").val("");
+                    }
                     showCar(line_id);
 
                 }
