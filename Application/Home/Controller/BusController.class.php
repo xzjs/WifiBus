@@ -16,31 +16,56 @@ class BusController extends Controller
      * 更新bus车牌号
      */
     public function update_no()
-    {
+    {   $Devic = D('Device');
         $bus = D('Bus');
-        //$no = I('post.no');
-       // $id = I('post.carId');
-        if ($bus->create()) {
-            $b = $bus->find($_POST["carId"]);
-            if ($b) {
-                $bus->no = $_POST["no"];
-            }
-            $result = $bus->save();
-            //$result = M()->execute("UPDATE think_bus SET no ='$no' WHERE id=$id");
-            $DeviceModel = D('Device');
-            $device = $DeviceModel->find($_POST["mac"]);
-            if ($device) {
-                $DeviceModel->bus_id = $id;
-            }
-            $result2 = $DeviceModel->save();
-            if (($result + $result2) > 0) {
-                echo "更新成功";
-            } else {
-                echo "更新失败".I('post.no').$_POST["mac"];
-            }
-        } else {
-            echo $bus->getError();
+        $id=I('post.carId');
+        $no = I('post.no');
+        $mac = I('post.mac');
+        $no_old=I('post.no_old');
+        $mac_old=I('post.mac_old');
+     //   echo $mac."d".$mac_old;
+        $sql_bus="UPDATE think_bus SET NO='$no' WHERE id=$id";
+        $sql_device="UPDATE think_device SET  mac='$mac' WHERE mac='$mac_old'";
+        if($no== $no_old&&$mac==$mac_old){
+        	echo "更新成功";
         }
+        else {
+        	if($no!=$no_old&&$mac==$mac_old){
+        		if($bus->create())
+        		{
+        			$result=M()->execute($sql_bus);
+        			$flag=1;
+        		}
+        	    else {
+        		    echo $bus->getError();
+        	     }
+        	}		
+        	if($no==$no_old&&$mac!=$mac_old){
+        		if($Devic->create())
+        		{$flag=1;
+        			$result=M()->execute($sql_device);
+        		}
+        		else {
+        			echo $Devic->getError();
+        		}
+        	}
+        	if($no!=$no_old&&$mac!=$mac_old){
+        		if($Devic->create()&&$bus->create())
+        		{  $result=M()->execute($sql_bus);
+        			$result1=M()->execute($sql_device);
+        			$flag=1;
+        		}
+        		else {
+        			echo $Devic->getError().$bus->getError();
+        		}
+        	}
+        	if($result)
+        		echo "更新成功";
+        	else if($flag==1)
+        		echo "更新失败";
+        }
+            
+         
     }
 
     /**
