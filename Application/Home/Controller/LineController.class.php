@@ -25,7 +25,6 @@ class LineController extends Controller {
 					'like',
 					'%' . $linename . '%' 
 			);
-			
 			$data = $line->field ( 'id as lineId,name as lineName' )->where ( $condition )->order ( 'id' )->select ();
 		} else
 			$data = $line->field ( 'id as lineId,name as lineName' )->order ( 'id' )->select ();
