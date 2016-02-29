@@ -111,12 +111,28 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
 	 * 获取首页三个表的数据
 	 */
     public function get_char() {
-    	$device=A('Device');
-    	$result1=$device->get_device_state(I('param.line_id'));
-    	$chart['work']=$result1['work'];
+		$line_id=I('param.line_id');
+		$bus_id=I('param.bus_id');
+		$bus=M('Bus');
+		$result=$bus->find($bus_id);
+		$real_line_id=$result['line_id'];
+		$device=A('Device');
+		$result1=$device->get_device_state($line_id);
 		$flow=A('Flow');
-		$chart['flow']=$flow->get_flow_info();
-		$terminal=$device->get_terminal_info();
+		if(!$bus_id){
+			$chart['flow']=$flow->get_flow_info('line',$line_id,$bus_id);
+			$terminal=$device->get_terminal_info('line',$line_id,$bus_id);
+		}else{
+			if((!$line_id)||($line_id==$real_line_id)){
+				$chart['flow']=$flow->get_flow_info('bus',$line_id,$bus_id);
+				$terminal=$device->get_terminal_info('bus',$line_id,$bus_id);
+			}else{
+				$chart['flow']=$flow->get_flow_info('line',$line_id,$bus_id);
+				$terminal=$device->get_terminal_info('line',$line_id,$bus_id);
+			}
+		}
+
+    	$chart['work']=$result1['work'];
 		$chart['terminal']=$terminal;
     	$this->ajaxReturn($chart);
     }

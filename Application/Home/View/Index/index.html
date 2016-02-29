@@ -55,7 +55,7 @@
             </div>
             <ul class="select" id="bus_no_selector">
                 <volist name="bus_list" id="vo" empty=" ">
-                    <li><a href="#" onclick="show_bus('__CONTROLLER__/bus/str/{$vo.id}/flag/0','')">{$vo.no}</a></li>
+                    <li><a href="#" onclick="show_bus('__CONTROLLER__/bus/str/{$vo.id}/flag/0','','{$vo.id}')">{$vo.no}</a></li>
                 </volist>
             </ul>
         </div>
@@ -92,6 +92,7 @@
     var c = 30;
     var d = 40;
     var line_id=0;
+    var bus_id=0;
     
     function ajax($url, line) {
     	//alert($url);
@@ -168,7 +169,9 @@
     var int = self.setInterval("chart()", 1000);
     var line;
     var aray_bus=new Array();
-    function show_bus($url, line) {
+    function show_bus($url, line,selected_bus) {
+         bus_id=selected_bus;
+        chart();
 	   	 clearInterval(ding_id);
 	   	 
 	        jQuery.ajax({
@@ -189,7 +192,8 @@
 	                 5000
 	         );
 	      }
- function show_line($url, line,id) {
+ function show_line($url,line,id) {
+     chart();
 	 line_id=id;
 	 line=line;
 		map.clearOverlays();
@@ -233,9 +237,11 @@
  * 更新饼状图数据
  */
 function chart() {
-    var id=line_id;
+    var selected_line_id=line_id;
+    var selected_bus_id=bus_id;
     $.post("{:U('Index/get_char')}", {
-        line_id:id,
+        line_id:selected_line_id,
+        bus_id:selected_bus_id,
     }, function (data, status) {
         if (status == 4 || status == "success") {
             var chart_info = eval(data);
