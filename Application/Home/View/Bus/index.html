@@ -14,35 +14,45 @@
     <script src="__PUBLIC__/js/bootstrap.min.js"></script>
 </head>
 <body>
-<table class="table">
-    <tr>
-        <td>id</td>
-        <td>车牌号</td>
-        <td>经度</td>
-        <td>纬度</td>
-        <td>设备mac</td>
-        <td>使用率</td>
-        <td>时间</td>
-        <td>在线人数</td>
-        <td>流量</td>
-        <td>heartbeat版本号</td>
-        <td>待发送命令</td>
-    </tr>
-    <volist name="data" id="vo">
+<div class="panel panel-default">
+    <!-- Default panel contents -->
+    <div class="panel-heading">车辆详情</div>
+    <div class="panel-body">
+        <label>选择月份</label>
+        
+    </div>
+
+    <!-- Table -->
+    <table class="table table-hover">
         <tr>
-            <td>{$vo.id}</td>
-            <td>{$vo.no}</td>
-            <td>{$vo.position_x}</td>
-            <td>{$vo.position_y}</td>
-            <td>{$vo.Device.mac}</td>
-            <td>{$vo.Device.useage}%</td>
-            <td>{$vo.Device.time|date="Y-m-d H:i:s",###}</td>
-            <td>{$vo.Device.online_num}</td>
-            <td>{:round($vo['Device']['flow_num']/(1024*1024),2)}G</td>
-            <td>{$vo.heartbeat}</td>
-            <td>{$vo.cmd}</td>
+            <td>id</td>
+            <td>车牌号</td>
+            <td>经度</td>
+            <td>纬度</td>
+            <td>设备mac</td>
+            <td>使用率</td>
+            <td>时间</td>
+            <td>在线人数</td>
+            <td>流量</td>
+            <td>heartbeat版本号</td>
+            <td>待发送命令</td>
         </tr>
-    </volist>
-</table>
+        <volist name="data" id="vo">
+            <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.no}</td>
+                <td>{$vo.position_x}</td>
+                <td>{$vo.position_y}</td>
+                <td>{$vo.Device.mac}</td>
+                <td>{$vo.Device.useage}%</td>
+                <td>{$vo.Device.time|date="Y-m-d H:i:s",###}</td>
+                <td>{$vo.Device.online_num}</td>
+                <td>{:round($vo['Device']['flow_num']/(1024*1024),2)}G</td>
+                <td>{$vo.heartbeat}</td>
+                <td>{$vo.cmd}</td>
+            </tr>
+        </volist>
+    </table>
+</div>
 </body>
 </html>
