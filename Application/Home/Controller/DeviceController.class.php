@@ -313,14 +313,24 @@ class DeviceController extends Controller
      * 获取链接设备的终端数量
      * @return float
      */
-    public function get_terminal_info(){
+    public function get_terminal_info($type,$line_id,$bus_id){
         $Device=M('Device');
-        $result=$Device->field('online_num')->select();
-        $total=0;
-        foreach($result as $vo){
-            $total+=$vo['online_num'];
+        if($type=='line'){
+            if($line_id==0){
+                $result=$Device->field('online_num')->select();
+            }else{
+                $result=M()->query("select d.online_num as online_num from think_device as d,think_bus as b where b.line_id=".$line_id." and b.id=d.bus_id");
+            }
+            $total=0;
+            foreach($result as $vo){
+                $total+=$vo['online_num'];
+            }
+            $terminal_info=$total/C('TOTAL_ONLINE_NUM')/count($result)*100;
+        }elseif($type=='bus'){
+            $condition['bus_id']=$bus_id;
+            $result=$Device->where($condition)->field('online_num')->find();
+            $terminal_info=$result['online_num']/C('TOTAL_ONLINE_NUM')*100;
         }
-        $terminal_info=$total/C('TOTAL_ONLINE_NUM')/count($result)*100;
         return $terminal_info;
     }
 

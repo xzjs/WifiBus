@@ -37,7 +37,7 @@ class BaseController extends Controller
     }
 
     /**
-     * 文件上传
+     * 实现电子书，apk和简介图片上传
      */
     public function upload_file($type)
     {
@@ -58,7 +58,7 @@ class BaseController extends Controller
     }
 
     /**
-     * 电影上传
+     * 实现电影和简介图片上传
      */
     public function upload_video(){
         $name='_' . time();
