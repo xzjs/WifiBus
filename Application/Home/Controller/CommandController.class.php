@@ -80,7 +80,7 @@ class CommandController extends Controller
             $DeviceModel->save($d);
 
             //增加流量
-            $this->addFlow($flow_num,$d['id']);
+            $this->addFlow($d['id'],$flow_num);
 
             //自动化限速
             $this->auto_limit($d['id']);
@@ -245,13 +245,16 @@ class CommandController extends Controller
     public function auto_limit($device_id){
         $DeviceModel=M('device');
         $networkLimit=$DeviceModel->where("id=$device_id")->getField('network_limit');
-        if($networkLimit!=0) {
+        if($networkLimit!=0||$networkLimit==null) {
             $FlowModel = M('Flow');
+            $year=date('Y');
+            $month=date('m');
+            $allday=date('t');
             $condition = array(
                 "device_id" => $device_id,
                 'time' => array(
-                    array('gt', strtotime('this month')),
-                    array('lt', strtotime('next month'))
+                    array('gt', strtotime($year."-".$month."-1")),
+                    array('lt', strtotime($year."-".$month."-".$allday))
                 )
             );
             $sumFlow = $FlowModel->where($condition)->sum('num');
