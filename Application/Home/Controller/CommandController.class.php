@@ -65,20 +65,26 @@ class CommandController extends Controller
     {
         $LogCtrl = A('Log');
         $LogCtrl->add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg, $ver);
-        $Device = D("Device");
-        $condition['mac'] = $mac;
-        $d = $Device->where($condition)->find();
+
         $CommandModel = D('Command');
+        $DeviceModel=D('Device');
+        //获取设备信息
+        $d=$this->getDevice($mac);
         if ($d) {
-            $Device->useage = $usage;
-            $Device->online_num = $online_num;
+            $d['useage'] = $usage;
+            $d['online_num'] = $online_num;
             $flow_num = $flow_num < 0 ? 0 : $flow_num;
-            $Device->flow_num = $flow_num + $d['flow_num'];
-            $DeviceCtrl = A('Device');
-            $FlowCtrl = A('Flow');
-            $FlowCtrl->update($flow_num, $d['id']);
-            $Device->time = time();
-            $Device->save();
+            $d['flow_num'] = $flow_num + $d['flow_num'];
+
+            $d['time'] = time();
+            $DeviceModel->save($d);
+
+            //增加流量
+            $this->addFlow($d['id'],$flow_num);
+
+            //自动化限速
+            $this->auto_limit($d['id']);
+
             $Bus = D('Bus');
             $b = $Bus->find($d['bus_id']);
             $LogModel = M('Log');
@@ -230,5 +236,58 @@ class CommandController extends Controller
             $this->assign('macs', $macs);
             $this->show();
         }
+    }
+
+    /**
+     * 流量溢出限速函数
+     * @param $device_id 设备id
+     */
+    public function auto_limit($device_id){
+        $DeviceModel=M('device');
+        $networkLimit=$DeviceModel->where("id=$device_id")->getField('network_limit');
+        if($networkLimit!=0||$networkLimit==null) {
+            $FlowModel = M('Flow');
+            $year=date('Y');
+            $month=date('m');
+            $allday=date('t');
+            $condition = array(
+                "device_id" => $device_id,
+                'time' => array(
+                    array('gt', strtotime($year."-".$month."-1")),
+                    array('lt', strtotime($year."-".$month."-".$allday))
+                )
+            );
+            $sumFlow = $FlowModel->where($condition)->sum('num');
+            if($sumFlow>C('TOTAL_FLOW')){
+                $data['network_limit']=0;
+                $result=$DeviceModel->where("id=$device_id")->save($data);
+                if(!$result){
+                    throw_exception('修改失败');
+                }
+            }
+        }
+    }
+
+    /**
+     * 增加设备的流量
+     * @param $device_id 设备id
+     * @param $num 使用的流量
+     * @return mixed 是否添加成功
+     */
+    public function addFlow($device_id,$num){
+        $FlowCtrl = A('Flow');
+        return $FlowCtrl->update($num,$device_id);
+    }
+
+    /**
+     * 获取设备信息
+     * @param $mac 设备mac
+     * @return mixed 设备信息数组
+     */
+    public function getDevice($mac){
+        $Device = D("Device");
+        $condition['mac'] = $mac;
+        $d=$Device->where($condition)->find();
+        return $d;
     }
 }
