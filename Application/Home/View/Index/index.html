@@ -163,15 +163,16 @@
 		girdSize:70,
 		maxZoom:12,
 	  }); */
-          
       }
    
     var int = self.setInterval("chart()", 1000);
     var line;
     var aray_bus=new Array();
+
+
     function show_bus($url, line,selected_bus) {
          bus_id=selected_bus;
-        chart();
+         chart();
 	   	 clearInterval(ding_id);
 	   	 
 	        jQuery.ajax({
@@ -180,7 +181,7 @@
 	              success: function (results) {
 	            	 
 	              	map.clearOverlays()
-	              //	alert($url);
+
 	              	var data=eval(results);
 	              	
 	                  get_map(line,data );
@@ -188,14 +189,13 @@
 	              }
 	          });
 	        ding_id=setInterval(
-	       		  function (){show_bus($url, line)},
+	       		  function (){show_bus($url, line,bus_id)},
 	                 5000
 	         );
 	      }
  function show_line($url,line,id) {
      chart();
 	 line_id=id;
-	 line=line;
 		map.clearOverlays();
 	 clearInterval(ding_id); 
 	 only_show_line(line);
