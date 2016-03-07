@@ -93,6 +93,7 @@
     var d = 40;
     var line_id=0;
     var bus_id=0;
+    var lineorBus="line";
     
     function ajax($url, line) {
     	//alert($url);
@@ -171,9 +172,10 @@
 
 
     function show_bus($url, line,selected_bus) {
-         bus_id=selected_bus;
-         chart();
-	   	 clearInterval(ding_id);
+        lineorBus="bus";
+        bus_id=selected_bus;
+        chart();
+        clearInterval(ding_id);
 	   	 
 	        jQuery.ajax({
 	              url: $url,
@@ -192,10 +194,11 @@
 	       		  function (){show_bus($url, line,bus_id)},
 	                 5000
 	         );
-	      }
+    }
  function show_line($url,line,id) {
+     lineorBus="line";
+     line_id=id;
      chart();
-	 line_id=id;
 		map.clearOverlays();
 	 clearInterval(ding_id); 
 	 only_show_line(line);
@@ -242,6 +245,7 @@ function chart() {
     $.post("{:U('Index/get_char')}", {
         line_id:selected_line_id,
         bus_id:selected_bus_id,
+        line_or_bus:lineorBus,
     }, function (data, status) {
         if (status == 4 || status == "success") {
             var chart_info = eval(data);
