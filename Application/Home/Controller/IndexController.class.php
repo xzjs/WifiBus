@@ -111,6 +111,7 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
 	 * 获取首页三个表的数据
 	 */
     public function get_char() {
+		$line_or_bus=I('param.line_or_bus');
 		$line_id=I('param.line_id');
 		$bus_id=I('param.bus_id');
 		$bus=M('Bus');
@@ -119,7 +120,11 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
 		$device=A('Device');
 		$result1=$device->get_device_state($line_id);
 		$flow=A('Flow');
-		if(!$bus_id){
+		$chart['flow']=$flow->get_flow_info($line_or_bus,$line_id,$bus_id);
+		$terminal=$device->get_terminal_info($line_or_bus,$line_id,$bus_id);
+
+
+		/*if(!$bus_id){
 			$chart['flow']=$flow->get_flow_info('line',$line_id,$bus_id);
 			$terminal=$device->get_terminal_info('line',$line_id,$bus_id);
 		}else{
@@ -130,7 +135,7 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
 				$chart['flow']=$flow->get_flow_info('line',$line_id,$bus_id);
 				$terminal=$device->get_terminal_info('line',$line_id,$bus_id);
 			}
-		}
+		}*/
 
     	$chart['work']=$result1['work'];
 		$chart['terminal']=$terminal;
