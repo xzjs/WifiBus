@@ -23,19 +23,19 @@ class WifidogController extends Controller
  * @param string $mac
  */
     public function login($gw_port=2060,$gw_address='192.168.18.1',$gw_id='0e:60:55:f3:3d:0a',$mac='假的'){
-        if (!S($gw_address . '.' . $mac . '.' . '0')) {
-            S($gw_address . '.' . $mac . '.' . '0', time(),strtotime("tomorrow")-time());
+        if (!S($gw_id . '.' . $mac . '.' . '0')) {
+            S($gw_id . '.' . $mac . '.' . '0', time(),strtotime("tomorrow")-time());
             $data = array(
                 'mac' => $mac,
                 'device_mac' => $gw_id,
-                'time' => S($gw_address . '.' . $mac . '.' . '0'),
+                'time' => S($gw_id . '.' . $mac . '.' . '0'),
                 'is_back' => 0);
-        } elseif ((time() - S($gw_address . '.' . $mac . '.' . '0') > 30)&&(!S($gw_address . '.' . $mac . '.' . '1'))) {
-            S($gw_address . '.' . $mac . '.' . '1', time(), strtotime("tomorrow")-time());
+        } elseif ((time() - S($gw_id . '.' . $mac . '.' . '0') > 30)&&(!S($gw_id . '.' . $mac . '.' . '1'))) {
+            S($gw_id . '.' . $mac . '.' . '1', time(), strtotime("tomorrow")-time());
             $data = array(
                 'mac' => $mac,
                 'device_mac' => $gw_id,
-                'time' => S($gw_address . '.' . $mac . '.' . '1'),
+                'time' => S($gw_id . '.' . $mac . '.' . '1'),
                 'is_back' => 1);
         }
         $WifidoglogModel=M('Wifidoglog');
