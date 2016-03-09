@@ -319,4 +319,20 @@ class BusController extends Controller
         echo json_encode($data);
     }
 
+    /**
+     * 获取设备的详细日志信息
+     * @param $mac 设备mac
+     */
+    public function detail($mac){
+        $this->assign('mac',$mac);
+        $LogModel=D('Log');
+        $condition['mac']=$mac;
+        $LogResult=$LogModel->where($condition)->order('time desc')->limit(20)->select();
+        $this->assign('LogResult',$LogResult);
+        $WifidogModel=D('Wifidoglog');
+        $condition1['device_mac']=$mac;
+        $WifidogResult=$WifidogModel->where($condition1)->order('time desc')->limit(20)->select();
+        $this->assign('WifidogLogResult',$WifidogResult);
+        $this->show();
+    }
 }
