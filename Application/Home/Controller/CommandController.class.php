@@ -258,11 +258,11 @@ class CommandController extends Controller
                 )
             );
             $sumFlow = $FlowModel->where($condition)->sum('num');
-            if($sumFlow>C('TOTAL_FLOW')){
-                $data['network_limit']=0;
-                $result=$DeviceModel->where("id=$device_id")->save($data);
+            if($sumFlow>(C('TOTAL_FLOW')-(0.5*1024*1024))){
+                $DeviceCtrl=A('Device');
+                $result=$DeviceCtrl->set_network_limit($device_id,0);
                 if(!$result){
-                    throw_exception('修改失败');
+                    throw_exception('限速失败');
                 }
             }
         }
