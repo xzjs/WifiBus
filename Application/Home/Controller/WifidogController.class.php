@@ -15,32 +15,33 @@ use Think\Controller;
  */
 class WifidogController extends Controller
 {
-/**
- * 加判重条件（第二次登陆时时间大于30s写入数据库）
- * @param number $gw_port
- * @param string $gw_address
- * @param string $gw_id
- * @param string $mac
- */
-    public function login($gw_port=2060,$gw_address='192.168.18.1',$gw_id='0e:60:55:f3:3d:0a',$mac='假的'){
+    /**
+     * 加判重条件（第二次登陆时时间大于30s写入数据库）
+     * @param number $gw_port
+     * @param string $gw_address
+     * @param string $gw_id
+     * @param string $mac
+     */
+    public function login($gw_port = 2060, $gw_address = '192.168.18.1', $gw_id = '0e:60:55:f3:3d:0a', $mac = '假的')
+    {
         if (!S($gw_id . '.' . $mac . '.' . '0')) {
-            S($gw_id . '.' . $mac . '.' . '0', time(),strtotime("tomorrow")-time());
+            S($gw_id . '.' . $mac . '.' . '0', time(), strtotime("tomorrow") - time());
             $data = array(
                 'mac' => $mac,
                 'device_mac' => $gw_id,
                 'time' => S($gw_id . '.' . $mac . '.' . '0'),
                 'is_back' => 0);
-        } elseif ((time() - S($gw_id . '.' . $mac . '.' . '0') > 30)&&(!S($gw_id . '.' . $mac . '.' . '1'))) {
-            S($gw_id . '.' . $mac . '.' . '1', time(), strtotime("tomorrow")-time());
+        } elseif ((time() - S($gw_id . '.' . $mac . '.' . '0') > 30) && (!S($gw_id . '.' . $mac . '.' . '1'))) {
+            S($gw_id . '.' . $mac . '.' . '1', time(), strtotime("tomorrow") - time());
             $data = array(
                 'mac' => $mac,
                 'device_mac' => $gw_id,
                 'time' => S($gw_id . '.' . $mac . '.' . '1'),
                 'is_back' => 1);
         }
-        $WifidoglogModel=M('Wifidoglog');
+        $WifidoglogModel = M('Wifidoglog');
         $WifidoglogModel->add($data);
-        $this->assign('url',"http://$gw_address:$gw_port/wifidog/auth?token=".time());
+        $this->assign('url', "http://$gw_address:$gw_port/wifidog/auth?token=" . time());
         $this->show();
 
 
@@ -72,15 +73,18 @@ class WifidogController extends Controller
           }*/
     }
 
-    public function ping(){
+    public function ping()
+    {
         echo 'pong';
     }
 
-    public function auth($token){
+    public function auth($token)
+    {
         echo "Auth: 1";
     }
 
-    public function portal(){
-        redirect('http://wifi21.com',1);
+    public function portal()
+    {
+        redirect('192.168.50.1', 1);
     }
 }
