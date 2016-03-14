@@ -51,9 +51,12 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
     }
 
     public function all(){
-    	$result=M()->query("SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.position_y,think_bus.no,think_device.online_num,think_device.flow_num,think_device.useage FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id");
+    	$result=M()->query("SELECT think_device.time, think_device.bus_id,think_device.id,think_bus.position_x,think_bus.position_y,think_bus.no,think_device.online_num,think_device.flow_num,think_device.useage FROM think_device,think_bus WHERE think_device.bus_id=think_bus.id");
     	$time=time();
+    	$flow=A('Flow');
+    	$j=0;
     	for($i=0;$i<count($result);$i++){
+    		$j++;
     		if(($time-$result[$i]['time'])>30*60)
     		{
     			$flag=1;//失联了
@@ -61,16 +64,21 @@ SELECT think_device.time, think_device.id,think_bus.position_x,think_bus.positio
     		else {
     			$flag=0;
     		}
+    		
+    		//echo $result[$i]['bus_id']."</br>";
+    		$flw=$flow->get_flow_info("bus","",$result[$i]['bus_id']);
+    	//	echo $flw."</br>";
     		$array[$i]=array(
     				'flag'=>$flag,
     				'car_no'=>$result[$i]['no'],
     				'online_num'=>$result[$i]['online_num'],
-    				'flow_num'=>$result[$i]['flow_num'],
+    				'flow_num'=>$flw,
     				'cipan_use'=>$result[$i]['useage'],
     				'p_x'=>$result[$i]['position_x'],
     				'p_y'=>$result[$i]['position_y'],
     		);
     	}
+    	echo $j;
     	echo json_encode($array);
 
     }
