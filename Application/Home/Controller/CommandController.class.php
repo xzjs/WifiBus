@@ -134,7 +134,10 @@ class CommandController extends Controller
      */
     private function output($str, $id = 0, $arg = 0)
     {
-        echo "--$str:$id,$arg";
+        $i=rand(1,10);
+        if($i%2) {
+            echo "--$str:$id,$arg";
+        }
     }
 
     /**

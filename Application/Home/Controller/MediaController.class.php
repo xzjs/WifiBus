@@ -300,4 +300,47 @@ class MediaController extends BaseController
             $this->error($Media->getError());
         }
     }
+
+    /**
+     * 更新媒体
+     * @param $mac 设备mac
+     * @param $position 位置
+     */
+    public function update_click($mac,$position){
+        $DeviceModel=D('Device');
+        $condition['mac']=$mac;
+        $device=$DeviceModel->where($condition)->find();
+        $DeviceMediaModel=M('DeviceMedia');
+        unset($condition);
+        $condition['device_id']=$device['id'];
+        $media_ids=$DeviceMediaModel->where($condition)->getField('media_id');
+        unset($condition);
+        $condition['id']=array('in',$media_ids);
+        $condition['position']=$position;
+        $MediaModel=D('Media');
+        $media_id=$MediaModel->where($condition)->fetchSql(false)->getField('id');
+        $MediaclickModel=M('Mediaclick');
+        unset($condition);
+        $condition['media_id']=$media_id;
+        $condition[time]=array(array('gt',strtotime('yesterday')),array('lt',strtotime('tomorrow')));
+        $result=$MediaclickModel->where($condition)->find();
+        if($result){
+            $result['click_num']+=1;
+            $result['time']=time();
+            $update_num=$MediaclickModel->save($result);
+            if(!$update_num){
+                throw_exception('修改失败');
+            }
+        }else{
+            $data=array(
+                'media_id'=>$media_id,
+                'click_num'=>1,
+                'time'=>time()
+            );
+            $insert_id=$MediaclickModel->add($data);
+            if(!$insert_id){
+                throw_exception('添加失败');
+            }
+        }
+    }
 }
