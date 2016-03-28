@@ -146,7 +146,7 @@ function getDisplay() {
 	var busArr = new Array();
 	for (var i = 0; i < checkedIdList.length; i++) {
 		if (checkedIdList[i].isChecked)
-			busArr[i] = checkedIdList[i].id;
+			busArr.push(checkedIdList[i].id);
 	}
 	if (busArr.length > 0) {
 		$.post('get_device_set', {
