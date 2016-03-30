@@ -91,9 +91,9 @@ class CommandController extends Controller
             $log_condition['mac'] = $mac;
             $log_num = $LogModel->where($log_condition)->count();
             $debug=$d['debug'];
-            /*if ($log_num % 300 == 0 && $log_num && $debug==0) {
+            if ($log_num % 300 == 0 && $log_num && $debug==0) {
                 $this->add($d['id'], 'Reboot');
-            }*/
+            }
             if ($b) {
                 if ($lon * $lat) {
                     $du = floor($lat / 100);
