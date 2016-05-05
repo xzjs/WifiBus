@@ -54,7 +54,6 @@ class FlowController extends BaseController{
         if($type=='line'){
             if($line_id==0){
                 $result=$FlowModel->field('device_id,sum(num) as num')->where($condition_time)->group('device_id')->select();
-                $a=$FlowModel->fetchSql();
             }else{
                 $result=M()->query("select f.device_id,sum(f.num) as num from think_flow as f,think_device as d,think_bus as b where b.line_id=".$line_id." and f.time>".mktime(0, 0 , 0,date('m'),1,date('Y'))."
                  and b.id=d.bus_id and d.id=f.device_id group by f.device_id");

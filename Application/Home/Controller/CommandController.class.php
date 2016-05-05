@@ -83,7 +83,7 @@ class CommandController extends Controller
             $this->addFlow($d['id'],$flow_num);
 
             //自动化限速
-            $this->auto_limit($d['id']);
+            //$this->auto_limit($d['id']);
 
             $Bus = D('Bus');
             $b = $Bus->find($d['bus_id']);
