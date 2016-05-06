@@ -350,5 +350,7 @@ class MediaController extends BaseController
                 throw_exception('添加失败');
             }
         }
+        echo '1';
     }
+
 }
