@@ -132,18 +132,20 @@ $(document).ready(function() {
 	searchLine.css('display', 'none');
 	// 线路管理侧边栏
 	boxThreeA.click(function(e) {
+		e.preventDefault();
 		userStart();
 		// clearUserControl();
-		$(this).toggleClass('boxThreeHover');
-		searchLine.stop(true, false).animate({
-			width: 'toggle'
-		});
-		var ev = e || window.event;
-		if (ev.stopPropagation) {
-			ev.stopPropagation();
-		} else if (window.event) {
-			window.event.cancelBubble = true;
-		}
+			// $(this).toggleClass('boxThreeHover');
+			searchLine.stop(true, false).animate({
+				width: 'toggle'
+			});
+			var ev = e || window.event;
+			if (ev.stopPropagation) {
+				ev.stopPropagation();
+			} else if (window.event) {
+				window.event.cancelBubble = true;
+			}
+		
 	});
 
 	var userLine = $(".search_line ul li i.icon-circle-arrow-right");

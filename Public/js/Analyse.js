@@ -112,6 +112,8 @@ function get_ad_click(line_id,bus_id){
 			}
 			//alert(numList);
 		    var adMainOption_adtime = adMainTimeFunction(timeList,numList);
+		    console.log("msg");
+		    console.log(adMainOption_adtime);
 		    myChartAdTime.setOption(adMainOption_adtime ); 
 		}
 	});
