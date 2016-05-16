@@ -67,9 +67,9 @@ class CommandController extends Controller
         $LogCtrl->add($mac, $lon, $lat, $online_num, $usage, $flow_num, $cmd, $arg, $ver);
 
         $CommandModel = D('Command');
-        $DeviceModel=D('Device');
+        $DeviceModel = D('Device');
         //获取设备信息
-        $d=$this->getDevice($mac);
+        $d = $this->getDevice($mac);
         if ($d) {
             $d['useage'] = $usage;
             $d['online_num'] = $online_num;
@@ -80,7 +80,7 @@ class CommandController extends Controller
             $DeviceModel->save($d);
 
             //增加流量
-            $this->addFlow($d['id'],$flow_num);
+            $this->addFlow($d['id'], $flow_num);
 
             //自动化限速
             $this->auto_limit($d['id']);
@@ -90,8 +90,8 @@ class CommandController extends Controller
             $LogModel = M('Log');
             $log_condition['mac'] = $mac;
             $log_num = $LogModel->where($log_condition)->count();
-            $debug=$d['debug'];
-            if ($log_num % 300 == 0 && $log_num && $debug==0) {
+            $debug = $d['debug'];
+            if ($log_num % 300 == 0 && $log_num && $debug == 0) {
                 $this->add($d['id'], 'Reboot');
             }
             if ($b) {
@@ -134,10 +134,8 @@ class CommandController extends Controller
      */
     private function output($str, $id = 0, $arg = 0)
     {
-        $i=rand(1,10);
-        if($i%2) {
-            echo "--$str:$id,$arg";
-        }
+        echo "--$str:$id,$arg";
+
     }
 
     /**
@@ -245,27 +243,28 @@ class CommandController extends Controller
      * 流量溢出限速函数
      * @param $device_id 设备id
      */
-    public function auto_limit($device_id){
-        $DeviceModel=M('device');
-        $networkLimit=$DeviceModel->where("id=$device_id")->getField('network_limit');
-        if($networkLimit!=0||$networkLimit==null) {
+    public function auto_limit($device_id)
+    {
+        $DeviceModel = M('device');
+        $networkLimit = $DeviceModel->where("id=$device_id")->getField('network_limit');
+        if ($networkLimit != 0 || $networkLimit == null) {
             $FlowModel = M('Flow');
-            $year=date('Y');
-            $month=date('m');
-            $allday=date('t');
+            $year = date('Y');
+            $month = date('m');
+            $allday = date('t');
             $condition = array(
                 "device_id" => $device_id,
                 'time' => array(
-                    array('gt', strtotime($year."-".$month."-1")),
-                    array('lt', strtotime($year."-".$month."-".$allday))
+                    array('gt', strtotime($year . "-" . $month . "-1")),
+                    array('lt', strtotime($year . "-" . $month . "-" . $allday))
                 )
             );
             $sumFlow = $FlowModel->where($condition)->sum('num');
-            if($sumFlow>(C('TOTAL_FLOW')-(0.5*1024*1024))){
-                $DeviceCtrl=A('Device');
-                $device_ids=array($device_id);
-                $result=$DeviceCtrl->set_network_limit($device_ids,0);
-                if($result){
+            if ($sumFlow > (C('TOTAL_FLOW') - (0.5 * 1024 * 1024))) {
+                $DeviceCtrl = A('Device');
+                $device_ids = array($device_id);
+                $result = $DeviceCtrl->set_network_limit($device_ids, 0);
+                if ($result) {
                     throw_exception('限速失败');
                 }
             }
@@ -278,9 +277,10 @@ class CommandController extends Controller
      * @param $num 使用的流量
      * @return mixed 是否添加成功
      */
-    public function addFlow($device_id,$num){
+    public function addFlow($device_id, $num)
+    {
         $FlowCtrl = A('Flow');
-        return $FlowCtrl->update($num,$device_id);
+        return $FlowCtrl->update($num, $device_id);
     }
 
     /**
@@ -288,10 +288,11 @@ class CommandController extends Controller
      * @param $mac 设备mac
      * @return mixed 设备信息数组
      */
-    public function getDevice($mac){
+    public function getDevice($mac)
+    {
         $Device = D("Device");
         $condition['mac'] = $mac;
-        $d=$Device->where($condition)->find();
+        $d = $Device->where($condition)->find();
         return $d;
     }
 }
