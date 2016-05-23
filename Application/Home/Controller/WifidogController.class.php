@@ -13,11 +13,11 @@ use Think\Controller;
  * Wifidog控制器
  * @package Home\Controller
  */
-class WifidogController extends Controller
+class WifidogController extends BaseController
 {
     /**
      * 加判重条件（第二次登陆时时间大于30s写入数据库）
-     * @param number $gw_port
+     * @param int $gw_port
      * @param string $gw_address
      * @param string $gw_id
      * @param string $mac
@@ -78,13 +78,70 @@ class WifidogController extends Controller
         echo 'pong';
     }
 
-    public function auth($token)
+    /**
+     * 用户状态心跳协议
+     * @param string $token token
+     * @param string $stage 用户类别
+     */
+    public function auth($token, $stage)
     {
-        echo "Auth: 1";
+        switch ($stage) {
+            case "counter":
+            case "login":
+                $UserModel = M('User');
+                $UserModel->getByToken($token);
+                if ($UserModel->token == $token) {
+                    echo "Auth: 1";
+                } else {
+                    echo "Auth: 0";
+                }
+                break;
+            case "logout":
+                $UserModel = M('User');
+                $UserModel->getByToken($token);
+                $UserModel->token = '';
+                $UserModel->save();
+                echo "Auth: 0";
+                break;
+            default:
+                echo "Auth: 0";
+                break;
+        }
     }
 
     public function portal()
     {
         redirect('http://192.168.50.1', 1);
+    }
+
+    /**
+     * 获取验证码
+     * @param string $phone 手机号
+     */
+    public function get_code($phone = '')
+    {
+        if ($phone != '') {
+            $code = rand(1000, 9999);
+            $content = "您的验证码是$code";
+            $result = $this->send_mail($phone, $content);
+            if ($result == true) {
+                $UserModel = M('User');
+                $data = $UserModel->getByPhone($phone);
+                if ($data) {
+                    $UserModel->code = $code;
+                    $UserModel->save();
+                } else {
+                    $UserModel->phone = $phone;
+                    $UserModel->code = $code;
+                    $UserModel->add();
+                }
+                $this->ajaxReturn(true);
+            } else {
+                $this->ajaxReturn($result);
+            }
+
+        } else {
+            $this->ajaxReturn(false);
+        }
     }
 }
