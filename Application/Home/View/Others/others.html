@@ -1,7 +1,7 @@
 <div class="out_container_title">
     <div class="container_title">
         <div class="left">
-            <ul>
+            <!-- <ul>
                 <li class="box_three">
                     <a href="{:U('Manage/line_manage')}"></a>
                 </li>
@@ -11,7 +11,7 @@
                 <li class="box_five">
                     <a href="{:U('Others/others')}" style="background: url(__PUBLIC__/images/up_other_hover.png)"></a>
                 </li>
-            </ul>
+            </ul> -->
             <div class="weather" id="weather" style="color:#ccc">
 
             </div>
@@ -22,24 +22,19 @@
                 <ul>
                 		<volist name="line_list" id="vo" empty=" " key="k">
                     	<if condition="($k eq 1)">
-
                     		<li class="showTemp"
                             	onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
                             <input type="checkbox" name="roadLine" value={$vo.id}  class="line_array">
                             <a>{$vo.name}</a></li>
-
 						<else/>
-
 							<li onclick="get_bus_list_check('{:U('Bus/select')}',$(this).find('input').val(),'bus_list_check',$(this).index())">
                             <input type="checkbox" name="roadLine" value={$vo.id}  class="line_array">
                             <a>{$vo.name}</a></li>
-
 						</if>
                     </volist>
                 </ul>
                 <a class="checkAll">全选</a>
                 <a class="checkNone">取消全选</a>
-
                 <div class="clr"></div>
             </div>
 
@@ -54,8 +49,6 @@
 
             <div class="search_car_far">
                 <ul id="bus_list_check">
-                    <br/>
-                    <br/>
                     <volist name="bus_list" id="vo" empty=" ">
                         <li><label for={$vo.id}>{$vo.no}</label>
                             <input class="bus_array" type="checkbox" id={$vo.id} name="car" value={$vo.id}
@@ -275,4 +268,5 @@ function set_reboot(){
             return busArr;
         }
     }
+
 </script>

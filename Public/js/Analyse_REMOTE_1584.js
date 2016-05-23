@@ -95,29 +95,6 @@ function get_flow(line_id, bus_id) {
  * @param line_id
  * @param bus_id
  */
-<<<<<<< HEAD
-function get_ad_click(line_id,bus_id){
-	$.ajax({
-		type : "POST",
-		url : "../Analyse/get_ad_click" ,
-		data:{line_id:line_id,bus_id:bus_id},
-		success : function(data) {
-			adInfo = eval(data);
-			
-			 var timeList=new Array();
-			var numList=new Array();
-			for (var i = 0; i < adInfo.length; i++) {
-				timeList[i]=adInfo[i].time;
-				numList[i]=adInfo[i].num;
-			}
-			//alert(numList);
-		    var adMainOption_adtime = adMainTimeFunction(timeList,numList);
-		    console.log("msg");
-		    console.log(adMainOption_adtime);
-		    myChartAdTime.setOption(adMainOption_adtime ); 
-		}
-	});
-=======
 function get_ad_click(line_id, bus_id) {
     $.ajax({
         type: "POST",
@@ -137,7 +114,6 @@ function get_ad_click(line_id, bus_id) {
             myChartAdTime.setOption(adMainOption_adtime);
         }
     });
->>>>>>> 84f725b4b6aac9212977c21411e9b75f1e753eb7
 }
 /**
  * 广告总排行榜

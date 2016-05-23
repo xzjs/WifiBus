@@ -1,89 +1,85 @@
 <div class="out_container_title">
-    <div class="container_title">
-        <div class="left">
-            <ul>
-                <li class="box_one"><a></a></li>
-                <li class="box_two"><a></a></li>
-            </ul>
-            <div class="weather" id="weather" style="color:#ccc">
-         </div>
-        </div>
-        <div id="allmap" class="main"></div>
-        <div class="right">
-            <div class="show-legend"><a>显示图例</a></div>
-            <div class="hide-legend"><a>隐藏图例</a></div>
-            <div class="clr"></div>
-            <ul>
-                <li><img src="__PUBLIC__/images/green_left.png" alt=""> <img
-                        src="__PUBLIC__/images/G_point.png" alt="">
-
-                    <p>正在运营</p></li>
-                <li class="clear"></li>
-                <li><img src="__PUBLIC__/images/red_left.png" alt=""> <img
-                        src="__PUBLIC__/images/R_point.png" alt="">
-
-                    <p>暂停运营</p></li>
-                <li class="clear"></li>
-            </ul>
+  <div class="container_title">
+    <div class="left">
+      <ul>
+        <li class="box_one"><a></a></li>
+        <li class="box_two"><a></a></li>
+      </ul>
+      <div class="weather" id="weather" style="color:#ccc">
+      </div>
+    </div>
+    <div id="allmap" class="main"></div>
+    <div class="right">
+      <div class="show-legend"><a>显示图例</a></div>
+      <div class="hide-legend"><a>隐藏图例</a></div>
+      <div class="clr"></div>
+      <ul>
+        <li><img src="__PUBLIC__/images/green_left.png" alt=""> <img
+          src="__PUBLIC__/images/G_point.png" alt="">
+          <p>正在运营</p></li>
+          <li class="clear"></li>
+          <li><img src="__PUBLIC__/images/red_left.png" alt=""> <img
+            src="__PUBLIC__/images/R_point.png" alt="">
+            <p>暂停运营</p></li>
+            <li class="clear"></li>
+          </ul>
         </div>
         <div class="clr"></div>
         <div class="footer" id="pie-index">
-            <ul>
-                <li id="workNormal"></li>
-                <li id="onlinePeople"></li>
-                <li id="flow"></li>
-                <li id="adClick"></li>
-                <div class="clr"></div>
-            </ul>
+          <ul>
+            <li id="workNormal"></li>
+            <li id="onlinePeople"></li>
+            <li id="flow"></li>
+            <li id="adClick"></li>
+            <div class="clr"></div>
+          </ul>
         </div>
         <div class="display" >
-            <select id="line_selector" onchange="get_bus_list_line('{:U('Bus/select')}',this.value,'bus_no_selector')">
-                <volist name="line_list" id="vo" empty=" ">
-                    <option value={$vo.id}>{$vo.name}</option>
-                </volist>
-            </select>
-
-            <div class="search">
-                <p>
-                    <input type="text" id="search_keys"> <a><img
-                        src="__PUBLIC__/images/home_search.png" alt=""
-                        onclick="search_bus_index('{:U('Bus/select')}',$('#search_keys').val())"></a>
-                </p>
-            </div>
-            <ul class="select" id="bus_no_selector">
-                <volist name="bus_list" id="vo" empty=" ">
-                    <li><a href="#" onclick="show_bus('__CONTROLLER__/bus/str/{$vo.id}/flag/0','','{$vo.id}')">{$vo.no}</a></li>
-                </volist>
-            </ul>
+          <select id="line_selector" onchange="get_bus_list_line('{:U('Bus/select')}',this.value,'bus_no_selector')">
+            <volist name="line_list" id="vo" empty=" ">
+            <option value={$vo.id}>{$vo.name}</option>
+            </volist>
+          </select>
+          <div class="search">
+            <p>
+              <input type="text" id="search_keys"> <a><img
+              src="__PUBLIC__/images/home_search.png" alt=""
+            onclick="search_bus_index('{:U('Bus/select')}',$('#search_keys').val())"></a>
+          </p>
         </div>
-
-        <div class="road_display">
-            <div class="left_display">
-                <ul>
-                	<volist name="line_list" id="vo" empty=" ">
-                  	  <li><a href="javascript:void(0);"
-                           onclick="show_line('__CONTROLLER__/bus/str/{$vo.id}/flag/1','{$vo.name}','{$vo.id}')">{$vo.name}</a></li>
-                	</volist>
-                </ul>
-            </div>
+        <ul class="select" id="bus_no_selector">
+          <volist name="bus_list" id="vo" empty=" ">
+          <li><a href="#" onclick="show_bus('__CONTROLLER__/bus/str/{$vo.id}/flag/0','','{$vo.id}')">{$vo.no}</a></li>
+          </volist>
+        </ul>
+      </div>
+      <div class="road_display">
+        <div class="left_display">
+          <ul>
+            <volist name="line_list" id="vo" empty=" ">
+            <li><a href="javascript:void(0);"
+            onclick="show_line('__CONTROLLER__/bus/str/{$vo.id}/flag/1','{$vo.name}','{$vo.id}')">{$vo.name}</a></li>
+            </volist>
+          </ul>
         </div>
+      </div>
     </div>
     <div class="clear"></div>
-    <div class="address-footer">
-        <p>版权:青岛智能产业技术研究院</p>
-        <p>2016 all rights reserved</p>
-    </div>
-</div>
-	<script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
-	<script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
-<script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
-<script type="text/javascript">
+    <!-- <div class="address-footer">
+      <p>版权:青岛智能产业技术研究院</p>
+      <p>2016 all rights reserved</p>
+    </div> -->
+    
+  </div>
 
+  <script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js"></script>
+  <script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script>
+  <script type="text/javascript" src="__PUBLIC__/js/echarts-all.js"></script>
+  <script type="text/javascript">
     var myChartWork = echarts.init(document.getElementById('workNormal'));
     var myChartOnline = echarts.init(document.getElementById('onlinePeople'));
     var myChartFlow = echarts.init(document.getElementById('flow'));
     var myChartAd = echarts.init(document.getElementById('adClick'));
-
     var a = 70;
     var b = 35;
     var c = 30;
@@ -91,316 +87,257 @@
     var line_id=0;
     var bus_id=0;
     var lineorBus="line";
+  
+    function ajax($url, line){
+      //alert($url);
+      jQuery.ajax({
+        url: $url,
+        dataType: "json",
+        success: function (results) {
+          map.clearOverlays()
+          //  alert($url);
+          var data=eval(results);
+          
+        get_map(line,data);
+        
+        }
+      });
+    }
+    var ding_id;
+    ding_id=setInterval(
+    function (){ajax("__CONTROLLER__/all", '')},5000);
+    function get_map(line, array){
+    var marker2=[],i=0;
+    var x;
+    for (x in array) {
+      var a = array[x]['p_x'];
+      var b = array[x]['p_y'];
+      var pt = new BMap.Point(a, b);
+      var num = array[x]['flag'];
+      var img;
+    switch (num) {
+      case 0:
+      img = "__PUBLIC__/images/green_left.png";
+      break;
+      case 1:
+      img = "__PUBLIC__/images/red_left.png";
+      break;
+      
+      default :
+      img = "__PUBLIC__/images/green_right.png";
+      break;
+    }
+    var myIcon = new BMap.Icon(img, new BMap.Size(30, 30));
+    marker2[i] = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
+    map.addOverlay(marker2[i]);
+    //  alert("dd"); // 创建标注
+  
+    var content =  '<div style="margin:0;line-height:20px;padding:2px;font-size: 12px">'
+        + '公交车牌号：'
+              +  array[x]['car_no']
+      + '<br/>在线人数：'
+            +  array[x]['online_num']
+            + '<br/>已用流量：'
+            +  parseInt(array[x]['flow_num']/1024)+'M'
+            + '<br/>磁盘使用率：'
+            +  array[x]['cipan_use']
     
-    function ajax($url, line) {
-    	//alert($url);
-        jQuery.ajax({
-              url: $url,
-              dataType: "json",
-              success: function (results) {
-              	map.clearOverlays()
-              //	alert($url);
-              	var data=eval(results);
-              	
-                  get_map(line,data);
-                  
-              }
-          });
-      }
-      var ding_id;
-      ding_id=setInterval(
-    		  function (){ajax("__CONTROLLER__/all", '')},
-              5000
-      );
-      function get_map(line, array) {
-    	  var marker2=[],i=0;
-          var x;
-            for (x in array) {
-                    	  var a = array[x]['p_x'];
-                          var b = array[x]['p_y'];
-                          var pt = new BMap.Point(a, b);
-                          var num = array[x]['flag'];
-                          var img;
-                          switch (num) {
-                              case 0:
-                                  img = "__PUBLIC__/images/green_left.png";
-                                  break;
-                              case 1:
-                                  img = "__PUBLIC__/images/red_left.png";
-                                  break;
-                              
-                              default :
-                                  img = "__PUBLIC__/images/green_right.png";
-                                  break;
-                          }
-                          var myIcon = new BMap.Icon(img, new BMap.Size(30, 30));
-                          marker2[i] = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
-                          map.addOverlay(marker2[i]);
-                   //  alert("dd"); // 创建标注
-                        
-                          	 var content =  '<div style="margin:0;line-height:20px;padding:2px;font-size: 12px">'
-                          		 + '公交车牌号：'
-                    				+  array[x]['car_no']	
-                          	    + '<br/>在线人数：'
-                   				+  array[x]['online_num']
-                   				+ '<br/>已用流量：'
-                   				+  parseInt(array[x]['flow_num']/1024)+'M'
-                   				+ '<br/>磁盘使用率：' 
-                   				 +  array[x]['cipan_use']
-                                 
-                   				+'</div>';
-                   				marker2[i].enableDragging();
-                          addClickHandler(content, marker2[i]);
-                      	i++;
-                      }
-            //alert("总览刷新了");
-        	
-       					
- /*  var markerClusterer = new BMapLib.MarkerClusterer(map, {
-	  markers:marker2,
-		girdSize:70,
-		maxZoom:12,
-	  }); */
-      }
-   
+          +'</div>';
+          marker2[i].enableDragging();
+        addClickHandler(content, marker2[i]);
+          i++;
+        }
+  //alert("总览刷新了");
+    
+            
+  /*  var markerClusterer = new BMapLib.MarkerClusterer(map, {
+    markers:marker2,
+      girdSize:70,
+      maxZoom:12,
+    }); */
+    }
+  
     var int = self.setInterval("chart()", 1000);
     var line;
     var aray_bus=new Array();
-
-
-    function show_bus($url, line,selected_bus) {
-        lineorBus="bus";
-        bus_id=selected_bus;
-        chart();
-        clearInterval(ding_id);
-	   	 
-	        jQuery.ajax({
-	              url: $url,
-	              dataType: "json",
-	              success: function (results) {
-	            	 
-	              	map.clearOverlays()
-
-	              	var data=eval(results);
-	              	
-	                  get_map(line,data );
-	                  
-	              }
-	          });
-	        ding_id=setInterval(
-	       		  function (){show_bus($url, line,bus_id)},
-	                 5000
-	         );
-    }
- function show_line($url,line,id) {
-     lineorBus="line";
-     line_id=id;
-     chart();
-		map.clearOverlays();
-	 clearInterval(ding_id); 
-	 only_show_line(line);
-	 get_map_line($url,line);
-	 ding_id=setInterval(
-    		  function (){get_map_line($url, line)},
-              5000
+    function show_bus($url,line,selected_bus) {
+    lineorBus="bus";
+    bus_id=selected_bus;
+    chart();
+    clearInterval(ding_id);
+        
+      jQuery.ajax({
+      url: $url,
+      dataType: "json",
+      success: function (results) {
+        
+        map.clearOverlays()
+        var data=eval(results);
+        
+      get_map(line,data );
+      
+      }
+      });
+      ding_id=setInterval(
+          function (){show_bus($url, line,bus_id)},
+      5000
       );
-}
- function only_show_line(line){
-	 // 百度地图API功能
-    var busline = new BMap.BusLineSearch(map, {
-        renderOptions: {map: map, panel: "r-result"},
-        onGetBusListComplete: function (result) {
-            if (result) {
-                var fstLine = result.getBusListItem(0);//获取第一个公交列表显示到map上
-                busline.getBusLine(fstLine);
-            }
-        }
-    });
-
-    function busSearch() {
-        var busName = line;
-        busline.getBusList(busName);
     }
-     busSearch();
-}
-    var map = new BMap.Map("allmap");   
+    function show_line($url,line,id) {
+      lineorBus="line";
+      line_id=id;
+      chart();
+        map.clearOverlays();
+        clearInterval(ding_id);
+        only_show_line(line);
+        get_map_line($url,line);
+        ding_id=setInterval(
+          function (){get_map_line($url, line)},
+      5000
+      );
+    }
+    function only_show_line(line){
+      // 百度地图API功能
+      var busline = new BMap.BusLineSearch(map, {
+      renderOptions: {map: map, panel: "r-result"},
+      onGetBusListComplete: function (result) {
+      if (result) {
+      var fstLine = result.getBusListItem(0);//获取第一个公交列表显示到map上
+      busline.getBusLine(fstLine);
+      }
+      }
+      });
+      function busSearch() {
+      var busName = line;
+      busline.getBusList(busName);
+      }
+      busSearch();
+    }
+    var map = new BMap.Map("allmap");
     map.enableScrollWheelZoom();// 创建Map实例
     map.centerAndZoom(new BMap.Point(120.183995, 35.948858), 13);
-     var opts = {
-        width: 250,     // 信息窗口宽度
-        height: 140,     // 信息窗口高度
-        title: "公交状况", // 信息窗口标题
-        enableMessage: true//设置允许信息窗发送短息
+    var opts = {
+      width: 250,     // 信息窗口宽度
+      height: 140,     // 信息窗口高度
+      title: "公交状况", // 信息窗口标题
+      enableMessage: true//设置允许信息窗发送短息
     };
-
-/**
- * 更新饼状图数据
- */
-function chart() {
-    var selected_line_id=line_id;
-    var selected_bus_id=bus_id;
-    $.post("{:U('Index/get_char')}", {
+  /**
+  * 更新饼状图数据
+  */
+    function chart() {
+      var selected_line_id=line_id;
+      var selected_bus_id=bus_id;
+      $.post("{:U('Index/get_char')}", {
         line_id:selected_line_id,
         bus_id:selected_bus_id,
         line_or_bus:lineorBus,
-    }, function (data, status) {
+      }, function (data, status) {
         if (status == 4 || status == "success") {
-            var chart_info = eval(data);
-            var optionWork = workOption(chart_info.work,'{:U('Index/work')}'+"/f/work");
-            var optionFlow = flowOption(chart_info.flow);
-            var optionOnline = onlineOption(chart_info.terminal);
-            myChartWork.setOption(optionWork);
-            myChartFlow.setOption(optionFlow);
-            myChartOnline.setOption(optionOnline);
+          
+          var chart_info = eval(data);
+          var optionWork = workOption(chart_info.work,'{:U('Index/work')}'+"/f/work");
+          var optionFlow = flowOption(chart_info.flow);
+          var optionOnline = onlineOption(chart_info.terminal);
+          myChartWork.setOption(optionWork);
+          myChartFlow.setOption(optionFlow);
+          myChartOnline.setOption(optionOnline);
         }
-    });
-
+      });
     // 正在工作设备量
-    var num = Math.random();
-    "__CONTROLLER__/work/f/work/num/" + a
-    num = 0.5 - num;
-    d += num;
-    var optionAd = adOption(d);
-    myChartAd.setOption(optionAd);
-}
-   
-   
-
+      var num = Math.random();
+      "__CONTROLLER__/work/f/work/num/" + a
+      num = 0.5 - num;
+      d += num;
+      // 暂时不显示广告流量
+      // var optionAd = adOption(d);
+      // myChartAd.setOption(optionAd);
+    }
+  
+  
     function addClickHandler(content, marker) {
-        marker.addEventListener("click", function (e) {
-                    openInfo(content, e)
-                }
-        );
+    marker.addEventListener("click", function (e) {
+    openInfo(content, e)
+    }
+    );
     }
     function get_map_line($url, line) {
-    	var array;
-    	 jQuery.ajax({
-    	        url: $url,
-    	        dataType: "json",
-    	        success: function (results) {
-    	        
-    	        	 for(var i=0;i<aray_bus.length;i++){
-    	        		 map.removeOverlay(aray_bus[i]);
-    	        		//	alert("ff");
-    	       	  }
-    	         	 array=eval(results);
-    	        		
-    	        }
-    	    });
-        
-    	  setTimeout(
-
-         		 function () {
-
-         			 //alert("线路");
-
-                     var x;
-
-                 
-
-                      for (x in array) {
-
-                         var a = array[x]['p_x'];
-
-                         var b = array[x]['p_y'];
-
-                     //  	
-
-                         var pt = new BMap.Point(a, b);
-
-                         var num = array[x]['flag'];
-
-                         var img;
-
-                         switch (num) {
-
-                             case 0:
-
-                                 img = "__PUBLIC__/images/green_left.png";
-
-                                 break;
-
-                             case 1:
-
-                                 img = "__PUBLIC__/images/red_left.png";
-
-                                 break;
-
-                             
-
-                             default :
-
-                                 img = "__PUBLIC__/images/green_right.png";
-
-                                 break;
-
-                         }
-
-                         var myIcon = new BMap.Icon(img, new BMap.Size(30, 30));
-
-                         var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
-
-                       //  marker2.setLabel(new BMap.Label("1嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎",{offset:new BMap.Size(10,-10)}));
-
-                         map.addOverlay(marker2);
-
-                        aray_bus[x]=marker2;
-
-                      //  alert("leng"+aray_bus.length);
-
-                 //  alert("f"+aray_bus[x].getLabel().content);
-
-                  
-
-                      //  alert("dd"); // 创建标注
-
-                       
-
-                         	 var content =  '<div style="margin:0;line-height:20px;padding:2px;font-size: 12px">'
-
-                         		 + '公交车牌号：'
-
-                   				+  array[x]['car_no']	
-
-                         	    + '<br/>在线人数：'
-
-                  				+  array[x]['online_num']
-
-                  				+ '<br/>已用流量：'
-
-                  				+  array[x]['flow_num']
-
-                  				+ '<br/>磁盘使用率：' 
-
-                  				+  array[x]['cipan_use']
-
-                                
-
-                  				+'</div>';
-
-                         addClickHandler(content, marker2);
-
-                     }
-
-          },800);
-         
-    }
-
-    function addClickHandler(content, marker) {
-        marker.addEventListener("click", function (e) {
-                    openInfo(content, e)
-                }
-        );
-    }
-    function openInfo(content, e) {
-        var p = e.target;
-        var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
-        var infoWindow = new BMap.InfoWindow(content, opts);  // 创建信息窗口对象
-       
-        map.openInfoWindow(infoWindow, point); //开启信息窗口
-    }
+      var array;
+      jQuery.ajax({
+      url: $url,
+      dataType: "json",
+      success: function (results) {
+      
+        for(var i=0;i<aray_bus.length;i++){
+            map.removeOverlay(aray_bus[i]);
+              //  alert("ff");
+          }
+          array=eval(results);
+            
+        }
+        });
+      
+        setTimeout(
+          function () {
+          //alert("线路");
+      var x;
+      
+      for (x in array) {
+      var a = array[x]['p_x'];
+      var b = array[x]['p_y'];
+        //
+      var pt = new BMap.Point(a, b);
+      var num = array[x]['flag'];
+      var img;
+      switch (num) {
+      case 0:
+      img = "__PUBLIC__/images/green_left.png";
+      break;
+      case 1:
+      img = "__PUBLIC__/images/red_left.png";
+      break;
+      
+      default :
+      img = "__PUBLIC__/images/green_right.png";
+      break;
+      }
+      var myIcon = new BMap.Icon(img, new BMap.Size(30, 30));
+      var marker2 = new BMap.Marker(pt, {icon: myIcon});  // 创建标注
+      //  marker2.setLabel(new BMap.Label("1嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎嘎",{offset:new BMap.Size(10,-10)}));
+      map.addOverlay(marker2);
+      aray_bus[x]=marker2;
+    //  alert("leng"+aray_bus.length);
+    //  alert("f"+aray_bus[x].getLabel().content);
     
+    //  alert("dd"); // 创建标注
     
-    
-    
-</script>
+      var content =  '<div style="margin:0;line-height:20px;padding:2px;font-size: 12px">'
+          + '公交车牌号：'
+                +  array[x]['car_no']
+        + '<br/>在线人数：'
+              +  array[x]['online_num']
+              + '<br/>已用流量：'
+              +  array[x]['flow_num']
+              + '<br/>磁盘使用率：'
+              +  array[x]['cipan_use']
+      
+            +'</div>';
+      addClickHandler(content, marker2);
+      }
+      },800);
+      
+      }
+      function addClickHandler(content, marker) {
+      marker.addEventListener("click", function (e) {
+      openInfo(content, e)
+      }
+      );
+      }
+      function openInfo(content, e) {
+      var p = e.target;
+      var point = new BMap.Point(p.getPosition().lng, p.getPosition().lat);
+      var infoWindow = new BMap.InfoWindow(content, opts);  // 创建信息窗口对象
+      
+      map.openInfoWindow(infoWindow, point); //开启信息窗口
+      }
+    </script>

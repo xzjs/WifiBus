@@ -8,19 +8,19 @@
                 <li class="box_two">
                     <a href="{:U('index')}"></a>
                 </li>
-                <li class="box_anly">
+                <!-- <li class="box_anly">
                         <a href="{:U('adver_rank')}" style="background: url(__PUBLIC__/images/analysis_hover.png)"></a>
-                </li>
+                </li> -->
                 <div class="weather" id="weather" style="color:#ccc">
             </ul>
         </div>
         <div class="ad_anly">
-            <ul class="ad_subtitle">
-               <!--  <li><a href="{:U('analyse')}">综合分析</a></li> -->
+            <!-- <ul class="ad_subtitle">
+                <li><a href="{:U('analyse')}">综合分析</a></li>
                 <li class="ad_action"><a href="{:U('adver_rank')}">排行分析</a></li>
                 <li><a href="{:u('footprint')}">足迹分析</a></li>
                 <li class="clr"></li>
-            </ul>
+            </ul> -->
             <ul class="ad_anly_pic">
                 <li id="adAnly1">
 
@@ -89,4 +89,12 @@
     myChartAdAnly1.setOption(adAnlyOption1);
    
  
+$(function(){
+    $("#J_nav>li.action").hover(function(){
+        $(this).children('ul').css('display','block');
+        
+    },function(){
+        $(this).children('ul').css('display','none');
+    })
+})
 </script>

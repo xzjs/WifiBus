@@ -25,16 +25,15 @@
 <div class="out_container_title">
     <div class="container_title">
         <div class="left">
-            <ul>
+           <!--  <ul>
                 <li class="box_three"><a href="{:U('Manage/line_manage')}"></a>
                 </li>
                 <li class="box_four"><a
                         href="{:U('Remoteupdate/remoteupdate')}"
                         style="background: url(__PUBLIC__/images/up_up_hover.png)"></a></li>
                 <li class="box_five"><a href="{:U('Others/others')}"></a></li>
-            </ul>
+            </ul> -->
             <div class="weather" id="weather" style="color:#ccc">
-
             </div>
         </div>
         
@@ -65,19 +64,16 @@
                 <div class="clr"></div>
             </div>
 
-            <div class="remote_search">
-                <p>
-                    <input type="text" id="search_keys" > <a><img
-                        src="__PUBLIC__/images/home_search.png" alt=""
-                        onclick="search_bus_list('{:U('Bus/select')}',$('#search_keys').val())"></a>
-                </p>
-            </div>
-
-
             <div class="search_car_far">
+                <div class="remote_search">
+                        <input type="text" id="search_keys" >
+                        <a>
+                            <img
+                            src="__PUBLIC__/images/home_search.png" alt=""
+                            onclick="search_bus_list('{:U('Bus/select')}',$('#search_keys').val())">
+                        </a>
+                </div>
                 <ul id="bus_list_check">
-                    <br/>
-                    <br/>
                     <volist name="bus_list" id="vo" empty=" ">
                         <li><label for={$vo.id}>{$vo.no}</label>
                             <input class="bus_array" type="checkbox" id={$vo.id} name="car" value={$vo.id}
@@ -810,6 +806,16 @@
                 </li>
             </ul>
             <div class="clear"></div>
+        </div>
+        <div class="phoneRes">
+            <div class="subtitle_1">
+                <p>远程更新--手机预览效果</p>
+                <a href="#"></a>
+                <div class="clear"></div>
+            </div>
+            <div class="phoneShow">
+                <iframe name="phoneWeb" src="http://localhost/web/index.php"  width="320" height="568"></iframe>
+            </div>
         </div>
         <div class="clear"></div>
     </div>

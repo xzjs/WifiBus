@@ -1,5 +1,4 @@
 <div class="out_container_title">
-
 	<div class="container_title">
 
 		<div class="left">
@@ -10,7 +9,7 @@
 
 				<li class="box_two"><a></a></li>
 
-				<li class="box_anly"><a href="{:U('adver_rank')}"></a></li>
+				<!-- <li class="box_anly"><a href="{:U('adver_rank')}"></a></li> -->
 
 			</ul>
 
@@ -135,4 +134,12 @@ var myChartFlowTime = echarts.init(document.getElementById('flowTime'),'macarons
 var myChartCustomerTime = echarts.init(document.getElementById('customerTime'),'macarons');
 
 var myChartTurnBackTime = echarts.init(document.getElementById('turnBackTime'),'macarons');
+$(function(){
+	$("#J_nav>li.action").hover(function(){
+		$(this).children('ul').css('display','block');
+		
+	},function(){
+		$(this).children('ul').css('display','none');
+	})
+})
 </script>

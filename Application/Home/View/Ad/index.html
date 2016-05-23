@@ -3,9 +3,9 @@
         <div class="left">
             <ul>
 
-                <li class="box_four">
+                <!-- <li class="box_four">
                     <a href="#" style="background: url(__PUBLIC__/images/up_up_hover.png)"></a>
-                </li>
+                </li> -->
 
             </ul>
             <div class="weather" id="weather" style="color:#ccc">
@@ -39,19 +39,13 @@
 
                 <div class="clr"></div>
             </div>
-
-            <div class="remote_search">
-                <p>
+            <div class="search_car_far">
+                <div class="remote_search">
                     <input type="text" id="search_keys" > <a><img
                         src="__PUBLIC__/images/home_search.png" alt=""
                         onclick="search_bus_list('{:U('Bus/select')}',$('#search_keys').val())"></a>
-                </p>
-            </div>
-
-            <div class="search_car_far">
+                </div>
                 <ul id="bus_list_check">
-                    <br/>
-                    <br/>
                     <volist name="bus_list" id="vo" empty=" ">
                         <li><label for={$vo.id}>{$vo.no}</label>
                             <input class="bus_array" type="checkbox" id={$vo.id} name="car" value={$vo.id}

@@ -2,6 +2,7 @@
 // 总览中的一些饼状图Pie
 // ****************************
 var myColor = ['#10C460', '#DE4949', '#CEC51A', '#16A2EF'];
+var myColor=['#5AB1EF','#2EC7C9','#B6A2DE','#E5CF0D'];
 var labelFromatter = {
     normal: {
         label: {
@@ -49,42 +50,84 @@ var labelBottom = {
 function workOption(a,url) {
     var optionWork = {
         legend: {
-            orient: 'vertical',
-            x: 'right',
-            y: 'bottom',
-            data: ['正在工作设备量', '设备总量'],
-            textStyle: {
-                color: '#fff'
-            }
+            show:false,
+            data:['正在工作设备量','设备总量']
+        },
+        toolbox: {
+            show:false
         },
         title: {
             x: 'center',
             y: 'center',
-            text: '正常工作\n',
+            text: '正常工作\n'+new Number(a).toFixed(2)+'%',
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
-                fontSize: 20,
-                color: '#FF7F50',
-                textAlign: 'center'
+                fontSize: 14,
+                color: '#000',
             },
             link: url,
             target: 'self'
 
         },
+        tooltip:{
+            trigger: 'item',
+            formatter: "{b} :{d}%",
+            showDelay:0,
+            transitionDuration:0,
+            enterable:true,
+            textStyle:{
+                fontSize:8,
+                color:'#fff',
+                align:'center',
+                baseline:'middle'
+            }
+        },
         series: [{
             name: '正常工作',
             type: 'pie',
-            radius: ['50%', '70%'],
-            itemStyle: labelFromatter,
+            radius : ['46%', "70%"],
+            center : ['50%', '50%'],
             data: [{
-                value: (100 - a),
+                value: (100-a),
                 name: '设备总量',
-                itemStyle: labelBottom
+                itemStyle: {
+                    normal : {
+                        color:'#E5CF0D',
+                        label : {
+                            show:false,
+                            position : 'inner'
+                        },
+                        labelLine : {
+                            show : false
+                        }
+                    },
+                    emphasis : {
+                        label : {
+                            show : false,
+                        }
+                    }
+                },
             }, {
 
                 value: a,
-                name: '正在工作设备量',
-                itemStyle: labelTop
+                name: '正常工作',
+                itemStyle: {
+                    normal : {
+                        color:'#57D2D3',
+                        label : {
+                            show:false,
+                            position : 'inner'
+                        },
+                        labelLine : {
+                            show : false
+                        }
+                    },
+                    emphasis : {
+                        label : {
+                            show : false,
+                        }
+                    }
+                },
             }]
         }]
     };
@@ -95,52 +138,90 @@ function workOption(a,url) {
 function onlineOption(a,url) {
     var optionOnline = {
         legend: {
-            orient: 'vertical',
-            x: 'right',
-            y: 'bottom',
+            show:false,
             data: ['当前在线总人数', '可承载人数'],
-            textStyle: {
-                color: '#fff'
-            }
         },
+        // title: {
+        //     x: 'center',
+        //     y: 'center',
+        //     text: '在线人数\n',
+        //     textStyle: {
+        //         fontFamily: 'Microsoft YaHei, sans-serif',
+        //         fontSize: 20,
+        //         color: myColor[1],
+        //         textAlign: 'center'
+        //     },
+        //     link: url,
+        //     target: 'self'
+
+        // },
         title: {
             x: 'center',
             y: 'center',
-            text: '在线人数\n',
+            text: '在线人数\n'+new Number(a).toFixed(2)+'%',
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
-                fontSize: 20,
-                color: myColor[1],
-                textAlign: 'center'
+                fontSize: 14,
+                color: '#000',
             },
             link: url,
             target: 'self'
 
         },
+        tooltip:{
+            trigger: 'item',
+            formatter: "{b}:{d}%",
+            showDelay:0,
+            transitionDuration:0,
+            enterable:true
+        },
         series: [{
             name: '在线人数',
             type: 'pie',
-            radius: ['50%', '70%'],
-            itemStyle: labelFromatter,
+            radius : ['48%', "70%"],
+            center : ['50%', '50%'],
+            // itemStyle: labelFromatter,
             data: [{
                 value: (100-a),
                 name: '可承载人数',
-                itemStyle: labelBottom
+                itemStyle: {
+                    normal : {
+                        color:'#5AB1EF',
+                        label : {
+                            show:false,
+                            position : 'inner'
+                        },
+                        labelLine : {
+                            show : false
+                        }
+                    },
+                    emphasis : {
+                        label : {
+                            show : false,
+                        }
+                    }
+                },
 
             }, {
                 value: a,
                 name: '当前在线总人数',
                 itemStyle: {
-                    normal: {
-                        color: myColor[1],
-                        label: {
-                            show: false,
-                        },
-                        labelLine: {
-                            show: false
-                        }
+                normal : {
+                    color:'#B6A2DE',
+                    label : {
+                        show:false,
+                        position : 'inner'
+                    },
+                    labelLine : {
+                        show : false
                     }
                 },
+                emphasis : {
+                    label : {
+                        show : false,
+                    }
+                }
+            },
             }]
         }]
     };
@@ -151,49 +232,84 @@ function onlineOption(a,url) {
 // 流量
 function flowOption(c,url) {
     var optionFlow = {
+        // legend: {
+        //     orient: 'vertical',
+        //     x: 'right',
+        //     y: 'bottom',
+        //     data: ['已用流量', '所有设备流量总量'],
+        //     textStyle: {
+        //         color: '#fff'
+        //     }
+        // },
         legend: {
-            orient: 'vertical',
-            x: 'right',
-            y: 'bottom',
+            show:false,
             data: ['已用流量', '所有设备流量总量'],
-            textStyle: {
-                color: '#fff'
-            }
         },
         title: {
             x: 'center',
             y: 'center',
-            text: '流量已用\n',
+            text: '正常工作\n'+new Number(c).toFixed(2)+'%',
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
-                fontSize: 20,
-                color: myColor[3],
+                fontSize: 14,
+                color: '#000',
             },
             link: url,
             target: 'self'
 
         },
+        tooltip:{
+            trigger: 'item',
+            formatter: "{b} :{d}%",
+            showDelay:0,
+            transitionDuration:0,
+            enterable:true
+        },
         series: [{
             name: '流量已用',
             type: 'pie',
-            radius: ['50%', '70%'],
-            itemStyle: labelFromatter,
+            radius : ['48%', "70%"],
+            center : ['49%', '50%'],
+            // itemStyle: labelFromatter,
             data: [{
-                value: (100 - c),
-                name: '所有设备流量总量',
-                itemStyle: labelBottom
+                value: (100-c),
+                name: '设备流量总量',
+                // itemStyle: labelBottom
+                itemStyle: {
+                normal : {
+                    color:'#FFB980',
+                    label : {
+                        show:false,
+                        position : 'inner'
+                    },
+                    labelLine : {
+                        show : false
+                    }
+                },
+                emphasis : {
+                    label : {
+                        show : false,
+                    }
+                }
+            },
 
             }, {
                 value: c,
                 name: '已用流量',
                 itemStyle: {
-                    normal: {
-                        color: myColor[3],
-                        label: {
-                            show: false,
+                    normal : {
+                        color:'#D87A80',
+                        label : {
+                            show:false,
+                            position : 'inner'
                         },
-                        labelLine: {
-                            show: false
+                        labelLine : {
+                            show : false
+                        }
+                    },
+                    emphasis : {
+                        label : {
+                            show : false,
                         }
                     }
                 },
@@ -204,42 +320,96 @@ function flowOption(c,url) {
     return optionFlow;
 };
 
-// 广告点击量
-function adOption(a,url) {
+// 广告点击量（原版）
+// function adOption(a,url) {
+//     var optionAd = {
+//         legend: {
+//             orient: 'vertical',
+//             x: 40,
+//             y: 140,
+//             data: ['广告点击量', '本地资源访问量', 'APP下载量'],
+//             textStyle: {
+//                 color: '#fff'
+//             },
+//             itemGap:5
+//         },
+//         series: [{
+//             name: '广告点击量',
+//             type: 'pie',
+//             radius: ['50%', '65%'],
+//             center:['50%', '35%'],
+//             itemStyle: {
+//                 normal: {
+//                     label: {
+//                         show: false,
+//                         x:0,
+//                         y:0
+//                     },
+//                     labelLine: {
+//                         show: false
+//                     }
+//                 },
+//                 emphasis : {
+//                     label : {
+//                         show : true,
+//                         position : 'center',
+//                         textStyle : {
+//                             fontSize : '14',
+//                             fontWeight : 'bold'
+//                         }
+//                     }
+//                 }
+//             },
+//             data: [{
+//                 value: a,
+//                 name: '广告下载量',
+
+//             }, {
+//                 value: (70 - a),
+//                 name: '本地资源访问量',
+//             }, {
+//                 value: 30,
+//                 name: 'APP下载量',
+//             }]
+//         }]
+//     };
+
+//     return optionAd;
+// };
+// 广告点击量（李静，修改版）
+function adOption(a,url){
     var optionAd = {
         legend: {
-            orient: 'vertical',
-            x: 'right',
-            y: 'bottom',
-            data: ['广告点击量', '本地资源访问量', 'APP下载量'],
-            textStyle: {
-                color: '#fff'
-            }
+            show:false,
+            data:['广告下载量','本地资源访问量','APP下载量']
         },
-        title: {
-            x: 'center',
-            y: 'center',
-            text: '广告点击量',
-            textStyle: {
-                fontFamily: 'Microsoft YaHei, sans-serif',
-                fontSize: 20,
-                color: '#fff'
-            },
-            link: url,
-            target: 'self'
-
+        toolbox: {
+            show:false
+        },
+        tooltip:{
+            trigger: 'item',
+            formatter: "{b} :{d}%",
+            showDelay:0,
+            transitionDuration:0,
+            enterable:true
         },
         series: [{
-            name: '广告点击量',
             type: 'pie',
-            radius: ['50%', '70%'],
+            radius : ['48%', "70%"],
+            center : ['49%', '50%'],
+            // roseType : 'radius',
             itemStyle: {
-                normal: {
-                    label: {
-                        show: false
+                normal : {
+                    label : {
+                        position : 'inner'
                     },
-                    labelLine: {
-                        show: false
+                    labelLine : {
+                        show : false
+                    }
+                },
+                emphasis : {
+                    label : {
+                        show : false,
                     }
                 }
             },
@@ -340,13 +510,22 @@ function adMainTimeFunction(date1, date2) {
             trigger: 'axis'
         },
         legend: {
-            data: [ ''],
+            data: [''],
             textStyle: {
                 fontFamily: 'Microsoft YaHei, sans-serif',
                 fontSize: 12,
                 color: '#fff'
             }
         },
+        toolbox: {
+            show : true,
+            x:260,
+            y:21,
+            feature : {
+                dataView : {show: true, readOnly: false},
+            }
+        },
+        calculable : true,
         xAxis: [{
             type: 'category',
             boundaryGap: false,
@@ -395,6 +574,18 @@ function adMainFlowFunction(date1,date2) {
         tooltip: {
             trigger: 'axis'
         },
+        toolbox: {
+            show : true,
+            x:260,
+            y:40,
+            feature : {
+                dataView : {
+                    show: true, 
+                    readOnly: false,
+                },
+            },
+        },
+        calculable : true,
         xAxis: [{
             type: 'category',
             boundaryGap: false,
@@ -448,6 +639,15 @@ function adMainCustomerFunction(date1,date2) {
         tooltip: {
             trigger: 'axis'
         },
+        toolbox: {
+            show : true,
+            x:260,
+            y:40,
+            feature : {
+                dataView : {show: true, readOnly: false},
+            }
+        },
+        calculable : true,
         xAxis: [{
             type: 'category',
             boundaryGap: false,
@@ -500,6 +700,15 @@ function adMainTurnBackFunction(date1,date2) {
         tooltip: {
             trigger: 'axis'
         },
+        toolbox: {
+            show : true,
+            x:260,
+            y:40,
+            feature : {
+                dataView : {show: true, readOnly: false},
+            }
+        },
+        calculable : true,
         xAxis: [{
             type: 'category',
             boundaryGap: false,
